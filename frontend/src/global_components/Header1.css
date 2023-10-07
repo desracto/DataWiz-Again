@@ -1,3 +1,4 @@
+
 .Header1 {
     width: 100%;
     height: 100%;
@@ -18,10 +19,12 @@
   
 .DatawizTextNormal {
     font-weight: 400;
+    font-family: "Gilroy-Regular";
 }
 
 .DatawizTextBold {
     font-weight: 700;
+    font-family: "Gilroy-Black";
 }
   
 
@@ -35,35 +38,35 @@
   position: absolute;
   border-radius: 20px;
   width: 110.34px;
-  top: 40px;
+  top: 45px;
 }
 
 .Bar1 {
-  left: 220px;
+  left: 230px;
   background: #422660;
 }
 
 .Bar2 {
-  left: 320px;
+  left: 330px;
   background: #663D79;
 }
 
 .Bar3 {
-  left: 420px;
+  left: 430px;
   background: #8A5A8E;
 }
 
 .Bar4 {
-  left: 520px;
+  left: 530px;
   background: #A67CA2;
 }
 
 .Bar5 {
-  left: 620px;
+  left: 630px;
   background: #BEA3B6;
 }
 
 .Bar6 {
-  left: 720px;
+  left: 730px;
   background: #D6D0D2;
 }
