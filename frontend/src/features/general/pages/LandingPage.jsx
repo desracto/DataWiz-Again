@@ -6,7 +6,6 @@ function LandingPage() {
     return (
         <>
         <Header1/>
-            
         </>
     )
 }
