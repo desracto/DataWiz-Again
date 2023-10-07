@@ -1,10 +1,59 @@
 @font-face {
+    font-family: "Gilroy-Back";
+    src: url("/public/Gilroy-Bold.ttf");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Gilroy-Bold";
+    src: url("/public/Gilroy-SemiBold.ttf");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Gilroy-ExtraBold";
+    src: url("/public/Gilroy-Bold.ttf");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Gilroy-Heavy";
+    src: url("/public/Gilroy-SemiBold.ttf");
+    font-weight: 400;
+}
+
+@font-face {
     font-family: "Gilroy-Bold";
     src: url("/public/Gilroy-Bold.ttf");
     font-weight: 400;
-  }
-  @font-face {
+}
+
+@font-face {
     font-family: "Gilroy-SemiBold";
     src: url("/public/Gilroy-SemiBold.ttf");
     font-weight: 400;
-  }
+}
+
+@font-face {
+    font-family: "Gilroy-Bold";
+    src: url("/public/Gilroy-Bold.ttf");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Gilroy-SemiBold";
+    src: url("/public/Gilroy-SemiBold.ttf");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Gilroy-Bold";
+    src: url("/public/Gilroy-Bold.ttf");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Gilroy-SemiBold";
+    src: url("/public/Gilroy-SemiBold.ttf");
+    font-weight: 400;
+}
