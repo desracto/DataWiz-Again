@@ -1,0 +1,69 @@
+.Header1 {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+  
+.Datawiz {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+  
+.DatawizTextBold,
+.DatawizTextNormal {
+    color: black;
+    font-size: 44px;
+}
+  
+.DatawizTextNormal {
+    font-weight: 400;
+}
+
+.DatawizTextBold {
+    font-weight: 700;
+}
+  
+
+.ColorBar .Bar1,
+.ColorBar .Bar2,
+.ColorBar .Bar3,
+.ColorBar .Bar4,
+.ColorBar .Bar5,
+.ColorBar .Bar6 {
+  height: 12px;
+  position: absolute;
+  border-radius: 20px;
+  width: 110.34px;
+  top: 40px;
+}
+
+.Bar1 {
+  left: 220px;
+  background: #422660;
+}
+
+.Bar2 {
+  left: 320px;
+  background: #663D79;
+}
+
+.Bar3 {
+  left: 420px;
+  background: #8A5A8E;
+}
+
+.Bar4 {
+  left: 520px;
+  background: #A67CA2;
+}
+
+.Bar5 {
+  left: 620px;
+  background: #BEA3B6;
+}
+
+.Bar6 {
+  left: 720px;
+  background: #D6D0D2;
+}
