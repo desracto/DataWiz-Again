@@ -1,0 +1,41 @@
+.IntroCard {
+    width: 80%;
+    height: 100%;
+    position: flex;
+  }
+  
+  .StyleVector1 {
+    width: 233px;
+    height: 0;
+    left: 60px;
+    top: 320px;
+    position: absolute;
+    border: 20px #FDC221 solid;
+  }
+  
+  .UnleashThePowerOfSqlLearning {
+    width: 548px;
+    left: 60px;
+    top: 170px;
+    position: absolute;
+    color: #331B3B;
+    font-size: 55px;
+    font-family: Gilroy-Bold;
+    line-height: 63px;
+    word-wrap: break-word;
+  }
+  
+  .Description {
+    width: 830px;
+    height: 218px;
+    left: 5px;
+    top: 228px;
+    position: absolute;
+    color: black;
+    font-size: 28px;
+    font-family: Gilroy-SemiBold;
+    font-weight: 400;
+    line-height: 46px;
+    word-wrap: break-word;
+  }
+  
