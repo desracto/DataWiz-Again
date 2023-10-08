@@ -66,8 +66,8 @@
 .LoginButton {
     width: 310px;
     height: 40px;
-    background: #F0C64A;
-    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.10);
+    background: #FDC221;
+    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.12);
     border-radius: 10px;
     border: none;
     cursor: pointer;
@@ -82,7 +82,7 @@
     width: 310px;
     height: 40px;
     background: #8A5A8E;
-    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.10);
+    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.12);
     border-radius: 10px;
     border: none;
     cursor: pointer;
