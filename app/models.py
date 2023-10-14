@@ -50,7 +50,8 @@ class Users(db.Model):
 
         return self
     
-    # def find_quiz(self, quiz_id):
+    def retrieve_quizes(self):
+        return self.quizzes
         
 class Quiz(db.Model):
     # Table name
