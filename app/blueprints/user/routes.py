@@ -18,12 +18,6 @@ def set_cookies(response: Response, data: dict, access_tokens):
     # JWT Tokens
     set_access_cookies(response, access_tokens)
     
-    # Username
-    response.set_cookie(
-        'id',
-        value=data['username']
-    )
-
     # Logged in
     response.set_cookie(
         'logged_in',
@@ -37,13 +31,6 @@ def unset_cookies(response: Response):
     # JWT Tokens
     unset_jwt_cookies(response)
 
-    # ID
-    response.set_cookie(
-        'id',
-        value="",
-        expires=0
-    )
-
     # Logged in
     response.set_cookie(
         'logged_in',
@@ -51,46 +38,6 @@ def unset_cookies(response: Response):
         expires=0
     )
 
-@user_bp.route('/login/', methods=['POST'])
-def login():
-    """
-        Retrieves a JSON object in the form:\n
-        {
-            [REQUIRED] "username": value,\n
-            [REQUIRED] "password": value
-        }
-
-        Error handling checks if the required fields are present and if the user exists.
-        If the user exists and password is correct, create a JWT Access Token and bind current user 
-        to the username. This stores the username in the ``current_user`` variable
-
-        After that, it modifies the response object to set the access token & CSRF token as cookies
-        and returns the response object to the client.
-
-        If the credentials are invalid, return 401 code for invalid credentials.
-    """
-    data = request.get_json() or {}
-
-    if 'username' not in data or 'password' not in data:
-        return bad_request('must include username and password')
-
-    # Check if user present in database using username
-    try:
-        user:Users = Users.query.filter_by(username=data['username']).first()
-    except:
-        return error_response(500, 'internal server error')
-
-    # If user present and password match, login user
-    if user and user.check_password(data['password']):
-        response = jsonify({"message": "login successful"})
-        access_token = create_access_token(identity=data['username'])
-        
-        # Modify response object
-        set_cookies(response, data, access_token)
-        return response
-    else:
-        return error_response(401, 'invalid credentials')
-    
 @user_bp.route('/', methods=['POST'])
 def register_user():
     """
@@ -130,9 +77,51 @@ def register_user():
     response.status_code = 201
     
     # Set location to URL for new resource
-    response.headers['Location'] = url_for('user.get_user', id=user.id)
+    response.headers['Location'] = url_for('user.get_user', username=user.username)
     return response
 
+@user_bp.route('/login/', methods=['POST'])
+def login():
+    """
+        Retrieves a JSON object in the form:\n
+        {
+            [REQUIRED] "username": value,\n
+            [REQUIRED] "password": value
+        }
+
+        Error handling checks if the required fields are present and if the user exists.
+        If the user exists and password is correct, create a JWT Access Token and bind current user 
+        to the username. This stores the username in the ``current_user`` variable
+
+        After that, it modifies the response object to set the access token & CSRF token as cookies
+        and returns the response object to the client.
+
+        If the credentials are invalid, return 401 code for invalid credentials.
+    """
+    data = request.get_json() or {}
+
+    if 'username' not in data or 'password' not in data:
+        return bad_request('must include username and password')
+
+    # Check if user present in database using username
+    try:
+        user:Users = Users.query.filter_by(username=data['username']).first()
+    except:
+        return error_response(500, 'internal server error')
+
+    # If user present and password match, login user
+    if user and user.check_password(data['password']):
+        response = jsonify({"message": "login successful"})
+
+        # Sets the ID as username
+        access_token = create_access_token(identity=data['username'])
+        
+        # Modify response object
+        set_cookies(response, data, access_token)
+        return response
+    else:
+        return error_response(401, 'invalid credentials')
+    
 @user_bp.route('/logout/', methods=['POST'])
 @jwt_required()
 def logout():
@@ -143,19 +132,23 @@ def logout():
     unset_cookies(response)
     return response
 
-@user_bp.route('/id/<id>/', methods=['GET'])
+@user_bp.route('/id/<username>/', methods=['GET'])
 @jwt_required()
-def get_user(id:str):
+def get_user(username:str):
     """
         Returns requested user as JSON object if user found or
         returns 404 code if user doesn't exist. 
         
     """
-    return Users.query.get_or_404(id)
+    user:Users = Users.query.filter_by(username=username).first()
+    if user:
+        return user.to_dict()
+    else:
+        return error_response(404, 'user not found')
 
-@user_bp.route('/id/<id>/', methods=['PUT'])
+@user_bp.route('/id/<username>/', methods=['PUT'])
 @jwt_required()
-def update_user(id:str):
+def update_user(username:str):
     """
         update_user function recieves a response object following this format:\n 
         {
@@ -172,7 +165,7 @@ def update_user(id:str):
         Code: 200 (OK)
     """
     try:
-        user:Users = Users.query.get_or_404(id)
+        user:Users = Users.query.filter_by(username=username).first()
     except:
         return error_response(500, 'internal server error')
     data = request.get_json() or {}
@@ -198,23 +191,28 @@ def update_user(id:str):
     # return new user resource represnetation
     return url_for('user.get_user', username=user.username)
 
-@user_bp.route('/id/<id>/', methods=['DELETE'])
+@user_bp.route('/id/<username>/', methods=['DELETE'])
 @jwt_required()
-def delete_user(id:str):
+def delete_user(username:str):
     """
         delete_user fetches a user using their ``username`` and 
-        deletes the resource from the database
+        deletes the resource from the database.
+        Also logs out user
     """
+    # Deletes user resource from database
     try:
-        user:Users = Users.query.get_or_404(id)
+        user:Users = Users.query.filter_by(username=username).first()
         db.session.delete(user)
         db.session.commit()
     except:
         db.session.rollback()
         return error_response(500, 'internal server error')
 
-    response = {
+    response = jsonify({
         "message": "account has been successfully deleted" 
-    }
+    })
+
+    # Logout user
+    unset_cookies(response)
 
     return response
