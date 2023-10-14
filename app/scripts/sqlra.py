@@ -1,4 +1,7 @@
 from sqlparse import parse
+from sqlparse.sql import Identifier
+
+# For debug purposes
 import pprint
 
 # Pre-process functions
@@ -23,7 +26,6 @@ def isolate_where(stmt_tokens):
 
 def pre_process(stmt_tokens):
     isolate_where(stmt_tokens)
-
 
 # Process functions
 def split_keywords(stmt_tokens):
@@ -128,8 +130,8 @@ def process_subqueries(stmt_dict: dict, join_type=None):
             if 'SELECT' in token.value.upper():
                 sub_queries[key] = values
 
-    print('SUBQUERY FILTERED DICTIONARY: ')
-    pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(sub_queries)
+    # print('SUBQUERY FILTERED DICTIONARY: ')
+    # pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(sub_queries)
 
     # Process subqueries
     for key, values in sub_queries.items():
@@ -175,6 +177,14 @@ def process(stmt_tokens) -> dict:
     except Exception as e:
         None
         # print(e)
+    
+    # Fix WHERE values
+    try:
+        process_keyword(stmt_dict, 'FROM')
+        None
+    except Exception as e:
+        None
+        # print(e)
 
     # fix join keyword
     try:
@@ -192,14 +202,33 @@ def process(stmt_tokens) -> dict:
 
     return stmt_dict
 
-# # post process functions
-# def post_process(stmt_dict: dict) -> dict:
-#     # clean dictionary
-#     clean_dict = {}
-#     for key, values in stmt_dict.items():
+# post process functions
+def post_process(stmt_dict: dict) -> dict:
+    clean_dict = {}
+    for key, values in stmt_dict.items():
+        # Create entry into clean dictionary
+        if type(values) == list:
+            clean_dict[key] = []
+        elif type(values) == dict:
+            clean_dict[key] = {}
+        elif type(values) == Identifier:
+            clean_dict[key] = None
 
+        # Check values
+        for value in values:
+            if type(values) == list:
+                if type(value) == dict:
+                    clean_dict[key].append(post_process(value))
+                else:
+                    clean_dict[key].append(value.value)
+            elif type(values) == dict:
+                clean_dict[key] = post_process(values)
+            elif type(values) == Identifier:
+                clean_dict[key] = (values.value)
 
-def translate_query(stmt_tokens):
+    return clean_dict
+
+def translate_query(query: str, DEBUG=True):
     """
         Accepts the inital array of tokens after 
         the sql query has been parsed
@@ -211,29 +240,45 @@ def translate_query(stmt_tokens):
         1. Split the WHERE by 1 depth to seperate keyword and values
     """
 
+    # Validate query
+    stmt_tokens = parse(query)[0].tokens
 
     # pre-process
+    # fixes the query and unifies it
     pre_process(stmt_tokens)
 
     # process
+    # convert query to dictionary
     stmt_dict = process(stmt_tokens)
 
+    # post process
+    # cleans up final dictionary
+    cleaned_dict = post_process(stmt_dict)
 
-    print("\n")
-    pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(stmt_dict)
+    if DEBUG:
+        print("\n")
+        print("QUERY:", query)
+        print("CLEANED DICTIONARY")
+        pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(cleaned_dict)
+
+        print("\n")
+        print("RAW DICTIONARY")
+        pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(stmt_dict)
+
+    return stmt_dict
 
 
 
 def main():
-    sql = "SELECT program.name, scores.inspiration, (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price FROM programme INNER JOIN scores ON programme.id = score.id  WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) GROUP BY id"
-    stmt_tokens = parse(sql)[0].tokens
-    translate_query(stmt_tokens)
+    sql = "SELECT program.name, scores.inspiration, (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price FROM programme, table INNER JOIN scores ON programme.id = score.id  WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) GROUP BY id"
+    # stmt_tokens = parse(sql)[0].tokens
+    translate_query(sql, True)
     
     # print("\n")
 
     sql = "SELECT * FROM employees"
-    stmt_tokens = parse(sql)[0].tokens
-    translate_query(stmt_tokens)
+    # stmt_tokens = parse(sql)[0].tokens
+    translate_query(sql, True)
 
 if __name__ == "__main__":
     main()
