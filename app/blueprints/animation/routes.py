@@ -6,7 +6,7 @@ from ...extensions import db
 
 from ..main.errors import bad_request, error_response
 from .scripts.generator import generate_prefixed
-from .scripts.sql2ra import translate 
+from ...scripts.sqlra import translate_query 
 
 from ._prefixed_models import Schema1_Employee as Employee
 from ._prefixed_models import Schema2_Product as Product, Schema2_Inventory as Inventory
@@ -164,7 +164,7 @@ def get_query():
 
     # Check if query valid & convert to RA
     try:
-        tree = translate(data['query'])
+        tree = translate_query(data['query'])
     except ParseException as pe:
         # the depth variable states how far up the stacktrace it will go. depth=0
         # only the failing input line, marker, and exception string will be shown
@@ -172,20 +172,9 @@ def get_query():
     except:
         return error_response(500)
 
-    # Extract tables
-    TABLE_NAMES = ['EMPLOYEE', 
-     'PRODUCT', 'INVENTORY', 
-     'COURSE', 'ENROLLMENT', 
-     'FLIGHT', 'PASSENGER', 'TICKET',
-     'ALBUM', 'ARTIST', 'GENRE', 'SONG']
-
-    if TABLE_NAMES in tree:
-        result = {
-            "msg": "hello"
-        }
 
 
     # Rollback all changes
     db.session.rollback()
-    return jsonify(result)
+    return jsonify(tree)
 
