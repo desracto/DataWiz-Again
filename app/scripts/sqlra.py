@@ -202,6 +202,34 @@ def process(stmt_tokens) -> dict:
 
     return stmt_dict
 
+def process(stmt_tokens) -> dict:
+
+    # splits into keyword-value pairs
+    stmt_dict = split_keywords(stmt_tokens)
+    stmt_dict = {key.upper(): value for key, value in stmt_dict.items()}
+
+    try: 
+        if 'SELECT' in stmt_dict.keys():
+            process_keyword(stmt_dict, 'SELECT')
+
+        if 'WHERE' in stmt_dict.keys():
+            process_keyword(stmt_dict, 'WHERE')
+        
+        do_join = False
+        for key in stmt_dict.keys():
+            if 'JOIN' in key:
+                do_join = True
+
+        if do_join:
+            process_join(stmt_dict)
+
+        process_subqueries(stmt_dict)
+    except Exception as e:
+        print(e)
+
+    return stmt_dict
+
+
 # post process functions
 def post_process(stmt_dict: dict) -> dict:
     clean_dict = {}
