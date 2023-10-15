@@ -3,6 +3,9 @@ body {
   line-height: normal;
 }
 
+* {
+  box-sizing: border-box;
+}
 .signup-card-child {
   position: absolute;
   top: 0;
@@ -34,7 +37,12 @@ body {
   position: absolute;
   top: 0;
   left: 0;
+
 }
+.text-button:hover {
+  text-decoration: underline;
+}
+
 .register-button,
 .text-button:hover {
   font-family: Gilroy-Bold;
@@ -288,3 +296,5 @@ body {
   color: #000;
   font-family: Gilroy-SemiBold;
 }
+
+

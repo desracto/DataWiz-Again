@@ -2,16 +2,18 @@ import { useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./SignUpPage.css";
 import Header1 from '../../../global_components/Header1';
-
+import HiddenEye  from '../../../assets/images/clarityeyehideline.svg'
+import GoogleLogo from '../../../assets/images/google-account-login.svg'
+<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
 const Signup = () => {
   const navigate = useNavigate();
 
   const onGroupContainerClick = useCallback(() => {
-    navigate("/login-page");
+    navigate("/LoginPage");
   }, [navigate]);
 
   const onSigninButtonClick = useCallback(() => {
-    navigate("/login-page");
+    navigate("/LoginPage");
   }, [navigate]);
 
   return (
@@ -40,7 +42,7 @@ const Signup = () => {
         <img
           className="google-account-login"
           alt=""
-          src="src\assets\images\google-account-login.svg"
+          src={GoogleLogo}
         />
         <button className="signin-button" onClick={onSigninButtonClick}>
           <div className="signin-button-child" />
@@ -86,7 +88,7 @@ const Signup = () => {
           <img
             className="clarityeye-hide-line-icon"
             alt=""
-            src="src/assets/images/clarityeyehideline.svg"
+            src={HiddenEye}
           />
           <div className="emailfield">
             <div className="input-label">Email</div>
