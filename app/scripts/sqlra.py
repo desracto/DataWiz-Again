@@ -113,89 +113,218 @@ def process_join(stmt_dict: dict):
 
     return join_type
     
-def process_subqueries(stmt_dict: dict, join_type=None):
+# def process_subqueries(stmt_dict: dict, join_type=None):
+#     """
+#         Seperates subqueries
+#     """
+#     sub_queries = {}
+
+#     # filter origianl dictionary
+#     # to include only keywords and values which contain subqueries
+#     for key, values in stmt_dict.items():
+#         if key == join_type:
+#             continue
+        
+#         for token in values:
+#             # Extract key and values
+#             if 'SELECT' in token.value.upper():
+#                 sub_queries[key] = values
+
+#     # print('SUBQUERY FILTERED DICTIONARY: ')
+#     # pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(sub_queries)
+
+#     # Process subqueries
+#     for key, values in sub_queries.items():
+#         # Loop through all keyword's values
+#         for i in range(len(values)):
+#             # Find subquery statment 
+#             if 'SELECT' in values[i].value.upper():
+
+#                 # Renamed queries need to be handled a bit differently
+#                 if 'AS' in values[i].value.upper():
+#                     continue
+
+#                 # Non-renamed queries
+#                 # remove the paranthesis at the beginning and end
+#                 # print(values[i].tokens)
+#                 sub_query_tokens = [x for x in values[i].tokens if not x.value in ['(', ')']]
+#                 # print(sub_query_tokens)
+#                 sub_query_dict = split_keywords(sub_query_tokens)
+
+#                 # Since sub_queries is a filtered stmt_dict,
+#                 # the keys will return the same values
+#                 # Using this, we change the original directly as by this step, 
+#                 # we have created a dictionary for the sub query
+#                 stmt_dict[key][i] = sub_query_dict
+
+# def process(stmt_tokens) -> dict:
+
+#     # splits into keyword-value pairs
+#     stmt_dict = split_keywords(stmt_tokens)
+
+#     # Fix SELECT values
+#     try:
+#         process_keyword(stmt_dict, 'SELECT')
+#         None
+#     except Exception as e:
+#         None
+#         # print(e)
+
+#     # Fix WHERE values
+#     try:
+#         process_keyword(stmt_dict, 'WHERE')
+#         None
+#     except Exception as e:
+#         None
+#         # print(e)
+    
+#     # Fix WHERE values
+#     try:
+#         process_keyword(stmt_dict, 'FROM')
+#         None
+#     except Exception as e:
+#         None
+#         # print(e)
+
+#     # fix join keyword
+#     try:
+#         join_type = process_join(stmt_dict)
+#     except Exception as e:
+#         None
+#         # print(e)
+
+#     # Fix subqueries
+#     try:
+#         process_subqueries(stmt_dict, join_type)
+#     except Exception as e:
+#         None
+#         # print(e)
+
+#     return stmt_dict
+
+def process_subqueries(stmt_dict: dict):
     """
         Seperates subqueries
     """
+    # print("ENtered process subqueries")
     sub_queries = {}
 
     # filter origianl dictionary
     # to include only keywords and values which contain subqueries
     for key, values in stmt_dict.items():
-        if key == join_type:
-            continue
-        
+        # print(f'key, values: {key, values}')
+        if 'JOIN' in key:
+            continue 
+
         for token in values:
             # Extract key and values
             if 'SELECT' in token.value.upper():
                 sub_queries[key] = values
 
-    # print('SUBQUERY FILTERED DICTIONARY: ')
-    # pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(sub_queries)
+    # print("ENtered process subqueries - 1st for loop done")
 
+    print('SUBQUERY FILTERED DICTIONARY: ')
+    pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(sub_queries)
+
+
+    as_dict = {}
     # Process subqueries
     for key, values in sub_queries.items():
+        # print(f'values {values}')
+
         # Loop through all keyword's values
         for i in range(len(values)):
+            # print(values[i].value + "\n")
+
             # Find subquery statment 
             if 'SELECT' in values[i].value.upper():
-
+                # print(f'values select: {values[i]}')
+                # print(f'key, values: {key, values}')
+                # print(f'stmt_dict for the keys here: {stmt_dict[key][i]}\n')
+                
                 # Renamed queries need to be handled a bit differently
-                if 'AS' in values[i].value.upper():
-                    continue
+                if ' AS ' in values[i].value.upper():   #does this check as for string or AS in keyword?
+                    # # print(f'values as: {values[i].tokens[0].tokens}')
+                    # # print(f'values as: {values[i].tokens[0].value}')
+                    # print(values[i])
+                    print("\n ENtered the as if ")
+                    parts = values[i].value.split(" AS ")
+                    if len(parts) == 2:
+                        as_key = parts[0].strip() 
+                        as_value = parts[1]
+                        as_dict[as_value] = as_key
+                        # print(f'as_dict: {as_dict}')
+                    
+                    sub_query_tokens_ = [x for x in values[i].tokens[0].tokens if not x.value in ['(', ')', ' ']]
 
-                # Non-renamed queries
-                # remove the paranthesis at the beginning and end
-                sub_query_tokens = [x for x in values[i].tokens if not x.value in ['(', ')']]
-                sub_query_dict = split_keywords(sub_query_tokens)
+                    if 'WHERE' in values[i].value.upper():
 
-                # Since sub_queries is a filtered stmt_dict,
-                # the keys will return the same values
-                # Using this, we change the original directly as by this step, 
-                # we have created a dictionary for the sub query
-                stmt_dict[key][i] = sub_query_dict
+                        # print(f'before subquery token: {sub_query_tokens_}')
+                        pre_process(sub_query_tokens_) # since pre-process only consists of having where function till now
+                        # print(f'after subquery token: {sub_query_tokens_}')
+
+                        sub_query_dict_ = split_keywords(sub_query_tokens_)
+                        process_keyword(sub_query_dict_, 'WHERE')
+
+                    print(f'subquery dict: {sub_query_dict_}')
+                    stmt_dict[key][i] = sub_query_dict_
+                    
+                    stmt_dict['rename'] = as_dict
+                    # # print(f'\nstmt_dict for select: {stmt_dict[key]}')
+
+                    # print(f'stmt_dict: {stmt_dict[key][i]}')
+                    # stmt_dict['SELECT'][i] = sub_query_dict_
+                    
+                    # continue
+                 
+                else:
+                    print("\nentered the as else \n")
+                    
+                    # Non-renamed queries
+                    # remove the paranthesis at the beginning and end
+                    # print(values[i].tokens)
+                    # print(values[i])
+
+                    sub_query_tokens = [x for x in values[i].tokens if not x.value in ['(', ')', ' ']]
+                    print(sub_query_tokens)
+                    # print("reached till tokenization but not dict")
+                    # print(sub_query_tokens)
+
+                    # Since sub_queries is a filtered stmt_dict,
+                    # the keys will return the same values
+                    # Using this, we change the original directly as by this step, 
+                    # we have created a dictionary for the sub query
+                    print("reached till almost end\n")
+                    sub_query_dict = split_keywords(sub_query_tokens)
+                    stmt_dict[key][i] = sub_query_dict
 
 def process(stmt_tokens) -> dict:
 
     # splits into keyword-value pairs
     stmt_dict = split_keywords(stmt_tokens)
+    stmt_dict = {key.upper(): value for key, value in stmt_dict.items()}
 
-    # Fix SELECT values
-    try:
-        process_keyword(stmt_dict, 'SELECT')
-        None
-    except Exception as e:
-        None
-        # print(e)
+    try: 
+        if 'SELECT' in stmt_dict.keys():
+            process_keyword(stmt_dict, 'SELECT')
 
-    # Fix WHERE values
-    try:
-        process_keyword(stmt_dict, 'WHERE')
-        None
-    except Exception as e:
-        None
-        # print(e)
-    
-    # Fix WHERE values
-    try:
-        process_keyword(stmt_dict, 'FROM')
-        None
-    except Exception as e:
-        None
-        # print(e)
+        if 'WHERE' in stmt_dict.keys():
+            process_keyword(stmt_dict, 'WHERE')
+        
+        do_join = False
+        for key in stmt_dict.keys():
+            if 'JOIN' in key:
+                do_join = True
 
-    # fix join keyword
-    join_type = ""
-    try:
-        join_type = process_join(stmt_dict)
-    except Exception as e:
-        None
-        # print(e)
+        if do_join:
+            process_join(stmt_dict)
 
-    # Fix subqueries
-    process_subqueries(stmt_dict, join_type)
+        process_subqueries(stmt_dict)
+    except Exception as e:
+        print(e)
 
     return stmt_dict
+
 
 # post process functions
 def post_process(stmt_dict: dict) -> dict:

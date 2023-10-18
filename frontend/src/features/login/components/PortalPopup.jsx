@@ -13,12 +13,13 @@ const PortalPopup = ({
   right = 0,
   top = 0,
   bottom = 0,
-  relativeLayerRef,
+  relativeLayerRef 
 }) => {
   const relContainerRef = useRef(null);
   const [relativeStyle, setRelativeStyle] = useState({
     opacity: 0,
   });
+  
   const popupStyle = useMemo(() => {
     const style = {};
     style.zIndex = zIndex;
@@ -59,7 +60,7 @@ const PortalPopup = ({
     }
     style.opacity = 1;
     return style;
-  }, [placement, overlayColor, zIndex, relativeLayerRef?.current]);
+  }, [placement, overlayColor, zIndex, relativeLayerRef]);
 
   const setPosition = useCallback(() => {
     const relativeItem = relativeLayerRef?.current?.getBoundingClientRect();
@@ -107,8 +108,8 @@ const PortalPopup = ({
     top,
     bottom,
     placement,
-    relativeLayerRef?.current,
-    relContainerRef?.current,
+    relativeLayerRef,
+    relContainerRef,
   ]);
 
   useEffect(() => {
@@ -130,7 +131,7 @@ const PortalPopup = ({
       }
       e.stopPropagation();
     },
-    [onOutsideClick, relativeLayerRef]
+    [onOutsideClick]
   );
 
   return (
