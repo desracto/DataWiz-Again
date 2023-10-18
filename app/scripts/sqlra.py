@@ -146,9 +146,7 @@ def process_subqueries(stmt_dict: dict, join_type=None):
 
                 # Non-renamed queries
                 # remove the paranthesis at the beginning and end
-                # print(values[i].tokens)
                 sub_query_tokens = [x for x in values[i].tokens if not x.value in ['(', ')']]
-                # print(sub_query_tokens)
                 sub_query_dict = split_keywords(sub_query_tokens)
 
                 # Since sub_queries is a filtered stmt_dict,
@@ -187,6 +185,7 @@ def process(stmt_tokens) -> dict:
         # print(e)
 
     # fix join keyword
+    join_type = ""
     try:
         join_type = process_join(stmt_dict)
     except Exception as e:
@@ -194,11 +193,7 @@ def process(stmt_tokens) -> dict:
         # print(e)
 
     # Fix subqueries
-    try:
-        process_subqueries(stmt_dict, join_type)
-    except Exception as e:
-        None
-        # print(e)
+    process_subqueries(stmt_dict, join_type)
 
     return stmt_dict
 
@@ -257,27 +252,43 @@ def translate_query(query: str, DEBUG=True):
 
     if DEBUG:
         print("\n")
-        print("QUERY:", query)
+        # print("QUERY:", query)
         print("CLEANED DICTIONARY")
         pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(cleaned_dict)
 
         print("\n")
         print("RAW DICTIONARY")
         pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(stmt_dict)
+        # print(stmt_dict['SELECT'][2].tokens[0])
+
 
     return stmt_dict
 
 
 
 def main():
-    sql = "SELECT program.name, scores.inspiration, (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price FROM programme, table INNER JOIN scores ON programme.id = score.id  WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) GROUP BY id"
+    sql = "SELECT program.name, scores.inspiration, (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price FROM programme, table INNER JOIN scores ON programme.id = score.id  WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) GROUP BY id HAVING something"
     # stmt_tokens = parse(sql)[0].tokens
-    translate_query(sql, True)
+    translate_query(sql, False)
     
     # print("\n")
 
     sql = "SELECT * FROM employees"
     # stmt_tokens = parse(sql)[0].tokens
+    translate_query(sql, False)
+
+    sql = "SELECT * FROM employees, products WHERE emp.id = prod.emp_id"
+    # stmt_tokens = parse(sql)[0].tokens
+    translate_query(sql, False)
+
+    sql = "SELECT * FROM employees INNER JOIN products ON emp.id = prod.emp_id"
+    # stmt_tokens = parse(sql)[0].tokens
+    translate_query(sql, False)
+
+    sql = "SELECT * FROM employees WHERE gender = 'M' AND salary > 50 OR salary < 50"
+    translate_query(sql, True)
+
+    sql = "SELECT * FROM employees WHERE gender = 'M' AND (salary > 50 OR salary < 50)"
     translate_query(sql, True)
 
 if __name__ == "__main__":
