@@ -4,6 +4,13 @@ from sqlparse.sql import Identifier
 # For debug purposes
 import pprint
 
+# Pre-Pre process
+def identify_processes(query:str):
+    bool_processes = {
+        "SELECT": False,
+        "DISTINCT": False, 
+    }
+
 # Pre-process functions
 def isolate_where(stmt_tokens):
     """
@@ -61,7 +68,7 @@ def process_keyword(stmt_dict:dict, keyword=None):
     if hasattr(stmt_dict[keyword][0], 'tokens'):
         keyword_values = stmt_dict[keyword][0].tokens
     else:
-        raise Exception("Only one projection statement")
+        raise Exception("PROCESS_KEYWORD", keyword)
 
     new_keyword_values = []
     for token in keyword_values:
@@ -177,7 +184,6 @@ def process_subqueries(stmt_dict: dict):
                     # the keys will return the same values
                     # Using this, we change the original directly as by this step, 
                     # we have created a dictionary for the sub query
-                    print("reached till almost end\n")
                     sub_query_dict = split_keywords(sub_query_tokens)
                     stmt_dict[key][i] = sub_query_dict
 
@@ -185,15 +191,26 @@ def process(stmt_tokens) -> dict:
 
     # splits into keyword-value pairs
     stmt_dict = split_keywords(stmt_tokens)
+    # capatilize all keywords
     stmt_dict = {key.upper(): value for key, value in stmt_dict.items()}
 
-    if 'SELECT' in stmt_dict.keys():
+    stmt_dict_keys = stmt_dict.keys()
+
+    if 'DISTINCT' in stmt_dict_keys:
+        process_keyword(stmt_dict, 'DISTINCT')
+
+        # Move values from distinct keyword to select
+        # Leave distinct empty as its an outter most node
+        stmt_dict['SELECT'] = stmt_dict['DISTINCT']
+        stmt_dict['DISTINCT'] = []
+
+    elif 'SELECT' in stmt_dict_keys:
         process_keyword(stmt_dict, 'SELECT')
 
-    if 'WHERE' in stmt_dict.keys():
+    if 'WHERE' in stmt_dict_keys:
         process_keyword(stmt_dict, 'WHERE')
     
-    for key in stmt_dict.keys():
+    for key in stmt_dict_keys:
         if 'JOIN' in key:
             process_join(stmt_dict)
 
@@ -293,8 +310,9 @@ def main():
     # sql = "SELECT * FROM employees WHERE gender = 'M' AND (salary > 50 OR salary < 50)"
     # translate_query(sql, True)
 
-    sql = "SELECT DISTINCT name FROM employees"
+    sql = "SELECT DISTINCT name, id, age FROM employees"
     translate_query(sql, True)
+
 
 if __name__ == "__main__":
     main()
