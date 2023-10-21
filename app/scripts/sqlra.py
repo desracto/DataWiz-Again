@@ -45,7 +45,7 @@ def identify_processes(stmt_dict: dict) -> dict:
         # Check if there are multiple values in the DISTINCT values array
         if len(stmt_dict['DISTINCT']) > 0:
             # Check if the token is grouped
-            if hasattr(stmt_dict['SELECT'][0], 'tokens'):
+            if hasattr(stmt_dict['DISTINCT'][0], 'tokens'):
                 bool_processes['DISTINCT'] = True
     elif 'SELECT' in keys:
         # Check if there are values in the SELECT values array
@@ -231,14 +231,14 @@ def process(stmt_tokens, DEBUG = True) -> dict:
     # splits into keyword-value pairs
     stmt_dict = split_keywords(stmt_tokens)
     if DEBUG:
-        print("PROCESS STEP 1: KEYWORD-VALUE SPLIT")
+        print("PROCESS STEP: KEYWORD-VALUE SPLIT")
         pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(stmt_dict)
         print("\n")
 
     # identify which functions need to run
     bool_processes = identify_processes(stmt_dict)
     if DEBUG:
-        print("PROCESS STEP 1.5: PROCESS-IDENTIFICATION")
+        print("PROCESS STEP: PROCESS-IDENTIFICATION")
         pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(bool_processes)
         print("\n")
 
@@ -248,31 +248,49 @@ def process(stmt_tokens, DEBUG = True) -> dict:
     # SELECT/DISTINCT
     if bool_processes['DISTINCT']:
         process_keyword(stmt_dict, 'DISTINCT')
+        stmt_dict['SELECT'] = stmt_dict['DISTINCT']
+        stmt_dict['DISTINCT'] = []
 
         if DEBUG:
-            print("PROCESS STEP 2: SELECT PARSE")
-            pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(bool_processes)
+            print("PROCESS STEP: DISTINCT PARSE")
+            pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(stmt_dict)
             print("\n")
 
     elif bool_processes['SELECT']:
         process_keyword(stmt_dict, 'SELECT')
 
         if DEBUG:
-            print("PROCESS STEP 2: SELECT PARSE")
+            print("PROCESS STEP: SELECT PARSE")
             pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(stmt_dict)
             print("\n")
     
     # WHERE
     if bool_processes['WHERE']:
         process_keyword(stmt_dict, 'WHERE')
+
+        if DEBUG:
+            print("PROCESS STEP: WHERE PARSE")
+            pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(stmt_dict)
+            print("\n")
     
     # JOIN
     if bool_processes['JOIN']:
         process_join(stmt_dict)
 
+        if DEBUG:
+            print("PROCESS STEP: JOIN PARSE")
+            pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(stmt_dict)
+            print("\n")
+
     # SUB QUERY
     if bool_processes['SUB_QUERY']:
         process_subqueries(stmt_dict)
+
+        if DEBUG:
+            print("PROCESS STEP: SUB QUERY PARSE")
+            pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(stmt_dict)
+            print("\n")
+
 
     return stmt_dict
 
@@ -321,16 +339,10 @@ def translate_query(query: str, DEBUG=True):
 
     # Validate query
     stmt_tokens = parse(query)[0].tokens
-    if DEBUG:
-        print("Inital Parse:", stmt_tokens)
-        print("\n")
 
     # pre-process
     # fixes the query and unifies it
     pre_process(stmt_tokens)
-    if DEBUG:
-        print("After Pre-Process:", stmt_tokens)
-        print("\n")
 
     # process
     # convert query to dictionary
@@ -353,8 +365,8 @@ def translate_query(query: str, DEBUG=True):
     return stmt_dict
 
 def main():
-    sql = "SELECT program.name, scores.inspiration, (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price FROM programme, table INNER JOIN scores ON programme.id = score.id  WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) GROUP BY id HAVING something"
-    translate_query(sql, True)
+    # sql = "SELECT program.name, scores.inspiration, (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price FROM programme, table INNER JOIN scores ON programme.id = score.id  WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) GROUP BY id HAVING something"
+    # translate_query(sql, True)
 
 
     # sql = "SELECT * FROM employees"
@@ -374,6 +386,9 @@ def main():
 
     # sql = "SELECT * FROM Employees WHERE Salary > 54900 AND Age > 30"
     # translate_query(sql, True)
+
+    sql = "SELECT DISTINCT department, position FROM employees"
+    translate_query(sql, True)
 
     
 
