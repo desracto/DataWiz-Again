@@ -1,5 +1,5 @@
 from sqlparse import parse
-from sqlparse.sql import Identifier
+from sqlparse.sql import Identifier, Function
 
 # For debug purposes
 import pprint
@@ -72,6 +72,16 @@ def identify_processes(stmt_dict: dict) -> dict:
     
     return bool_processes
 
+def identify_keyword_process(stmt_dict: dict) -> list:
+    """
+        Identifies all tokens that have a grouped value
+    """
+    grouped_keywords = []
+    for key, values in stmt_dict.items():
+        if len(values) > 0:
+            if hasattr(values[0], 'tokens'):
+                print(key)
+
 def split_keywords(stmt_tokens):
     """
         Assigns the values to each keyword
@@ -103,6 +113,10 @@ def process_keyword(stmt_dict:dict, keyword=None):
         raise Exception("Keyword not defined")
     
     if hasattr(stmt_dict[keyword][0], 'tokens'):
+        # If the keyword inside is only a function, skip it
+        if type(stmt_dict[keyword][0]) is Function:
+            return None
+        
         keyword_values = stmt_dict[keyword][0].tokens
     else:
         raise Exception("PROCESS_KEYWORD", keyword)
@@ -112,7 +126,7 @@ def process_keyword(stmt_dict:dict, keyword=None):
         # clean ws and punctuation characters
         if token.is_whitespace or token.value == ',':
             continue
-        
+
         new_keyword_values.append(token)
     
     stmt_dict[keyword] = new_keyword_values
@@ -174,10 +188,6 @@ def process_subqueries(stmt_dict: dict):
             if 'SELECT' in token.value.upper():
                 sub_queries[key] = values
 
-
-    # print('SUBQUERY FILTERED DICTIONARY: ')
-    # pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(sub_queries)
-
     as_dict = {}
     # Process subqueries
     for key, values in sub_queries.items():
@@ -189,45 +199,48 @@ def process_subqueries(stmt_dict: dict):
             if 'SELECT' in values[i].value.upper():
                 
                 # Renamed queries need to be handled a bit differently
-                if ' AS ' in values[i].value.upper():   #does this check as for string or AS in keyword?
-                    parts = values[i].value.split(" AS ")
-                    if len(parts) == 2:
-                        as_key = parts[0].strip() 
-                        as_value = parts[1]
-                        as_dict[as_value] = as_key
-                    
+                if ' AS ' in values[i].value.upper():
+                    as_value = values[i].tokens[-1]  
                     sub_query_tokens_ = [x for x in values[i].tokens[0].tokens if not x.value in ['(', ')', ' ']]
-
-                    if 'WHERE' in values[i].value.upper():
-
-                        # since pre-process only consists of having where function till now
-                        pre_process(sub_query_tokens_) 
-
-                        sub_query_dict_ = split_keywords(sub_query_tokens_)
-                        process_keyword(sub_query_dict_, 'WHERE')
-
-                    stmt_dict[key][i] = sub_query_dict_
+                    sub_query = ""
+                    for token in sub_query_tokens_:
+                        sub_query += token.value + " "
                     
-                    stmt_dict['rename'] = as_dict                 
+                    sub_query_dict = translate_query(sub_query, False)
+                    sub_query_dict['AS'] = [as_value]
+
+                    stmt_dict[key][i] = sub_query_dict         
                 else:
                     # Non-renamed queries
                     # remove the paranthesis at the beginning and end
                     sub_query_tokens = [x for x in values[i].tokens if not x.value in ['(', ')', ' ']]
+                    sub_query = ""
+                    for token in sub_query_tokens:
+                        sub_query += token.value + " "
+
+                    sub_query_dict = translate_query(sub_query, False)
 
                     # Since sub_queries is a filtered stmt_dict,
                     # the keys will return the same values
                     # Using this, we change the original directly as by this step, 
                     # we have created a dictionary for the sub query
-                    sub_query_dict = split_keywords(sub_query_tokens)
                     stmt_dict[key][i] = sub_query_dict
 
-def process(stmt_tokens) -> dict:
+def process(stmt_tokens, DEBUG = True) -> dict:
 
     # splits into keyword-value pairs
     stmt_dict = split_keywords(stmt_tokens)
+    if DEBUG:
+        print("PROCESS STEP 1: KEYWORD-VALUE SPLIT")
+        pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(stmt_dict)
+        print("\n")
 
     # identify which functions need to run
     bool_processes = identify_processes(stmt_dict)
+    if DEBUG:
+        print("PROCESS STEP 1.5: PROCESS-IDENTIFICATION")
+        pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(bool_processes)
+        print("\n")
 
     # capatilize all keywords
     stmt_dict = {key.upper(): value for key, value in stmt_dict.items()}
@@ -235,8 +248,19 @@ def process(stmt_tokens) -> dict:
     # SELECT/DISTINCT
     if bool_processes['DISTINCT']:
         process_keyword(stmt_dict, 'DISTINCT')
+
+        if DEBUG:
+            print("PROCESS STEP 2: SELECT PARSE")
+            pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(bool_processes)
+            print("\n")
+
     elif bool_processes['SELECT']:
         process_keyword(stmt_dict, 'SELECT')
+
+        if DEBUG:
+            print("PROCESS STEP 2: SELECT PARSE")
+            pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(stmt_dict)
+            print("\n")
     
     # WHERE
     if bool_processes['WHERE']:
@@ -292,16 +316,25 @@ def translate_query(query: str, DEBUG=True):
         1. Split the WHERE by 1 depth to seperate keyword and values
     """
 
+    if DEBUG:
+        print("QUERY TO BE PROCESSED:", query, "\n")
+
     # Validate query
     stmt_tokens = parse(query)[0].tokens
+    if DEBUG:
+        print("Inital Parse:", stmt_tokens)
+        print("\n")
 
     # pre-process
     # fixes the query and unifies it
     pre_process(stmt_tokens)
+    if DEBUG:
+        print("After Pre-Process:", stmt_tokens)
+        print("\n")
 
     # process
     # convert query to dictionary
-    stmt_dict = process(stmt_tokens)
+    stmt_dict = process(stmt_tokens, DEBUG)
 
     # post process
     # cleans up final dictionary
@@ -309,36 +342,39 @@ def translate_query(query: str, DEBUG=True):
 
     if DEBUG:
         print("\n")
+        print("RAW DICTIONARY")
+        pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(stmt_dict)
+        
+        print("\n")
         print("CLEANED DICTIONARY")
         pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(cleaned_dict)
 
-        print("\n")
-        print("RAW DICTIONARY")
-        pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(stmt_dict)
 
     return stmt_dict
 
 def main():
     sql = "SELECT program.name, scores.inspiration, (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price FROM programme, table INNER JOIN scores ON programme.id = score.id  WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) GROUP BY id HAVING something"
-    translate_query(sql, False)
-
-
-    sql = "SELECT * FROM employees"
-    translate_query(sql, False)
-
-    sql = "SELECT * FROM employees, products WHERE emp.id = prod.emp_id"
-    translate_query(sql, False)
-
-    sql = "SELECT * FROM employees INNER JOIN products ON emp.id = prod.emp_id"
-    translate_query(sql, False)
-
-    sql = "SELECT * FROM employees WHERE gender = 'M' AND salary > 50 OR salary < 50"
-    translate_query(sql, False)
-
-    sql = "SELECT * FROM employees WHERE gender = 'M' AND (salary > 50 OR salary < 50)"
     translate_query(sql, True)
 
-    sql = "SELECT DISTINCT name, id, age FROM employees WHERE age > 20"
+
+    # sql = "SELECT * FROM employees"
+    # translate_query(sql, False)
+
+    # sql = "SELECT * FROM employees, products WHERE emp.id = prod.emp_id"
+    # translate_query(sql, False)
+
+    # sql = "SELECT * FROM employees INNER JOIN products ON emp.id = prod.emp_id"
+    # translate_query(sql, False)
+
+    # sql = "SELECT * FROM employees WHERE gender = 'M' AND salary > 50 OR salary < 50"
+    # translate_query(sql, False)
+
+    # sql = "SELECT * FROM employees WHERE gender = 'M' AND (salary > 50 OR salary < 50)"
+    # translate_query(sql, True)
+
+    # sql = "SELECT * FROM Employees WHERE Salary > 54900 AND Age > 30"
+    # translate_query(sql, True)
+
     
 
 
