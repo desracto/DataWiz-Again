@@ -4,20 +4,11 @@ from sqlparse.sql import Identifier
 # For debug purposes
 import pprint
 
-# Pre-Pre process
-def identify_processes(query:str):
-    bool_processes = {
-        "SELECT": False,
-        "DISTINCT": False, 
-    }
-
-# Pre-process functions
+# --------------- PRE-PROCESS ---------------
 def isolate_where(stmt_tokens):
     """
         Isolates the WHERE keyword from it's values
     """
-    found = False # for debug purposes
-
     for i in range(0, len(stmt_tokens)):
         # Skip WS characters
         if stmt_tokens[i].is_whitespace:
@@ -25,7 +16,6 @@ def isolate_where(stmt_tokens):
 
         # Find the where clause
         if stmt_tokens[i].value.upper()[:5] == 'WHERE':
-            found = True
             where_values = stmt_tokens[i].tokens
 
             # Replace old where token with new tokens
@@ -34,7 +24,54 @@ def isolate_where(stmt_tokens):
 def pre_process(stmt_tokens):
     isolate_where(stmt_tokens)
 
-# Process functions
+# --------------- PROCESS FUNCTIONS ---------------
+def identify_processes(stmt_dict: dict) -> dict:
+    """
+        This is to only understand what functions must be called in the 
+        PROCESS section. 
+    """
+    bool_processes = {
+        "SELECT": False,
+        "DISTINCT": False,
+        "WHERE": False,
+        'JOIN': False,
+        "SUB_QUERY": False
+    }
+
+    keys = stmt_dict.keys()
+
+    # SELECT/DISTINCT block
+    if 'DISTINCT' in keys:
+        # Check if there are multiple values in the DISTINCT values array
+        if len(stmt_dict['DISTINCT']) > 0:
+            # Check if the token is grouped
+            if hasattr(stmt_dict['SELECT'][0], 'tokens'):
+                bool_processes['DISTINCT'] = True
+    elif 'SELECT' in keys:
+        # Check if there are values in the SELECT values array
+        if len(stmt_dict['SELECT']) > 0:
+            # Check if the token is grouped
+            if hasattr(stmt_dict['SELECT'][0], 'tokens'):
+                bool_processes['SELECT'] = True
+    
+    # WHERE block
+    if 'WHERE' in keys:
+        bool_processes['WHERE'] = True
+    
+    # JOIN block
+    if any('JOIN' in sub for sub in keys):
+        bool_processes['JOIN'] = True
+
+    # SUB-QUERY block
+    values = stmt_dict.values()
+    # Loop through each sub_array containing a keyword and it's values
+    for sub_array in values:
+        for token in sub_array:
+            if 'SELECT' in token.value.upper():
+                bool_processes['SUB_QUERY'] = True
+    
+    return bool_processes
+
 def split_keywords(stmt_tokens):
     """
         Assigns the values to each keyword
@@ -169,13 +206,10 @@ def process_subqueries(stmt_dict: dict):
                         sub_query_dict_ = split_keywords(sub_query_tokens_)
                         process_keyword(sub_query_dict_, 'WHERE')
 
-                    print(f'subquery dict: {sub_query_dict_}')
                     stmt_dict[key][i] = sub_query_dict_
                     
                     stmt_dict['rename'] = as_dict                 
                 else:
-                    print("\nentered the as else \n")
-                    
                     # Non-renamed queries
                     # remove the paranthesis at the beginning and end
                     sub_query_tokens = [x for x in values[i].tokens if not x.value in ['(', ')', ' ']]
@@ -191,35 +225,34 @@ def process(stmt_tokens) -> dict:
 
     # splits into keyword-value pairs
     stmt_dict = split_keywords(stmt_tokens)
+
+    # identify which functions need to run
+    bool_processes = identify_processes(stmt_dict)
+
     # capatilize all keywords
     stmt_dict = {key.upper(): value for key, value in stmt_dict.items()}
 
-    stmt_dict_keys = stmt_dict.keys()
-
-    if 'DISTINCT' in stmt_dict_keys:
+    # SELECT/DISTINCT
+    if bool_processes['DISTINCT']:
         process_keyword(stmt_dict, 'DISTINCT')
-
-        # Move values from distinct keyword to select
-        # Leave distinct empty as its an outter most node
-        stmt_dict['SELECT'] = stmt_dict['DISTINCT']
-        stmt_dict['DISTINCT'] = []
-
-    elif 'SELECT' in stmt_dict_keys:
+    elif bool_processes['SELECT']:
         process_keyword(stmt_dict, 'SELECT')
-
-    if 'WHERE' in stmt_dict_keys:
+    
+    # WHERE
+    if bool_processes['WHERE']:
         process_keyword(stmt_dict, 'WHERE')
     
-    for key in stmt_dict_keys:
-        if 'JOIN' in key:
-            process_join(stmt_dict)
+    # JOIN
+    if bool_processes['JOIN']:
+        process_join(stmt_dict)
 
-    process_subqueries(stmt_dict)
+    # SUB QUERY
+    if bool_processes['SUB_QUERY']:
+        process_subqueries(stmt_dict)
 
     return stmt_dict
 
-
-# post process functions
+# --------------- POST-PROCESS ---------------
 def post_process(stmt_dict: dict) -> dict:
     clean_dict = {}
     for key, values in stmt_dict.items():
@@ -245,6 +278,8 @@ def post_process(stmt_dict: dict) -> dict:
 
     return clean_dict
 
+
+# --------------- MAIN ---------------
 def translate_query(query: str, DEBUG=True):
     """
         Accepts the inital array of tokens after 
@@ -283,35 +318,28 @@ def translate_query(query: str, DEBUG=True):
 
     return stmt_dict
 
-
-
 def main():
-    # sql = "SELECT program.name, scores.inspiration, (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price FROM programme, table INNER JOIN scores ON programme.id = score.id  WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) GROUP BY id HAVING something"
-    # # stmt_tokens = parse(sql)[0].tokens
-    # translate_query(sql, False)
-    
-    # # print("\n")
+    sql = "SELECT program.name, scores.inspiration, (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price FROM programme, table INNER JOIN scores ON programme.id = score.id  WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) GROUP BY id HAVING something"
+    translate_query(sql, False)
 
-    # sql = "SELECT * FROM employees"
-    # # stmt_tokens = parse(sql)[0].tokens
-    # translate_query(sql, False)
 
-    # sql = "SELECT * FROM employees, products WHERE emp.id = prod.emp_id"
-    # # stmt_tokens = parse(sql)[0].tokens
-    # translate_query(sql, False)
+    sql = "SELECT * FROM employees"
+    translate_query(sql, False)
 
-    # sql = "SELECT * FROM employees INNER JOIN products ON emp.id = prod.emp_id"
-    # # stmt_tokens = parse(sql)[0].tokens
-    # translate_query(sql, False)
+    sql = "SELECT * FROM employees, products WHERE emp.id = prod.emp_id"
+    translate_query(sql, False)
 
-    # sql = "SELECT * FROM employees WHERE gender = 'M' AND salary > 50 OR salary < 50"
-    # translate_query(sql, True)
+    sql = "SELECT * FROM employees INNER JOIN products ON emp.id = prod.emp_id"
+    translate_query(sql, False)
 
-    # sql = "SELECT * FROM employees WHERE gender = 'M' AND (salary > 50 OR salary < 50)"
-    # translate_query(sql, True)
+    sql = "SELECT * FROM employees WHERE gender = 'M' AND salary > 50 OR salary < 50"
+    translate_query(sql, False)
 
-    sql = "SELECT DISTINCT name, id, age FROM employees"
+    sql = "SELECT * FROM employees WHERE gender = 'M' AND (salary > 50 OR salary < 50)"
     translate_query(sql, True)
+
+    sql = "SELECT DISTINCT name, id, age FROM employees WHERE age > 20"
+    
 
 
 if __name__ == "__main__":
