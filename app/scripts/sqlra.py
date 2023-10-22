@@ -1,5 +1,6 @@
 from sqlparse import parse
 from sqlparse.sql import Identifier, Function
+from tree.tree import Node
 
 # For debug purposes
 import pprint
@@ -113,7 +114,7 @@ def process_keyword(stmt_dict:dict, keyword=None):
         raise Exception("Keyword not defined")
     
     if hasattr(stmt_dict[keyword][0], 'tokens'):
-        # If the keyword inside is only a function, skip it
+        # If the value inside is only a function, skip it
         if type(stmt_dict[keyword][0]) is Function:
             return None
         
@@ -320,9 +321,8 @@ def post_process(stmt_dict: dict) -> dict:
 
     return clean_dict
 
-
 # --------------- MAIN ---------------
-def translate_query(query: str, DEBUG=True):
+def translate_query(query: str, DEBUG=True, CLEAN=False):
     """
         Accepts the inital array of tokens after 
         the sql query has been parsed
@@ -361,12 +361,22 @@ def translate_query(query: str, DEBUG=True):
         print("CLEANED DICTIONARY")
         pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(cleaned_dict)
 
+    if CLEAN:
+        return cleaned_dict
 
     return stmt_dict
 
+
+
 def main():
-    # sql = "SELECT program.name, scores.inspiration, (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price FROM programme, table INNER JOIN scores ON programme.id = score.id  WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) GROUP BY id HAVING something"
-    # translate_query(sql, True)
+    sql = "SELECT program.name, scores.inspiration, (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price FROM programme, table INNER JOIN scores ON programme.id = score.id  WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) GROUP BY id HAVING something"
+    dict_tree = translate_query(sql, False, True)
+    
+    rat = Node().insert_dictionary(dict_tree)
+    rat.PrintTree()
+
+    # rat = Node().insert_node('SELECT', dict_tree['SELECT'])
+    # rat.PrintTree()
 
 
     # sql = "SELECT * FROM employees"
@@ -387,8 +397,8 @@ def main():
     # sql = "SELECT * FROM Employees WHERE Salary > 54900 AND Age > 30"
     # translate_query(sql, True)
 
-    sql = "SELECT DISTINCT department, position FROM employees"
-    translate_query(sql, True)
+    # sql = "SELECT DISTINCT department, position FROM employees"
+    # translate_query(sql, True)
 
     
 
