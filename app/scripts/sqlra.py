@@ -1,6 +1,8 @@
 from sqlparse import parse
 from sqlparse.sql import Identifier, Function
 from tree.tree import Node
+from tree.select_parser import select_stmt, Optional
+from pyparsing.exceptions import ParseException
 
 # For debug purposes
 import pprint
@@ -321,6 +323,10 @@ def post_process(stmt_dict: dict) -> dict:
 
     return clean_dict
 
+def check_syntax(s):
+    (select_stmt + Optional(';')).parseString(s, parseAll=True)
+
+
 # --------------- MAIN ---------------
 def translate_query(query: str, DEBUG=True, CLEAN=False):
     """
@@ -338,6 +344,7 @@ def translate_query(query: str, DEBUG=True, CLEAN=False):
         print("QUERY TO BE PROCESSED:", query, "\n")
 
     # Validate query
+    check_syntax(query)
     stmt_tokens = parse(query)[0].tokens
 
     # pre-process
@@ -366,17 +373,19 @@ def translate_query(query: str, DEBUG=True, CLEAN=False):
 
     return stmt_dict
 
-
-
 def main():
-    sql = "SELECT program.name, scores.inspiration, (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price FROM programme, table INNER JOIN scores ON programme.id = score.id  WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) GROUP BY id HAVING something"
-    dict_tree = translate_query(sql, False, True)
-    
-    rat = Node().insert_dictionary(dict_tree)
-    rat.PrintTree()
+    # sql = "SELECT program.name, scores.inspiration, (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price FROM programme, table INNER JOIN scores ON programme.id = score.id  WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) GROUP BY id HAVING something"
+    sql = "SEEEE"
+    try:
+        dict_tree = translate_query(sql, False, True)
+    except ParseException as pe:
+        print(pe)
 
-    # rat = Node().insert_node('SELECT', dict_tree['SELECT'])
-    # rat.PrintTree()
+    if dict_tree:
+        rat = Node().insert_dictionary(dict_tree)
+        rat.PrintTree()
+
+
 
 
     # sql = "SELECT * FROM employees"

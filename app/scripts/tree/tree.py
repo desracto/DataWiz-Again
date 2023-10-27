@@ -43,8 +43,11 @@ class Node:
     
     def PrintTree(self):
         if self.left:
+            # print("LEFT")
             self.left.PrintTree()
+        # print("ROOT")
         print("\\ | {} | {} {}".format(self.representation.upper(), self.type, self.values))        
+        # print("RIGHT")
         if self.right:
             self.right.PrintTree()
 
@@ -61,3 +64,4 @@ class Node:
             representation = 'aggregation'
 
         return representation
+
