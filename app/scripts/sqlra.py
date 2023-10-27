@@ -344,7 +344,7 @@ def translate_query(query: str, DEBUG=True, CLEAN=False):
         print("QUERY TO BE PROCESSED:", query, "\n")
 
     # Validate query
-    check_syntax(query)
+    # check_syntax(query)
     stmt_tokens = parse(query)[0].tokens
 
     # pre-process
@@ -374,8 +374,9 @@ def translate_query(query: str, DEBUG=True, CLEAN=False):
     return stmt_dict
 
 def main():
-    # sql = "SELECT program.name, scores.inspiration, (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price FROM programme, table INNER JOIN scores ON programme.id = score.id  WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) GROUP BY id HAVING something"
-    sql = "SEEEE"
+    sql = "SELECT program.name, scores.inspiration, (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price FROM programme, table INNER JOIN scores ON programme.id = score.id  WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) GROUP BY id HAVING something"
+    # sql = "SEEEE"
+    dict_tree = None
     try:
         dict_tree = translate_query(sql, False, True)
     except ParseException as pe:
