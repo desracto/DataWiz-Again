@@ -24,7 +24,6 @@ class Node:
     def insert_node(self, node_type, node_values):
         # It is not a root node and therefore contains values
         if not self.type == "root":
-<<<<<<< HEAD
             # Checks left node
             # if node is empty, add a Node class
             if self.left is None:
@@ -32,17 +31,12 @@ class Node:
                 self.left = Node(node_type, node_values, representation)
             # if the node is not empty, recursively call the insert node function
             # till it finds an empty spot
-=======
-            if self.left is None:
-                self.left = Node(node_type, node_values)
->>>>>>> a5200bdbab84423631f52ceb6a2bc41133f697ca
             else:
                 self.left.insert_node(node_type, node_values)
         # Is a root node
         else:
             self.type = node_type
             self.values = node_values
-<<<<<<< HEAD
             self.representation = Node.assign_representation(node_type)
 
         return self
@@ -67,14 +61,3 @@ class Node:
             representation = 'aggregation'
 
         return representation
-=======
-    
-        return self
-
-    def PrintTree(self):
-        if self.left:
-            self.left.PrintTree()
-        print("\\ {}: {}".format(self.type, self.values))        
-        if self.right:
-            self.right.PrintTree()
->>>>>>> a5200bdbab84423631f52ceb6a2bc41133f697ca
