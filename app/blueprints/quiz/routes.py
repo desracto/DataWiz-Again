@@ -67,10 +67,6 @@ def add_quiz_question(quiz_id):
 def edit_quiz_question(quiz_id, qaid):
     pass
 
-@quiz_bp.route("<quiz_id>/question/<qaid>/edit_question", methods=['PUT'])
-def edit_quiz_answer(quiz_id, qaid):
-    pass
-
 @quiz_bp.route("/<quiz_id>/question/<qaid>/delete_question/", methods=['DELETE'])
 def delete_quiz_question(quiz_id, qaid):
     pass
