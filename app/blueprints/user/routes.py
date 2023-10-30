@@ -138,7 +138,6 @@ def get_user(username:str):
     """
         Returns requested user as JSON object if user found or
         returns 404 code if user doesn't exist. 
-        
     """
     user:Users = Users.query.filter_by(username=username).first()
     if user:

@@ -80,12 +80,17 @@ class Quiz(db.Model):
         return datetime.datetime.strftime(self.start_time, "%d/%m/%Y, %H:%M:%S")
     
     def to_dict(self):
+
+        questions = list(self.questions)
+        for i in range(len(questions)):
+            questions[i] = questions[i].to_dict()
+
         data = {
             "id": self.id,
             "quiz_name": self.name,
             "start_time": self.get_time(),
-            "userid": self.user,
-            "questions": self.questions
+            "userid": self.user.id,
+            "questions": questions
         }
 
         return data
@@ -106,3 +111,13 @@ class Quiz_QPA(db.Model):
     # Functions
     def __repr__(self):
         return "<Quiz_QPA | ID: {}, Quiz ID: {}>".format(self.qaid, self.quiz_id)
+    
+    def to_dict(self):
+        data = {
+            "qaid": self.qaid,
+            "problem": self.problem,
+            "answer": self.answer,
+            "quiz_id": self.quiz_id
+        }
+
+        return data
