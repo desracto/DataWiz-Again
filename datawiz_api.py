@@ -3,7 +3,7 @@ from app.blueprints.animation.scripts.generator import generate_prefixed, retrie
 
 from app.models import Users
 from app.models import Quiz
-from app.models import Quiz_QA
+from app.models import Quiz_QPA
 app = create_app()
 
 @app.shell_context_processor
@@ -14,5 +14,5 @@ def make_shell_context():
             # Models
             "User": Users,
             "Quiz": Quiz,
-            "Quiz_QA": Quiz_QA
+            "Quiz_QPA": Quiz_QPA
             }

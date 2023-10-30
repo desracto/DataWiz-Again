@@ -8,7 +8,7 @@ class Config(object):
     DEBUG = True
 
     # Flask-Migrate
-    MIGRATION_DIR = os.path.join(basedir, 'database\\migrations')
+    MIGRATION_DIR = os.path.join(basedir, 'app\\database\\migrations')
 
     # Flask-SQLAlchemy
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
