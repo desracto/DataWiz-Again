@@ -96,7 +96,7 @@ class Quiz_QPA(db.Model):
 
     # Fields
     qaid = db.Column(db.String(32), primary_key=True, unique=True) # PK
-    question = db.Column(db.String(400))
+    problem = db.Column(db.String(400))
     answer = db.Column(db.String(1000))
     quiz_id = db.Column(db.String(32), db.ForeignKey('Quiz.id')) # Fk
 
