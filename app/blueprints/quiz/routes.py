@@ -7,9 +7,10 @@ from app.models import Quiz, Users
 from ...extensions import db
 from ..main.errors import bad_request, error_response
 
-@quiz_bp.route("/user/<userid>/retrieve-quizzes", methods=['GET'])
-def retrieve_quizes(userid):
-    pass
+@quiz_bp.route("/user/<username>/retrieve-quizzes", methods=['GET'])
+def retrieve_quizes(username):
+    user:Users = Users.query.filter_by(username=username).first()
+    return user.quizzes
 
 @quiz_bp.route("/user/<userid>/quiz/<quiz_id>/", methods=['GET'])
 def retrieve_quiz(userid, quiz_id):
@@ -28,7 +29,7 @@ def create_quiz():
             [REQUIRED] "start_time": "time": str,
             [REQUIRED] "user_id": "id": str,
 
-            [OPTIONAL] "question": [[question, answer], [question, answer]]: array,
+            [OPTIONAL] "question": [[problem, answer], [problem, answer]]: array,
             [OPTIONAL] "schema"
         }
     """
@@ -58,7 +59,7 @@ def create_quiz():
     response['Location'] = url_for('quiz.retrieve_quiz', quiz_id=quiz.id)
     return response
     
-@quiz_bp.route("/<quiz_id>/add_question/", methods=['PUT'])
+@quiz_bp.route("quiz/<quiz_id>/add_question/", methods=['PUT'])
 def add_quiz_question(quiz_id):
     pass
 

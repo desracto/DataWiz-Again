@@ -52,7 +52,7 @@ class Users(db.Model):
     
     def retrieve_quizes(self):
         return self.quizzes
-        
+         
 class Quiz(db.Model):
     # Table name
     __tablename__ = 'Quiz'
@@ -65,7 +65,7 @@ class Quiz(db.Model):
 
     # Relationships
     user = db.relationship('Users', back_populates='quizzes')
-    questions = db.relationship('Quiz_QA', back_populates='quiz')
+    questions = db.relationship('Quiz_QPA', back_populates='quiz')
 
     # Functions
     def __repr__(self):
@@ -90,9 +90,9 @@ class Quiz(db.Model):
 
         return data
             
-class Quiz_QA(db.Model):
+class Quiz_QPA(db.Model):
     # Table name
-    __tablename__ = 'Quiz_QA'
+    __tablename__ = 'Quiz_QPA'
 
     # Fields
     qaid = db.Column(db.String(32), primary_key=True, unique=True) # PK
@@ -105,4 +105,4 @@ class Quiz_QA(db.Model):
 
     # Functions
     def __repr__(self):
-        return "<Quiz_QA | ID: {}, Quiz ID: {}>".format(self.qaid, self.quiz_id)
+        return "<Quiz_QPA | ID: {}, Quiz ID: {}>".format(self.qaid, self.quiz_id)
