@@ -169,7 +169,12 @@ class Node:
         for key in aggr_key:
             organized_dict[key] = stmt_dict[key]
 
-        return rel_key
+        return {
+            "relation": rel_key,
+            "selection": sel_key,
+            "projection": proj_key,
+            "aggregation": aggr_key
+        }
 
     @staticmethod
     def create_relations(stmt_dict:dict, relation_tokens:list):
@@ -184,5 +189,58 @@ class Node:
             else:
                 # Add new relation node
                 tree.insert_node(key, stmt_dict[key], node_types_dict.get("relation"))
+
+                tree = Node.fix_root(tree)
     
+        return tree
+    
+    @staticmethod
+    def create_valexpbinary(key, values):
+        left_done, or_done = False, False
+        left, right, op = None, None, None
+
+        for value in values:
+            # [left, comparison, right]
+            if not left_done:
+                print("left: ", value, type(value))
+                left = value
+                left_done = True
+            
+            elif not or_done:
+                print("operator", value, type(value))
+                op = value
+                or_done = True
+            
+            else:
+                print("right:", value, type(value))
+                if type(value) is dict:
+                    right = "value"
+                else:
+                    right = value
+                
+                break
+        
+        return left + " " + str(op) + " " + str(right)
+
+
+    @staticmethod
+    def create_selection(tree, stmt_dict:dict, selection_tokens:list):
+        for key in selection_tokens:
+            cond = Node.create_valexpbinary(key, stmt_dict[key])
+            tree.insert_node(key, cond, node_types_dict.get("selection"))
+            tree = Node.fix_root(tree)
+
+        return tree
+
+
+    @staticmethod
+    def fix_root(tree):
+        if tree is None:
+            return tree
+
+        # Keep going upwards until you find the top-most node
+        # sets that node as root node
+        while tree.parent is not None:
+            tree = tree.parent
+        
         return tree

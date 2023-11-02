@@ -113,7 +113,7 @@ def process_keyword(stmt_dict:dict, keyword=None):
     """
     if not keyword:
         raise Exception("Keyword not defined")
-    
+        
     if hasattr(stmt_dict[keyword][0], 'tokens'):
         # If the value inside is only a function, skip it
         if type(stmt_dict[keyword][0]) is Function:
@@ -290,7 +290,6 @@ def process(stmt_tokens, DEBUG = True) -> dict:
             pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(stmt_dict)
             print("\n")
 
-
     return stmt_dict
 
 # --------------- POST-PROCESS ---------------
@@ -391,18 +390,21 @@ def main():
             FROM programme \
             INNER JOIN scores \
                 ON programme.id = score.id \
-            WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) GROUP BY id"
+            WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) \
+                AND s.age = 20 \
+            GROUP BY id"
 
     dict_tree = translate_query(query = sql,
                                 DEBUG=True,
                                 CLEAN=True)
     
     if dict_tree:
-        relation = Node.organize_dictionary(dict_tree)
-        print(relation)
+        relation = Node.organize_dictionary(dict_tree)["relation"]
+        selection =Node.organize_dictionary(dict_tree)["selection"]
 
         rat = Node.create_relations(dict_tree, relation)
-        print(rat.parent)
+        rat = Node.create_selection(rat, dict_tree, selection)
+        rat.PrintTree()
     
 
     # sql = "SELECT * FROM employees"
