@@ -1,10 +1,16 @@
 import { useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./SignUpPage.css";
+
+// Component Imports
 import Header1 from '../../../global_components/Header1';
+
+// Image Imports
 import HiddenEye  from '../../../assets/images/clarityeyehideline.svg'
 import GoogleLogo from '../../../assets/images/google-account-login.svg'
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+
 const Signup = () => {
   const navigate = useNavigate();
 
