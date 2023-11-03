@@ -1,16 +1,9 @@
 .IntroCard {
-    width: 100%;
-    margin-top: 100px;  
-    position: flex; 
-}
-
-.StyleVector1 {
-    width: 175px;
-    height: 0;
-    left: 64px;
-    top: 300px;
-    position: relative;
-    border: 20px #FDC221 solid;
+    display: flex;
+    flex-direction: column;
+    align-items: left; /* Center content horizontally */
+    text-align: left; /* Center text content */
+    margin-top: 140px;
 }
 
 .UnleashThePowerOfSqlLearning {
@@ -58,7 +51,7 @@
 
 .SignupAndLoginButtons {
     display: flex;
-    position: absolute;
+    position: flex;
     margin-left: 60px;
     margin-top: 30px;
 }
@@ -109,4 +102,234 @@
 .LoginButton:active, .SignUpButton:active {
     background: #331B3B; 
     color: white;
+}
+
+.LoginButton, .SignUpButton {
+    text-decoration: none;
+  }
+  
+
+/* ----------------------Features--------------------------- */
+
+.TopFeaturesContainer {
+    display: flex;
+    position: flex;
+    flex-direction: column;
+    margin-top: 100px;
+ }
+
+.LFeatures {
+    text-align: center;
+    color: #5C5959;
+    font-size: 60px;
+    font-family: 'Gilroy-Bold';
+    word-wrap: break-word;
+    position: flex;
+    margin-bottom: 10px;
+}
+  
+.ForLearners {
+    text-align: center;
+    color: #5C5959;
+    font-size: 35px;
+    font-family: 'Gilroy-SemiBold';
+    word-wrap: break-word;
+    position: flex;
+}
+
+.AnimationFeatureCarousel {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    position: relative;
+    margin-top: 30px;
+    height: 500px;
+    z-index: 0;
+}
+
+.AutoGradingFeatureCarousel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-top: 30px;
+    height: 500px;
+    z-index: 0;
+}
+
+.BottomFeaturesContainer {
+    display: flex;
+    position: flex;
+    flex-direction: column;
+    margin-top: 50px;
+}
+  
+.ForInstructors {
+    text-align: center;
+    color: #5C5959;
+    font-size: 35px;
+    font-family: 'Gilroy-SemiBold';
+    word-wrap: break-word;
+    position: flex;
+}
+
+
+/* ----------------------Meet The Team---------------------- */
+
+.MeetTheTeamContainer {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+  
+.MeetTheTeamCard {
+    width: 950px;
+    height: 590px;
+    background: #daccd5;
+    border-top-right-radius: 290px; 
+    border-bottom-right-radius: 50px; 
+    border-top-left-radius: 290px; 
+    border-bottom-left-radius: 50px;  
+    /* border-radius: 300px; */
+    overflow: hidden;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+}
+
+.MTTTop {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    width: 100%;
+}
+  
+.BarL, .BarR {
+    width: 150px; /* Equal width for both bars */
+    height: 5px;
+    border-radius: 10px;
+    background: linear-gradient(to right, #763f93, #ffd452);
+    margin-top: 30px;
+}
+
+.MeetTheTeamTitle {
+    text-align: center;
+    color: #4a4848;
+    font-size: 27px;
+    font-family: 'Gilroy-Bold';
+    word-wrap: break-word;
+    position: flex;
+    margin-top: 30px;
+    text-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
+    padding: 0px 30px;
+}
+
+
+.TopRowIcons {
+    display: flex;
+    justify-content: center; /* Center the ellipses horizontally */
+    align-items: center; /* Center the ellipses vertically */
+}
+
+/* Common styles for the ellipses */
+.Ellipse2,
+.Ellipse3,
+.Ellipse4 {
+    width: 150px;
+    height: 150px;
+    background: #F6E9C4;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the content vertically */
+    justify-content: center; /* Center the content horizontally */
+    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.12);
+    margin: 0 50px;
+    margin-top: 40px;
+
+}
+
+.TehamiImageIcon {
+    width: 80px;
+    height: 100px;
+}
+.HibaImageIcon,
+.RidaImageIcon {
+    width: 70px;
+    height: 100px;
+}
+
+.TehamiName {
+    text-align: center;
+    margin-top: 15px;
+    color: #4a4848;
+    font-size: 19px;
+    font-family: 'Gilroy-SemiBold';
+    word-wrap: break-word;
+    width: 250px;
+    text-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
+}
+
+.HibaName,
+.RidaName {
+    text-align: center;
+    margin-top: 15px;
+    color: #4a4848;
+    font-size: 19px;
+    font-family: 'Gilroy-SemiBold';
+    word-wrap: break-word;
+    text-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
+}
+
+.BottomRowIcons {
+    display: flex;
+    justify-content: center; /* Center the ellipses horizontally */
+    align-items: center; /* Center the ellipses vertically */
+}
+
+.Ellipse5,
+.Ellipse6{
+    width: 150px;
+    height: 150px;
+    background: #F6E9C4;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center; 
+    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.12);
+    margin: 0 50px;
+    margin-top: 25px;
+
+}
+
+.EjazImageIcon {
+    width: 80px;
+    height: 100px;
+}
+
+.NihalImageIcon {
+    width: 70px;
+    height: 100px;
+}
+
+.EjazName {
+    text-align: center;
+    margin-top: 15px;
+    color: #4a4848;
+    font-size: 19px;
+    font-family: 'Gilroy-SemiBold';
+    word-wrap: break-word;
+    width: 239px;
+    text-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
+}
+
+.NihalName {
+    text-align: center;
+    margin-top: 15px;
+    color: #4a4848;
+    font-size: 19px;
+    font-family: 'Gilroy-SemiBold';
+    word-wrap: break-word;
+    width: 234.5px;
+    text-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
 }
