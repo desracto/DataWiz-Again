@@ -365,7 +365,7 @@ def translate_query(query: str, DEBUG=True, CLEAN=False):
     return stmt_dict
 
 def main():
-    # sql = "SELECT program.name, scores.inspiration, (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price FROM programme INNER JOIN scores ON programme.id = score.id  WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) GROUP BY id HAVING something"
+    sql = "SELECT program.name, scores.inspiration, (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price FROM programme INNER JOIN scores ON programme.id = score.id  WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) GROUP BY id HAVING something"
     # # sql = "SEEEE"
     # dict_tree = None
     # try:
@@ -385,27 +385,35 @@ def main():
 
 
 
-    sql = " SELECT program.name, scores.inspiration, \
-                    (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price \
-            FROM programme \
-            INNER JOIN scores \
-                ON programme.id = score.id \
-            WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) \
-                AND s.age = 20 \
-            GROUP BY id"
+    # sql = " SELECT program.name, scores.inspiration, \
+    #                 (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price \
+    #         FROM programme \
+    #         INNER JOIN scores \
+    #             ON programme.id = score.id \
+    #         WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) \
+    #             AND s.age = 20 \
+    #         GROUP BY id"
+    
+    # sql = "SELECT * FROM employees"
+
+    # sql = "SELECT DISTINCT department, position FROM employees"
+
+    # sql = "SELECT first_name, last_name \
+    #     FROM employees \
+    #     WHERE department = 'Sales' \
+    #     GROUP BY department \
+    #     HAVING COUNT(*) > 5 \
+    #     ORDER BY last_name \
+    #     ASC LIMIT 10"
+    
+    # sql = "SELECT * FROM employees WHERE gender = 'M' AND (salary > 50 OR salary < 50)"
 
     dict_tree = translate_query(query = sql,
                                 DEBUG=True,
                                 CLEAN=True)
     
-    if dict_tree:
-        relation = Node.organize_dictionary(dict_tree)["relation"]
-        selection =Node.organize_dictionary(dict_tree)["selection"]
-
-        rat = Node.create_relations(dict_tree, relation)
-        rat = Node.create_selection(rat, dict_tree, selection)
-        rat.PrintTree()
-    
+    rat = Node.create_tree(dict_tree)
+    rat.PrintTree()    
 
     # sql = "SELECT * FROM employees"
     # translate_query(sql, False)

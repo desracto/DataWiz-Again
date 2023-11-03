@@ -8,7 +8,6 @@ node_types_dict = {
     "aggregation": 4
 }
 
-
 class Node:
     def __init__(self, node_type="root", values="()",
                  representation="r", left=None, right=None, parent=None):
@@ -35,8 +34,20 @@ class Node:
         # Otherwise, can be added as basic nodes
         # Adds nodes bottom up
         else:
+            # need to check if values contain a sub-query
+            sub_rat = None
+            for i in range(len(node_values)):
+                # check for sub-query
+                if type(node_values[i]) is dict:
+                    sub_rat = Node.create_tree(node_values[i])
+                    # renamed
+                    if 'AS' in node_values[i].keys():
+                        node_values[i] = node_values[i]['AS']
+
             new_tree = Node(node_type, node_values, node_representation)
             new_tree.left = self
+            if sub_rat:
+                new_tree.right = sub_rat
             self.parent = new_tree
                 
     def insert_relation(self, node_type, node_values, node_representation):
@@ -55,21 +66,38 @@ class Node:
                 self.insert_cartesian(node_type, node_values, node_representation)
 
     def insert_cartesian(self, node_type, node_values, node_representation):
-        right_node = Node(node_type, node_values, node_representation)
-        # create new node as cartesian node
-        new_tree = Node("X", "()", node_types_dict.__getitem__("cross"))
-        
-        # set the parent of the current node to the new tree
-        # as it's being added upwards
-        self.parent = new_tree
-        
-        # set right node's parent to new tree
-        right_node.parent = new_tree
+        # Check if node_type is JOIN
+        # or FROM
 
-        # set the new tree's left and right accordingly
-        new_tree.left = self
-        new_tree.right = right_node
-        
+        if 'JOIN' in node_type:
+            right_node = Node('FROM', [node_values['RIGHT TABLE']], node_representation)
+            
+            # Cross node
+            new_tree = Node('INNER JOIN', node_values['ON'], node_types_dict.get('cross'))
+
+            # set right and left node's parents to new
+            # cross node
+            self.parent = new_tree
+            right_node.parent = new_tree
+
+            new_tree.left = self
+            new_tree.right = right_node
+        else:
+            right_node = Node(node_type, node_values, node_representation)
+            # create new node as cartesian node
+            new_tree = Node("X", "()", node_types_dict.__getitem__("cross"))
+            
+            # set the parent of the current node to the new tree
+            # as it's being added upwards
+            self.parent = new_tree
+            
+            # set right node's parent to new tree
+            right_node.parent = new_tree
+
+            # set the new tree's left and right accordingly
+            new_tree.left = self
+            new_tree.right = right_node
+            
 
 
     
@@ -95,18 +123,15 @@ class Node:
     #     return self
     }
 
-
-
-
-    def PrintTree(self):
+    def PrintTree(self, side="O"):
         if self.left:
-            # print("LEFT")
-            self.left.PrintTree()
-        # print("ROOT")
-        print("\\ | {} | {} {}".format(self.representation, self.type, self.values))        
-        # print("RIGHT")
+            self.left.PrintTree("/")
+        print("{} | {} | {} {}".format(side, self.representation, self.type, self.values))        
         if self.right:
-            self.right.PrintTree()
+            self.right.PrintTree("\\")
+
+    def to_dict(self):
+        pass
 
     @staticmethod
     def assign_representation(keyword) -> int:
@@ -178,7 +203,13 @@ class Node:
 
     @staticmethod
     def create_relations(stmt_dict:dict, relation_tokens:list):
+        print("RELATION NODES:", relation_tokens)
+        
         tree: Node = None
+
+        # No relation nodes
+        if len(relation_tokens) == 0:
+            return tree
         
         # loop through all relation tokens
         for key in relation_tokens:
@@ -202,19 +233,19 @@ class Node:
         for value in values:
             # [left, comparison, right]
             if not left_done:
-                print("left: ", value, type(value))
+                # print("left: ", value, type(value))
                 left = value
                 left_done = True
             
             elif not or_done:
-                print("operator", value, type(value))
+                # print("operator", value, type(value))
                 op = value
                 or_done = True
             
             else:
-                print("right:", value, type(value))
+                # print("right:", value, type(value))
                 if type(value) is dict:
-                    right = "value"
+                    right = "sub_query"
                 else:
                     right = value
                 
@@ -222,9 +253,14 @@ class Node:
         
         return left + " " + str(op) + " " + str(right)
 
-
     @staticmethod
     def create_selection(tree, stmt_dict:dict, selection_tokens:list):
+        print("SELECTION TOKENS:", selection_tokens)
+
+        # No selection nodes
+        if len(selection_tokens) == 0:
+            return tree
+
         for key in selection_tokens:
             cond = Node.create_valexpbinary(key, stmt_dict[key])
             tree.insert_node(key, cond, node_types_dict.get("selection"))
@@ -232,6 +268,28 @@ class Node:
 
         return tree
 
+    @staticmethod
+    def create_projection(tree, stmt_dict:dict, projection_tokens:list):
+        print("PROJECTION TOKENS:", projection_tokens)
+
+        if len(projection_tokens) == 0:
+            return tree
+
+        for key in projection_tokens:
+            tree.insert_node(key, stmt_dict[key], node_types_dict.get("projection"))
+            tree = Node.fix_root(tree)
+
+        return tree
+
+    @staticmethod
+    def create_aggregation(tree, stmt_dict:dict, aggregation_tokens:list):
+        print("AGGREGATION TOKENS:", aggregation_tokens)
+
+        for key in aggregation_tokens:
+            tree.insert_node(key, stmt_dict[key], node_types_dict.get("aggregation"))
+            tree = Node.fix_root(tree)
+
+        return tree
 
     @staticmethod
     def fix_root(tree):
@@ -244,3 +302,25 @@ class Node:
             tree = tree.parent
         
         return tree
+    
+    @staticmethod
+    def create_tree(stmt_dict:dict):
+        relation = Node.organize_dictionary(stmt_dict)["relation"]
+        selection =Node.organize_dictionary(stmt_dict)["selection"]
+        projection = Node.organize_dictionary(stmt_dict)["projection"]
+        aggregation = Node.organize_dictionary(stmt_dict)["aggregation"]
+
+        rat: Node = Node.create_relations(stmt_dict, relation)
+        rat: Node = Node.create_selection(rat, stmt_dict, selection)
+        rat: Node = Node.create_aggregation(rat, stmt_dict, aggregation)
+        rat: Node = Node.create_projection(rat, stmt_dict, projection)
+
+        return rat
+
+
+# Notes:
+
+# - Need to process AND nodes (``isolate_where`` can handle this)
+# - Need to identify subqueries and build a secondary tree
+# - Handle ASC nodes
+# - Create to_dict function to send to frontend
