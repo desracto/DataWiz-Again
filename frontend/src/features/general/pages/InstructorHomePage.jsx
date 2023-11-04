@@ -1,4 +1,6 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
+import axios from 'axios';
+import Cookies from "js-cookie";
 import "./InstructorHomePage.css";
 import slantingRectangle from '../../../assets/images/InstrHome-Rectangle.svg'
 import MainIcon from '../../../assets/images/InstrHome-MainIcon.svg'
@@ -9,29 +11,30 @@ import CreateQuizzIcon from '../../../assets/images/Create-Quizzes-Logo.png';
 
 
 const InstructorHomePage = () => {
-  const onExploreAnimationButtonClick = useCallback(() => {
-    // Please sync "Schema Selection Page" to the project
-  }, []);
 
-  const onTryOutQuizzesButtonClick = useCallback(() => {
+    const onExploreAnimationButtonClick = useCallback(() => {
     // Please sync "Schema Selection Page" to the project
-  }, []);
+    }, []);
 
-  const onSchemaSelectionCardClick = useCallback(() => {
+    const onTryOutQuizzesButtonClick = useCallback(() => {
     // Please sync "Schema Selection Page" to the project
-  }, []);
+    }, []);
 
-  const onCreateQuizButtonClick = useCallback(() => {
+    const onSchemaSelectionCardClick = useCallback(() => {
+    // Please sync "Schema Selection Page" to the project
+    }, []);
+
+    const onCreateQuizButtonClick = useCallback(() => {
     // Please sync "Quiz Filters Page" to the project
-  }, []);
+    }, []);
 
-  const onSavedQueryAnimationCardClick = useCallback(() => {
+    const onSavedQueryAnimationCardClick = useCallback(() => {
     // Please sync "Saved Animation Page" to the project
-  }, []);
+    }, []);
 
-  const onSavedQuizzesCardClick = useCallback(() => {
+    const onSavedQuizzesCardClick = useCallback(() => {
     // Please sync "Saved Quizzes Page" to the project
-  }, []);
+    }, []);
 
   return (
     <div className="instructor-home-page">

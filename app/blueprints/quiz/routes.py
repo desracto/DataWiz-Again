@@ -20,6 +20,7 @@ def retrieve_quizes(username):
 #         if quiz_id in quiz:
 #             return quiz
 
+# testing route
 @quiz_bp.route("/<quiz_id>/", methods=['GET'])
 def retrieve_quiz(quiz_id):
     quiz:Quiz = Quiz.query.get(quiz_id)
@@ -45,27 +46,28 @@ def create_quiz():
     if 'quiz_name' not in data or 'start_time' not in data or 'user_id' not in data:
         return bad_request('must include quiz name, start time and user id')
     
+    # Check if time is valid
+    # DO THIS
+
     # Create new response
     quiz = None
-    # try:
-    quiz:Quiz = Quiz(name=data['quiz_name'], start_time=datetime.strptime(data['start_time'], "%d/%m/%y"), userid=data['user_id'])
+    quiz:Quiz = Quiz(name=data['quiz_name'], userid=data['user_id'])
+    quiz.add_time(data['start_time'])
     
     # Check if optional fields present
-    if 'question' in data:
     # Handle the 'question' field if it's present
+    if 'question' in data:
         for problem, answer in data['question']:
             quiz_question = Quiz_QPA(problem=problem, answer=answer)
             quiz.questions.append(quiz_question)
 
+    # Handle the 'schema' field if it's present
     if 'schema' in data:
-        # Handle the 'schema' field if it's present
         quiz.schema = data['schema']
     
     db.session.add(quiz)
     db.session.commit()
-    # except:
-    #     error_response(500, 'internal server error')
-
+    
     # Create response and add quiz object
     response = jsonify(quiz.to_dict())
     response.status_code = 201
@@ -115,31 +117,28 @@ def edit_quiz_question(quiz_id, qaid):
     """
     data = request.get_json() or {}
 
-    try:
-        # Find the quiz associated with quiz_id
-        quiz = Quiz.query.get_or_404(quiz_id)
-        
-        # Find the quiz question associated with qaid
-        question = Quiz_QPA.query.get(qaid)
-        if not question:
-            return error_response(404, 'Quiz not found')
-        
-        # Check if optional fields 'problem' and 'answer' are present in the JSON request
-        if 'problem' in data:
-            # Update the problem field if it's present
-            question.problem = data['problem']
+    # Find the quiz associated with quiz_id
+    quiz = Quiz.query.get_or_404(quiz_id)
+    
+    # Find the quiz question associated with qaid
+    question = Quiz_QPA.query.get(qaid)
+    if not question:
+        return error_response(404, 'Quiz not found')
+    
+    # Check if optional fields 'problem' and 'answer' are present in the JSON request
+    if 'problem' in data:
+        # Update the problem field if it's present
+        question.problem = data['problem']
 
-        if 'answer' in data:
-            # Update the answer field if it's present
-            question.answer = data['answer']
+    if 'answer' in data:
+        # Update the answer field if it's present
+        question.answer = data['answer']
 
-        db.session.commit()
-    except:
-        error_response(500, 'internal server error')
+    db.session.commit()
 
-        # Create a response with the updated question
-        response = jsonify(question.to_dict())
-        response.status_code = 200
+    # Create a response with the updated question
+    response = jsonify(question.to_dict())
+    response.status_code = 200
 
     return response
 

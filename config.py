@@ -12,11 +12,12 @@ class Config(object):
 
     # Flask-SQLAlchemy
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir, 'app\\database\\db_files\\main.db')
+        'mysql://sql12657821:dyMDPWtEP5@sql12.freemysqlhosting.net/sql12657821'
     
     SQLALCHEMY_BINDS = {
         "prefixed": "sqlite:///" + os.path.join(basedir, "app\\database\\db_files\\prefixed_sc.db")
-    }
+        }
+    
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = False
 

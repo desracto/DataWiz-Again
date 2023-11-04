@@ -32,4 +32,5 @@ venv
 
 
 # temp files
-/temp_files
+/temp
+/dump

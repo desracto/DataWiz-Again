@@ -1,5 +1,7 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios'
+import Cookies from 'js-cookie';
 import "./LoginPage.css";
 
 // Component Imports
@@ -11,15 +13,54 @@ import GoogleLogo from '../../../assets/images/google-account-login.svg'
 import LeftArrow from '../../../assets/images/left-arrow.png';
 
 const LoginPage = () => {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  const onForgotPasswordClick = useCallback(() => {
+    // email hooks
+    const [emailFieldValue, setEmailFieldValue] = useState('')
+    const handleEmailFieldChange = (event) => {
+        setEmailFieldValue(event.target.value);
+    }
+
+    // password hooks
+    const [passwordFieldValue, setPasswordFieldValue] = useState('')
+    const handlePasswordFieldChange = (event) => {
+        setPasswordFieldValue(event.target.value)
+    }
+
+    // log in
+    const logInHandler = (event) => {
+        // console.log(emailFieldValue, passwordFieldValue)
+        const requestObject = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Server': 'Werkzeug/3.0.0 Python/3.11.5'
+            },
+            data: {
+                "email": emailFieldValue,
+                "password": passwordFieldValue
+            }
+        }
+
+        console.log("Logging in: " + emailFieldValue + " " + passwordFieldValue)
+        axios.post("http://127.0.0.1:5000/api/user/login/", requestObject.data)
+            .then(response => {
+                console.log(response.data)
+            })
+            .catch(error => {
+                console.error(error)
+            })
+
+
+        
+    }
+
+    const onForgotPasswordClick = useCallback(() => {
     navigate("/ResetPasswordPage");
-  }, [navigate]);
+    }, [navigate]);
 
-  const onRegisterButtonClick = useCallback(() => {
+    const onRegisterButtonClick = useCallback(() => {
     navigate("/SignUpPage");
-  }, [navigate]);
+    }, [navigate]);
 
   const onBackArrowContainer1Click = useCallback(() => {
     navigate("/LandingPage");
@@ -55,6 +96,8 @@ const LoginPage = () => {
                         name="Login-email"
                         placeholder="xyz@gmail.com"
                         type="email"
+                        value={emailFieldValue}
+                        onChange={handleEmailFieldChange}
                     />
                 </div>
 
@@ -67,6 +110,8 @@ const LoginPage = () => {
                         placeholder="*******"
                         name="login-password"
                         type="password"
+                        value={passwordFieldValue}
+                        onChange={handlePasswordFieldChange}
                     />
                     {/* <img
                         className="Login-HideEyeIcon"
@@ -81,8 +126,9 @@ const LoginPage = () => {
                 </div>
 
                 <button className="Login-signinButton">
-                    <div className="Login-signinButton-Text">
-                        Sign in
+                    <div className="Login-signinButton-Text"
+                         onClick={logInHandler}>
+                        Log In
                     </div>
                 </button>
                 <div className="GoogleContainer">
@@ -109,7 +155,7 @@ const LoginPage = () => {
             </div>
         </div>
     </>
-  );
+    );
 };
 
 export default LoginPage;
