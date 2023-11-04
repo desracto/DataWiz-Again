@@ -66,7 +66,6 @@ const LoginPage = () => {
                 </div>
 
                 <button className="Login-signinButton">
-                    <div className="Login-signinButton-child" />
                     <div className="Login-signinButton-Text">
                         Sign in
                     </div>
