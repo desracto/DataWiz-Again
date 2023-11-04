@@ -12,17 +12,48 @@ body{
 }
 
 .signup-card {
+    position: relative;
     display: flex;
     flex-direction: column;
     border-radius: 40px;
     background-color: #d7c8d3;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     max-width: 755px;
     width: 60%;
     height: 1050px;
     padding: 60px 120px;
-  }
+}
 
+.Return-Landing-SignUp1 {
+    top: 48px;
+    left: 40px;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    cursor: pointer;
+}
+
+.Return-Landing-SignUp-left {
+    max-width: 70%;
+    max-height: 70%;
+}
+
+.Return-Landing-SignUp-Circle2 {
+    height: 100%;
+    width: 100%;
+    border-radius:  50%;
+    background-color: #ffffff;
+    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.08);
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+}
+
+.Return-Landing-SignUp-Circle2:hover {
+    background: #fee08d;
+}
 
 .welcome-to-datawiz-container {
   font-size: 24px;
