@@ -35,6 +35,7 @@ const ResetPassword = () => {
                     <div className="group-item">
                         <img 
                             src={LeftArrow}
+                            alt=""
                             className="vuesaxlineararrow-left">
                         </img>
                     </div>
