@@ -31,12 +31,12 @@ const ResetPassword = () => {
         <Header1/>
         <div className="Reset-Password-Container">
             <div className="Reset-Password-Card">
-                <div className="back-arrow1" onClick={onBackArrowContainer1Click}>
-                    <div className="group-item">
+                <div className="Return-to-Login" onClick={onBackArrowContainer1Click}>
+                    <div className="Return-to-Login-Circle">
                         <img 
                             src={LeftArrow}
                             alt=""
-                            className="vuesaxlineararrow-left">
+                            className="arrow-left1">
                         </img>
                     </div>
                 </div>
