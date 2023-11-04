@@ -52,7 +52,7 @@ class Users(db.Model):
     
     def retrieve_quizes(self):
         return self.quizzes
-         
+        
 class Quiz(db.Model):
     # Table name
     __tablename__ = 'Quiz'
@@ -75,10 +75,16 @@ class Quiz(db.Model):
         """
             Doesn't matter how the datetime is inserted into the database, 
             it will always send it out in the following format:
-                %d/%m/%Y, %H:%M:%S -> d/m/YYYY
+                %d/%m/%Y, %H:%M:%S -> d/m/YYYY HH:MM:SS
         """
         return datetime.datetime.strftime(self.start_time, "%d/%m/%Y, %H:%M:%S")
+
+    def add_time(self, year, month, day, hour, minute, second):
+        self.start_time = datetime.datetime(year, month, day, hour, minute, second)
     
+    def add_time(self, time:str):
+        self.start_time = datetime.datetime.strptime(time, "%d/%m/%Y - %H:%M:%S")
+
     def to_dict(self):
 
         questions = list(self.questions)
@@ -95,29 +101,38 @@ class Quiz(db.Model):
 
         return data
             
+
 class Quiz_QPA(db.Model):
     # Table name
     __tablename__ = 'Quiz_QPA'
 
     # Fields
-    qaid = db.Column(db.String(32), primary_key=True, unique=True) # PK
-    problem = db.Column(db.String(400))
-    answer = db.Column(db.String(1000))
+    qaid = db.Column(db.String(32), primary_key=True, unique=True, default=get_uuid) # PK
     quiz_id = db.Column(db.String(32), db.ForeignKey('Quiz.id')) # Fk
 
+    question_number = db.Column(db.Integer)
+    problem = db.Column(db.String(400))
+    answer = db.Column(db.String(1000))
+
+
     # Relationships
+    # retrieves the associated quiz's details
     quiz = db.relationship('Quiz', back_populates='questions')
 
     # Functions
     def __repr__(self):
-        return "<Quiz_QPA | ID: {}, Quiz ID: {}>".format(self.qaid, self.quiz_id)
+        return "<Quiz_QPA | ID: {}, \
+                 Quiz ID: {}, \
+                 Question Number: {}>".format(self.qaid, self.quiz_id, self.question_number)
     
     def to_dict(self):
         data = {
             "qaid": self.qaid,
+            "question_number": self.question_number,
             "problem": self.problem,
             "answer": self.answer,
             "quiz_id": self.quiz_id
         }
 
         return data
+
