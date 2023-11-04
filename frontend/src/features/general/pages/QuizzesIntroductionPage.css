@@ -93,7 +93,7 @@
     cursor: pointer;
     border: 0;
     padding: 0;
-    background-color: var(--color-darkslateblue-100);
+    background-color: #8a5a8e;
     position: absolute;
     top: 408px;
     left: 4px;
@@ -103,7 +103,7 @@
     height: 75px;
   }
   .quizintro-create-a-quiz-button:hover {
-    background-color: var(--color-darkslateblue-400);
+    background-color: #422660;
     color: #fff;
   }
   .group-child4 {
@@ -128,8 +128,8 @@
     position: absolute;
     top: 154px;
     left: 4px;
-    font-size: var(--font-size-9xl);
-    font-family: var(--font-gilroy-regular);
+    font-size: 28px;
+    font-family: Gilroy-Regular;
     display: inline-block;
     width: 579px;
   }
@@ -182,8 +182,8 @@
   }
   .manage-all-your {
     top: 100.7px;
-    font-size: var(--font-size-9xl);
-    font-family: var(--font-gilroy-regular);
+    font-size: 28px;
+    font-family: Gilroy-Regular;
     width: 579px;
     height: 209.6px;
   }
@@ -192,9 +192,9 @@
     height: 100%;
     top: 0;
     left: calc(50% - 199.5px);
-    font-size: var(--font-size-4xl);
-    font-family: var(--font-gilroy-bold);
-    color: var(--color-black);
+    font-size:  23px;
+    font-family:  Gilroy-Bold;
+    color: #000;
     text-align: center;
     display: flex;
     align-items: center;
@@ -218,7 +218,7 @@
     height: 75px;
   }
   .quizintro-view-quizzes-button:hover {
-    background-color: var(--color-darkslateblue-400);
+    background-color: #422660;
     color: #fff;
   }
   .group-div {
@@ -258,8 +258,8 @@
     height: 3388px;
     overflow: hidden;
     text-align: left;
-    font-size: var(--font-size-36xl);
-    color: var(--color-black);
-    font-family: var(--font-gilroy-bold);
+    font-size: 55px;
+    color: #000;
+    font-family:  Gilroy-Bold;
   }
   
