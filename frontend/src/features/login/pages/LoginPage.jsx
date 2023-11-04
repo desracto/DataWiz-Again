@@ -10,6 +10,7 @@ import Header1 from '../../../global_components/Header1';
 // Images Imports
 import HiddenEye  from '../../../assets/images/clarityeyehideline.svg'
 import GoogleLogo from '../../../assets/images/google-account-login.svg'
+import LeftArrow from '../../../assets/images/left-arrow.png';
 
 const LoginPage = () => {
     const navigate = useNavigate();
@@ -61,11 +62,25 @@ const LoginPage = () => {
     navigate("/SignUpPage");
     }, [navigate]);
 
-    return (
+  const onBackArrowContainer1Click = useCallback(() => {
+    navigate("/LandingPage");
+  }, [navigate]);
+
+  return (
     <>
         <Header1/>
         <div className="login-card-container">
             <div className="login-card-item">
+                <div className="Return-Landing-Login1" onClick={onBackArrowContainer1Click}>
+                    <div className="Return-Landing-Login-Circle">
+                        <img 
+                            src={LeftArrow}
+                            alt=""
+                            className="Return-Landing-Login-left">
+                        </img>
+                    </div>
+                </div>
+
                 <div className="welcome-back-to">
                     Welcome back to DataWiz.
                 </div>

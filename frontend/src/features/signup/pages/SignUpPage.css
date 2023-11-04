@@ -1,238 +1,86 @@
-body {
-  margin: 0;
-  line-height: normal;
+body{
+  background-color: white;
 }
 
-* {
-  box-sizing: border-box;
+.signup-container{
+  margin: 150px auto 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
 }
-.signup-card-child {
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: 40px;
-  background-color: #d7c8d3;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  width: 755px;
-  height: 1122px;
+
+.signup-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: 40px;
+    background-color: #d7c8d3;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    max-width: 755px;
+    width: 60%;
+    height: 1050px;
+    padding: 60px 120px;
 }
-.span {
-  font-family: Gilroy-Regular;
+
+.Return-Landing-SignUp1 {
+    top: 48px;
+    left: 40px;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    cursor: pointer;
 }
-.data {
+
+.Return-Landing-SignUp-left {
+    max-width: 70%;
+    max-height: 70%;
+}
+
+.Return-Landing-SignUp-Circle2 {
+    height: 100%;
+    width: 100%;
+    border-radius:  50%;
+    background-color: #ffffff;
+    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.08);
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+}
+
+.Return-Landing-SignUp-Circle2:hover {
+    background: #fee08d;
+}
+
+.welcome-to-datawiz-container {
+  font-size: 24px;
+  font-family: Gilroy-SemiBold;
+}
+
+.data{
   font-family: Gilroy-Black;
 }
-.welcome-to-datawiz-container {
-  position: absolute;
-  top: 71px;
-  left: 128px;
-  font-size: 24px;
-}
-.already-have-an {
-  position: absolute;
-  top: calc(50% - 8.5px);
-  left: calc(50% - 107px);
-}
-.text-button {
-  position: absolute;
-  top: 0;
-  left: 0;
 
-}
-.text-button:hover {
-  text-decoration: underline;
-}
-
-.register-button,
-.text-button:hover {
+.signup1 {
+  margin-top: 20px;
+  font-size: 38px;
   font-family: Gilroy-Bold;
 }
-.register-button {
-  cursor: pointer;
-  text-decoration: none;
-  position: absolute;
-  top: 0;
-  left: 175px;
-  width: 39px;
-  height: 17px;
-  color: #5c5959;
-}
-.already-have-an-account-parent {
-  position: absolute;
-  top: calc(50% + 472px);
-  left: calc(50% - 107.5px);
-  width: 214px;
-  height: 17px;
-  cursor: pointer;
-}
-.or-continue-with {
-  position: absolute;
-  top: calc(50% + 365px);
-  left: calc(50% - 52.5px);
-}
-.google-account-login {
-  position: absolute;
-  top: calc(50% + 385px);
-  left: calc(50% - 79.5px);
-  width: 158px;
-  height: 58px;
-}
-.signin-button-child {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  border-radius: 10px;
-  background-color: #8a5a8e;
-}
-.signin-button-child:hover {
-  background-color: #422660;
-}
-.button-text {
-  position: absolute;
-  top: 24%;
-  left: 43.4%;
-  font-size: 20px;
-  font-family: Gilroy-Bold;
-  color: #fff;
-  text-align: center;
-}
-.signin-button {
-  cursor: pointer;
-  border: 0;
-  padding: 0;
-  background-color: transparent;
-  position: absolute;
-  top: 831px;
-  left: calc(50% - 250.5px);
-  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1);
-  width: 500px;
-  height: 50px;
-}
-.account-type {
-  position: absolute;
-  top: 0;
-  left: 0;
+
+.signup-info {
+  max-width: 502px;
+  width:100%;
+  height: 657px;
   font-size: 18px;
 }
-.checkbox {
-  cursor: pointer;
-  position: absolute;
-  top: 50px;
-  left: 0;
-  width: 21px;
-  height: 21px;
-  background-color: #D7C8D3;
-}
-.instructor,
-.learner {
-  position: absolute;
-  top: calc(50% - 7px);
-  left: calc(50% - 11px);
-}
-.instructor {
-  top: calc(50% + 40px);
-}
-.checkbox1 {
-  cursor: pointer;
-  position: absolute;
-  top: 97px;
-  left: 0;
-  width: 21px;
-  height: 21px;
-  background-color: #D7C8D3;
-}
-.account-type-parent {
-  position: absolute;
-  top: 539px;
-  left: 2px;
-  width: 114px;
-  height: 118px;
-  font-size: 13px;
-}
-.radio-button,
-.radio-button1 {
-  cursor: auto;
-  position: absolute;
-  top: 50px;
-  left: 0;
-  background-color: #D7C8D3;
-  width: 20px;
-  height: 20px;
-}
-.radio-button1 {
-  cursor: pointer;
-  top: 97px;
-}
-.female,
-.male {
-  position: absolute;
-  top: calc(50% - 6.5px);
-  left: calc(50% + 0.5px);
-}
-.male {
-  top: calc(50% + 40.5px);
-}
-.gender-parent {
-  position: absolute;
-  top: 539px;
-  left: 227px;
-  width: 91px;
-  height: 117px;
-  font-size: 13px;
-}
-.input-label {
-  position: relative;
-}
-.textbox {
-  border: 0;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.08);
-  width: 500px;
-  height: 50px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 10px 20px;
-  box-sizing: border-box;
-}
 
-.textbox1:focus,
-.textbox:focus {
-  outline: none !important;
-  border: 2px solid #8A5A8E;
-}
-.passwordfield {
-  position: absolute;
-  top: 422px;
-  left: 2px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 10px;
-}
-.clarityeye-hide-line-icon {
-  position: absolute;
-  top: calc(50% + 141.5px);
-  left: calc(50% + 215px);
-  border-radius: 40px;
-  width: 16px;
-  height: 16px;
-  overflow: hidden;
-}
-.emailfield,
-.inputfield,
-.textbox1,
-.usernamefield {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+.input-label{
+  font-family: Gilroy-SemiBold;
+  font-size: 18px;
+  margin-top: 25px;
 }
 .textbox1 {
   border: 0;
@@ -241,60 +89,110 @@ body {
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 8px 8px rgba(0, 0, 0, 0.08);
-  width: 500px;
+  max-width: 500px;
+  width:100%;
   height: 50px;
   justify-content: center;
   padding: 10px 20px;
   box-sizing: border-box;
+  margin-top:10px;
 }
-.emailfield,
-.inputfield,
-.usernamefield {
-  position: absolute;
-  top: 305px;
-  left: 2px;
-  justify-content: flex-start;
-  gap: 10px;
+
+.textbox1:focus,.textbox1:hover {
+  outline: none !important;
+  border: 2px solid #8A5A8E;
 }
-.inputfield,
-.usernamefield {
-  top: 188px;
+
+.checkbox-pair{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 25px;
+
 }
-.inputfield {
-  top: 71px;
-}
-.signup1 {
-  position: absolute;
-  top: calc(50% - 328.5px);
-  left: calc(50% - 251px);
-  font-size: 38px;
-  font-family: Gilroy-Bold;
-}
-.signup-info {
-  position: absolute;
-  top: 125px;
-  left: 126px;
-  width: 502px;
-  height: 657px;
-  font-size: 18px;
-}
-.signup-card {
-  position: absolute;
-  top: 189px;
-  left: 486px;
-  width: 755px;
-  height: 1122px;
-}
-.signup {
-  position: relative;
-  background-color: #fff;
-  width: 100%;
-  height: 1421px;
-  overflow: hidden;
-  text-align: left;
-  font-size: 14px;
-  color: #000;
+
+
+.input-label2{
   font-family: Gilroy-SemiBold;
+  font-size: 18px;
+  margin-top: 25px;
+  margin-right: 18vh;
 }
 
+.checkbox-group1{
+  display: flex;
+  flex-direction: column;
+  margin-right: 18vh;
+}
+.checkbox-group2{
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+}
 
+.checkbox {
+  width: 21px;
+  height: 21px;
+  background-color: #D7C8D3;
+  margin-right: 20px;
+}
+
+.checkbox-label{
+font-family: Gilroy-SemiBold;
+font-size: 13px;
+}
+
+.signin-button {
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width:100%;
+  height: 50px;
+  border-radius: 10px;
+  background-color: #8a5a8e;
+}
+
+.signin-button:hover {
+  background-color: #422660;
+}
+
+.button-text {
+  font-size: 20px;
+  font-family: Gilroy-Bold;
+  color: #fff;
+  text-align: center;
+  font-style: normal;
+}
+
+.or-continue-with {
+  font-family: Gilroy-SemiBold;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 45px;
+}
+
+.google-account-login {
+  max-width: 158px;
+  width:100%;
+  height: auto;
+  display: flex;
+  margin:auto;
+}
+
+.already-have-an {
+  font-family: Gilroy-SemiBold;
+  font-size: 14px;
+  text-align: center;
+  margin: 37px auto ;
+}
+
+.text-button {
+  font-family: Gilroy-Bold;
+  color: #5c5959;
+  text-decoration: none;
+}
+.text-button:hover {
+  text-decoration: underline;
+}

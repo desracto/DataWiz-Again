@@ -9,6 +9,7 @@ import LoginPage from './features/login/pages/LoginPage';
 import ResetPassword from './features/login/pages/ResetPasswordPage';
 import InstructorHomePage from './features/general/pages/InstructorHomePage';
 import QuizzesIntroductionPage from './features/general/pages/QuizzesIntroductionPage';
+import AnimationIntroductionPage from './features/general/pages/AnimationIntroductionPage';
  
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/ResetPasswordPage" element={<ResetPassword />} /> {/* To make sure this path is also valid, without the root path*/}
           <Route path="/InstructorHomePage" element={<InstructorHomePage />} /> {/* To make sure this path is also valid, without the root path*/}
           <Route path="/QuizzesIntroductionPage" element={<QuizzesIntroductionPage />} /> {/* To make sure this path is also valid, without the root path*/}
+          <Route path="/AnimationIntroductionPage" element={<AnimationIntroductionPage />} /> {/* To make sure this path is also valid, without the root path*/}
         </Routes>
       </BrowserRouter>
     </div>

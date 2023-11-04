@@ -1,7 +1,7 @@
 from sqlparse import parse
 from sqlparse.sql import Identifier, Function
-from tree.tree import Node
-from tree.select_parser import select_stmt, Optional
+from .tree.tree import Node
+from .tree.select_parser import select_stmt, Optional
 from pyparsing.exceptions import ParseException
 
 # For debug purposes
@@ -154,9 +154,6 @@ def process_join(stmt_dict: dict):
             join_type = key
             found = True
     
-    if not found:
-        raise Exception("No Join Found")
-
     # Join found, process into one node
     join_values = stmt_dict[join_type]
     on_values = stmt_dict['ON'][0].tokens
@@ -374,20 +371,44 @@ def translate_query(query: str, DEBUG=True, CLEAN=False):
     return stmt_dict
 
 def main():
-    sql = "SELECT program.name, scores.inspiration, (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price FROM programme, table INNER JOIN scores ON programme.id = score.id  WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) GROUP BY id HAVING something"
-    # sql = "SEEEE"
-    dict_tree = None
-    try:
-        dict_tree = translate_query(sql, False, True)
-    except ParseException as pe:
-        print(pe)
+    # sql = "SELECT program.name, scores.inspiration, (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price FROM programme INNER JOIN scores ON programme.id = score.id  WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) GROUP BY id HAVING something"
+    # # sql = "SEEEE"
+    # dict_tree = None
+    # try:
+    #     dict_tree = translate_query(query = sql, 
+    #                                 DEBUG = False, 
+    #                                 CLEAN = True)
+    # except ParseException as pe:
+    #     print(pe)
 
+    # if dict_tree:
+    #     rat = Node().insert_dictionary(Node.organize_dictionary(dict_tree))
+    #     rat.PrintTree()
+    
+    # # pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(
+    # #     Node.organize_dictionary(dict_tree)
+    # # )
+
+
+
+    sql = " SELECT program.name, scores.inspiration, \
+                    (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price \
+            FROM programme \
+            INNER JOIN scores \
+                ON programme.id = score.id \
+            WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) GROUP BY id"
+
+    dict_tree = translate_query(query = sql,
+                                DEBUG=True,
+                                CLEAN=True)
+    
     if dict_tree:
-        rat = Node().insert_dictionary(dict_tree)
+        relation = Node.organize_dictionary(dict_tree)
+        print(relation)
+
+        rat = Node.create_relations(dict_tree, relation)
         rat.PrintTree()
-
-
-
+    
 
     # sql = "SELECT * FROM employees"
     # translate_query(sql, False)
@@ -410,6 +431,20 @@ def main():
     # sql = "SELECT DISTINCT department, position FROM employees"
     # translate_query(sql, True)
 
+    sql = "SELECT employees.employee_id, \
+            FROM employees \
+            RIGHT JOIN departments \
+                ON employees.department_id = departments.department_id \
+            where employees.employee_id = 100"
+
+    sql = "SELECT first_name, last_name \
+            FROM employees \
+            WHERE department = 'Sales' \
+            GROUP BY department \
+            HAVING COUNT(*) > 5 \
+            ORDER BY last_name \
+            ASC LIMIT 10"
+    # dict_tree = translate_query(sql, True, True)
     
 
 

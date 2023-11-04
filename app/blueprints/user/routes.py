@@ -1,9 +1,10 @@
 from ..user import user_bp
 from flask import request, jsonify, url_for
-from flask_jwt_extended import create_access_token, jwt_required, set_access_cookies, unset_jwt_cookies
+from flask_jwt_extended import create_access_token, jwt_required, set_access_cookies, unset_jwt_cookies, current_user
 
 from ..main.errors import bad_request, error_response
 from ...extensions import db
+from flask_cors import cross_origin
 from ...models import Users
 
 from flask import Response
@@ -15,15 +16,11 @@ def set_cookies(response: Response, data: dict, access_tokens):
             id: username
             expires: expiration time
     """
-    # JWT Tokens
-    set_access_cookies(response, access_tokens)
-    
-    # Logged in
-    response.set_cookie(
-        'logged_in',
-        value='yes'
-    )
+    domain='http://localhost:3000/'
 
+    # JWT Tokens
+    set_access_cookies(response, access_tokens, domain=domain)
+    
 def unset_cookies(response: Response):
     """
         Unsets cookies from client side
@@ -31,12 +28,6 @@ def unset_cookies(response: Response):
     # JWT Tokens
     unset_jwt_cookies(response)
 
-    # Logged in
-    response.set_cookie(
-        'logged_in',
-        value='no',
-        expires=0
-    )
 
 @user_bp.route('/', methods=['POST'])
 def register_user():
@@ -81,17 +72,18 @@ def register_user():
     return response
 
 @user_bp.route('/login/', methods=['POST'])
+@cross_origin()
 def login():
     """
         Retrieves a JSON object in the form:\n
         {
-            [REQUIRED] "username": value,\n
+            [REQUIRED] "email": value,\n
             [REQUIRED] "password": value
         }
 
         Error handling checks if the required fields are present and if the user exists.
         If the user exists and password is correct, create a JWT Access Token and bind current user 
-        to the username. This stores the username in the ``current_user`` variable
+        to the email. This stores the email in the ``current_user`` variable
 
         After that, it modifies the response object to set the access token & CSRF token as cookies
         and returns the response object to the client.
@@ -100,21 +92,21 @@ def login():
     """
     data = request.get_json() or {}
 
-    if 'username' not in data or 'password' not in data:
-        return bad_request('must include username and password')
+    if 'email' not in data or 'password' not in data:
+        return bad_request('must include email and password')
 
-    # Check if user present in database using username
+    # Check if user present in database using email
     try:
-        user:Users = Users.query.filter_by(username=data['username']).first()
-    except:
-        return error_response(500, 'internal server error')
+        user:Users = Users.query.filter_by(email=data['email']).first()
+    except Exception as e:
+        return error_response(500, 'internal server error' + e)
 
     # If user present and password match, login user
     if user and user.check_password(data['password']):
         response = jsonify({"message": "login successful"})
 
-        # Sets the ID as username
-        access_token = create_access_token(identity=data['username'])
+        # Sets the ID as email
+        access_token = create_access_token(identity=user)
         
         # Modify response object
         set_cookies(response, data, access_token)
@@ -139,11 +131,14 @@ def get_user(username:str):
         Returns requested user as JSON object if user found or
         returns 404 code if user doesn't exist. 
     """
-    user:Users = Users.query.filter_by(username=username).first()
-    if user:
-        return user.to_dict()
-    else:
-        return error_response(404, 'user not found')
+    # user:Users = Users.query.filter_by(username=username).first()
+    # if user:
+    #     return user.to_dict()
+    # else:
+    #     return error_response(404, 'user not found')
+
+
+
 
 @user_bp.route('/id/<username>/', methods=['PUT'])
 @jwt_required()

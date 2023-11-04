@@ -12,6 +12,8 @@ import { EffectCoverflow, Pagination, Navigation } from 'swiper/modules';
 import CreateQuizzesLogoImage from '../../../assets/images/Create-Quizzes-Logo.png';
 import AutoGradingLogoImage from '../../../assets/images/Auto-grading_Icon.png';
 import SavedQuizzesLogoImage from '../../../assets/images/Saved-Quizzes.png';
+import LeftArrow from '../../../assets/images/left-arrow.png';
+import RightArrow from '../../../assets/images/right-arrow.png';
 
 import  './ICarousel.css';
 
@@ -99,10 +101,18 @@ function ICarousel() {
 
         <div className="slider-controler">
           <div className="swiper-button-prev slider-arrow">
-            <ion-icon name="arrow-back-outline"></ion-icon>
+            <img 
+                src={LeftArrow}
+                alt=""
+                className="Move-left">
+            </img>
           </div>
           <div className="swiper-button-next slider-arrow">
-            <ion-icon name="arrow-forward-outline"></ion-icon>
+            <img 
+                src={RightArrow}
+                alt=""
+                className="Move-right">
+            </img>
           </div>
           <div className="swiper-pagination"></div>
         </div>

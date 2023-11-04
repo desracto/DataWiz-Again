@@ -148,8 +148,18 @@ body {
   color: #222224;
 }
 
-.slider-controler .slider-arrow::after {
+/* .slider-controler .slider-arrow::after {
   content: '';
+} */
+
+.Move-left {
+    max-width: 65%;
+    max-height: 65%;
+}
+
+.Move-right {
+    max-width: 60%;
+    max-height: 60%;
 }
 
 .swiper-pagination {

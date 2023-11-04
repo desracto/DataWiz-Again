@@ -1,0 +1,271 @@
+.animation-introduction-page-child {
+    position: absolute;
+    top: -2px;
+    left: 0;
+    background-color: #fff;
+    width: 1729px;
+    height: 1130px;
+  }
+  .animation-introduction-page-item {
+    position: absolute;
+    top: 0;
+    left: 1331.7px;
+    width: 396.3px;
+    height: 1028.3px;
+  }
+  .animation-introduction-page-inner {
+    position: absolute;
+    top: 688.4px;
+    left: 1174.9px;
+    width: 553.1px;
+    height: 1534.5px;
+  }
+  .animation-introduction-page-child1 {
+    position: absolute;
+    top: 1194px;
+    left: 0;
+    width: 911px;
+    height: 1000px;
+  }
+  .schema-selection-section-child {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 57, 142, 0.15);
+    filter: blur(80px);
+    backdrop-filter: blur(40px);
+    width: 1729px;
+    height: 1171px;
+  }
+  .image-removebg-1-icon {
+    position: absolute;
+    top: 278px;
+    left: 944px;
+    width: 524px;
+    height: 583px;
+    object-fit: cover;
+  }
+  .animintro-schema-and-anim-butt-child {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 10px;
+  }
+  .check-out-schemas {
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: calc(50% - 199.5px);
+    font-size: 23px;
+    font-family: Gilroy-Bold;
+    color: #fff;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 400px;
+  }
+  .check-out-schemas:hover {
+    color: #fff;
+  }
+  .animintro-schema-and-anim-butt {
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    background-color: #f03ca6;
+    position: absolute;
+    top: 460px;
+    left: 0;
+    border-radius: 10px;
+    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1);
+    width: 555px;
+    height: 75px;
+  }
+  .animintro-saved-queries-button:hover,
+  .animintro-schema-and-anim-butt:hover {
+    background-color: #422660;
+    color: #fff;
+  }
+  .group-item {
+    position: absolute;
+    top: 112px;
+    left: 93px;
+    width: 435px;
+    height: 21.1px;
+  }
+  .schema-selection {
+    margin: 0;
+  }
+  .explore-the-intricate,
+  .schema-selection-for-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .explore-the-intricate {
+    top: 166px;
+    font-size: 28px;
+    font-family: Gilroy-Regular;
+    display: inline-block;
+    width: 579px;
+  }
+  .animintro-schema-and-anim-butt-parent,
+  .schema-selection-section-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 579px;
+    height: 535px;
+  }
+  .schema-selection-section-inner {
+    top: 344px;
+    left: 259px;
+  }
+  .ellipse-div,
+  .schema-selection-section {
+    position: absolute;
+    top: 1130px;
+    left: 0;
+    width: 1729px;
+    height: 1171px;
+  }
+  .ellipse-div {
+    top: 2818px;
+    left: -267px;
+    border-radius: 50%;
+    background-color: rgba(157, 161, 236, 0.8);
+    width: 1000px;
+    height: 1000px;
+  }
+  .saved-query-animation-section-child {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(202, 205, 249, 0.5);
+    filter: blur(80px);
+    backdrop-filter: blur(40px);
+    width: 1729px;
+    height: 1171px;
+  }
+  .saved-query-animation-section-item {
+    position: absolute;
+    top: 427.1px;
+    left: 916px;
+    width: 342.1px;
+    height: 21px;
+  }
+  .never-lose-your2,
+  .saved-query-animations-container {
+    position: absolute;
+    top: 0;
+    left: calc(50% - 289.5px);
+  }
+  .never-lose-your2 {
+    top: 166px;
+    font-size: 28px;
+    font-family: Gilroy-Regular;
+    display: inline-block;
+    width: 579px;
+  }
+  .animintro-saved-queries-button {
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    background-color: #5047e3;
+    position: absolute;
+    top: 420px;
+    left: 0;
+    border-radius: 10px;
+    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1);
+    width: 555px;
+    height: 75px;
+  }
+  .saved-query-animations-parent {
+    position: absolute;
+    top: 378px;
+    left: calc(50% + 55.5px);
+    width: 579px;
+    height: 495px;
+  }
+  .image-removebg-preview-3-1 {
+    position: absolute;
+    top: 381px;
+    left: 243px;
+    width: 490px;
+    height: 513px;
+    object-fit: cover;
+  }
+  .group-inner,
+  .saved-query-animation-section {
+    position: absolute;
+    top: 2217px;
+    left: 0;
+    width: 1729px;
+    height: 1171px;
+  }
+  .group-inner {
+    top: 0;
+    background-color: rgba(255, 255, 255, 0.15);
+    filter: blur(80px);
+    backdrop-filter: blur(40px);
+    height: 863px;
+  }
+  .group-child1 {
+    position: absolute;
+    top: 44px;
+    left: 0;
+    width: 347.6px;
+    height: 20.9px;
+  }
+  .uncover-sql-magic,
+  .watch-queries-come {
+    position: absolute;
+    top: 0;
+    left: 4.2px;
+    display: inline-block;
+    width: 479.8px;
+  }
+  .watch-queries-come {
+    top: 166px;
+    font-size: 30px;
+    font-family: Gilroy-Regular;
+    width: 448.3px;
+  }
+  .vector-parent {
+    position: absolute;
+    top: 228px;
+    left: 1124px;
+    width: 484px;
+    height: 238px;
+  }
+  .image-removebg-preview-4-1 {
+    position: absolute;
+    top: 164px;
+    left: 233px;
+    width: 720px;
+    height: 447px;
+    object-fit: cover;
+  }
+  .rectangle-group {
+    position: absolute;
+    top: 295px;
+    left: 0;
+    width: 1729px;
+    height: 863px;
+  }
+  .animation-introduction-page {
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    height: 3388px;
+    overflow: hidden;
+    text-align: left;
+    font-size:  55px;
+    color: #000;
+    font-family: Gilroy-Bold;
+  }
+  
