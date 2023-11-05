@@ -24,13 +24,50 @@ import NihalImage from '../../../assets/images/NihalChar.png';
 
 
 function LandingPage() {
+  return (
+    <>
+    <div className='HeaderTop'>
+        <Header1 />
+    </div>
+{/* ----------------------Introduction----------------------- */}
 
-    return (
-        <>
-        <div className='HeaderTop'>
-            <Header1 />
+        <div className="IntroCard">
+
+            <div className='IntroSection1Container'>
+                <div className="UnleashThePowerOfSqlLearning">Unleash the<br />power of SQL Learning</div>
+                    <div className="Description">
+                    DataWiz is your gateway to mastering SQL effortlessly. Whether you're a curious learner or an educator looking for efficient teaching tools, DataWiz has something for everyone. Explore the world of interactive query animation and auto-grading quizzes for an engaging learning experience.
+                </div>
+
+                <div className="SignupAndLoginButtons">
+                    <Link to="/LoginPage" className="LoginButton">
+                    <div className="ButtonText">Login</div>
+                    </Link>
+
+                    <Link to="/SignUpPage" className="SignUpButton">
+                    <div className="ButtonText">Sign Up</div>
+                    </Link>
+                </div>
+
+                <div className="Ellipse1">
+                    <img
+                        src={dataWizLogoImage}
+                        alt="DataWiz."
+                        className="LogoImage"
+                    />
+                </div>
+            </div>
+
         </div>
-        {/* ----------------------Introduction----------------------- */}
+        <div className="TopFeaturesContainer">
+            <div className="LFeatures">
+                Features.
+            </div>
+            <div className="ForLearners">
+                For Learners.
+            </div>
+        </div>
+{/* ----------------------Features--------------------------- */}
 
             <div className="IntroCard">
 
