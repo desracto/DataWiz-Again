@@ -42,16 +42,17 @@ const LoginPage = () => {
         // DEBUGGING PRINT - DELETE
         console.log("Logging in: " + emailFieldValue + " " + passwordFieldValue)
         request({
-            url: "/api/user/login/",
+            url: "api/user/login/",
             method: "post",
             data: {
                 "email": emailFieldValue,
                 "password": passwordFieldValue
             }
         }).then(response => {
-            console.log(response)
+            // console.log(response)
+            const user_details = response.data.user
 
-            navigate("/InstructorHomePage")
+            navigate("/InstructorHomePage", { state: user_details })
             
         }).catch(error => {
             console.error(error.response)

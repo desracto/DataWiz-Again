@@ -3,17 +3,12 @@
 
 from flask import Flask
 from config import Config
-from .extensions import db, migrate, jwt, cors
+from .extensions import register_app
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
-
-    # extensions
-    db.init_app(app)
-    migrate.init_app(app, db, app.config["MIGRATION_DIR"])
-    jwt.init_app(app)
-    cors.init_app(app, supports_credentials=True)
+    register_app(app)
     
     # Main blueprint
     from app.blueprints.main import main_bp

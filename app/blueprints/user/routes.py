@@ -1,25 +1,28 @@
 from ..user import user_bp
 from flask import request, jsonify, url_for
-from flask_jwt_extended import create_access_token, jwt_required, set_access_cookies, unset_jwt_cookies, current_user
+from flask_jwt_extended import create_access_token, create_refresh_token, \
+                               jwt_required, \
+                               set_access_cookies, unset_jwt_cookies, set_refresh_cookies, \
+                               get_jwt_identity
 
 from ..main.errors import bad_request, error_response
 from ...extensions import db
 from flask_cors import cross_origin
 from ...models import Users
 
-from flask import Response
+from flask import Response, current_app
+import logging
 
-def set_cookies(response: Response, data: dict, access_tokens):
+def set_cookies(response: Response, access_token, refresh_token):
     """
         Modifies provided response object to set cookies on client side
         cookies set:
             id: username
             expires: expiration time
     """
-    domain='http://localhost:3000/'
-
     # JWT Tokens
-    set_access_cookies(response, access_tokens, domain=domain)
+    set_access_cookies(response, access_token)
+    set_refresh_cookies(response, refresh_token)
     
 def unset_cookies(response: Response):
     """
@@ -72,7 +75,6 @@ def register_user():
     return response
 
 @user_bp.route('/login/', methods=['POST'])
-@cross_origin()
 def login():
     """
         Retrieves a JSON object in the form:\n
@@ -90,6 +92,10 @@ def login():
 
         If the credentials are invalid, return 401 code for invalid credentials.
     """
+    # current_app.logger.info(
+    #     msg="Login Function called with: " + str(request.get_json())
+    # )
+
     data = request.get_json() or {}
 
     if 'email' not in data or 'password' not in data:
@@ -98,18 +104,28 @@ def login():
     # Check if user present in database using email
     try:
         user:Users = Users.query.filter_by(email=data['email']).first()
-    except Exception as e:
-        return error_response(500, 'internal server error' + e)
+        
+        # User not found
+        if not user:
+            return error_response(404, 'incorrect email/password')
+        
+    except:
+        return error_response(500, 'internal server error')
 
     # If user present and password match, login user
     if user and user.check_password(data['password']):
-        response = jsonify({"message": "login successful"})
-
         # Sets the ID as email
-        access_token = create_access_token(identity=user)
-        
-        # Modify response object
-        set_cookies(response, data, access_token)
+        access_token = create_access_token(identity=data["email"])
+        refresh_token = create_refresh_token(identity=data["email"])
+
+        response = jsonify({
+            "message": "login successful",
+            "user": user.to_dict()
+        })
+
+        # Modify response object for cookies
+        set_cookies(response, access_token, refresh_token)
+
         return response
     else:
         return error_response(401, 'invalid credentials')
@@ -117,6 +133,7 @@ def login():
 @user_bp.route('/logout/', methods=['POST'])
 @jwt_required()
 def logout():
+
     """
         logout function unsets the JWT and CSRF tokens from the client's cookies, thus logging them out of the server
     """
@@ -124,21 +141,16 @@ def logout():
     unset_cookies(response)
     return response
 
-@user_bp.route('/id/<username>/', methods=['GET'])
+@user_bp.route('/load_user', methods=['GET'])
 @jwt_required()
-def get_user(username:str):
+def get_user():
     """
         Returns requested user as JSON object if user found or
         returns 404 code if user doesn't exist. 
     """
-    # user:Users = Users.query.filter_by(username=username).first()
-    # if user:
-    #     return user.to_dict()
-    # else:
-    #     return error_response(404, 'user not found')
-
-
-
+    current_user = get_jwt_identity()
+    user: Users = Users.query.filter_by(email=current_user).first_or_404()
+    return jsonify(user.to_dict())
 
 @user_bp.route('/id/<username>/', methods=['PUT'])
 @jwt_required()
