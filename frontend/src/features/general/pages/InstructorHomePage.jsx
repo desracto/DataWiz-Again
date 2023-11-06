@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import axios from 'axios';
-import Cookies from "js-cookie";
 import "./InstructorHomePage.css";
 import slantingRectangle from '../../../assets/images/InstrHome-Rectangle.svg'
 import MainIcon from '../../../assets/images/InstrHome-MainIcon.svg'
@@ -9,8 +9,30 @@ import SavedAnimationIcon from '../../../assets/images/Saved-Animations.png';
 import SavedQuizzesIcon from '../../../assets/images/Saved-Quizzes.png';
 import CreateQuizzIcon from '../../../assets/images/Create-Quizzes-Logo.png';
 
-
+const request = axios.create({
+    baseURL: "http://localhost:5000",
+    headers: {
+        "Content-Type" : "application/json"
+    },
+    withCredentials: true,
+    timeout: 300000
+})
 const InstructorHomePage = () => {
+    const location = useLocation()
+    console.log(location)
+
+    // useEffect(() => {
+    //     request({
+    //         url: "/api/user/load_user",
+    //         method: "get"
+    //     }).then(response => {
+    //         const user_details = response.data
+    //         console.log(user_details)
+
+    //     }).catch(error => {
+    //         console.error(error)
+    //     })
+    // }, [])
 
     const onExploreAnimationButtonClick = useCallback(() => {
     // Please sync "Schema Selection Page" to the project

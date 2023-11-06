@@ -12,6 +12,16 @@ import HiddenEye  from '../../../assets/images/clarityeyehideline.svg'
 import GoogleLogo from '../../../assets/images/google-account-login.svg'
 import LeftArrow from '../../../assets/images/left-arrow.png';
 
+
+const request = axios.create({
+    baseURL: "http://localhost:5000",
+    headers: {
+        "Content-Type" : "application/json"
+    },
+    withCredentials: true,
+    timeout: 300000
+})
+
 const LoginPage = () => {
     const navigate = useNavigate();
 
@@ -29,18 +39,20 @@ const LoginPage = () => {
 
     // log in
     const logInHandler = (event) => {
-        // console.log(emailFieldValue, passwordFieldValue)
-        const requestObject = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Server': 'Werkzeug/3.0.0 Python/3.11.5'
-            },
+        // DEBUGGING PRINT - DELETE
+        console.log("Logging in: " + emailFieldValue + " " + passwordFieldValue)
+        request({
+            url: "api/user/login/",
+            method: "post",
             data: {
                 "email": emailFieldValue,
                 "password": passwordFieldValue
             }
-        }
+        }).then(response => {
+            // console.log(response)
+            const user_details = response.data.user
 
+<<<<<<< HEAD
         console.log("Logging in: " + emailFieldValue + " " + passwordFieldValue)
         axios.post("http://127.0.0.1:5000/api/user/login/", requestObject.data)
             .then(response => {
@@ -49,6 +61,14 @@ const LoginPage = () => {
             .catch(error => {
                 console.error(error)
             }) 
+=======
+            navigate("/InstructorHomePage", { state: user_details })
+            
+        }).catch(error => {
+            console.error(error.response)
+        })
+    
+>>>>>>> d4bebf27aee61b3e1265ef95156dbdeda2bf5610
     }
 
     const onForgotPasswordClick = useCallback(() => {
