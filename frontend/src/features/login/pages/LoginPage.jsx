@@ -48,10 +48,7 @@ const LoginPage = () => {
             })
             .catch(error => {
                 console.error(error)
-            })
-
-
-        
+            }) 
     }
 
     const onForgotPasswordClick = useCallback(() => {
