@@ -50,25 +50,14 @@ const LoginPage = () => {
             }
         }).then(response => {
             // console.log(response)
-            const user_details = response.data.user
+            const user_details = response.data.user;
 
-<<<<<<< HEAD
-        console.log("Logging in: " + emailFieldValue + " " + passwordFieldValue)
-        axios.post("http://127.0.0.1:5000/api/user/login/", requestObject.data)
-            .then(response => {
-                console.log(response.data)
-            })
-            .catch(error => {
-                console.error(error)
-            }) 
-=======
-            navigate("/InstructorHomePage", { state: user_details })
+            navigate("/InstructorHomePage", { state: user_details });
             
         }).catch(error => {
             console.error(error.response)
         })
     
->>>>>>> d4bebf27aee61b3e1265ef95156dbdeda2bf5610
     }
 
     const onForgotPasswordClick = useCallback(() => {
