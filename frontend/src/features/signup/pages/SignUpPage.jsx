@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import "./SignUpPage.css";
+import axios from "axios";
 
 // Component Imports
 import Header1 from '../../../global_components/Header1';
@@ -12,6 +13,14 @@ import GoogleLogo from '../../../assets/images/google-account-login.svg'
 import LeftArrow from '../../../assets/images/left-arrow.png';
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+const request = axios.create({
+    baseURL: "http://localhost:5000",
+    headers: {
+        "Content-Type" : "application/json"
+    },
+    withCredentials: true,
+    timeout: 300000
+})
 
 const Signup = () => {
     const navigate = useNavigate();
@@ -21,6 +30,17 @@ const Signup = () => {
     const onSubmit = (data) => {
         setUserInfo(data);
         console.log(data);
+
+        request({
+            url: "api/user/",
+            method: "post",
+            data: data
+        }).then(response => {
+            console.log(response);
+            
+        }).catch(error => {
+            console.error(error.response)
+        })        
     }
 
     const onSigninButtonClick = useCallback(() => {
@@ -64,7 +84,7 @@ const Signup = () => {
                             className="textbox1"
                             placeholder="Enter your full name"
                             type="text"
-                             {...register("FullName", { required: "Full Name is required", pattern : {value:/^[A-Za-z ]+$/i, message: "Full name must contain only letters and spaces"}})}
+                             {...register("fullName", { required: "Full Name is required", pattern : {value:/^[A-Za-z ]+$/i, message: "Full name must contain only letters and spaces"}})}
                         />
                          <p className = "ErrorMessages">{errors.FullName?.message}</p>
 
@@ -73,7 +93,7 @@ const Signup = () => {
                             className="textbox1" 
                             placeholder="Enter your username" 
                             type="text" 
-                             {...register("Username", { required: "Username is required", pattern : {value:/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,20}$/, message: "Username must be between 6 and 20 characters ,include at least 1 uppercase letter and 1 numeric digit"} })}
+                             {...register("username", { required: "Username is required", pattern : {value:/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,20}$/, message: "Username must be between 6 and 20 characters ,include at least 1 uppercase letter and 1 numeric digit"} })}
                         />
                         <p className = "ErrorMessages">{errors.Username?.message}</p>
 
@@ -82,7 +102,7 @@ const Signup = () => {
                             className="textbox1"
                             placeholder="Enter your email"
                             type="email"
-                             {...register("Email", { required: "Email is required",  pattern : {value:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, message: "Enter a valid email address"}})}
+                             {...register("email", { required: "Email is required",  pattern : {value:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, message: "Enter a valid email address"}})}
                         />
                         <p className = "ErrorMessages">{errors.Email?.message}</p>
 
@@ -114,9 +134,9 @@ const Signup = () => {
                                         className={`checkbox ${errors['accountType'] ? 'error' : ''}`}
                                         id="learner check"
                                         type="radio"
-                                        name="accountType"
+                                        name="account_type"
                                         value = "learner"
-                                         {...register("accountType", { required: "Please select an account type" })}
+                                         {...register("account_type", { required: "Please select an account type" })}
                                     />
                                     <label className="checkbox-label">Learner</label>
                                 </div> 
@@ -125,9 +145,9 @@ const Signup = () => {
                                         className={`checkbox ${errors['accountType'] ? 'error' : ''}`}
                                         id="instructor check"
                                         type="radio"
-                                        name="accountType"
+                                        name="account_type"
                                         value="instructor"
-                                        {...register("accountType", { required: "Please select an account type" })}
+                                        {...register("account_type", { required: "Please select an account type" })}
                                     />
                                     <label className="checkbox-label">Instructor</label>
                                 </div>
