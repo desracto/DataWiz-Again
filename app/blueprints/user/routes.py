@@ -37,9 +37,12 @@ def register_user():
     """
         create_user function recieves a JSON request following this format:\n
         {
+                                "fullname": fullname
             [REQUIRED] [UNIQUE] "username": "username"\n
             [REQUIRED] [UNIQUE] "email": "email@test.com",\n
-            [REQUIRED]          "password": "password"\n
+            [REQUIRED]          "password": "password"\n,
+                                "account_type": account-type,
+                                "gender": gender
         }
 
         Error handling checks if the mandatory fields are present and if it already exists in the database. 

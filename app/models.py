@@ -14,9 +14,12 @@ class Users(db.Model):
 
     # Fields
     id = db.Column(db.String(32), primary_key=True, unique=True, default=get_uuid)
+    fullname = db.Column(db.String(40))
     username = db.Column(db.String(40), unique=True)
     email = db.Column(db.String(345), unique=True)
     password_hash = db.Column(db.Text, nullable=False)
+    account_type = db.Column(db.String(10))
+    gender = db.Column(db.String(6))
 
     # Relationships
     quizzes = db.relationship('Quiz', back_populates='user')
@@ -41,7 +44,7 @@ class Users(db.Model):
         return data
     
     def from_dict(self, data, new_user=False):
-        for field in ['username', 'email', 'password']:
+        for field in ['fullname', 'username', 'email', 'password', 'account_type', 'gender']:
             if field in data:
                 setattr(self, field, data[field])
 
