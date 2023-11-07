@@ -36,6 +36,7 @@ def identify_processes(stmt_dict: dict) -> dict:
         "SELECT": False,
         "DISTINCT": False,
         "WHERE": False,
+        'FROM': False,
         'JOIN': False,
         "SUB_QUERY": False
     }
@@ -60,6 +61,12 @@ def identify_processes(stmt_dict: dict) -> dict:
     if 'WHERE' in keys:
         bool_processes['WHERE'] = True
     
+    # FROM block
+    if 'FROM' in keys:
+        # check if FROM has multiple tables
+        if hasattr(stmt_dict['FROM'][0], 'tokens'):
+            bool_processes['FROM'] = True
+
     # JOIN block
     if any('JOIN' in sub for sub in keys):
         bool_processes['JOIN'] = True
@@ -225,10 +232,15 @@ def process_subqueries(stmt_dict: dict):
                     # we have created a dictionary for the sub query
                     stmt_dict[key][i] = sub_query_dict
 
+def normalization_quantifying(stmt_dict: dict):
+    # find any place where a quantifying operator is used
+    pass
+
 def process(stmt_tokens, DEBUG = True) -> dict:
 
     # splits into keyword-value pairs
     stmt_dict = split_keywords(stmt_tokens)
+
     if DEBUG:
         print("PROCESS STEP: KEYWORD-VALUE SPLIT")
         pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(stmt_dict)
@@ -254,7 +266,6 @@ def process(stmt_tokens, DEBUG = True) -> dict:
             print("PROCESS STEP: DISTINCT PARSE")
             pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(stmt_dict)
             print("\n")
-
     elif bool_processes['SELECT']:
         process_keyword(stmt_dict, 'SELECT')
 
@@ -269,6 +280,15 @@ def process(stmt_tokens, DEBUG = True) -> dict:
 
         if DEBUG:
             print("PROCESS STEP: WHERE PARSE")
+            pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(stmt_dict)
+            print("\n")
+
+    # FROM
+    if bool_processes['FROM']:
+        process_keyword(stmt_dict, 'FROM')
+
+        if DEBUG:
+            print("PROCESS STEP: FROM PARSE")
             pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(stmt_dict)
             print("\n")
     
@@ -373,6 +393,8 @@ def main():
            WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) \
            GROUP BY id \
            HAVING something"
+    
+    sql = "SELECT name, id, product FROM employees, products WHERE emp.id = products.emp_id"
     
     dict_tree = translate_query(query = sql,
                                 DEBUG=True,
