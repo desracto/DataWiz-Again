@@ -1,5 +1,4 @@
-import { useCallback } from "react";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import "./SignUpPage.css";
@@ -32,11 +31,12 @@ const Signup = () => {
       navigate("/LandingPage");
     }, [navigate]);
 
-    console.log(errors);
+  
   return (
     <>
       <Header1/>
         <div className="signup-container">
+            <pre> {JSON.stringify(userInfo, undefined, 2)}</pre>
             <div className="signup-card">
                 <div className="Return-Landing-SignUp1" onClick={onBackArrowContainer1Click}>
                     <div className="Return-Landing-SignUp-Circle2">

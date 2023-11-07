@@ -1,11 +1,13 @@
 import os
 from datetime import timedelta
+from logging.config import dictConfig
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config(object):
     SECRET_KEY = 'f@n_|^Is"6zHto-edhd@Q+}jtYpDm$<<'
     DEBUG = True
+    FRONTEND_DOMAIN = 'http://localhost:3000/'
 
     # Flask-Migrate
     MIGRATION_DIR = os.path.join(basedir, 'app\\database\\migrations')
@@ -24,4 +26,3 @@ class Config(object):
     # Flask-JWT-Extended
     JWT_SECRET_KEY = 'sic-1/)to06#WV$~XB;u,JO=#%AmXV+b'
     JWT_TOKEN_LOCATION = ["cookies"]
-    JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=1)
