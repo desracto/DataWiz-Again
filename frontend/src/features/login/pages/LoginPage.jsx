@@ -50,7 +50,7 @@ const LoginPage = () => {
             }
         }).then(response => {
             // console.log(response)
-            const user_details = response.data.user
+            const user_details = response.data.user;
 
             // redirect user to home page after login
             // and transfer their details with it
