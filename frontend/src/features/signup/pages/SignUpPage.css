@@ -1,9 +1,9 @@
-body{
+body {
   background-color: white;
 }
 
-.signup-container{
-  margin: 150px auto 50px;
+/* .signup-container{
+  margin: 150px auto ;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,7 +12,6 @@ body{
 }
 
 .signup-card {
-    position: relative;
     display: flex;
     flex-direction: column;
     border-radius: 40px;
@@ -22,37 +21,87 @@ body{
     width: 60%;
     height: 1050px;
     padding: 60px 120px;
+} */
+
+
+.signup-container {
+  margin: 100px auto 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  min-height: 1200px;
+  height: 100%;
+}
+
+.signup-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 40px;
+  background-color: #d7c8d3;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  max-width: 755px;
+  width: 60%;
+  padding: 60px 120px;
+  height: auto;
+  min-height: 1050px;
+  position: relative;
+}
+
+
+.ErrorMessages {
+  color: #ff0000;
+  /* Red color for the error message */
+  font-size: 12px;
+  margin: 5px 10px;
+  font-family: Gilroy-Bold;
+}
+
+.ErrorMessages-accounttype {
+  color: #ff0000;
+  font-size: 12px;
+  font-family: Gilroy-Bold;
+  order: 1;
+}
+
+.ErrorMessages-gender {
+  color: #ff0000;
+  font-size: 12px;
+  font-family: Gilroy-Bold;
+  margin-right: 115px;
+  order: 2;
 }
 
 .Return-Landing-SignUp1 {
-    top: 48px;
-    left: 40px;
-    width: 50px;
-    height: 50px;
-    position: absolute;
-    cursor: pointer;
+  top: 48px;
+  left: 40px;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  cursor: pointer;
 }
 
 .Return-Landing-SignUp-left {
-    max-width: 70%;
-    max-height: 70%;
+  max-width: 70%;
+  max-height: 70%;
 }
 
 .Return-Landing-SignUp-Circle2 {
-    height: 100%;
-    width: 100%;
-    border-radius:  50%;
-    background-color: #ffffff;
-    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.08);
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.3s ease;
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  background-color: #ffffff;
+  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.08);
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
 }
 
 .Return-Landing-SignUp-Circle2:hover {
-    background: #fee08d;
+  background: #fee08d;
 }
 
 .welcome-to-datawiz-container {
@@ -60,7 +109,7 @@ body{
   font-family: Gilroy-SemiBold;
 }
 
-.data{
+.data {
   font-family: Gilroy-Black;
 }
 
@@ -72,16 +121,17 @@ body{
 
 .signup-info {
   max-width: 502px;
-  width:100%;
+  width: 100%;
   height: 657px;
   font-size: 18px;
 }
 
-.input-label{
+.input-label {
   font-family: Gilroy-SemiBold;
   font-size: 18px;
   margin-top: 25px;
 }
+
 .textbox1 {
   border: 0;
   font-family: Gilroy-Regular;
@@ -90,41 +140,46 @@ body{
   border-radius: 10px;
   box-shadow: 0 8px 8px rgba(0, 0, 0, 0.08);
   max-width: 500px;
-  width:100%;
+  width: 100%;
   height: 50px;
   justify-content: center;
   padding: 10px 20px;
   box-sizing: border-box;
-  margin-top:10px;
+  margin-top: 10px;
 }
 
-.textbox1:focus,.textbox1:hover {
+.textbox1:focus,
+.textbox1:hover {
   outline: none !important;
   border: 2px solid #8A5A8E;
 }
 
-.checkbox-pair{
+.checkbox-pair {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 25px;
-
 }
 
+.error-checkbox-pair {
+  display: flex;
+  justify-content: space-between;
+}
 
-.input-label2{
+.input-label2 {
   font-family: Gilroy-SemiBold;
   font-size: 18px;
   margin-top: 25px;
   margin-right: 18vh;
 }
 
-.checkbox-group1{
+.checkbox-group1 {
+  margin: 20px 25px 20px 0px;
   display: flex;
   flex-direction: column;
   margin-right: 18vh;
 }
-.checkbox-group2{
+
+.checkbox-group2 {
   display: flex;
   flex-direction: row;
   margin-bottom: 20px;
@@ -137,9 +192,9 @@ body{
   margin-right: 20px;
 }
 
-.checkbox-label{
-font-family: Gilroy-SemiBold;
-font-size: 13px;
+.checkbox-label {
+  font-family: Gilroy-SemiBold;
+  font-size: 13px;
 }
 
 .signin-button {
@@ -148,7 +203,7 @@ font-size: 13px;
   background-color: transparent;
   box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1);
   max-width: 500px;
-  width:100%;
+  width: 100%;
   height: 50px;
   border-radius: 10px;
   background-color: #8a5a8e;
@@ -176,17 +231,17 @@ font-size: 13px;
 
 .google-account-login {
   max-width: 158px;
-  width:100%;
+  width: 100%;
   height: auto;
   display: flex;
-  margin:auto;
+  margin: auto;
 }
 
 .already-have-an {
   font-family: Gilroy-SemiBold;
   font-size: 14px;
   text-align: center;
-  margin: 37px auto ;
+  margin: 37px auto;
 }
 
 .text-button {
@@ -194,6 +249,7 @@ font-size: 13px;
   color: #5c5959;
   text-decoration: none;
 }
+
 .text-button:hover {
   text-decoration: underline;
 }

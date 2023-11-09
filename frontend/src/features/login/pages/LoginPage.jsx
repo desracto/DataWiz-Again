@@ -52,7 +52,9 @@ const LoginPage = () => {
             // console.log(response)
             const user_details = response.data.user;
 
-            navigate("/InstructorHomePage", { state: user_details });
+            // redirect user to home page after login
+            // and transfer their details with it
+            navigate("/InstructorHomePage", { state: user_details })
             
         }).catch(error => {
             console.error(error.response)

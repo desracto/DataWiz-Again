@@ -20,9 +20,6 @@ import EjazImage from '../../../assets/images/EjazChar.png';
 import NihalImage from '../../../assets/images/NihalChar.png';
 
 
-
-
-
 function LandingPage() {
   return (
     <>
