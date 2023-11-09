@@ -7,44 +7,14 @@ import "./SignUpPage.css";
 import Header1 from '../../../global_components/Header1';
 
 // Image Imports
-import HiddenEye  from '../../../assets/images/clarityeyehideline.svg'
-import GoogleLogo from '../../../assets/images/google-account-login.svg'
+import HiddenEye  from '../../../assets/images/clarityeyehideline.svg';
+import GoogleLogo from '../../../assets/images/google-account-login.svg';
 import LeftArrow from '../../../assets/images/left-arrow.png';
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
 
 const Signup = () => {
   const navigate = useNavigate();
-
-    // State variables to capture user input
-    const [fullName, setFullName] = useState('');
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [accountType, setAccountType] = useState('');
-    const [gender, setGender] = useState('');
-
-    const onSignupButtonClick = () => {
-        const userData = {
-          username,
-          email,
-          password,
-          full_name: fullName, // Make sure this matches your backend field names
-          account_type: accountType,
-          gender,
-        };
-
-    // Send a POST request to the backend for user registration
-    axios.post("http://127.0.0.1:5000/api/user/", userData)
-    .then(response => {
-      // Handle successful signup, e.g., redirect to login page
-      navigate("/LoginPage");
-    })
-    .catch(error => {
-      // Handle signup error, e.g., display an error message
-      console.error(error);
-    });
-};
 
   const onSigninButtonClick = useCallback(() => {
     navigate("/LoginPage");
@@ -86,7 +56,6 @@ const Signup = () => {
                         className="textbox1"
                         placeholder="Enter your full name"
                         type="text"
-                        value={fullName}
                     />
 
                     <div className="input-label">Username</div>
@@ -94,7 +63,6 @@ const Signup = () => {
                         className="textbox1" 
                         placeholder="Enter your username" 
                         type="text" 
-                        value={username}
                     />
 
                     <div className="input-label">Email</div>
@@ -102,7 +70,6 @@ const Signup = () => {
                         className="textbox1"
                         placeholder="Enter your email"
                         type="email"
-                        value={email}
                     />
 
                     <div className="input-label">Password</div>
@@ -110,7 +77,6 @@ const Signup = () => {
                         className="textbox1" 
                         type="password"
                         placeholder="**********" 
-                        value={password}
                     />
 
                     <div className="checkbox-pair">
