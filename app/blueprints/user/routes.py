@@ -110,8 +110,7 @@ def login():
         
         # User not found
         if not user:
-            return error_response(404, 'incorrect email/password')
-        
+            return error_response(404, 'ACNF01')
     except:
         return error_response(500, 'internal server error')
 
@@ -131,7 +130,7 @@ def login():
 
         return response
     else:
-        return error_response(401, 'invalid credentials')
+        return error_response(401, 'INEP01')
     
 @user_bp.route('/logout/', methods=['POST'])
 @jwt_required()
