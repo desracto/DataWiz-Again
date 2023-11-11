@@ -56,7 +56,7 @@ const Signup = () => {
     <>
       <Header1/>
         <div className="signup-container">
-            <pre> {JSON.stringify(userInfo, undefined, 2)}</pre>
+            {/*<pre> {JSON.stringify(userInfo, undefined, 2)}</pre>*/}
             <div className="signup-card">
                 <div className="Return-Landing-SignUp1" onClick={onBackArrowContainer1Click}>
                     <div className="Return-Landing-SignUp-Circle2">
