@@ -12,6 +12,11 @@ import HiddenEye  from '../../../assets/images/clarityeyehideline.svg';
 import GoogleLogo from '../../../assets/images/google-account-login.svg';
 import LeftArrow from '../../../assets/images/left-arrow.png';
 
+import svgImage from '../../../assets/images/vector-31.svg'; 
+import svgImage2 from '../../../assets/images/blob-haikei.svg'; 
+import BlobOutline1 from '../../../assets/images/BlobOutline1.png'; 
+
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
 const request = axios.create({
     baseURL: "http://localhost:5000",
@@ -59,7 +64,7 @@ const Signup = () => {
             <pre> {JSON.stringify(userInfo, undefined, 2)}</pre>
 
             <div className="signup-card">
-                
+
                 {/* Return Arrow */}
                 <div className="Return-Landing-SignUp1" onClick={onBackArrowContainer1Click}>
                     <div className="Return-Landing-SignUp-Circle2">
@@ -206,6 +211,32 @@ const Signup = () => {
                 </div>
                 
             </div>
+        </div>
+        <div className="SVG-CONTAINER">
+            {/* SVG Background */}
+            <img 
+                src={svgImage} 
+                alt="SVG Background" 
+                className="svg-background" 
+            />
+        </div>
+
+        <div className="SVG-CONTAINER">
+            {/* SVG Background */}
+            <img 
+                src={svgImage2} 
+                alt="SVG Background" 
+                className="svg-background1" 
+            />
+        </div>
+
+        <div className="SVG-CONTAINER">
+            {/* SVG Background */}
+            <img 
+                src={BlobOutline1} 
+                alt="SVG Background" 
+                className="svg-background2" 
+            />
         </div>
     </>
   );
