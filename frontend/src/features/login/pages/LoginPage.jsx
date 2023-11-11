@@ -23,9 +23,6 @@ const request = axios.create({
     timeout: 300000
 })
 
-
-
-
 const LoginPage = () => {
     const navigate = useNavigate();
     const {register, handleSubmit, formState: { errors }} = useForm();
