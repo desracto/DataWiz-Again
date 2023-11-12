@@ -60,9 +60,9 @@ def register_user():
     
     # Checking if data already in use by another account
     if Users.query.filter_by(username=data['username']).first():
-        return bad_request('please use a different username')
+        return bad_request('EUNIDB') # please enter a different username
     if Users.query.filter_by(email=data['email']).first():
-        return bad_request('please use a different email')
+        return bad_request('EEMIDB') #please use a different email
     
     # Create new user if above checks pass
     user:Users = Users().from_dict(data, new_user=True)

@@ -63,7 +63,7 @@ const LoginPage = () => {
             }
 
         }).catch(error => {
-            console.error(error.response.data)
+            console.error(error.response.data);
             if (error.response.data.message === "INEP01") 
             {
                 setEmailError("");

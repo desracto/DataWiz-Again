@@ -31,6 +31,8 @@ const Signup = () => {
     const navigate = useNavigate();
     const {register, handleSubmit, formState: { errors }} = useForm();
     const [userInfo, setUserInfo] = useState();
+    const [emailTakenError, setEmailTakenError] = useState("");
+    const [usernameTakenError, setUsernameTakenError] = useState("");
 
     const onSubmit = (data) => {
         setUserInfo(data);
@@ -42,15 +44,35 @@ const Signup = () => {
             data: data
         }).then(response => {
             console.log(response);
+
+            if (response.status === 200) {
+                // Clear any previous errors
+                setEmailTakenError("");
+                setUsernameTakenError("");
+
+                // Navigate to the login page
+                navigate("/LoginPage"); 
+            }
             
         }).catch(error => {
-            console.error(error.response)
+            console.error(error.response);
+            if (error.response.data.message === "EUNIDB") 
+            {
+                setEmailTakenError("");
+                setUsernameTakenError("please enter a different username");
+            }
+            else if(error.response.data.message === "EEMIDB")
+            {
+                setEmailTakenError("Please use a different Email");
+                setUsernameTakenError("");
+            }
+            else{
+                setEmailTakenError("");
+                setUsernameTakenError("")
+            }
+
         })        
     };
-
-    const onSigninButtonClick = useCallback(() => {
-      navigate("/LoginPage");
-    }, [navigate]);
 
     const onBackArrowContainer1Click = useCallback(() => {
       navigate("/LandingPage");
@@ -61,7 +83,6 @@ const Signup = () => {
     <>
       <Header1/>
         <div className="signup-container">
-            {/*<pre> {JSON.stringify(userInfo, undefined, 2)}</pre>*/}
             <div className="signup-card">
 
                 {/* Return Arrow */}
@@ -93,7 +114,7 @@ const Signup = () => {
                             type="text"
                              {...register("fullName", { required: "Full Name is required", pattern : {value:/^[A-Za-z ]+$/i, message: "Full name must contain only letters and spaces"}})}
                         />
-                         <p className = "ErrorMessages">{errors.FullName?.message}</p>
+                         <p className = "ErrorMessages">{errors.fullName?.message}</p>
 
                         <div className="input-label">Username</div>
                         <input 
@@ -102,7 +123,8 @@ const Signup = () => {
                             type="text" 
                              {...register("username", { required: "Username is required", pattern : {value:/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,20}$/, message: "Username must be between 6 and 20 characters ,include at least 1 uppercase letter and 1 numeric digit"} })}
                         />
-                        <p className = "ErrorMessages">{errors.Username?.message}</p>
+                        <p className = "ErrorMessages">{errors.username?.message}</p>
+                        <p className = "ErrorMessages">{usernameTakenError}</p>
 
                         <div className="input-label">Email</div>
                         <input
@@ -111,7 +133,8 @@ const Signup = () => {
                             type="email"
                              {...register("email", { required: "Email is required",  pattern : {value:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, message: "Enter a valid email address"}})}
                         />
-                        <p className = "ErrorMessages">{errors.Email?.message}</p>
+                        <p className = "ErrorMessages">{errors.email?.message}</p>
+                        <p className = "ErrorMessages">{emailTakenError}</p>
 
                         <div className="input-label">Password</div>
                         <input 
@@ -128,7 +151,7 @@ const Signup = () => {
                         </div>
 
                         <div className="error-checkbox-pair">
-                        <p className = "ErrorMessages-accounttype">{errors.accountType?.message}</p>
+                        <p className = "ErrorMessages-accounttype">{errors.account_type?.message}</p>
                         <p className = "ErrorMessages-gender">{errors.gender?.message}</p>
                         </div>
 
@@ -189,7 +212,7 @@ const Signup = () => {
                             </div>
                         </div>
 
-                        <button className="signin-button" onClick={onSigninButtonClick}>
+                        <button className="signin-button">
                             <div className="button-text">Signup</div>
                         </button>
                         
@@ -211,6 +234,7 @@ const Signup = () => {
                 
             </div>
         </div>
+
         <div className="SVG-CONTAINER">
             {/* SVG Background */}
             <img 
