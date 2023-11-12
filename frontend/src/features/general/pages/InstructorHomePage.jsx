@@ -1,5 +1,6 @@
 import { useCallback, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import "./InstructorHomePage.css";
 import SecondHeader from "../../../global_components/SecondHeader";
@@ -38,17 +39,19 @@ const InstructorHomePage = () => {
     //     })
     // }, [])
 
+    const navigate = useNavigate();
+
     const onExploreAnimationButtonClick = useCallback(() => {
-    // Please sync "Schema Selection Page" to the project
-    }, []);
+        navigate("/SchemaSelectionPage");
+    }, [navigate]);
 
     const onTryOutQuizzesButtonClick = useCallback(() => {
     // Please sync "Schema Selection Page" to the project
     }, []);
 
     const onSchemaSelectionCardClick = useCallback(() => {
-    // Please sync "Schema Selection Page" to the project
-    }, []);
+        navigate("/SchemaSelectionPage");
+    }, [navigate]);
 
     const onCreateQuizButtonClick = useCallback(() => {
     // Please sync "Quiz Filters Page" to the project

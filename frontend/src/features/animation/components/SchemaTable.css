@@ -1,0 +1,67 @@
+
+/* Adjusted .table-container */
+.table-container {
+    width: 100%; /* Take up full width of the SchemaDisplayCard */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start; /* Align tables to the top */
+}
+  
+  /* Adjusted .table */
+.table {
+    width: 45%; /* Adjust the width of each table */
+    border-collapse: collapse;
+    margin: 0 auto; /* Adjust margin between tables */
+}
+  
+/* Style for the table headers */
+.table th {
+    padding: 15px;
+    background-color: #d1b2d4; 
+    font-family: Gilroy-Bold, sans-serif;
+    border-top: 2px solid #454141;
+    border-bottom: 2px solid #454141;
+    color: #454141;
+    font-size: 15px;
+    text-align: center;
+}
+
+/* Style for the table cells */
+.table td {
+    padding: 12px;
+    font-family: Gilroy-SemiBols, sans-serif;
+    border-bottom: 2px solid #454141;
+    color: #454141;
+    font-size: 13px;
+    text-align: center;
+}
+
+/* Add vertical lines between columns and on table edges */
+.table th, .table td {
+    border-right: 2px solid #454141;
+}
+
+.table th:first-child, .table td:first-child {
+    border-left: 2px solid #454141;
+}
+
+th:first-of-type {
+    border-top-left-radius: 20px;
+  }
+  th:last-of-type {
+    border-top-right-radius: 20px;
+  }
+  tr:last-of-type td:first-of-type {
+    border-bottom-left-radius: 20px;
+  }
+  tr:last-of-type td:last-of-type {
+    border-bottom-right-radius: 20px;
+  }
+
+/* Media query to adjust layout for smaller screens */
+@media (max-width: 768px) {
+    .table {
+        width: 95%; /* Adjust the width of each table for smaller screens */
+    }
+}
