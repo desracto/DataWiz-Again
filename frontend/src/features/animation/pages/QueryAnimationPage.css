@@ -1,0 +1,283 @@
+.svg-background {
+    position: absolute;
+    right: -40%;
+    width: 80%; 
+    height: 80%; 
+    top: 0;
+    overflow: hidden;
+    z-index: -1;
+    background-repeat: repeat;
+}
+
+.svg-background2 {
+    position: absolute;
+    left: -35%;
+    width: 80%; 
+    height: 80%; 
+    top: 1400px;
+    overflow: hidden;
+    z-index: -1;
+    transform: scaleX(-1) scaleY(-1); 
+}
+
+.svg-background1 {
+    position: absolute;
+    left: -32%;
+    width: 70%; 
+    height: 70%; 
+    top: 300px;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.svg-background3 {
+    position: absolute;
+    right: -32%;
+    width: 80%; 
+    height: 80%; 
+    top: 1000px;
+    overflow: hidden;
+    z-index: -1;
+    background-repeat: repeat;
+}
+
+.QueryAnimationContainer {
+    display: flex;
+    position: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center; 
+    margin-top: 80px;
+}
+  
+.QueryAnimationTitle {
+    font-Size: 35px;
+    font-family: Gilroy-Bold;
+    margin-bottom: 15px; 
+    text-shadow: 0px 8px 8px rgba(0, 0, 0, 0.10);
+    width: 80%;
+    max-width: 1060px;
+}
+  
+.QueryAnimationText {
+    font-Size: 20px;
+    font-family: Gilroy-SemiBold;
+    word-wrap: break-word;
+    margin-bottom: 50px;
+    text-shadow: 0px 8px 8px rgba(0, 0, 0, 0.10);
+    width: 80%;
+    max-width: 1060px; 
+}
+  
+.QueryInputCard {
+    width: 78%;
+    height: 1100px;
+    background: #D4C1CE;
+    border-radius: 45px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+    max-width: 1080px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    position: relative;
+}
+
+.AnimationNameContainer {
+    width: 80%;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    margin-top: 30px;
+    align-items: flex-start;
+    gap: 10px;
+}
+  
+.AnimationNameLabel {
+    color: #454141;
+    font-size: 18px;
+    font-family: 'Gilroy-SemiBold';
+    word-wrap: break-word;
+}
+  
+.AnimationNameTextbox {
+    align-self: stretch;
+    width: 100%;
+    height: 40px;
+    padding: 10px 20px;
+    background: white;
+    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+}
+  
+.AnimationNamePlaceholder {
+    color: #706D6D;
+    font-size: 14px;
+    font-family: Gilroy-Regular;
+    word-wrap: break-word;
+}
+  
+  .button-container2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    background-color: aqua;
+    width: 80%;
+    display: inline-flex; /* Use inline-flex to align buttons horizontally */
+  }
+ 
+  .SchemaButton {
+    width: 30%;
+    max-width: 120px;
+    height: 40px;
+    background: #EAC576;
+    border-radius: 100px;
+    color: #454141;
+    font-size: 14px;
+    font-family: Gilroy-Bold;
+    text-align: center; 
+    cursor: pointer;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+
+.ReturnSchemaSelectionButton {
+    align-items: flex-start; 
+    position: absolute;
+    width: 40%;
+    max-width: 150px;
+    height: 40px;
+    background: #ffffff;
+    border-radius: 100px;
+    color: #454141;
+    font-size: 14px;
+    font-family: Gilroy-Bold;
+}
+
+.SelectedSchemaCard {
+    width: 85%;
+    height: 700px;
+    background: #f5ecf4;
+    border-radius: 45px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.20);
+    max-width: 900px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    margin-top: 40px;
+    overflow: auto; 
+}
+
+.QueryContainer {
+    width: 80%;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    margin-top: 30px;
+    align-items: center;
+}
+
+.QueryTextbox {
+    align-self: stretch;
+    width: 100%;
+    height: 55px;
+    padding: 10px 20px;
+    background: white;
+    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+}
+  
+.QueryPlaceholder {
+    color: #706D6D;
+    font-size: 12px;
+    font-family: Gilroy-Regular;
+    word-wrap: break-word;
+}
+
+.AnimateQueryButton {
+    width: 50%;
+    max-width: 300px;
+    height: 40px;
+    background: #EAC576;
+    border-radius: 10px;
+    color: #454141;
+    font-size: 14px;
+    font-family: Gilroy-Bold;
+    text-align: center; 
+    cursor: pointer;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+    border: none;
+    transition: background-color 0.3s ease;
+    margin-top: 30px;
+}
+
+.AnimateQueryButton:hover {
+    background: #e7aefb;
+}
+
+.DownAndSaveButtonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    display: inline-flex;
+    width: 78%;
+    gap: 40px;
+}
+
+.SaveAniButton {
+    width: 50%;
+    max-width: 300px;
+    height: 40px;
+    background: #EAC576;
+    border-radius: 10px;
+    color: #454141;
+    font-size: 14px;
+    font-family: Gilroy-Bold;
+    text-align: center; 
+    cursor: pointer;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.DownPDFButton {
+    width: 50%;
+    max-width: 300px;
+    height: 40px;
+    background: #8a5a8c;
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 14px;
+    font-family: Gilroy-Bold;
+    text-align: center; 
+    cursor: pointer;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.VisualizationDisplayCard {
+    width: 90%;
+    height: 800px;
+    background: #e9e7e9;
+    border-radius: 45px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.20);
+    max-width: 1200px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    margin-top: 40px;
+    margin-bottom: 40px;
+}

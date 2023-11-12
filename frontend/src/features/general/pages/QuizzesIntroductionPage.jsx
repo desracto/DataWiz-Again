@@ -29,11 +29,6 @@ const QuizzesIntroductionPage = () => {
         <SecondHeader/>
 
         <div className="Quiz-Intro-Sec1">
-            <img
-                className="Stacked-Waves"
-                alt=""
-                src={stackedWaves1}
-            />
             <div className="Quiz-Intro-Sec1-Text">
                 <img 
                     className="Quiz-Intro-Sec1-Vec1" 
@@ -56,11 +51,6 @@ const QuizzesIntroductionPage = () => {
         </div>
 
         <div className="Quiz-Intro-Sec2">
-            <img
-                className="Stacked-Waves"
-                alt=""
-                src={stackedWaves2}
-            />
             
             <img
                 className="Quiz-Intro-Sec2-Image"
@@ -92,11 +82,6 @@ const QuizzesIntroductionPage = () => {
         </div>
 
         <div className="Quiz-Intro-Sec3">
-            <img
-                className="Stacked-Waves"
-                alt=""
-                src={stackedWaves3}
-            />
 
             <div className="Quiz-Intro-Sec3-Text">
                 <img 
