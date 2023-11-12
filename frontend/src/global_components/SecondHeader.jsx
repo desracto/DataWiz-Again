@@ -50,17 +50,17 @@ const SecondHeader = () => {
                 {/* Menu */}
                 <div className="menu_list">
 
-                    <NavLink href="#" className="nav_link">
+                    <NavLink to="/InstructorHomePage" className="nav_link">
                     <img src={home} alt="Menu Icon 3" />
                     <span className="menu_top">Home</span>
                     </NavLink>
 
-                    <NavLink href="#" className="nav_link">
+                    <NavLink to="/AnimationIntroductionPage" className="nav_link">
                     <img src={animation} alt="Menu Icon 3" />
                     <span className="menu_top">Animation</span>
                     </NavLink>
 
-                    <NavLink to={"/quiz"} className="nav_link">
+                    <NavLink to={"/QuizzesIntroductionPage"} className="nav_link">
                     <img src={quizzes} alt="Menu Icon 3" style={{ maxWidth: '21px', height: 'auto', marginBottom:'-1px', marginTop:'1px' }}/>
                     <span className="menu_top_quiz">Quizzes</span>
                     </NavLink>
