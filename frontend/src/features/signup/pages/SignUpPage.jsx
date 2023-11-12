@@ -49,7 +49,7 @@ const Signup = () => {
     };
 
     const onSigninButtonClick = useCallback(() => {
-      navigate("/LoginPage");
+    //   navigate("/LoginPage");
     }, [navigate]);
 
     const onBackArrowContainer1Click = useCallback(() => {

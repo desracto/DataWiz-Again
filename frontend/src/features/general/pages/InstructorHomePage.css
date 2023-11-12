@@ -10,6 +10,17 @@
     overflow: hidden;
 }
 
+.Top-Section::before {
+    content: '';
+    position: absolute; 
+    top: 20px; 
+    bottom: 20px;    
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.3);    
+    filter: blur(40px);
+    z-index: -1;
+}
+
 .Stacked-Waves {
     position: absolute;
     top: -20px;

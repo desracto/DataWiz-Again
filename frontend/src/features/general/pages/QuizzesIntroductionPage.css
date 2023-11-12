@@ -1,10 +1,4 @@
-.Stacked-Waves {
-    position: absolute;
-    top: -20px;
-    width: 100%;
-    height: 100%;
-    z-index: -2;
-}
+
 
 .Quiz-Intro-Sec1 {
     position: relative;
@@ -12,7 +6,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 500px;
+    height: 600px;
 }
 
 .Quiz-Intro-Sec1::before {
@@ -60,6 +54,7 @@
 }
 
 .Quiz-Intro-Sec1-Text {
+    top: 20px;
     position: relative;
     font-size: 64px;
     max-width: 560px;
@@ -73,7 +68,8 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 600px;    
+    height: 600px;   
+    /* background-color: #422660;  */
 }
 
 .Quiz-Intro-Sec2::before {
