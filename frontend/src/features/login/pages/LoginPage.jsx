@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import axios from 'axios'
 import Cookies from 'js-cookie';
 import "./LoginPage.css";
@@ -26,10 +26,10 @@ const request = axios.create({
 const LoginPage = () => {
     const navigate = useNavigate();
     const {register, handleSubmit, formState: { errors }} = useForm();
-    const [userInfo, setUserInfo] = useState();
 
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("")
+
 
     const onForgotPasswordClick = useCallback(() => {
         navigate("/ResetPasswordPage");
@@ -43,10 +43,6 @@ const LoginPage = () => {
         navigate("/LandingPage");
     }, [navigate]);
 
-    const onLogInButtonClick = useCallback(() => {
-        //to the home page
-    }, [navigate])
-
     
     const onSubmit = (data) => {
         console.log(data);
@@ -55,18 +51,32 @@ const LoginPage = () => {
             method: "post",
             data: data
         }).then(response => {
-            console.log(response)
+            console.log(response);
+
+            if (response.status === 200) {
+                // Clear any previous errors
+                setEmailError("");
+                setPasswordError("");
+
+                // Navigate to the instructor page
+                navigate("/InstructorHomePage"); 
+            }
+
         }).catch(error => {
             console.error(error.response.data)
-            if (error.response.data.message == "INEP01") 
+            if (error.response.data.message === "INEP01") 
             {
-                setEmailError("Incorrect Email")
-                setPasswordError("Incorrect Password")
+                setEmailError("");
+                setPasswordError("Incorrect Email or Password");
             }
-            else if (error.response.data.message == "ACNF01")
+            else if (error.response.data.message === "ACNF01")
             {
-                setEmailError("Account Not Found")
-                setPasswordError("")
+                setEmailError("Account Not Found");
+                setPasswordError("");
+            }
+            else{
+                setEmailError("");
+                setPasswordError("");
             }
         })
     };
@@ -102,10 +112,10 @@ const LoginPage = () => {
                                 name="Login-email"
                                 placeholder="xyz@gmail.com"
                                 type="email"
-                                {...register("email", { required: "Email is required"})}
+                                {...register("email", { required: "Email is required",  pattern : {value:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, message: "Enter a valid email address"}})}
                             />
                             <p className = "ErrorMessages">{errors.email?.message}</p>
-                            <div className = "ErrorMessages">{emailError}</div>
+                            <p className = "ErrorMessages">{emailError}</p>
                         </div>
 
                         <div className="PasswordSection">
@@ -117,10 +127,11 @@ const LoginPage = () => {
                                 placeholder="*******"
                                 name="login-password"
                                 type="password"
-                                {...register("password", { required: "Password is required"})}
+                                {...register("password", { required: "Password is required" })}
                             />
+
                             <p className = "ErrorMessages">{errors.password?.message}</p>
-                            <div className = "ErrorMessages">{passwordError}</div>
+                            <p className = "ErrorMessages">{passwordError}</p>
                             {/* <img
                                 className="Login-HideEyeIcon"
                                 alt="hidden eye"
@@ -134,7 +145,7 @@ const LoginPage = () => {
                         </div>
 
                         <button className="Login-signinButton">
-                            <div className="Login-signinButton-Text" onClick={onLogInButtonClick}>
+                            <div className="Login-signinButton-Text">
                                     Log In
                             </div>
                         </button>
@@ -152,7 +163,7 @@ const LoginPage = () => {
 
                         <div className="dont-have-an-account-yet-parent">
                             <div className="dont-have-an">
-                                Don’t have an account yet?
+                                Don't have an account yet?
                             </div>
                             <label className="Login-register-button" onClick={onRegisterButtonClick}>
                                 <div className="Login-register-text">
