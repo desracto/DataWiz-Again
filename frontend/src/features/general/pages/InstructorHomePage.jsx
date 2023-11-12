@@ -2,6 +2,8 @@ import { useCallback, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from 'axios';
 import "./InstructorHomePage.css";
+import SecondHeader from "../../../global_components/SecondHeader";
+
 
 // Image Imports
 import stackedWaves from '../../../assets/images/stacked-waves-haikei.svg'
@@ -10,7 +12,6 @@ import SchemaIcon from '../../../assets/images/Schema-Selection.png';
 import SavedAnimationIcon from '../../../assets/images/Saved-Animations.png';
 import SavedQuizzesIcon from '../../../assets/images/Saved-Quizzes.png';
 import CreateQuizzIcon from '../../../assets/images/Create-Quizzes-Logo.png';
-import SecondHeader from "../../../global_components/SecondHeader";
 
 const request = axios.create({
     baseURL: "http://localhost:5000",
