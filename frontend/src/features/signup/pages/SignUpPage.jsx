@@ -46,10 +46,10 @@ const Signup = () => {
         }).catch(error => {
             console.error(error.response)
         })        
-    }
+    };
 
     const onSigninButtonClick = useCallback(() => {
-      //navigate("/LoginPage");
+      navigate("/LoginPage");
     }, [navigate]);
 
     const onBackArrowContainer1Click = useCallback(() => {
@@ -61,8 +61,7 @@ const Signup = () => {
     <>
       <Header1/>
         <div className="signup-container">
-            <pre> {JSON.stringify(userInfo, undefined, 2)}</pre>
-
+            {/*<pre> {JSON.stringify(userInfo, undefined, 2)}</pre>*/}
             <div className="signup-card">
 
                 {/* Return Arrow */}

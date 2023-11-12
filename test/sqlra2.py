@@ -132,7 +132,7 @@ def process_keyword(stmt_dict:dict, keyword=None):
     stmt_dict[keyword] = new_keyword_values
 
 # JOIN processing functions
-def join_caluse(stmt_dict: dict):
+def join_clause(stmt_dict: dict):
     # find the join type
     join_types = [
         'INNER JOIN',
@@ -212,13 +212,10 @@ def from_clause(stmt_dict: dict):
     pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(cleaned_match)
 
     # connect them
-    
-
-
 
 def join_processing(stmt_dict: dict, which: str):
     if which == 'JOIN':
-        join_caluse(stmt_dict)
+        join_clause(stmt_dict)
     elif which == 'FROM':   
         from_clause(stmt_dict)
 
