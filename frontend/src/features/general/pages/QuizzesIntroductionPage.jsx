@@ -1,14 +1,19 @@
 import { useCallback } from "react";
 import "./QuizzesIntroductionPage.css";
-import BlurryRectange from '../../../assets/images/blurryRectangle.svg';
+
+// Image Imports
 import vector64 from '../../../assets/images/vector-64.svg';
-import vector31 from '../../../assets/images/vector-31.svg';
 import vector7 from '../../../assets/images/vector-7.svg';
 import vector71 from '../../../assets/images/vector-71.svg';
 import savedQuizzes from '../../../assets/images/QuizIntro- saved quizes icon.svg';
 import QuizzIntro_Icon from '../../../assets/images/QuizIntro-icon.svg';
 import CreateQuizIcon from '../../../assets/images/QuizIntro- createQuizzesIcon.svg';
+import stackedWaves1 from '../../../assets/images/stacked-waves-haikei.svg'
+import stackedWaves3 from '../../../assets/images/stacked-waves-haikei-red.svg'
+import stackedWaves2 from '../../../assets/images/stacked-waves-haikei-green.svg'
 
+
+import SecondHeader from "../../../global_components/SecondHeader";
 
 const QuizzesIntroductionPage = () => {
   const onQuizIntroCreateAQuizButtonClick = useCallback(() => {
@@ -20,76 +25,108 @@ const QuizzesIntroductionPage = () => {
   }, []);
 
   return (
-    <div className="quizzes-introduction-page">
-      <div className="quizzes-introduction-page-child" />
-      <img
-        className="quizzes-introduction-page-item"
-        alt=""
-        src={BlurryRectange}
-      />
-      <div className="vector-group">
-        <img className="group-child2" alt="" src={vector64} />
-        <div className="embark-on-a">{`Embark on a Knowledge Quest `}</div>
-        <div className="craft-quizzes-grade">
-          Craft Quizzes, Grade with Precision, and Educate Effortlessly.
-        </div>
-      </div>
-      <div className="vector-container">
-        <img className="group-child3" alt="" src={vector31} /> {/* check if this got renered - yellow shape */}
+    <>
+        <SecondHeader/>
 
-        <div className="rectangle-div" />
-        <div className="quizintro-create-a-quiz-button-parent">
-          <button
-            className="quizintro-create-a-quiz-button"
-            onClick={onQuizIntroCreateAQuizButtonClick}
-          >
-            <div className="quizintro-create-a-quiz-button-child" />
-            <div className="create-a-quiz">Create a Quiz</div>
-          </button>
-          <img className="group-child4" alt="" src={vector7} />
-          <div className="create-quiz-container">
-            <p className="create-quiz1">{`Create Quiz & Add Auto-Grading Filters`}</p>
-          </div>
-          <div className="craft-engaging-quizzes">
-            Craft engaging quizzes effortlessly with our intuitive quiz creation
-            tool. Add, edit, and structure quiz questions and solutions to
-            tailor the learning experience. Leverage our powerful "Configure
-            Filters" feature to fine-tune the quiz....
-          </div>
+        <div className="Quiz-Intro-Sec1">
+            <img
+                className="Stacked-Waves"
+                alt=""
+                src={stackedWaves1}
+            />
+            <div className="Quiz-Intro-Sec1-Text">
+                <img 
+                    className="Quiz-Intro-Sec1-Vec1" 
+                    alt="" 
+                    src={vector64} 
+                />
+                <div className="embark-on-a">
+                    Embark on a Knowledge Quest
+                </div>
+                <div className="craft-quizzes-grade">
+                    Craft Quizzes, Grade with Precision, and Educate Effortlessly.
+                </div>
+            </div>
+            <img 
+                className="Quiz-Intro-Sec1-Image" 
+                alt="" 
+                src={QuizzIntro_Icon} 
+            />
+
         </div>
-      </div>
-      <div className="rectangle-container">
-        <div className="group-child5" />
-        <img
-          className="add-files-rafiki-1-1"
-          alt=""
-          src={savedQuizzes}
-        />
-        <div className="group-div">
-          <img className="group-child6" alt="" src={vector71} />
-          <div className="saved-quizzes1">Saved Quizzes</div>
-          <div className="manage-all-your">
-            Manage all your quizzes in one convenient hub. Access, review, and
-            update quizzes with ease. Make necessary adjustments, revisit
-            questions, and improve the learning experience. Save time and
-            streamline your teaching process...
-          </div>
-          <button
-            className="quizintro-view-quizzes-button"
-            onClick={onQuizIntroViewQuizzesButtonClick}
-          >
-            <div className="quizintro-create-a-quiz-button-child" />
-            <div className="view-saved-quizzes">View Saved Quizzes</div>
-          </button>
+
+        <div className="Quiz-Intro-Sec2">
+            <img
+                className="Stacked-Waves"
+                alt=""
+                src={stackedWaves2}
+            />
+            
+            <img
+                className="Quiz-Intro-Sec2-Image"
+                alt=""
+                src={CreateQuizIcon}
+            />
+            <div className="Quiz-Intro-Sec2-Text">
+                <img 
+                    className="Quiz-Intro-Sec2-Vec1" 
+                    alt="" src={vector7} 
+                />
+                <p className="create-quiz1">
+                    Create Quiz & Add Auto-Grading Filters
+                </p>
+                <div className="craft-engaging-quizzes">
+                    Craft engaging quizzes effortlessly with our intuitive quiz creation
+                    tool. Add, edit, and structure quiz questions and solutions to
+                    tailor the learning experience. Leverage our powerful "Configure
+                    Filters" feature to fine-tune the quiz....
+                </div>
+                <button
+                className="quizintro-create-a-quiz-button"
+                onClick={onQuizIntroCreateAQuizButtonClick}
+                >
+                    <div className="create-a-quiz">Create a Quiz</div>
+                </button>
+            </div>
+
         </div>
-      </div>
-      <img className="grades-cuate-1-icon" alt="" src={QuizzIntro_Icon} />
-      <img
-        className="new-entries-cuate-1"
-        alt=""
-        src={CreateQuizIcon}
-      />
-    </div>
+
+        <div className="Quiz-Intro-Sec3">
+            <img
+                className="Stacked-Waves"
+                alt=""
+                src={stackedWaves3}
+            />
+
+            <div className="Quiz-Intro-Sec3-Text">
+                <img 
+                    className="Quiz-Intro-Sec3-Vec1" 
+                    alt="" 
+                    src={vector71} 
+                />
+                <div className="saved-quizzes1">
+                    Saved Quizzes
+                </div>
+                <div className="manage-all-your">
+                    Manage all your quizzes in one convenient hub. Access, review, and
+                    update quizzes with ease. Make necessary adjustments, revisit
+                    questions, and improve the learning experience. Save time and
+                    streamline your teaching process...
+                </div>
+                <button
+                    className="quizintro-view-quizzes-button"
+                    onClick={onQuizIntroViewQuizzesButtonClick}
+                >
+                    <div className="view-saved-quizzes">View Saved Quizzes</div>
+                </button>
+            </div>
+            <img
+                className="Quiz-Intro-Sec3-Image"
+                alt=""
+                src={savedQuizzes}
+            />
+        </div>
+    </>
   );
 };
 
