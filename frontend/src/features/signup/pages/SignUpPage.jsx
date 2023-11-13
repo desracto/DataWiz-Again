@@ -55,7 +55,7 @@ const Signup = () => {
             }
             
         }).catch(error => {
-            console.error(error.response?.data);
+            console.error(error.response.data);
                 if (error.response.data.message === "EUNIDB") 
                 {
                     setEmailTakenError("");

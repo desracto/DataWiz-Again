@@ -57,8 +57,8 @@ def create_quiz():
     # Check if optional fields present
     # Handle the 'question' field if it's present
     if 'question' in data:
-        for problem, answer in data['question']:
-            quiz_question = Quiz_QPA(problem=problem, answer=answer)
+        for question in data['question']:
+            quiz_question = Quiz_QPA(problem=question['question'], answer=question['answer'])
             quiz.questions.append(quiz_question)
 
     # Handle the 'schema' field if it's present

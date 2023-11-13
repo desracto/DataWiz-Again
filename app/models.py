@@ -86,7 +86,7 @@ class Quiz(db.Model):
         self.start_time = datetime.datetime(year, month, day, hour, minute, second)
     
     def add_time(self, time:str):
-        self.start_time = datetime.datetime.strptime(time, "%d/%m/%Y - %H:%M:%S")
+        self.start_time = datetime.datetime.strptime(time, "%m/%d/%Y - %H:%M:%S")
 
     def to_dict(self):
 

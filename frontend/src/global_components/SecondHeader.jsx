@@ -1,5 +1,5 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import {React, useState,useCallback} from "react";
+import { NavLink, useNavigate, Link  } from "react-router-dom";
 import "./Header2.css";
 // import { animation, faqs, home, logo, quizzes, setting } from "../assets/images";
 
@@ -14,20 +14,24 @@ import setting from "../assets/images/Settings-Icon.png";
 
 
 const SecondHeader = () => {
+    const navigate = useNavigate();
+    const [isMobile, setIsMobile] = useState(false);
 
-    const [isMobile, setIsMobile] = React.useState(false);
 
     return (
         <div className="main">
             <div className="Header2Container">
-                {/* Logo */}
-                <div className="logo">
-                    <img src={logo} alt="Logo" />
+                {/* Logo */}  
+                <Link className = "logo" to="/InstructorHomePage">
+                    <div className="logo"   >
+                        <img src={logo} alt="Logo" />
                     <span>
                     Data
                     <span>Wiz.</span>
                     </span>
-                </div>
+                    </div>
+                </Link>
+               
                 <button
                     onClick={() => setIsMobile(!isMobile)}
                     // Add an event handler to toggle the mobile menu
