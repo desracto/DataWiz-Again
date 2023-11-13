@@ -1324,10 +1324,10 @@
   resolved "https://registry.npmjs.org/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@ionic/core@7.5.4", "@ionic/core@^7.5.4":
-  version "7.5.4"
-  resolved "https://registry.yarnpkg.com/@ionic/core/-/core-7.5.4.tgz#81353b835f20f4b225e3a0b69703308196fa7489"
-  integrity sha512-rZbKlcVucRTDOK2Woh4CWPePlsXiUt3G9dCUniduKD7WeiuAk0GzfmoM3WXBvcUpkVTUIOrvKHaqd3JJSWEIzg==
+"@ionic/core@^7.5.3", "@ionic/core@7.5.3":
+  version "7.5.3"
+  resolved "https://registry.npmjs.org/@ionic/core/-/core-7.5.3.tgz"
+  integrity sha512-nd4NV6gSgohLvKHGmf+jAcgzI1387eKq3enjBfE574FK/ikl5CeIltv0MBVJr9lz0pNSL/y9m1tdaFg+syASuA==
   dependencies:
     "@stencil/core" "^4.7.1"
     ionicons "^7.2.1"
@@ -7900,7 +7900,7 @@ react-router@6.16.0:
 
 react-scripts@^5.0.1:
   version "5.0.1"
-  resolved "https://registry.npmjs.org/react-scripts/-/react-scripts-5.0.1.tgz"
+  resolved "https://registry.yarnpkg.com/react-scripts/-/react-scripts-5.0.1.tgz#6285dbd65a8ba6e49ca8d651ce30645a6d980003"
   integrity sha512-8VAmEm/ZAwQzJ+GOMLbBsTdDKOpuZh7RPs0UymvBR2vRk4iZWCskjbFnxqjrzoIvlNNRZ3QJFx6/qDSi6zSnaQ==
   dependencies:
     "@babel/core" "^7.16.0"
