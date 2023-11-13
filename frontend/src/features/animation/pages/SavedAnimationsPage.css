@@ -1,4 +1,4 @@
-.maincontainer {
+.main-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -9,7 +9,7 @@
     margin-bottom: 100px;
 }
 
-.headingcontainer {
+.headingcontainer-savedquizzes {
     display: flex;
     flex-direction: column;
     margin-top: 60px;
@@ -17,12 +17,12 @@
     margin-bottom: 2rem;
 }
 
-.headingsubcontainer {
+.heading-subcontainer {
     color: #000;
    
 }
 
-.headingsubcontainer h1 {
+.heading-subcontainer h1 {
     text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
     font-weight: 700;
     font-size: 3.7rem;
@@ -33,14 +33,14 @@
     margin-left: -39.5rem;
 }
 
-.headingsubcontainer span {
+.heading-subcontainer span {
     font-family: Gilroy-SemiBold;
     display: flex;
     align-items: center;
     margin-top:1rem;
 }
 
-.headingcontainer .button {
+.headingcontainer-savedquizzes .button {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -48,119 +48,79 @@
     
 }
 
-.headingcontainer .button .navlink {
-    display: flex;
-    align-items: center;
-    text-decoration-line: none;
-    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    font-weight: 700 !important;
-    font-family: Gilroy-Bold;
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
-    background-color: #F0C64A;
-    border-style: none;
-    border-radius: 0.25rem;
-    justify-content: center;
-    cursor: pointer;
-    min-width: 136px;
-    width: 50%;
-    color:black;
-    
-}
-
-
-
-.button-div {
+.content-card-button-div {
     cursor: pointer;
 }
 
-.completed span2 {
-    font-size: 17px;
-    color:#01BC08;
-    font-family: Gilroy-Bold;
-    margin-left: 32rem;
-    position: relative;
-    bottom: 35px;
-    margin-bottom: -20px;
-  }
 
-.completed span3 {
-    font-size: 17px;
-    color:#FB3F3F;
-    font-family: Gilroy-Bold;
-    margin-left: 49rem;
-    position: relative;
-    bottom: 35px;
-    margin-bottom: -20px;
-}
 
-.headingcontainer .button .navlink:hover {
+.headingcontainer-savedquizzes .button .navlink:hover {
     background: #331B3B;
     color: white;
     transition: 0.45s;
 }
 
-.contentcontainer {
+.content-container {
     display: flex;
     box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    background-color: #D8D8D8;
+    background-color: #F5F6F6;
     border-radius: 2.5rem;
     flex-direction: column;
-    width: 95%;
+    width: 50%;
     padding: 2rem;
     height: auto;
     margin-top: 1rem;
 }
 
-.contentcontainer .content_heading {
+.content-container .content_heading {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2.5rem;
 }
 
-.contentcontainer .content_heading span{
+.content-container .content_heading span{
     font-size: 28px;
     font-family: Gilroy-Bold;
     text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-.contentcontainer .content_heading span1{
+.content-container .content_heading span1{
     font-size: 28px;
     font-family: Gilroy-Bold;
     color: #454141;
     margin-top: 0.75rem;
 }
 
-.contentcontainer .content_card{
+.content-container .animation-content_card{
     display: flex;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    padding-left: 1.5rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    padding-left: 1.8rem;
     padding-right: 1.5rem;
-    background-color: #fff;
-    border-radius: 1rem;
+    background-color: #D4C1CE;
+    border-radius: 1.5rem;
     justify-content: space-between;
     align-items: center;
     width: auto;
     margin-bottom: 2rem;
 }
-.contentcontainer .content_card div {
+.content-container .animation-content_card div {
     width: 100%;
     display: flex;
     flex-direction: column;
 }
-.contentcontainer .content_card div span{
+.content-container .animation-content_card div span{
     font-family: Gilroy-SemiBold;
     margin-left: 0.5rem
 }
-.contentcontainer .content_card div small{
+.content-container .animation-content_card div small{
     font-family: Gilroy-Regular;
     margin-left: 0.5rem;
 }
 @media (min-width: 768px) {
-    .contentcontainer {
+    .content-container {
         padding: 4.5rem;
         max-width: 788px;
         

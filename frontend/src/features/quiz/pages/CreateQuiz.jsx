@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 import { useDropzone } from "react-dropzone";
 import { useLocation } from "react-router-dom"; // Import useLocation
 import { FaFilter, FaSave, FaTrash } from "react-icons/fa";
@@ -7,6 +8,16 @@ import FilterModal from "../components/FilterModal";
 import SuccessModal from "../components/SuccessModal";
 import "./CreateQuiz.css";
 import SecondHeader from '../../../global_components/SecondHeader';
+
+const request = axios.create({
+    baseURL: "http://localhost:5000",
+    headers: {
+        "Content-Type" : "application/json"
+    },
+    withCredentials: true,
+    timeout: 300000
+})
+
 
 function CreateQuiz() {
   const [schemaAdded, setSchemaAdded] = useState(false);
@@ -20,18 +31,20 @@ function CreateQuiz() {
 
   const [schemasList, setSchemasList] = useState([]);
   const [isSaved, setIsSaved] = useState(false);
-  const quizNameRef = useRef(quizName);
-  
- // Function to generate a unique ID
- function generateUniqueId() {
-    // Creates a unique identifier based on the current time and a random number
-    return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-  }
 
-  
+  // Sets a variable that does not cause a re-render on value change
+  // However, the variable persists even after the original value changes
+  const quizNameRef = useRef(quizName);
+  // Changes the ref object on quizName changes 
   useEffect(() => {
     quizNameRef.current = quizName;
   }, [quizName]);
+  
+ // Function to generate a unique ID
+    function generateUniqueId() {
+        // Creates a unique identifier based on the current time and a random number
+        return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    }
 
   // Save draft function
   const saveDraft = () => {
@@ -69,32 +82,44 @@ function CreateQuiz() {
     }
   }, [location]);
 
-  
-  const saveQuiz = () => {
-    if (!quizName.trim()) {
-      alert("Please enter a quiz name.");
-      return;
-    }
+    const saveQuiz = () => {
+        if (!quizName.trim()) {
+            alert("Please enter a quiz name.");
+            return;
+        }
 
-    const currentDate = new Date();
-    const newQuiz = {
-      id: Date.now(), // Simple unique ID for demonstration
-      name: quizName,
-      description: quizDescription,
-      questions: questions,
-      date: currentDate.toLocaleDateString(), // Saves only the date
-      time: currentDate.toLocaleTimeString(), // Saves only the time
+        const currentDate = new Date();
+        const options = {day: 'numeric', month: 'numeric', year: 'numeric'};
+        const newQuiz = {
+            id: Date.now(), // Simple unique ID for demonstration
+            quiz_name: quizName,
+            description: quizDescription,
+            question: questions,
+            start_time: currentDate.toLocaleDateString(undefined, options) + " - " + currentDate.toLocaleTimeString().replace(/\s[AP]M$/, ''), // Saves only the date
+            user_id: "71e5434eed094515917c08a3e7e9b682"
+            // time: currentDate.toLocaleTimeString(), // Saves only the time
+        };
+
+        const savedQuizzes = JSON.parse(localStorage.getItem("quizzes") || "[]");
+        savedQuizzes.unshift(newQuiz); // Add the new quiz at the beginning of the array
+        localStorage.setItem("quizzes", JSON.stringify(savedQuizzes));
+
+        console.log(newQuiz )
+        request({
+            url: "api/quiz/",
+            method: "post",
+            data: newQuiz
+        }).then(response => {
+            console.log(response.data)
+        }).catch(error => {
+            console.error(error)
+        })
+
+        setQuizName("");
+        setQuizDescription("");
+        setQuestions([]);
+        alert("Quiz saved successfully!");
     };
-
-    const savedQuizzes = JSON.parse(localStorage.getItem("quizzes") || "[]");
-    savedQuizzes.unshift(newQuiz); // Add the new quiz at the beginning of the array
-    localStorage.setItem("quizzes", JSON.stringify(savedQuizzes));
-
-    setQuizName("");
-    setQuizDescription("");
-    setQuestions([]);
-    alert("Quiz saved successfully!");
-  };
 
   const handleSubmission = (id) => {
     const exist = schemasList.find((schema) => schema?.id == id);

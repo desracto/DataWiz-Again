@@ -4,7 +4,7 @@ import ToggleSwitch from "../../../global_components/ToggleButton";
 function FilterModal({onClose}) {
   return (
     <div className="fixed top-0 bottom-0 left-0 right-0 w-full h-screen flex justify-center items-center bg-black/70">
-      <div className="flex flex-col h-auto bg-[#D8D8D8] w-[1200px] md:max-w-[768px]  p-10 md:p-14 rounded-3xl shadow-lg items-center">
+      <div className="flex flex-col h-auto bg-[#D8D8D8] w-[1200px] md:max-w-[868px]  p-10 md:p-14 rounded-3xl shadow-lg items-center">
         <div className="flex w-full max-w-7xl flex-col mb-8">
           <div className="text-black mb-8">
             <div className="text-[3rem] mb-2 font-bold inline-block [text-shadow:0px_2px_2px_rgba(0,_0,_0,_0.25)] font-gilroy-semibold w-[100%] ">

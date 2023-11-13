@@ -46,24 +46,24 @@ const InstructorHomePage = () => {
     }, [navigate]);
 
     const onTryOutQuizzesButtonClick = useCallback(() => {
-    // Please sync "Schema Selection Page" to the project
-    }, []);
+        navigate("/QuizHomePage");
+    }, [navigate]);
 
     const onSchemaSelectionCardClick = useCallback(() => {
         navigate("/SchemaSelectionPage");
     }, [navigate]);
 
     const onCreateQuizButtonClick = useCallback(() => {
-    // Please sync "Quiz Filters Page" to the project
-    }, []);
+        navigate("/QuizHomePage");
+    }, [navigate]);
 
     const onSavedQueryAnimationCardClick = useCallback(() => {
     // Please sync "Saved Animation Page" to the project
     }, []);
 
     const onSavedQuizzesCardClick = useCallback(() => {
-    // Please sync "Saved Quizzes Page" to the project
-    }, []);
+        navigate("/saved_quizzes");
+    }, [navigate]);
 
   return (
     <>
