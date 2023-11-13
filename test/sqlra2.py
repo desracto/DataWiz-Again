@@ -53,6 +53,22 @@ def identify_processes(stmt_dict: dict) -> dict:
     """
         This is to only understand what functions must be called in the 
         PROCESS section. 
+
+        :param ``SELECT/DISTINCT``: False
+        ``True`` condition: multiple columns exist in the ``SELECT`` keyword.
+        If ``DISTINCT`` keyword exists, it swaps the values to ``SELECT``
+
+        :param ``WHERE``: False
+        ``True`` condition: If the ``WHERE`` clause exists in the query
+
+        :param ``FROM``: False
+        ``True`` condition: If the multiple tables exist in the ``FROM`` clause
+
+        :param ``JOIN``: False
+        ``True`` condition: If any of the JOINs exist in the query
+
+        :param ``SUB-QUERY``: False
+        ``True`` condition: If a sub-query exists in any of the values
     """
     bool_processes = {
         "SELECT": False,
@@ -173,54 +189,99 @@ def join_clause(stmt_dict: dict):
 
 def from_clause(stmt_dict: dict):
     # retrieve all tables
-    from_tables = stmt_dict['FROM']
+    # and where conditions, empty arrays if they dont exist
+    tables = stmt_dict['FROM']
+    conditions = stmt_dict.get('WHERE', []) + stmt_dict.get('AND', [])
 
-    # find the join condition on a pair-basis
-    where_conditions = stmt_dict['WHERE'] + stmt_dict.get('AND', [])
+    join_nodes = []
+    completed_conditions = []
 
-    # create outter-most JOIN node
-    matched = []
-    for left_table in from_tables:
-        for cond in where_conditions:
-            for right_table in from_tables:
-                # skip matched tables
-                if left_table == right_table:
-                    continue
+    # tables and conditions found
+    # creates matching pairs
+    # {
+    #   "LEFT": left-table,
+    #   "RIGHT": right-table,
+    #   "ON": On-condition
+    # }
+    for left_table in tables:
+        for condition in conditions:
+            for right_table in tables:
 
-                if left_table.value in cond.value and \
-                    right_table.value in cond.value:
+                if left_table.value == right_table.value:
+                    continue     
 
-                        matched.append({
-                            "LEFT": left_table.value,
-                            "RIGHT": right_table.value,
-                            "ON": cond.value
+                # check if condition has equality operator
+                if '=' in condition.value:
+                    equality_operator = condition.value.find('=')
+                    if  left_table.value in condition.value and \
+                        right_table.value in condition.value and \
+                        condition.value not in completed_conditions:
+
+                        join_nodes.append({
+                            'LEFT': left_table.value,
+                            'RIGHT': right_table.value,
+                            'ON': condition.value
                         })
+                        
+                        completed_conditions.append(condition.value)
 
-                        break
+    pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(join_nodes)
 
-    # remove all duplicates
-    cleaned_match = []
-    cond_done = []
-    for match in matched:
-        current_cond = match['ON']        
-        if current_cond in cond_done:
+    # Create one overall node
+    join = {
+        "LEFT": None,
+        "RIGHT": None,
+        "ON": None
+    }
+
+    for match in join_nodes:
+        # outter node has not been established yet
+        if not join['LEFT']:
+            join['LEFT'] = match['LEFT']
+            join['RIGHT'] = match['RIGHT']
+            join['ON'] = match['ON']
+        elif join['RIGHT']:
+            temp = {
+                'LEFT': join['LEFT'],
+                'RIGHT': join['RIGHT'],
+                'ON': join['ON']
+            }
+
+            join['LEFT'] = match['RIGHT']
+            join['RIGHT'] = temp
+            join['ON'] = match['ON']
+
+    # remove matched conditions from selection array
+    # naive way
+    cleaned_conditions = []
+    for condition in conditions:
+        if condition.value in completed_conditions:
             continue
         else:
-            cleaned_match.append(match)
-            cond_done.append(current_cond)
+            cleaned_conditions.append(condition)
 
-    pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(cleaned_match)
+    # multiple conditions
+    if len(cleaned_conditions) > 1:
+        stmt_dict['WHERE'] = cleaned_conditions[0]
+        stmt_dict['AND'] = cleaned_conditions[1:]
 
-    # connect them
+    stmt_dict['WHERE'] = cleaned_conditions
+    
+    # Delete old nodes
+    del stmt_dict['FROM']
+    del stmt_dict['AND']
 
-def join_processing(stmt_dict: dict, which: str):
-    if which == 'JOIN':
+    stmt_dict['INNER JOIN'] = join
+
+def join_processing(stmt_dict: dict, type: str):
+    if type == 'JOIN':
         join_clause(stmt_dict)
-    elif which == 'FROM':   
+    elif type == 'FROM':
         from_clause(stmt_dict)
 
 def process(stmt_tokens, DEBUG = True) -> dict:
     # isolate the where keyword first
+    # if it exists
     isolate_where(stmt_tokens)
     if DEBUG:
         print("PROCESS STEP: KEYWORD-VALUE SPLIT")
@@ -249,10 +310,10 @@ def process(stmt_tokens, DEBUG = True) -> dict:
         process_keyword(stmt_dict, 'FROM')
         join_processing(stmt_dict, 'FROM')
 
-        # if DEBUG:
-        #     print("PROCESS STEP: JOIN PROCESSING")
-        #     pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(stmt_dict)
-        #     print("\n")
+        if DEBUG:
+            print("PROCESS STEP: JOIN PROCESSING")
+            pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(stmt_dict)
+            print("\n")
     elif bool_processes['JOIN']:
         join_processing(stmt_dict, 'JOIN')
 
@@ -301,8 +362,6 @@ def process(stmt_tokens, DEBUG = True) -> dict:
 def translate_query(query: str, DEBUG=True, CLEAN=False):
     # pre-process
     query = pre_process(query)
-
-    # convert query to tokens
     stmt_tokens = parse(query)[0].tokens
 
     # process
@@ -314,11 +373,16 @@ if __name__ == "__main__":
     # retrieves the name and id of employees
     # who have 500 of their product's stock left
     sql = "SELECT employees.name, employees.id, products.stock AS stock" \
-            " FROM employees, products, inventory" \
+            " FROM employees, products, inventory, stock" \
             " WHERE employees.id = products.emp_id" \
                 " AND products.id = inventory.prod_id" \
-                " AND inventory.stock > 500;"
+                " AND inventory.stockID = stock.id" \
+                " AND inventory.items > 500;"
     
+    # # retrieves all employee names
+    # sql =   "SELECT name " \
+    #         "FROM employees, products"
+
     # sql =   "SELECT employees.name, employees.id, products.stock AS stock " \
     #         "FROM employees " \
     #         "INNER JOIN products " \
@@ -336,3 +400,7 @@ if __name__ == "__main__":
     #         "WHERE inventory.stock > 50"
     
     translate_query(sql)
+
+
+
+# Cant handle multiple inner joins
