@@ -3,6 +3,7 @@ import { useNavigate} from "react-router-dom";
 import "./AnimationIntroductionPage.css";
 import SecondHeader from "../../../global_components/SecondHeader";
 
+
 //Image imports
 import animQuery from '../../../assets/images/animInto-QueryAnimation.png';
 import vector62 from '../../../assets/images/vector-62.svg';
@@ -17,7 +18,7 @@ const AnimationIntroductionPage = () => {
     navigate("/SchemaSelectionPage")
   }, [navigate]);
   const onAnimIntroSavedQueriesButtonClick = useCallback(() => {
-    navigate("/SchemaSelectionPage")
+    navigate("/SavedAnimationsPage")
   }, []);
 
 
