@@ -1324,21 +1324,21 @@
   resolved "https://registry.npmjs.org/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@ionic/core@7.5.3", "@ionic/core@^7.5.3":
+"@ionic/core@^7.5.3", "@ionic/core@7.5.3":
   version "7.5.3"
   resolved "https://registry.npmjs.org/@ionic/core/-/core-7.5.3.tgz"
   integrity sha512-nd4NV6gSgohLvKHGmf+jAcgzI1387eKq3enjBfE574FK/ikl5CeIltv0MBVJr9lz0pNSL/y9m1tdaFg+syASuA==
   dependencies:
-    "@stencil/core" "^4.6.0"
+    "@stencil/core" "^4.7.1"
     ionicons "^7.2.1"
     tslib "^2.1.0"
 
-"@ionic/react@^7.5.3":
-  version "7.5.3"
-  resolved "https://registry.npmjs.org/@ionic/react/-/react-7.5.3.tgz"
-  integrity sha512-qnHz/g84mqLenUAoyi6HL181xvq3izVG/sD2hQ6iX3QjGQKMnbWNVo6M3YK4FJI1ht91NzhFxs6qvXHFcA1o4g==
+"@ionic/react@^7.5.4":
+  version "7.5.4"
+  resolved "https://registry.yarnpkg.com/@ionic/react/-/react-7.5.4.tgz#9d85118bdc2a5aa5e854f424726d7feb389d5bd2"
+  integrity sha512-SJ/iHPgHg5FeOka8AzoSWFM1zi923yqTEEqTjAJczjow4V276e3YWy5YoVzPMg+k2ti4YaIJSkUU9hypcwfDMg==
   dependencies:
-    "@ionic/core" "7.5.3"
+    "@ionic/core" "7.5.4"
     ionicons "^7.0.0"
     tslib "*"
 
@@ -1753,10 +1753,15 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@stencil/core@^4.0.3", "@stencil/core@^4.6.0":
+"@stencil/core@^4.0.3":
   version "4.7.0"
   resolved "https://registry.npmjs.org/@stencil/core/-/core-4.7.0.tgz"
   integrity sha512-hl3hD5FA8F9kZiDJSus08Kno1QRl+fXeMBzrl5DjWAzAu0JHxL1AqTph5oQSekjvkSahaa8JtsXnHRZU93eivg==
+
+"@stencil/core@^4.7.1":
+  version "4.7.1"
+  resolved "https://registry.yarnpkg.com/@stencil/core/-/core-4.7.1.tgz#38f3f42c2348bebd22aee34fc170518870b9baa0"
+  integrity sha512-KDWA/3qDiABA5LqtHCmTVwORuzgu/YdC0FpSBwVmwlw6K8jUjbTA5JB6Q03da2F+EQlDHOVgbW0TNtHCm54uXQ==
 
 "@surma/rollup-plugin-off-main-thread@^2.2.3":
   version "2.2.3"
@@ -7831,7 +7836,7 @@ react-dom@^18.2.0:
 
 react-dropzone@^14.2.3:
   version "14.2.3"
-  resolved "https://registry.npmjs.org/react-dropzone/-/react-dropzone-14.2.3.tgz"
+  resolved "https://registry.yarnpkg.com/react-dropzone/-/react-dropzone-14.2.3.tgz#0acab68308fda2d54d1273a1e626264e13d4e84b"
   integrity sha512-O3om8I+PkFKbxCukfIR3QAGftYXDZfOE2N1mr/7qebQJHs7U+/RSL/9xomJNpRg9kM5h9soQSdf0Gc7OHF5Fug==
   dependencies:
     attr-accept "^2.2.2"
@@ -7855,7 +7860,7 @@ react-hook-form@^7.48.2:
 
 react-icons@^4.11.0:
   version "4.11.0"
-  resolved "https://registry.npmjs.org/react-icons/-/react-icons-4.11.0.tgz"
+  resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.11.0.tgz#4b0e31c9bfc919608095cc429c4f1846f4d66c65"
   integrity sha512-V+4khzYcE5EBk/BvcuYRq6V/osf11ODUM2J8hg2FDSswRrGvqiYUYPRy4OdrWaQOBj4NcpJfmHZLNaD+VH0TyA==
 
 react-is@^16.13.1:
