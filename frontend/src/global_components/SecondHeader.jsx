@@ -61,7 +61,7 @@ const SecondHeader = () => {
                     </NavLink>
 
                     <NavLink to={"/QuizzesIntroductionPage"} className="nav_link">
-                    <img src={quizzes} alt="Menu Icon 3" style={{ maxWidth: '21px', height: 'auto', marginBottom:'-2px', marginTop:'1px' }}/>
+                    <img src={quizzes} alt="Menu Icon 3" style={{ maxWidth: '21px', height: 'auto', marginBottom:'-2.1px', marginTop:'1px' }}/>
                     <span className="menu_top_quiz">Quizzes</span>
                     </NavLink>
 
