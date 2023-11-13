@@ -1,4 +1,4 @@
-.main_container {
+.maincontainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -9,54 +9,54 @@
     margin-bottom: 100px;
 }
 
-.heading_container {
+.headingcontainer {
     display: flex;
     flex-direction: column;
     margin-top: 60px;
-    max-width: 75rem;
+    max-width: 48rem;
     margin-bottom: 2rem;
 }
 
-.heading_sub_container {
+.headingsubcontainer {
     color: #000;
-    margin-bottom: 2rem;
+   
 }
 
-.heading_sub_container h1 {
+.headingsubcontainer h1 {
     text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
     font-weight: 700;
-    font-size: 4.1rem;
+    font-size: 3.7rem;
     font-family: Gilroy-SemiBold;
     display: inline-block;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0rem;
     margin-top: 0 !important;
+    margin-left: -39.5rem;
 }
 
-.heading_sub_container span {
+.headingsubcontainer span {
     font-family: Gilroy-SemiBold;
     display: flex;
     align-items: center;
     margin-top:1rem;
 }
 
-.heading_container .button {
+.headingcontainer .button {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    margin-top: 1.5rem;
     
     
 }
 
-.heading_container .button .navlink {
+.headingcontainer .button .navlink {
     display: flex;
     align-items: center;
     text-decoration-line: none;
     box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
     font-weight: 700 !important;
     font-family: Gilroy-Bold;
-    padding-top: 1.2rem;
-    padding-bottom: 1.2rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
     background-color: #F0C64A;
     border-style: none;
     border-radius: 0.25rem;
@@ -68,71 +68,108 @@
     
 }
 
+
+
 .button-div {
     cursor: pointer;
 }
 
-.heading_container .button .navlink:hover {
+.completed span2 {
+    
+    
+    font-size: 17px;
+    color:#01BC08;
+    font-family: Gilroy-Bold;
+    margin-left: 32rem;
+    position: relative;
+    bottom: 35px;
+    margin-bottom: -20px;
+  }
+
+  .completed span3 {
+    
+    
+    font-size: 17px;
+    color:#FB3F3F;
+    font-family: Gilroy-Bold;
+    margin-left: 49rem;
+    position: relative;
+    bottom: 35px;
+    margin-bottom: -20px;
+  }
+
+.headingcontainer .button .navlink:hover {
     background: #331B3B;
     color: white;
     transition: 0.45s;
 }
 
-.content_container {
+.contentcontainer {
     display: flex;
     box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
     background-color: #D8D8D8;
     border-radius: 2.5rem;
     flex-direction: column;
-    width: 90%;
-    
+    width: 95%;
+    padding: 2rem;
     height: auto;
-    margin-top: 2.5rem;
+    margin-top: 1rem;
+    
+    
 }
 
-.content_container .content_heading {
+.contentcontainer .content_heading {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 3rem;
-    margin-top: 1.7rem;
+    margin-bottom: 2.5rem;
     
 }
-.content_container .content_heading span{
-    font-size: 35px;
+.contentcontainer .content_heading span{
+    font-size: 28px;
     font-family: Gilroy-Bold;
+    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-.content_container .content_card{
+
+.contentcontainer .content_heading span1{
+    font-size: 28px;
+    font-family: Gilroy-Bold;
+    color: #454141;
+    margin-top: 0.75rem;
+}
+
+.contentcontainer .content_card{
     display: flex;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    padding-top: 1.6rem;
-    padding-bottom: 1.6rem;
-    padding-left: 2.2rem;
-    padding-right: 2.2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
     background-color: #fff;
-    border-radius: 1.4rem;
+    border-radius: 1rem;
     justify-content: space-between;
     align-items: center;
     width: auto;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
 }
-.content_container .content_card div {
+.contentcontainer .content_card div {
     width: 100%;
     display: flex;
     flex-direction: column;
 }
-.content_container .content_card div span{
+.contentcontainer .content_card div span{
     font-family: Gilroy-SemiBold;
+    margin-left: 0.5rem
 }
-.content_container .content_card div small{
+.contentcontainer .content_card div small{
     font-family: Gilroy-Regular;
     margin-left: 0.5rem;
 }
 @media (min-width: 768px) {
-    .content_container {
-        padding: 25px 40px;
-        width: 150%; 
-        max-width: 830px;
+    .contentcontainer {
+        padding: 4.5rem;
+        max-width: 788px;
+        
     }
 }

@@ -15,6 +15,12 @@ import AnimationIntroductionPage from './features/general/pages/AnimationIntrodu
 import SchemaSelectionPage from './features/animation/pages/SchemaSelectionPage'
 import QueryAnimationPage from './features/animation/pages/QueryAnimationPage'
 
+//Quizz Pages
+import CreateQuiz from './features/quiz/pages/CreateQuiz';
+import QuizHome from './features/quiz/pages/QuizHome';
+import SavedQuizzes from './features/quiz/pages/SavedQuizzesPage';
+import UNCompletedQuiz from './features/quiz/pages/UNCompletedQuiz';
+
 function App() {
   return (
     <div>
@@ -30,6 +36,11 @@ function App() {
           <Route path="/AnimationIntroductionPage" element={<AnimationIntroductionPage />} /> {/* To make sure this path is also valid, without the root path*/}
           <Route path="/SchemaSelectionPage" element={<SchemaSelectionPage />} /> 
           <Route path="/QueryAnimationPage" element={<QueryAnimationPage />} /> 
+          <Route path="/QuizHomePage" element={<QuizHome />} />
+          <Route path="/CreateQuizPage" element={<CreateQuiz />} />
+          <Route path="/saved_quizzes" element={<SavedQuizzes />}/>
+          <Route path="/UncompletedQuizPage" element={<UNCompletedQuiz />}/>
+
         </Routes>
       </BrowserRouter>
     </div>

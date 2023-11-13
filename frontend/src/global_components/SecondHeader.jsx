@@ -51,12 +51,12 @@ const SecondHeader = () => {
                 <div className="menu_list">
 
                     <NavLink to="/InstructorHomePage" className="nav_link">
-                    <img src={home} alt="Menu Icon 3" />
+                    <img src={home} alt="Menu Icon 3"style={{ maxWidth: '30px', height: 'auto', marginBottom:'-1px', marginTop:'1px' }} />
                     <span className="menu_top">Home</span>
                     </NavLink>
 
                     <NavLink to="/AnimationIntroductionPage" className="nav_link">
-                    <img src={animation} alt="Menu Icon 3" />
+                    <img src={animation} alt="Menu Icon 3" style={{ maxWidth: '30px', height: 'auto', marginBottom:'-1px', marginTop:'1px' }} />
                     <span className="menu_top">Animation</span>
                     </NavLink>
 
@@ -66,12 +66,12 @@ const SecondHeader = () => {
                     </NavLink>
 
                     <NavLink href="#" className="nav_link">
-                    <img src={faqs} alt="Menu Icon 3" />
+                    <img src={faqs} alt="Menu Icon 3" style={{ maxWidth: '43px', height: 'auto', marginBottom:'-1px', marginTop:'1px' }}/>
                     <span className="menu_top">FAQs</span>
                     </NavLink>
 
                     <NavLink href="#" className="nav_link">
-                    <img src={setting} alt="Menu Icon 3" />
+                    <img src={setting} alt="Menu Icon 3" style={{ maxWidth: '30px', height: 'auto', marginBottom:'-1px', marginTop:'1px' }}/>
                     <span className="menu_top">Settings</span>
                     </NavLink>
 

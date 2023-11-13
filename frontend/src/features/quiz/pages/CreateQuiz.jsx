@@ -1,21 +1,75 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from 'react';
 import { useDropzone } from "react-dropzone";
+import { useLocation } from "react-router-dom"; // Import useLocation
 import { FaFilter, FaSave, FaTrash } from "react-icons/fa";
 import { MdOutlineAddCircleOutline } from "react-icons/md";
 import FilterModal from "../components/FilterModal";
 import SuccessModal from "../components/SuccessModal";
 import "./CreateQuiz.css";
+import SecondHeader from '../../../global_components/SecondHeader';
 
 function CreateQuiz() {
   const [schemaAdded, setSchemaAdded] = useState(false);
   const [files, setFiles] = useState([]);
   const [showSubmitButton, setShowSubmitButton] = useState(false);
 
+  const location = useLocation(); // Get the location hook
+
   const [quizName, setQuizName] = useState("");
   const [quizDescription, setQuizDescription] = useState("");
 
   const [schemasList, setSchemasList] = useState([]);
+  const [isSaved, setIsSaved] = useState(false);
+  const quizNameRef = useRef(quizName);
+  
+ // Function to generate a unique ID
+ function generateUniqueId() {
+    // Creates a unique identifier based on the current time and a random number
+    return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  }
 
+  
+  useEffect(() => {
+    quizNameRef.current = quizName;
+  }, [quizName]);
+
+  // Save draft function
+  const saveDraft = () => {
+    const currentQuizName = quizNameRef.current; // Use current value from the ref
+    if (!currentQuizName.trim()) return;
+
+    const drafts = JSON.parse(localStorage.getItem('drafts') || '[]');
+    const newDraft = {
+      id: generateUniqueId(),
+      name: currentQuizName,
+      date: new Date().toLocaleDateString(),
+      time: new Date().toLocaleTimeString(),
+      isDraft: true
+    };
+
+    // Add new draft at the start of the array
+    drafts.unshift(newDraft);
+    // Save the updated drafts array to local storage
+    localStorage.setItem('drafts', JSON.stringify(drafts));
+  };
+
+  // Effect for handling the saving of draft when component unmounts
+  useEffect(() => {
+    // Cleanup function that runs when the component unmounts
+    return saveDraft;
+  }, []); 
+
+  useEffect(() => {
+    // If there's a draft in the state, load it
+    if (location.state && location.state.draft) {
+      const { name, description } = location.state.draft;
+      setQuizName(name);
+      setQuizDescription(description);
+      // Handle loading questions or other parts of the draft as needed
+    }
+  }, [location]);
+
+  
   const saveQuiz = () => {
     if (!quizName.trim()) {
       alert("Please enter a quiz name.");
@@ -132,6 +186,8 @@ function CreateQuiz() {
   };
 
   return (
+    <>
+    <SecondHeader/>
     <div className="create-quiz-container">
       {filterModal ? <FilterModal onClose={() => setFilterModal(false)} /> : null}
       {successModal ? <SuccessModal onClose={() => setSuccessModal(false)} /> : null}
@@ -176,12 +232,15 @@ function CreateQuiz() {
                 className="description-textarea"
                 placeholder="Description"
                 rows={5}
+                value={quizDescription}
+                onChange={(e) => setQuizDescription(e.target.value)}
                 style={{ resize: "none" }} // Add this line
               />
             </div>
           </div>
 
-          {schemasList?.length > 0 ? (
+          {
+          schemasList?.length > 0 ? (
             <div className="w-full flex flex-col gap-5">
               {schemasList.map((schema, index) => (
                 <div key={index}>
@@ -353,6 +412,7 @@ function CreateQuiz() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
