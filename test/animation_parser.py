@@ -1,4 +1,5 @@
 # keywords = ['SELECT', 'FROM', 'WHERE', 'GROUP BY', 'HAVING', "LIMIT", 'ORDER BY']
+from sqlra import *
 
 def find_subqueries(d):
     subqueries = []
@@ -49,14 +50,15 @@ join_types = ['INNER JOIN', 'LEFT JOIN', 'LEFT OUTER JOIN', 'RIGHT JOIN', 'RIGHT
 
 def checker(query):
     query_list = []
-    print(f"Query: {query}")
+    # print(f"Query: {query}")
 
     join_check = any(key in query for key in join_types)
     subq_check = find_subqueries(query)
 
     if len(subq_check) >1:
-        print("present sub-query")
-        print("trim it be removing the first one")
+        # print("present sub-query")
+        # print("trim it be removing the first one")
+        print()
     if join_check:
         # print("found join")
         # query_list.append('select * .....')
@@ -95,20 +97,33 @@ def checker(query):
     return query_list
 
 def main():
-    sql = {'SELECT': [   'program.name',
-                  'scores.inspiration',
-                  {   'SELECT': ['MAX(price)'],
-                      'FROM': ['product_prices'],
-                      'WHERE': ['product_id', '=', 'products.product_id']}],
-    'FROM': ['programme'],
-    'INNER JOIN': {   'RIGHT TABLE': 'scores',
-                      'ON': ['programme.id', '=', 'score.id']},
-    'WHERE': [   's.inspiration',
-                 '>',
-                 {'SELECT': ['AVG(INSPIRATION)'], 'FROM': ['SCORES']}],
-    'GROUP BY': ['id']}
+
+    q = "SELECT program.name, scores.inspiration, \
+            (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price \
+           FROM programme \
+           INNER JOIN scores \
+                ON programme.id = score.id  \
+           WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) \
+           GROUP BY id \
+           HAVING something"
+    sql = translate_query(query = q,
+                                DEBUG=True,
+                                CLEAN=True)
+    # sql = {'SELECT': [   'program.name',
+    #               'scores.inspiration',
+    #               {   'SELECT': ['MAX(price)'],
+    #                   'FROM': ['product_prices'],
+    #                   'WHERE': ['product_id', '=', 'products.product_id']}],
+    # 'FROM': ['programme'],
+    # 'INNER JOIN': {   'RIGHT TABLE': 'scores',
+    #                   'ON': ['programme.id', '=', 'score.id']},
+    # 'WHERE': [   's.inspiration',
+    #              '>',
+    #              {'SELECT': ['AVG(INSPIRATION)'], 'FROM': ['SCORES']}],
+    # 'GROUP BY': ['id']}
     a = converter(sql)
-    print(a)
+    # print(a)
+    print("\n")
     b = checker(a)
     for i in b:
         print(i)
