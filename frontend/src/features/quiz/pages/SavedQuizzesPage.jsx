@@ -20,6 +20,7 @@ function SavedQuizzes() {
     localStorage.setItem('quizzes', JSON.stringify(updatedQuizzes));
     window.location.reload(); // Refresh the page to update the UI
   };
+  
   const goToUncompletedQuiz = (quizId) => {
     // Navigate to the UNCompletedQuiz page with the quiz ID as a parameter
     navigate(`/uncompleted-quiz/${quizId}`);
@@ -29,63 +30,63 @@ function SavedQuizzes() {
     <>
     <SecondHeader/>
     <div className="maincontainer">
-      <div className="headingcontainer">
-        <div className="headingsubcontainer">
-          <h1>Saved Quizzes</h1>
-          
-        </div>
-        
-      </div>
-      <div className="contentcontainer ">
-        <div className="content_heading">
-          <span>Recent Quizzes </span>
-          <FaTrash 
-                color="#98989F" 
-                size={24} 
-                style={{cursor: "pointer"}}
-                onClick={deleteMostRecentQuiz}
-              />
-          
-        </div>
-        {savedQuizzes.map((quiz, index) => (
-        <div key={quiz.id} className="content_card">
-        <div className="button-div completed ">
-                 
-            <span> {quiz.name}</span>
-            <small>Date: {quiz.date}</small>
-            <small>Time: {quiz.time}</small> 
-            <span3>UNATTEMPTED</span3> 
-          
+        <div className="headingcontainer">
+            <div className="headingsubcontainer">
+                <h1>Saved Quizzes</h1>
+            
             </div>
             
-          <FaChevronRight style={{cursor:"pointer"}} 
-           onClick={() => goToUncompletedQuiz(quiz.id)}
-          />
-          
         </div>
-        ))}
-        
-        
-        <div className="content_heading">
-          <span1>All Quizzes</span1>
-        </div>
+        <div className="contentcontainer ">
+            <div className="content_heading">
+            <span>Recent Quizzes </span>
+            <FaTrash 
+                    color="#98989F" 
+                    size={24} 
+                    style={{cursor: "pointer"}}
+                    onClick={deleteMostRecentQuiz}
+                />
+            
+            </div>
+            {savedQuizzes.map((quiz, index) => (
+            <div key={quiz.id} className="content_card">
+            <div className="button-div completed ">
+                    
+                <span> {quiz.name}</span>
+                <small>Date: {quiz.date}</small>
+                <small>Time: {quiz.time}</small> 
+                <span3>UNATTEMPTED</span3> 
+            
+                </div>
+                
+            <FaChevronRight style={{cursor:"pointer"}} 
+            onClick={() => goToUncompletedQuiz(quiz.id)}
+            />
+            
+            </div>
+            ))}
+            
+            
+            <div className="content_heading">
+            <span1>All Quizzes</span1>
+            </div>
 
-        {savedQuizzes.map((quiz, index) => (
-        <div key={quiz.id} className="content_card">
-          <div className="button-div completed ">
-                 
-          <span> {quiz.name}</span>
-            <small>Date: {quiz.date}</small>
-            <small>Time: {quiz.time}</small> 
-            <span3>UNATTEMPTED</span3> 
-          
-          </div>
-          
-          <FaChevronRight style={{cursor:"pointer"}} onSubmit={{}}/>
+            {savedQuizzes.map((quiz, index) => (
+            <div key={quiz.id} className="content_card">
+            <div className="button-div completed ">
+                    
+            <span> {quiz.name}</span>
+                <small>Date: {quiz.date}</small>
+                <small>Time: {quiz.time}</small> 
+                <span3>UNATTEMPTED</span3> 
+            
+            </div>
+            
+            <FaChevronRight style={{cursor:"pointer"}} onSubmit={{}}/>
+            </div>
+            ))}
+            
         </div>
-        ))}
-        
-      </div>
     </div>
     </>
   );

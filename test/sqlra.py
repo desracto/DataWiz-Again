@@ -382,6 +382,8 @@ def translate_query(query: str, DEBUG=True, CLEAN=False):
     if CLEAN:
         return cleaned_dict
 
+    print("\n")
+
     return stmt_dict
 
 def main():
@@ -394,7 +396,7 @@ def main():
            GROUP BY id \
            HAVING something"
     
-    sql = "SELECT name, id, product FROM employees, products WHERE emp.id = products.emp_id"
+    # sql = "SELECT name, id, product FROM employees, products WHERE emp.id = products.emp_id"
     
     dict_tree = translate_query(query = sql,
                                 DEBUG=True,
@@ -402,6 +404,8 @@ def main():
     
     rat = Node.create_tree(dict_tree)
     rat.PrintTree()    
+
+    print("\n")
 
     # # sql = "SEEEE"
     # dict_tree = None
@@ -467,19 +471,19 @@ def main():
     # sql = "SELECT DISTINCT department, position FROM employees"
     # translate_query(sql, True)
 
-    sql = "SELECT employees.employee_id, \
-            FROM employees \
-            RIGHT JOIN departments \
-                ON employees.department_id = departments.department_id \
-            where employees.employee_id = 100"
+    # sql = "SELECT employees.employee_id, \
+    #         FROM employees \
+    #         RIGHT JOIN departments \
+    #             ON employees.department_id = departments.department_id \
+    #         where employees.employee_id = 100"
 
-    sql = "SELECT first_name, last_name \
-            FROM employees \
-            WHERE department = 'Sales' \
-            GROUP BY department \
-            HAVING COUNT(*) > 5 \
-            ORDER BY last_name \
-            ASC LIMIT 10"
+    # sql = "SELECT first_name, last_name \
+    #         FROM employees \
+    #         WHERE department = 'Sales' \
+    #         GROUP BY department \
+    #         HAVING COUNT(*) > 5 \
+    #         ORDER BY last_name \
+    #         ASC LIMIT 10"
     # dict_tree = translate_query(sql, True, True)
     
 

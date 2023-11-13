@@ -24,8 +24,6 @@ function QuizHome() {
         });
         return Object.values(unique);
       };
-
-      
   
       const deleteMostRecentDraft = () => {
         if (drafts.length === 0) {

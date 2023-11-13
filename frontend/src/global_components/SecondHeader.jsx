@@ -90,17 +90,17 @@ const SecondHeader = () => {
                             </div>
                             <div className="menu_container">
 
-                                <NavLink href="#" className="mobile_nav_link">
+                                <NavLink to="/InstructorHomePage" className="mobile_nav_link">
                                     <img src={home} alt="Menu Icon 3" style={{ maxWidth: '21px', height: 'auto', marginBottom:'-1px', marginTop:'1px' }}/>
                                     <span>Home</span>
                                 </NavLink>
 
-                                <NavLink href="#" className="mobile_nav_link">
+                                <NavLink to="/AnimationIntroductionPage" className="mobile_nav_link">
                                     <img src={animation} alt="Menu Icon 3" style={{ maxWidth: '21px', height: 'auto', marginBottom:'-1px', marginTop:'1px' }}/>
                                     <span>Animation</span>
                                 </NavLink>
 
-                                <NavLink to={"/quiz"} className="mobile_nav_link">
+                                <NavLink to="/QuizzesIntroductionPage" className="mobile_nav_link">
                                     <img src={quizzes} alt="Menu Icon 3" style={{ maxWidth: '16px', height: 'auto', marginBottom:'-1px', marginTop:'1px', marginLeft:'3px'}}/>
                                     <span>Quizzes</span>
                                 </NavLink>
