@@ -75,8 +75,6 @@
 }
 
 .completed span2 {
-    
-    
     font-size: 17px;
     color:#01BC08;
     font-family: Gilroy-Bold;
@@ -86,9 +84,7 @@
     margin-bottom: -20px;
   }
 
-  .completed span3 {
-    
-    
+.completed span3 {
     font-size: 17px;
     color:#FB3F3F;
     font-family: Gilroy-Bold;
@@ -96,7 +92,7 @@
     position: relative;
     bottom: 35px;
     margin-bottom: -20px;
-  }
+}
 
 .headingcontainer .button .navlink:hover {
     background: #331B3B;
@@ -114,8 +110,6 @@
     padding: 2rem;
     height: auto;
     margin-top: 1rem;
-    
-    
 }
 
 .contentcontainer .content_heading {
@@ -123,14 +117,13 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2.5rem;
-    
 }
+
 .contentcontainer .content_heading span{
     font-size: 28px;
     font-family: Gilroy-Bold;
     text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
-
 
 .contentcontainer .content_heading span1{
     font-size: 28px;
