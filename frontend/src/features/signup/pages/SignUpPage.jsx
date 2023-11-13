@@ -55,22 +55,21 @@ const Signup = () => {
             }
             
         }).catch(error => {
-            console.error(error.response);
-            if (error.response.data.message === "EUNIDB") 
-            {
-                setEmailTakenError("");
-                setUsernameTakenError("please enter a different username");
-            }
-            else if(error.response.data.message === "EEMIDB")
-            {
-                setEmailTakenError("Please use a different Email");
-                setUsernameTakenError("");
-            }
-            else{
-                setEmailTakenError("");
-                setUsernameTakenError("")
-            }
-
+            console.error(error.response?.data);
+                if (error.response.data.message === "EUNIDB") 
+                {
+                    setEmailTakenError("");
+                    setUsernameTakenError("please enter a different username");
+                }
+                else if(error.response.data.message === "EEMIDB")
+                {
+                    setEmailTakenError("Please use a different Email");
+                    setUsernameTakenError("");
+                }
+                else{
+                    setEmailTakenError("");
+                    setUsernameTakenError("")
+                }
         })        
     };
 
@@ -98,6 +97,7 @@ const Signup = () => {
                 
                 <div className="welcome-to-datawiz-container">
                     Welcome to <span className ="data">Data</span>Wiz
+
                 </div>
                 <div className="signup1">
                     Sign Up
@@ -155,11 +155,9 @@ const Signup = () => {
                         <p className = "ErrorMessages-gender">{errors.gender?.message}</p>
                         </div>
 
-
                         <div className = "checkbox-pair">
                             <div className="checkbox-group1">
                                 <div className ="checkbox-group2">
-                               
                                     <input
                                         className={`checkbox ${errors['accountType'] ? 'error' : ''}`}
                                         id="learner check"
@@ -253,14 +251,14 @@ const Signup = () => {
             />
         </div>
 
-        <div className="SVG-CONTAINER">
-            {/* SVG Background */}
+        {/* <div className="SVG-CONTAINER">
+             SVG Background
             <img 
                 src={BlobOutline1} 
                 alt="SVG Background" 
                 className="svg-background2" 
             />
-        </div>
+        </div> */}
     </>
   );
 };
