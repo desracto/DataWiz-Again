@@ -73,6 +73,8 @@ def checker(query):
         
     if 'FROM' in query.keys() and not join_check:
         query_list.append("select * FROM "+ query['FROM'])
+        # print(f'FROM from the query: {query['WHERE']}')
+        # print(f'Type of FROM from the query: {type(query['WHERE'])}')
     if 'WHERE' in query.keys():
         lenl = len(query_list)
         query_list.append(query_list[lenl-1] + " WHERE "+ query['WHERE'])
@@ -91,40 +93,56 @@ def checker(query):
 
     # print(', '.join(query['SELECT']))
     # lenl = len(query_list)
-    # squery = query_list[lenl-1].replace('*', ', '.join(query['SELECT']))
+    # squery = query_list[lenl-1]#.replace('*', ', '.join(query['SELECT']))
+    # print(f'Select stuff: {query['SELECT']}')
     # query_list.append(squery)
 
     return query_list
 
-def main():
 
-    q = "SELECT program.name, scores.inspiration, \
-            (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price \
-           FROM programme \
-           INNER JOIN scores \
-                ON programme.id = score.id  \
-           WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) \
-           GROUP BY id \
-           HAVING something"
+def select_star_fixer(ql_list, q_dict,):
+    # print(f'q_dict: {q_dict}')
+    # print(f'ql_list: {ql_list}')
+
+    select_value = ' '.join(q_dict['SELECT'])
+    # print(f"select value : {select_value}")
+    qq = ql_list[-1]
+    qq = qq.replace('*', select_value)
+    return qq
+
+def subq_formatter():
+    return None
+
+def main():
+    q = "SELECT program.name, scores.inspiration, (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price FROM programme INNER JOIN scores ON programme.id = score.id WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) GROUP BY id HAVING something"
     sql = translate_query(query = q,
                                 DEBUG=True,
                                 CLEAN=True)
-    # sql = {'SELECT': [   'program.name',
-    #               'scores.inspiration',
-    #               {   'SELECT': ['MAX(price)'],
-    #                   'FROM': ['product_prices'],
-    #                   'WHERE': ['product_id', '=', 'products.product_id']}],
-    # 'FROM': ['programme'],
-    # 'INNER JOIN': {   'RIGHT TABLE': 'scores',
-    #                   'ON': ['programme.id', '=', 'score.id']},
-    # 'WHERE': [   's.inspiration',
-    #              '>',
-    #              {'SELECT': ['AVG(INSPIRATION)'], 'FROM': ['SCORES']}],
-    # 'GROUP BY': ['id']}
+    print(f'\nSQL: {sql}\n')
+
+    subqueries = find_subqueries(sql)
+    subqueries.pop(0)
+    # print(f'subqr: {subqueries}')
+
+    if len(subqueries) > 0:
+        sq_list = []
+        for i in subqueries:
+            # print(f'I : {i}')
+            x = converter(i)
+            y = checker(x)
+            # print(f'y: {y}')
+            z = select_star_fixer(y, i)
+            # print(f"\nz : {z}")
+            y.append(z)
+            print(f' new subquery tree: {y}\n')
+            sq_list.append(y)
+
     a = converter(sql)
-    # print(a)
-    print("\n")
     b = checker(a)
+    b.append(q)
+
+    # final_formatter()
+
     for i in b:
         print(i)
 
