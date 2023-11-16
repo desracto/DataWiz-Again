@@ -97,7 +97,6 @@ const Signup = () => {
                 
                 <div className="welcome-to-datawiz-container">
                     Welcome to <span className ="data">Data</span>Wiz
-
                 </div>
                 <div className="signup1">
                     Sign Up
@@ -159,7 +158,7 @@ const Signup = () => {
                             <div className="checkbox-group1">
                                 <div className ="checkbox-group2">
                                     <input
-                                        className={`checkbox ${errors['accountType'] ? 'error' : ''}`}
+                                        className={`signup-checkbox ${errors['account_type'] ? 'error' : ''}`}
                                         id="learner check"
                                         type="radio"
                                         name="account_type"
@@ -170,7 +169,7 @@ const Signup = () => {
                                 </div> 
                                 <div className ="checkbox-group2">
                                     <input
-                                        className={`checkbox ${errors['accountType'] ? 'error' : ''}`}
+                                    className={`signup-checkbox ${errors['account_type'] ? 'error' : ''}`}
                                         id="instructor check"
                                         type="radio"
                                         name="account_type"
@@ -185,7 +184,7 @@ const Signup = () => {
                             <div className="checkbox-group1">
                                 <div className ="checkbox-group2">
                                     <input
-                                        className={`checkbox ${errors['gender'] ? 'error' : ''}`}
+                                    className={`signup-checkbox ${errors['gender'] ? 'error' : ''}`}
                                         id="Female check"
                                         type="radio"
                                         name="gender"
@@ -197,7 +196,7 @@ const Signup = () => {
                                 
                                 <div className ="checkbox-group2">
                                     <input
-                                        className={`checkbox ${errors['gender'] ? 'error' : ''}`}
+                                        className={`signup-checkbox ${errors['gender'] ? 'error' : ''}`}
                                         id="Male check"
                                         type="radio"
                                         name="gender"
@@ -264,4 +263,3 @@ const Signup = () => {
 };
 
 export default Signup;
-

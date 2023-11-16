@@ -1,0 +1,483 @@
+.account-setting-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1728px;;
+  width: 100%;  
+  height: 2095px;
+} 
+
+ .Settings-Card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 40px;
+  background-color: #d8d8d8;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  max-width: 1170px;
+  width: 65%;
+  height: 1781px;
+  padding: 120px 180px 69px 179px;
+}
+
+.Card-Header{
+  display:flex;
+  flex-direction:row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 60px;
+}
+
+.account-settings {
+  font-size: 50px;
+  font-family: Gilroy-Bold;
+}
+
+.settings-edit-button {
+  position: relative; 
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.edit-button-image {
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  overflow: hidden;
+  min-width: 40px;
+  min-height: 40px;
+  width: 100%;
+  height: 100%;
+}
+
+.settings-subheadings {
+  font-size: 35px;
+  font-family: Gilroy-Bold;
+  margin-bottom:40px;
+}
+
+.settings-input-label{
+  font-family: Gilroy-SemiBold;
+  font-size: 25px;
+}
+
+.settings-textbox1 {
+  border: 0;
+  font-family: Gilroy-Regular;
+  font-size: v14px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.08);
+  max-width: 812px;
+  width: 100%;
+  height: 50px;
+  justify-content: center;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  margin: 20px 0 60px 0;
+}
+
+.settings-checkbox-group1 {
+  margin: 20px 25px 20px 0px;
+  display: flex;
+  flex-direction: row;
+}
+
+.settings-checkbox-group2 {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+}
+
+.settings-checkbox-label {
+  font-family: Gilroy-Medium;
+  font-size: 23px;
+  margin-left: 23px;
+  margin-right: 191px;
+}
+
+.settings-checkbox{
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+}
+
+.settings-delete-account
+ {
+  position: relative;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: #b60b0b;
+  border-radius: 10px;
+  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1);
+  max-width: 401.5px;
+  width: 100%;
+  height: 65px;
+  flex-shrink: 0;
+  margin-right: 8px;
+}
+
+.settings-button-label{
+  color: #FFF;
+  text-align: center;
+  font-family: Gilroy-Bold;
+  font-size: 20px;
+}
+
+.settings-save-changes{
+  position: relative;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: #8A5A8E;
+  border-radius: 10px;
+  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1);
+  max-width: 401.5px;
+  width: 100%;
+  height: 65px;
+  flex-shrink: 0;
+}
+
+.logout-button {
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  position: relative;
+  height: 39px;
+  display: block;
+  margin: 0 auto;
+}
+
+.logout-button-text {
+  position: relative; 
+  font-size: 36px;
+  text-decoration: underline;
+  font-family: Gilroy-Bold;
+  color: #000;
+  text-align: left;
+}
+
+/* .group-child {
+  position: absolute;
+  top: 0;
+  left: calc(50% - 585px);
+  border-radius: 40px;
+  background-color: #d8d8d8;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  width: 1170px;
+  height: 1781px;
+}
+
+.text-button3 {
+  position: absolute;
+  top: -7.69%;
+  left: 0;
+  font-size: 36px;
+  text-decoration: underline;
+  font-family: Gilroy-Bold;
+  color: #000;
+  text-align: left;
+}
+
+.text-button2 {
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  position: absolute;
+  top: 1545px;
+  left: calc(50% - 59.25px);
+  width: 118px;
+  height: 39px;
+}
+
+.settings-delete-account-child {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 10px;
+}
+
+.delete-account {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  left: calc(50% - 199.75px);
+  font-size: 20px;
+  font-family: Gilroy-Bold;
+  color: #fff;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 400px;
+}
+
+.delete-account:hover {
+  color: #fff;
+}
+
+.settings-delete-account,
+.settings-save-changes {
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: #b60b0b;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 10px;
+  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1);
+  width: 401.5px;
+  height: 65px;
+}
+
+.settings-delete-account:hover,
+.settings-save-changes:hover {
+  background-color: #422660;
+  color: #fff;
+}
+
+.settings-save-changes {
+  background-color: #8a5a8e;
+  left: 411px;
+}
+
+.settings-delete-account-parent {
+  position: absolute;
+  top: 1412px;
+  left: 0;
+  width: 812.5px;
+  height: 65px;
+}
+
+.account-settings,
+.change-password,
+.personal-information {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 55px;
+  font-family: Gilroy-Bold;
+  display: inline-block;
+  width: 618.6px;
+}
+
+.change-password,
+.personal-information {
+  top: 128px;
+  font-size: 35px;
+  width: 479.2px;
+}
+
+.change-password {
+  top: 673px;
+  width: 415.2px;
+}
+
+.instructor1,
+.radio-button2 {
+  position: absolute;
+  top: 3px;
+  left: 62px;
+}
+
+.radio-button2 {
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 30px;
+}
+
+.instructor-parent,
+.learner-parent {
+  position: absolute;
+  top: 1301px;
+  left: 0;
+  width: 162px;
+  height: 31px;
+  font-size: 23px;
+  font-family: Gilroy-Medium;
+}
+
+.learner-parent {
+  left: 353px;
+  width: 143px;
+}
+
+.change-account-type {
+  position: absolute;
+  top: 1218px;
+  left: 0;
+  font-size: 35px;
+  font-family: Gilroy-Bold;
+  display: inline-block;
+  width: 510.5px;
+}
+
+.input-label5 {
+  position: relative;
+}
+
+.textbox5 {
+  border: 0;
+  font-family: Gilroy-Regular;
+  font-size: 14px;
+  background-color: #fff;
+  align-self: stretch;
+  flex: 1;
+  border-radius: 10px;
+  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 10px 20px;
+}
+
+.textbox5:focus,
+.textbox6:focus {
+  border: 1px solid #8a5a8e;
+}
+
+.inputfield1,
+.textbox6 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.inputfield1 {
+  position: absolute;
+  top: 211px;
+  left: calc(50% - 406.25px);
+  width: 812px;
+  height: 94px;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.textbox6 {
+  border: 0;
+  background-color: #fff;
+  align-self: stretch;
+  flex: 1;
+  border-radius: 10px;
+  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.05);
+  justify-content: center;
+  padding: 10px 20px;
+}
+
+.inputfield2,
+.inputfield3,
+.inputfield4,
+.inputfield5,
+.inputfield6 {
+  position: absolute;
+  top: 756px;
+  left: calc(50% - 406.25px);
+  width: 812px;
+  height: 94px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.inputfield3,
+.inputfield4,
+.inputfield5,
+.inputfield6 {
+  top: 365px;
+}
+
+.inputfield4,
+.inputfield5,
+.inputfield6 {
+  top: 910px;
+}
+
+.inputfield5,
+.inputfield6 {
+  top: 519px;
+}
+
+.inputfield6 {
+  top: 1064px;
+}
+
+.text-button-parent {
+  position: absolute;
+  top: 128px;
+  left: calc(50% - 406px);
+  width: 812.5px;
+  height: 1584px;
+}
+
+.rectangle-parent {
+  position: absolute;
+  top: 0;
+  left: calc(50% - 585px);
+  width: 1170px;
+  height: 1781px;
+}
+
+.vector-icon {
+  position: absolute;
+  height: 99%;
+  width: 99%;
+  top: 1%;
+  right: 1%;
+  bottom: 0;
+  left: 0;
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+}
+
+.pen-to-square-solid-1 {
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  position: absolute;
+  top: 142px;
+  left: 950px;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+}
+
+.group-parent {
+  position: absolute;
+  top: 237px;
+  left: calc(50% - 585px);
+  width: 1170px;
+  height: 1781px;
+}
+
+.account-setting-page {
+  position: relative;
+  background-color: #fff;
+  width: 100%;
+  height: 2095px;
+  overflow: hidden;
+  text-align: left;
+  font-size: 25px;
+  ;
+  color: #000;
+  font-family: Gilroy-SemiBold;
+} */

@@ -10,6 +10,7 @@ import ResetPassword from './features/login/pages/ResetPasswordPage';
 import InstructorHomePage from './features/general/pages/InstructorHomePage';
 import QuizzesIntroductionPage from './features/general/pages/QuizzesIntroductionPage';
 import AnimationIntroductionPage from './features/general/pages/AnimationIntroductionPage';
+import AccountSettingsPage from './features/general/pages/AccountSettingsPage';
 
 // Animation Pages
 import SchemaSelectionPage from './features/animation/pages/SchemaSelectionPage'
@@ -42,6 +43,7 @@ function App() {
           <Route path="/CreateQuizPage" element={<CreateQuiz />} />
           <Route path="/saved_quizzes" element={<SavedQuizzes />}/>
           <Route path="/UncompletedQuizPage" element={<UNCompletedQuiz />}/>
+          <Route path="/AccountSettingsPage" element={<AccountSettingsPage />}/>
 
         </Routes>
       </BrowserRouter>

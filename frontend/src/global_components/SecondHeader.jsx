@@ -74,7 +74,7 @@ const SecondHeader = () => {
                     <span className="menu_top">FAQs</span>
                     </NavLink>
 
-                    <NavLink href="#" className="nav_link">
+                    <NavLink href="/AccountSettingsPage" className="nav_link">
                     <img src={setting} alt="Menu Icon 3" style={{ maxWidth: '30px', height: 'auto', marginBottom:'-1px', marginTop:'1px' }}/>
                     <span className="menu_top">Settings</span>
                     </NavLink>
@@ -114,7 +114,7 @@ const SecondHeader = () => {
                                     <span style={{ marginLeft: '14px' }}>FAQs</span>
                                 </NavLink>
 
-                                <NavLink href="#" className="mobile_nav_link">
+                                <NavLink href="/AccountSettingsPage" className="mobile_nav_link">
                                     <img src={setting} alt="Menu Icon 3"  style={{ maxWidth: '21px', height: 'auto', marginBottom:'-1px', marginTop:'1px' }}/>
                                     <span>Settings</span>
                                 </NavLink>
