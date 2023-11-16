@@ -16,7 +16,10 @@
     margin-left: 2rem;
   }
   .checkbox {
-    display: none;
+    opacity: 0;
+    width: 0;
+    height: 0;
+        
   }
   .outer_switch {
     display: block;
@@ -25,6 +28,8 @@
     border: 0 solid #bbb;
     border-radius: 20px; 
     margin-left: 5px;
+    bottom: 5px;
+    
   }
   .label {
     text-align: center;
@@ -61,6 +66,7 @@
     background-color: #bbb;
     color: #fff;
     text-align: right;
+    height: 26.5px;
   }
   .switch {
     display: block;

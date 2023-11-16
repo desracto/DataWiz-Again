@@ -11,7 +11,7 @@
     position: relative;
     display: inline-block;
     width: 60px; /* Width of the switch */
-    height: 30px; /* Height of the switch */
+    height: 27px; /* Height of the switch */
     padding-bottom: 10px;
   
   }
@@ -35,10 +35,11 @@
   .outer_switch .switch:before {
     position: absolute;
     content: "";
-    height: 20px; /* Height of the knob */
-    width: 20px; /* Width of the knob */
+    height: 15px; /* Height of the knob */
+    width: 15px; /* Width of the knob */
     left: 0px; /* Position from the left */
     bottom: 0px; /* Position from the bottom */
+    top:1px;
     background-color: white; /* Color of the knob */
     transition: .4s; /* Animation to slide the knob */
     border-radius: 50%; /* Round shape */
@@ -52,5 +53,5 @@
   
   /* Position the knob to the right when checked */
   .checkbox:checked + .outer_switch .switch:before {
-    transform: translateX(26px); /* Slide to the right */
+    transform: translateX(35px); /* Slide to the right */
   }
