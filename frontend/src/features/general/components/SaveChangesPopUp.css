@@ -1,144 +1,82 @@
-.back-card1 {
-    position: absolute;
-    height: 100%;
+.save-changes-pop-up-container {
+    display: flex; /* To make the card containers flex containers */
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;  /* Stack card content vertically */  
     width: 100%;
-    top: 0%;
-    right: 0%;
-    bottom: 0%;
-    left: 0%;
+}
+
+
+.save-changes-pop-up-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width:600px;
+    height: 350px;
+    max-width: 100%;
+    max-height: 100%;
+    text-align: center;
+    color: #000;
+    font-family: Gilroy-Bold;
     border-radius: 40px;
     background-color: #fff;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
-}
-
-.are-you-sure {
-    position: absolute;
-    height: 26.97%;
-    width: 74.43%;
-    top: 29.05%;
-    left: 12.85%;
-    line-height: 50px;
-    font-family: Gilroy-SemiBold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    padding: 60px 70px;
 }
 
 .save-changes1 {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 0%;
-    left: 0%;
-    display: inline-block;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.query-animation-title1 {
-    position: absolute;
-    height: 9.34%;
-    width: 60.38%;
-    top: 17.63%;
-    right: 19.81%;
-    bottom: 73.03%;
-    left: 19.81%;
-    font-size: 36px;
-}
-
-.confirm-button-child {
-    position: absolute;
-    height: 100%;
+    font-family: Gilroy-Bold;
     width: 100%;
-    top: 0%;
-    right: 0%;
-    bottom: 0%;
-    left: 0%;
-    border-radius: 10px;
-    background-color: #8a5a8e;
+    font-size:  30px;
 }
 
-.button-text2 {
-    position: absolute;
-    top: 24%;
-    left: 47.2%;
+
+.are-you-sure {
+    font-family: Gilroy-SemiBold;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-size:  19px;
+    line-height: 80px;
 }
+
+
+
 
 .confirm-button {
-    position: absolute;
-    height: 10.37%;
-    width: 60.02%;
-    top: 58.09%;
-    right: 19.93%;
-    bottom: 31.54%;
-    left: 20.05%;
-    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    position: relative;
     cursor: pointer;
+    max-width: 400px;
+    height: 40px;
+    width: 100%;
+    border-radius: 10px;
+    background-color: #8a5a8e;
+    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.1);  
+    font-family: Gilroy-Bold;
     font-size: 20px;
     color: #fff;
 }
 
-.cancel-item {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 0%;
-    right: 0%;
-    bottom: 0%;
-    left: 0%;
-    border-radius: 10px;
-    border: 2px solid #000;
-    box-sizing: border-box;
-}
-
-.cancel3 {
-    position: absolute;
-    height: 100%;
-    top: 0%;
-    left: calc(50% - 200px);
-    font-size: 20px;
-    font-family: Gilroy-Bold;
-    color: #000;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 400px;
-}
-
-.cancel3:hover {
-    color: white;
-}
-
-.cancel2 {
+.save-changes-pop-up-cancelButton{
+    margin: 17px auto 0 auto;
     cursor: pointer;
-    border: none;
+    max-width: 400px;
+    height: 40px;
+    width: 100%;
+    border-radius: 10px;
+    border: 2px solid black;
     padding: 0;
     background-color: transparent;
-    position: absolute;
-    height: 10.58%;
-    width: 60.02%;
-    top: 71.99%;
-    right: 19.81%;
-    bottom: 17.43%;
-    left: 20.17%;
-    border-radius: 10px;
-    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.1);  
+    font-family: Gilroy-Bold;
+    font-size: 20px;
+    color: black;
 }
 
-.cancel2:hover {
+
+
+.save-changes-pop-up-cancelButton:hover {
     background-color: black;
     color: white;
 }
 
-.save-changes-pop-up {
-    width: 833px;
-    height: 482px;
-    max-width: 100%;
-    max-height: 100%;
-    overflow: auto;
-    text-align: center;
-    font-size: 20px;
-    color: #000;
-    font-family: Gilroy-Bold;
-}

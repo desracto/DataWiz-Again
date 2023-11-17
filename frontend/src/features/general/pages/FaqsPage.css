@@ -1,0 +1,15 @@
+.Faqs-container{
+    display: flex;
+    flex-direction: column;
+    max-width: 1728px;
+    width: 100%;
+    height: 3351px;
+    padding-top: 100px;
+    padding-left:279px;
+}
+
+.Faqs-header{
+    font-family: Gilroy-Bold;
+    font-size: 40px;
+}
+

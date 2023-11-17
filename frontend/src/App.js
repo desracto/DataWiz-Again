@@ -11,6 +11,7 @@ import InstructorHomePage from './features/general/pages/InstructorHomePage';
 import QuizzesIntroductionPage from './features/general/pages/QuizzesIntroductionPage';
 import AnimationIntroductionPage from './features/general/pages/AnimationIntroductionPage';
 import AccountSettingsPage from './features/general/pages/AccountSettingsPage';
+import FaqsPage from './features/general/pages/FaqsPage';
 
 // Animation Pages
 import SchemaSelectionPage from './features/animation/pages/SchemaSelectionPage'
@@ -44,6 +45,7 @@ function App() {
           <Route path="/saved_quizzes" element={<SavedQuizzes />}/>
           <Route path="/UncompletedQuizPage" element={<UNCompletedQuiz />}/>
           <Route path="/AccountSettingsPage" element={<AccountSettingsPage />}/>
+          <Route path="/FaqsPage" element={<FaqsPage />}/>
 
         </Routes>
       </BrowserRouter>

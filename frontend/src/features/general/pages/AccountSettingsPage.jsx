@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import LogoutConfirmationPopUp from "../components/LogoutConfirmationPopUp.jsx";
-import PortalPopup from "../components/PortalPopup.jsx";
+import PortalPopup from '../components/PortalPopup.jsx';
 import DeleteConfirmationPopUp from "../components/DeleteConfirmationPopUp.jsx";
 import SaveChangesPopUp from "../components/SaveChangesPopUp.jsx";
 import "./AccountSettingPage.css";
@@ -138,6 +138,7 @@ return(
 
                         <div className ="settings-checkbox-group2">
                             <button 
+                                type="button" // Do not remove, import so button does not submit the form
                                 className="settings-delete-account"
                                 onClick={openDeleteConfirmationPopUp}
                             >
@@ -145,14 +146,16 @@ return(
                             </button>
 
                             <button 
+                                type="button" // Do not remove, import so button does not submit the form
                                 className="settings-save-changes"
-                                onClick={openDeleteConfirmationPopUp}
+                                onClick={openSaveChangesPopUp}
                             >
                             <div className="settings-button-label">Save Changes</div>
                             </button>
                         </div>
 
                     <button
+                        type="button" // Do not remove, import so button does not submit the form
                         className="logout-button"
                         onClick={openLogoutConfirmationPopUp}
                     >
@@ -161,7 +164,8 @@ return(
                 </form>
             </div>
         </div>
-    
+
+{/* ------------------------------- */}    
         {isLogoutConfirmationPopUpOpen && (
         <PortalPopup
           overlayColor="rgba(65, 62, 62, 0.5)"
@@ -193,138 +197,5 @@ return(
 )
 }
 export default AccountSettingPage;
-
-
-
-//   return (
-//     <>
-//       <div className="account-setting-page">
-//         <div className="group-parent">
-//           <div className="rectangle-parent">
-//             <div className="group-child" />
-//             <div className="text-button-parent">
-            //   <button
-            //     className="text-button2"
-            //     onClick={openLogoutConfirmationPopUp}
-            //   >
-            //     <div className="text-button3">Logout</div>
-            //   </button>
-//               <div className="settings-delete-account-parent">
-                // <button
-                //   className="settings-delete-account"
-                //   onClick={openDeleteConfirmationPopUp}
-                // >
-                //   <div className="settings-delete-account-child" />
-                //   <div className="delete-account">Delete Account</div>
-                // </button>
-//                 <button
-//                   className="settings-save-changes"
-//                   onClick={openSaveChangesPopUp}
-//                 >
-//                   <div className="settings-delete-account-child" />
-//                   <div className="delete-account">Save Changes</div>
-//                 </button>
-//               </div>
-//               <div className="account-settings">Account Settings</div>
-//               <div className="personal-information">Personal Information</div>
-//               <div className="change-password">Change Password</div>
-//               <div className="instructor-parent">
-//                 <div className="instructor1">Instructor</div>
-//                 <input
-//                   className="radio-button2"
-//                   type="radio"
-//                   name="setting_account_type"
-//                 />
-//               </div>
-//               <div className="learner-parent">
-//                 <div className="instructor1">Learner</div>
-//                 <input
-//                   className="radio-button2"
-//                   type="radio"
-//                   name="setting_account_type"
-//                 />
-//               </div>
-//               <div className="change-account-type">Change Account Type</div>
-//               <div className="inputfield1">
-//                 <div className="input-label5">Full Name</div>
-//                 <input className="textbox5" placeholder="Hiba G" type="text" />
-//               </div>
-//               <div className="inputfield2">
-//                 <div className="input-label5">Current Password</div>
-//                 <input
-//                   className="textbox6"
-//                   placeholder="*************************"
-//                   type="password"
-//                 />
-//               </div>
-//               <div className="inputfield3">
-//                 <div className="input-label5">Username</div>
-//                 <input
-//                   className="textbox5"
-//                   placeholder="HibaG2318"
-//                   type="text"
-//                 />
-//               </div>
-//               <div className="inputfield4">
-//                 <div className="input-label5">New Password</div>
-//                 <input
-//                   className="textbox6"
-//                   placeholder="******************"
-//                   type="password"
-//                 />
-//               </div>
-//               <div className="inputfield5">
-//                 <div className="input-label5">Email</div>
-//                 <input
-//                   className="textbox5"
-//                   placeholder="hibaaligohar@gmail.com"
-//                   type="email"
-//                 />
-//               </div>
-//               <div className="inputfield6">
-//                 <div className="input-label5">Confirm Password</div>
-//                 <input
-//                   className="textbox6"
-//                   placeholder="******************"
-//                   type="password"
-//                 />
-//               </div>
-//             </div>
-//           </div>
-//           <button className="pen-to-square-solid-1">
-//             <img className="vector-icon" alt="" src={vector} />
-//           </button>
-//         </div>
-//       </div>
-//       {isLogoutConfirmationPopUpOpen && (
-//         <PortalPopup
-//           overlayColor="rgba(65, 62, 62, 0.5)"
-//           placement="Centered"
-//           onOutsideClick={closeLogoutConfirmationPopUp}
-//         >
-//           <LogoutConfirmationPopUp onClose={closeLogoutConfirmationPopUp} />
-//         </PortalPopup>
-//       )}
-//       {isDeleteConfirmationPopUpOpen && (
-//         <PortalPopup
-//           overlayColor="rgba(65, 62, 62, 0.5)"
-//           placement="Centered"
-//           onOutsideClick={closeDeleteConfirmationPopUp}
-//         >
-//           <DeleteConfirmationPopUp onClose={closeDeleteConfirmationPopUp} />
-//         </PortalPopup>
-//       )}
-//       {isSaveChangesPopUpOpen && (
-//         <PortalPopup
-//           overlayColor="rgba(65, 62, 62, 0.5)"
-//           placement="Centered"
-//           onOutsideClick={closeSaveChangesPopUp}
-//         >
-//           <SaveChangesPopUp onClose={closeSaveChangesPopUp} />
-//         </PortalPopup>
-//       )}
-//     </>
-//   );
-// };
 
 
