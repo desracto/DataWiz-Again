@@ -1,244 +1,230 @@
 .Anim-intro-sec1{
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: auto;
-  margin-top: 100px;
-  padding-bottom: 50px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 600px;
 }
 
 .Anim-intro-sec1::before {
-  content: '';
-  position: absolute; 
-  top: 20px; 
-  bottom: 40px;    
-  width: 100%;
-  background-color: rgba(255, 255, 255, 0.15);
-  filter: blur(40px);
-  backdrop-filter: blur(20px);
-  z-index: -1;
+    content: '';
+    position: absolute; 
+    top: 20px; 
+    bottom: 40px;    
+    width: 100%;
+    background-color: #fef9f8;    
+    filter: blur(40px);
+    z-index: -1;
 }
 
-.Anim-intro-sec-Text {
-  position: relative;
-  font-size: 64px;
-  max-width: 560px;
-  min-width: 200px;
-  min-height: 200px;
-  margin-left: 175.2px;
-  scale: 0.9;
+.Anim-intro-sec1-Text {
+    top: 20px;
+    position: relative;
+    font-size: 64px;
+    max-width: 560px;
+    min-width: 200px;
+    min-height: 200px;
+    scale: 0.9;
 }
 
-.image-removebg-preview-4-1 {
-  position: relative;
-  max-width: 35%;
-  min-width: 350px;
-  overflow: hidden;
+.Anim-Intro-Sec1-Image {
+    position: relative;
+    max-width: 30%;
+    min-width: 200px;
+    min-height: 200px;
+    overflow: hidden;
+    scale: 0.8;
 }
 
-.group-child1 {
-  position: absolute;
-  top: 44px;
-  left: 0;
-  width: 347.6px;
-  height: 20.9px;
+.Anim-Intro-Sec1-Vec1 {
+    top: 50px;
+    left: 3px;
+    width: 321px;
+    height: 21.1px;
+    position: absolute;
 }
 
 .uncover-sql-magic{
-  position: relative;
-  top: 0;
-  left: 4.2px;
-  display: inline-block;
-  width: 479.8px;
-  font-size: 55px;
-  font-family:  Gilroy-Bold;
+    position: relative;
+    display: inline-block;
+    text-align: left;
+    font-size: 55px;
+    font-family:  Gilroy-Bold;
 }
 
 .watch-queries-come {
-  position: relative;
-  display: inline-block;
-  font-family: Gilroy-Regular;
-  font-size: 30px;
-  text-align: left;
+    top: 10px;
+    font-size: 30px;
+    font-family: Gilroy-Regular;
+    position: relative;
+    display: inline-block;
+    text-align: left;
 }
 
 .Anim-intro-sec2{
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: auto;
-  padding-bottom: 50px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 600px;   
 }
 
 .Anim-intro-sec2::before {
-  content: '';
-  position: absolute;
-  top: 20px; 
-  bottom: 40px;    
-  width: 100%;
-  background: rgba(255, 57, 142, 0.15);
-  filter: blur(40px);
-  backdrop-filter: blur(20px);
-  z-index: -1;
+    content: '';
+    position: absolute;
+    top: 20px; 
+    bottom: 40px;    
+    width: 100%;
+    background-color: #fcdeea;    
+    filter: blur(40px);
+    z-index: -1;
 }
 
 .Anim-intro-sec2-Text{
-  position: relative;
-  font-size: 64px;
-  max-width: 560px;
-  min-width: 200px;
-  min-height: 200px;
-  margin-right: 157px;
-  scale: 0.9;
+    position: relative;
+    font-size: 64px;
+    max-width: 560px;
+    min-width: 200px;
+    min-height: 200px;
+    scale: 0.8;
+}
+
+.Anim-Intro-Sec2-Vec1 {
+    top: 120px;
+    left: -3px;
+    width: 440px;
+    height: 21.1px;
+    position: absolute;
 }
 
 .schema-selection{
-  top: 0;
-  left: 0;
-  position: relative;
-  display: inline-block;
-  text-align: left;
-  font-size: 55px;
-  font-family:  Gilroy-Bold;
-}
-
-.schema-selection2 {
-  position: relative;
-  display: inline-block;
-  font-size: 55px;
-  font-family: Gilroy-Bold;
-  color: black; 
-  margin: 0px;
-}
-
-.schema-selection2::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -3px; 
-  width: 100%;
-  height: 21.1px; 
-  background-color: #FF398E; 
-  z-index: -1; 
-}
-
-.group-item {
-  position: absolute;
-  top: 130px;
-  left: 93px;
-  width: 435px;
-  height: 21.1px;
+    position: relative;
+    display: inline-block;
+    text-align: left;
+    font-size: 55px;
+    font-family:  Gilroy-Bold;
 }
 
 .explore-the-intricate{
-  position: relative;
-  font-family: Gilroy-Regular;
-  font-size: 28px;
-  margin-top: 20px;
+    top: 10px;
+    font-size: 30px;
+    font-family: Gilroy-Regular;
+    position: relative;
+    display: inline-block;
+    text-align: left;
 }
 
 .animintro-schema-and-anim-butt {
-  cursor: pointer;
-  border: 0;
-  padding: 0;
-  background-color: #f03ca6;
-  position: relative;
-  border-radius: 10px;
-  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
-  width: 100%;
-  height: 50px;
-  margin-top: 20px;
+    cursor: pointer;
+    background-color: #f334a3;
+    position: relative;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    width: 500px;
+    height: 50px;
+    transition: background 0.3s ease;
+}
+
+.animintro-schema-and-anim-butt:hover {
+    background-color: #b2d3e4;
 }
 
 .check-out-schemas {
-  position: relative;
-  display: inline;
-  color: #FFF;
-  text-align: center;
-  font-family: Gilroy-Bold;
-  font-size: 20px;
+    position: relative;
+    font-size: 20px;
+    font-family: Gilroy-Bold;
+    color: #fff;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.image-removebg-1-icon{
-  position: relative;
-  max-width: 35%;
-  min-width: 350px;
-  overflow: hidden;
+.check-out-schemas:hover {
+    color: #000;
+}
+
+.Anim-Intro-Sec2-Image{
+    position: relative;
+    max-width: 30%;
+    max-width: 30%;
+    min-width: 200px;
+    min-height: 200px;
+    overflow: hidden;
+    margin-right: 30px;
+    scale: 0.8;
 }
 
 .Anim-intro-sec3{
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 600px;  
 }
 
 .Anim-intro-sec3::before {
-  content: '';
-  position: absolute;
-  top: 20px; 
-  bottom: 40px;    
-  width: 100%;
-  background: rgba(202, 205, 249, 0.50);
-  filter: blur(40px);
-  backdrop-filter: blur(20px);
-  z-index: -1;
+    content: '';
+    position: absolute;
+    top: 20px; 
+    bottom: 40px;    
+    width: 100%;
+    background-color: #e4e6fb;    
+    filter: blur(40px);
+    z-index: -1;
 }
 
 .Anim-intro-sec3-text{
-  position: relative;
-  font-size: 64px;
-  max-width: 560px;
-  min-width: 200px;
-  min-height: 200px;
-  margin-left: 187px;
-  scale: 0.9;
+    position: relative;
+    font-size: 64px;
+    max-width: 560px;
+    min-width: 200px;
+    min-height: 200px;
+    scale: 0.8;
 }
 
-.image-removebg-preview-3-1{
-  position: relative;
-  max-width: 490px;
-  width: 35%;
-  object-fit: cover;
+.Anim-Intro-Sec3-Image{
+    position: relative;
+    max-width: 30%;
+    max-width: 30%;
+    min-width: 200px;
+    min-height: 200px;
+    overflow: hidden;
+    scale: 0.8;
 }
 
 .saved-query-animation-section-item {
-  position: absolute;
-  top: 60px;
-  width: 342.1px;
-  height: 21px;
+    top: 52px;
+    left: 3px;
+    width: 321px;
+    height: 21.1px;
+    position: absolute;
 }
 
 .never-lose-your2{
-  font-family: Gilroy-Regular;
-  font-size: 28px;
+    top: 10px;
+    font-size: 30px;
+    font-family: Gilroy-Regular;
+    position: relative;
+    display: inline-block;
+    text-align: left;
 }
 
 .animintro-saved-queries-button {
-  cursor: pointer;
-  border: 0;
-  padding: 0;
-  background-color: #5047e3;
-  position:relative;
-  top: 420px;
-  left: 0;
-  border-radius: 10px;
-  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
-  width: 100%;
-  height: 50px;
-  top: 0;
+    cursor: pointer;
+    background-color: #424ade;
+    position: relative;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    width: 500px;
+    height: 50px;
+    transition: background 0.3s ease;
 }
 
-.animintro-saved-queries-button:hover,
-.animintro-schema-and-anim-butt:hover {
-  background-color: #422660;
+.animintro-saved-queries-button:hover {
+  background-color: #bcc1f1;
   color: #fff;
 }

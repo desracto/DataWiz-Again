@@ -1,0 +1,82 @@
+.Logout-pop-up-container {
+  display: flex; /* To make the card containers flex containers */
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;  /* Stack card content vertically */  
+  width: 100%;
+}
+
+
+.Logout-pop-up-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width:600px;
+  height: 350px;
+  max-width: 100%;
+  max-height: 100%;
+  text-align: center;
+  color: #000;
+  font-family: Gilroy-Bold;
+  border-radius: 40px;
+  background-color: #fff;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+  padding: 60px 70px;
+}
+
+.confirm-Logout {
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: Gilroy-Bold;
+  width: 100%;
+  font-size:  30px;
+}
+
+
+.are-you-sure-3 {
+  margin-top: 10px;
+  font-family: Gilroy-SemiBold;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-size:  19px;
+  line-height: 40px;
+  margin-bottom: 10px;
+}
+
+.confirm-Logout-button {
+  margin: 0 auto;
+  position: relative;
+  cursor: pointer;
+  max-width: 400px;
+  height: 40px;
+  width: 100%;
+  border-radius: 10px;
+  background-color: #B60B0B;
+  box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.1);  
+  font-family: Gilroy-Bold;
+  font-size: 20px;
+  color: #fff;
+}
+
+.Logout-pop-up-cancelButton{
+  margin: 17px auto 0 auto;
+  cursor: pointer;
+  max-width: 400px;
+  height: 40px;
+  width: 100%;
+  border-radius: 10px;
+  border: 2px solid black;
+  padding: 0;
+  background-color: transparent;
+  box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.1);  
+  font-family: Gilroy-Bold;
+  font-size: 20px;
+  color: black;
+}
+
+
+
+.Logout-pop-up-cancelButton:hover {
+  background-color: black;
+  color: white;
+}
+
+

@@ -1,0 +1,26 @@
+
+.Faqs-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-top: 100px;
+    padding-left:200px;
+    padding-right:200px;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+
+.Faqs-header{
+    max-width: 520px;
+    width: 100%;
+    font-family: Gilroy-Bold;
+    font-size: 40px;
+    margin-bottom: 48px;
+    align-items: flex-start;
+}
+
+
+
+
+

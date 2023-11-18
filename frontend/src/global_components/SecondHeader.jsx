@@ -1,5 +1,5 @@
 import {React, useState,useCallback} from "react";
-import { NavLink, useNavigate, Link  } from "react-router-dom";
+import { NavLink, useNavigate} from "react-router-dom";
 import "./Header2.css";
 // import { animation, faqs, home, logo, quizzes, setting } from "../assets/images";
 
@@ -17,12 +17,15 @@ const SecondHeader = () => {
     const navigate = useNavigate();
     const [isMobile, setIsMobile] = useState(false);
 
+    const GoToHomePage = useCallback(() => {
+        navigate("/InstructorHomePage");
+      }, []);
 
     return (
         <div className="main">
             <div className="Header2Container">
                 {/* Logo */}  
-                <Link className = "logo" to="/InstructorHomePage">
+                <button className="logo-button" onClick={GoToHomePage} >
                     <div className="logo"   >
                         <img src={logo} alt="Logo" />
                     <span>
@@ -30,9 +33,10 @@ const SecondHeader = () => {
                     <span>Wiz.</span>
                     </span>
                     </div>
-                </Link>
+                </button>
                
                 <button
+                    className="header-icon-button"
                     onClick={() => setIsMobile(!isMobile)}
                     // Add an event handler to toggle the mobile menu
                 >
@@ -69,12 +73,12 @@ const SecondHeader = () => {
                     <span className="menu_top_quiz">Quizzes</span>
                     </NavLink>
 
-                    <NavLink href="#" className="nav_link">
+                    <NavLink to="/FaqsPage" className="nav_link">
                     <img src={faqs} alt="Menu Icon 3" style={{ maxWidth: '43px', height: 'auto', marginBottom:'-1px', marginTop:'1px' }}/>
                     <span className="menu_top">FAQs</span>
                     </NavLink>
 
-                    <NavLink href="#" className="nav_link">
+                    <NavLink to="/AccountSettingsPage" className="nav_link">
                     <img src={setting} alt="Menu Icon 3" style={{ maxWidth: '30px', height: 'auto', marginBottom:'-1px', marginTop:'1px' }}/>
                     <span className="menu_top">Settings</span>
                     </NavLink>
@@ -109,12 +113,12 @@ const SecondHeader = () => {
                                     <span>Quizzes</span>
                                 </NavLink>
 
-                                <NavLink href="#" className="mobile_nav_link">
+                                <NavLink to="/FaqsPage" className="mobile_nav_link">
                                     <img src={faqs} alt="Menu Icon 3" style={{ maxWidth: '30px', height: 'auto', marginBottom:'-1px', marginTop:'1px' ,marginLeft:'-3px'}}/>
                                     <span style={{ marginLeft: '14px' }}>FAQs</span>
                                 </NavLink>
 
-                                <NavLink href="#" className="mobile_nav_link">
+                                <NavLink to="/AccountSettingsPage" className="mobile_nav_link">
                                     <img src={setting} alt="Menu Icon 3"  style={{ maxWidth: '21px', height: 'auto', marginBottom:'-1px', marginTop:'1px' }}/>
                                     <span>Settings</span>
                                 </NavLink>
