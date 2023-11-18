@@ -9,7 +9,15 @@
 }
 
 .Faqs-header{
+    max-width: 520px;
+    width: 100%;
     font-family: Gilroy-Bold;
     font-size: 40px;
+    margin-bottom: 48px;
 }
+
+
+
+
+
 
