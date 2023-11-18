@@ -17,15 +17,15 @@ const SecondHeader = () => {
     const navigate = useNavigate();
     const [isMobile, setIsMobile] = useState(false);
 
-    const GoToLandingPage = useCallback(() => {
-        navigate("/LandingPage");
+    const GoToHomePage = useCallback(() => {
+        navigate("/InstructorHomePage");
       }, []);
 
     return (
         <div className="main">
             <div className="Header2Container">
                 {/* Logo */}  
-                <button className="logo-button" onClick={GoToLandingPage} >
+                <button className="logo-button" onClick={GoToHomePage} >
                     <div className="logo"   >
                         <img src={logo} alt="Logo" />
                     <span>
