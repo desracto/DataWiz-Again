@@ -18,7 +18,7 @@
   flex-direction: column;
   align-items: center;
   background-color: #fff;
-  width: 400px;
+  width: 500px;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -49,11 +49,11 @@
   background-color: #D8D8D8;
   display: flex;
   align-items: center;
-  padding: 6px 16px;
+  padding: 6px 8px;
   border-radius: 7px;
-  width: 290px;
+  width: 325px;
   margin-right: 70px;
-  margin-left: 20px;
+  margin-left: 0px;
   
 }
 

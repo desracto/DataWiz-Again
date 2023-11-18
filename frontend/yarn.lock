@@ -1324,21 +1324,21 @@
   resolved "https://registry.npmjs.org/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@ionic/core@7.5.3", "@ionic/core@^7.5.3":
+"@ionic/core@^7.5.3", "@ionic/core@7.5.3":
   version "7.5.3"
   resolved "https://registry.npmjs.org/@ionic/core/-/core-7.5.3.tgz"
   integrity sha512-nd4NV6gSgohLvKHGmf+jAcgzI1387eKq3enjBfE574FK/ikl5CeIltv0MBVJr9lz0pNSL/y9m1tdaFg+syASuA==
   dependencies:
-    "@stencil/core" "^4.6.0"
+    "@stencil/core" "^4.7.1"
     ionicons "^7.2.1"
     tslib "^2.1.0"
 
-"@ionic/react@^7.5.3":
-  version "7.5.3"
-  resolved "https://registry.npmjs.org/@ionic/react/-/react-7.5.3.tgz"
-  integrity sha512-qnHz/g84mqLenUAoyi6HL181xvq3izVG/sD2hQ6iX3QjGQKMnbWNVo6M3YK4FJI1ht91NzhFxs6qvXHFcA1o4g==
+"@ionic/react@^7.5.4":
+  version "7.5.4"
+  resolved "https://registry.yarnpkg.com/@ionic/react/-/react-7.5.4.tgz#9d85118bdc2a5aa5e854f424726d7feb389d5bd2"
+  integrity sha512-SJ/iHPgHg5FeOka8AzoSWFM1zi923yqTEEqTjAJczjow4V276e3YWy5YoVzPMg+k2ti4YaIJSkUU9hypcwfDMg==
   dependencies:
-    "@ionic/core" "7.5.3"
+    "@ionic/core" "7.5.4"
     ionicons "^7.0.0"
     tslib "*"
 
@@ -1753,10 +1753,15 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@stencil/core@^4.0.3", "@stencil/core@^4.6.0":
+"@stencil/core@^4.0.3":
   version "4.7.0"
   resolved "https://registry.npmjs.org/@stencil/core/-/core-4.7.0.tgz"
   integrity sha512-hl3hD5FA8F9kZiDJSus08Kno1QRl+fXeMBzrl5DjWAzAu0JHxL1AqTph5oQSekjvkSahaa8JtsXnHRZU93eivg==
+
+"@stencil/core@^4.7.1":
+  version "4.7.1"
+  resolved "https://registry.yarnpkg.com/@stencil/core/-/core-4.7.1.tgz#38f3f42c2348bebd22aee34fc170518870b9baa0"
+  integrity sha512-KDWA/3qDiABA5LqtHCmTVwORuzgu/YdC0FpSBwVmwlw6K8jUjbTA5JB6Q03da2F+EQlDHOVgbW0TNtHCm54uXQ==
 
 "@surma/rollup-plugin-off-main-thread@^2.2.3":
   version "2.2.3"
@@ -2804,7 +2809,11 @@ at-least-node@^1.0.0:
 
 attr-accept@^2.2.2:
   version "2.2.2"
+<<<<<<< HEAD
   resolved "https://registry.yarnpkg.com/attr-accept/-/attr-accept-2.2.2.tgz#646613809660110749e92f2c10833b70968d929b"
+=======
+  resolved "https://registry.npmjs.org/attr-accept/-/attr-accept-2.2.2.tgz"
+>>>>>>> df9ddbd419293d4dee0d7e918a47943705f2bf8e
   integrity sha512-7prDjvt9HmqiZ0cl5CRjtS84sEyhsHP2coDkaZKRKVfCDo9s7iw7ChVmar78Gu9pC4SoR/28wFu/G5JJhTnqEg==
 
 autoprefixer@^10.4.13:
@@ -4626,7 +4635,11 @@ file-loader@^6.2.0:
 
 file-selector@^0.6.0:
   version "0.6.0"
+<<<<<<< HEAD
   resolved "https://registry.yarnpkg.com/file-selector/-/file-selector-0.6.0.tgz#fa0a8d9007b829504db4d07dd4de0310b65287dc"
+=======
+  resolved "https://registry.npmjs.org/file-selector/-/file-selector-0.6.0.tgz"
+>>>>>>> df9ddbd419293d4dee0d7e918a47943705f2bf8e
   integrity sha512-QlZ5yJC0VxHxQQsQhXvBaC7VRJ2uaxTf+Tfpu4Z/OcVQJVpZO+DGU0rkoVW5ce2SccxugvpBJoMvUs59iILYdw==
   dependencies:
     tslib "^2.4.0"
@@ -7845,12 +7858,12 @@ react-error-overlay@^6.0.11:
 
 react-form@^4.0.1:
   version "4.0.1"
-  resolved "https://registry.yarnpkg.com/react-form/-/react-form-4.0.1.tgz#f442adae7142261a6650a63001c49827e4317ca5"
+  resolved "https://registry.npmjs.org/react-form/-/react-form-4.0.1.tgz"
   integrity sha512-vhsCuBLZJYjm6vd8TBxIhIWeB/8Jg4mmmiR3Zj+1zIGBM39qJf1CLqekadLp0J9NeW0EsZxUnBtbmEnMeZ/7Pw==
 
 react-hook-form@^7.48.2:
   version "7.48.2"
-  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.48.2.tgz#01150354d2be61412ff56a030b62a119283b9935"
+  resolved "https://registry.npmjs.org/react-hook-form/-/react-hook-form-7.48.2.tgz"
   integrity sha512-H0T2InFQb1hX7qKtDIZmvpU1Xfn/bdahWBN1fH19gSe4bBEqTfmlr7H3XWTaVtiK4/tpPaI1F3355GPMZYge+A==
 
 react-icons@^4.11.0:
@@ -7895,7 +7908,7 @@ react-router@6.16.0:
 
 react-scripts@^5.0.1:
   version "5.0.1"
-  resolved "https://registry.npmjs.org/react-scripts/-/react-scripts-5.0.1.tgz"
+  resolved "https://registry.yarnpkg.com/react-scripts/-/react-scripts-5.0.1.tgz#6285dbd65a8ba6e49ca8d651ce30645a6d980003"
   integrity sha512-8VAmEm/ZAwQzJ+GOMLbBsTdDKOpuZh7RPs0UymvBR2vRk4iZWCskjbFnxqjrzoIvlNNRZ3QJFx6/qDSi6zSnaQ==
   dependencies:
     "@babel/core" "^7.16.0"

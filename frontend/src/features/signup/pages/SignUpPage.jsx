@@ -55,22 +55,21 @@ const Signup = () => {
             }
             
         }).catch(error => {
-            console.error(error.response);
-            if (error.response.data.message === "EUNIDB") 
-            {
-                setEmailTakenError("");
-                setUsernameTakenError("please enter a different username");
-            }
-            else if(error.response.data.message === "EEMIDB")
-            {
-                setEmailTakenError("Please use a different Email");
-                setUsernameTakenError("");
-            }
-            else{
-                setEmailTakenError("");
-                setUsernameTakenError("")
-            }
-
+            console.error(error.response.data);
+                if (error.response.data.message === "EUNIDB") 
+                {
+                    setEmailTakenError("");
+                    setUsernameTakenError("please enter a different username");
+                }
+                else if(error.response.data.message === "EEMIDB")
+                {
+                    setEmailTakenError("Please use a different Email");
+                    setUsernameTakenError("");
+                }
+                else{
+                    setEmailTakenError("");
+                    setUsernameTakenError("")
+                }
         })        
     };
 
@@ -155,13 +154,11 @@ const Signup = () => {
                         <p className = "ErrorMessages-gender">{errors.gender?.message}</p>
                         </div>
 
-
                         <div className = "checkbox-pair">
                             <div className="checkbox-group1">
                                 <div className ="checkbox-group2">
-                               
                                     <input
-                                        className={`checkbox ${errors['accountType'] ? 'error' : ''}`}
+                                        className={`signup-checkbox ${errors['account_type'] ? 'error' : ''}`}
                                         id="learner check"
                                         type="radio"
                                         name="account_type"
@@ -172,7 +169,7 @@ const Signup = () => {
                                 </div> 
                                 <div className ="checkbox-group2">
                                     <input
-                                        className={`checkbox ${errors['accountType'] ? 'error' : ''}`}
+                                    className={`signup-checkbox ${errors['account_type'] ? 'error' : ''}`}
                                         id="instructor check"
                                         type="radio"
                                         name="account_type"
@@ -187,7 +184,7 @@ const Signup = () => {
                             <div className="checkbox-group1">
                                 <div className ="checkbox-group2">
                                     <input
-                                        className={`checkbox ${errors['gender'] ? 'error' : ''}`}
+                                    className={`signup-checkbox ${errors['gender'] ? 'error' : ''}`}
                                         id="Female check"
                                         type="radio"
                                         name="gender"
@@ -199,7 +196,7 @@ const Signup = () => {
                                 
                                 <div className ="checkbox-group2">
                                     <input
-                                        className={`checkbox ${errors['gender'] ? 'error' : ''}`}
+                                        className={`signup-checkbox ${errors['gender'] ? 'error' : ''}`}
                                         id="Male check"
                                         type="radio"
                                         name="gender"
@@ -253,17 +250,16 @@ const Signup = () => {
             />
         </div>
 
-        <div className="SVG-CONTAINER">
-            {/* SVG Background */}
+        {/* <div className="SVG-CONTAINER">
+             SVG Background
             <img 
                 src={BlobOutline1} 
                 alt="SVG Background" 
                 className="svg-background2" 
             />
-        </div>
+        </div> */}
     </>
   );
 };
 
 export default Signup;
-

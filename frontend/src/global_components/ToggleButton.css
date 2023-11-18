@@ -1,0 +1,57 @@
+/* Hide the default checkbox appearance */
+.checkbox {
+    opacity: 0;
+    width: 0;
+    height: 0;
+        
+  }
+  
+  /* Custom outer switch styles (the track of the switch) */
+  .outer_switch {
+    position: relative;
+    display: inline-block;
+    width: 60px; /* Width of the switch */
+    height: 27px; /* Height of the switch */
+    padding-bottom: 10px;
+  
+  }
+  
+  /* The slider */
+  .outer_switch .switch {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: transparent; /* Color of the switch */
+    transition: .4s; /* Animation to slide the switch */
+    border-radius: 34px; /* Round corners */
+    box-shadow: none; 
+    border: none;
+  }
+  
+  /* The toggle knob */
+  .outer_switch .switch:before {
+    position: absolute;
+    content: "";
+    height: 15px; /* Height of the knob */
+    width: 15px; /* Width of the knob */
+    left: 0px; /* Position from the left */
+    bottom: 0px; /* Position from the bottom */
+    top:1px;
+    background-color: white; /* Color of the knob */
+    transition: .4s; /* Animation to slide the knob */
+    border-radius: 50%; /* Round shape */
+  }
+  
+  
+  /* Checked state of the switch */
+  .checkbox:checked + .outer_switch .switch {
+    background-color: transparent; /* Color when checked */
+  }
+  
+  /* Position the knob to the right when checked */
+  .checkbox:checked + .outer_switch .switch:before {
+    transform: translateX(35px); /* Slide to the right */
+  }

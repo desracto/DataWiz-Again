@@ -1,5 +1,5 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import {React, useState,useCallback} from "react";
+import { NavLink, useNavigate} from "react-router-dom";
 import "./Header2.css";
 // import { animation, faqs, home, logo, quizzes, setting } from "../assets/images";
 
@@ -14,21 +14,29 @@ import setting from "../assets/images/Settings-Icon.png";
 
 
 const SecondHeader = () => {
+    const navigate = useNavigate();
+    const [isMobile, setIsMobile] = useState(false);
 
-    const [isMobile, setIsMobile] = React.useState(false);
+    const GoToLandingPage = useCallback(() => {
+        navigate("/LandingPage");
+      }, []);
 
     return (
         <div className="main">
             <div className="Header2Container">
-                {/* Logo */}
-                <div className="logo">
-                    <img src={logo} alt="Logo" />
+                {/* Logo */}  
+                <button className="logo-button" onClick={GoToLandingPage} >
+                    <div className="logo"   >
+                        <img src={logo} alt="Logo" />
                     <span>
                     Data
                     <span>Wiz.</span>
                     </span>
-                </div>
+                    </div>
+                </button>
+               
                 <button
+                    className="header-icon-button"
                     onClick={() => setIsMobile(!isMobile)}
                     // Add an event handler to toggle the mobile menu
                 >
@@ -51,27 +59,27 @@ const SecondHeader = () => {
                 <div className="menu_list">
 
                     <NavLink to="/InstructorHomePage" className="nav_link">
-                    <img src={home} alt="Menu Icon 3" />
+                    <img src={home} alt="Menu Icon 3"style={{ maxWidth: '30px', height: 'auto', marginBottom:'-1px', marginTop:'1px' }} />
                     <span className="menu_top">Home</span>
                     </NavLink>
 
                     <NavLink to="/AnimationIntroductionPage" className="nav_link">
-                    <img src={animation} alt="Menu Icon 3" />
+                    <img src={animation} alt="Menu Icon 3" style={{ maxWidth: '30px', height: 'auto', marginBottom:'-1px', marginTop:'1px' }} />
                     <span className="menu_top">Animation</span>
                     </NavLink>
 
                     <NavLink to={"/QuizzesIntroductionPage"} className="nav_link">
-                    <img src={quizzes} alt="Menu Icon 3" style={{ maxWidth: '21px', height: 'auto', marginBottom:'-1px', marginTop:'1px' }}/>
+                    <img src={quizzes} alt="Menu Icon 3" style={{ maxWidth: '21px', height: 'auto', marginBottom:'-2.1px', marginTop:'1px' }}/>
                     <span className="menu_top_quiz">Quizzes</span>
                     </NavLink>
 
-                    <NavLink href="#" className="nav_link">
-                    <img src={faqs} alt="Menu Icon 3" />
+                    <NavLink to="/FaqsPage" className="nav_link">
+                    <img src={faqs} alt="Menu Icon 3" style={{ maxWidth: '43px', height: 'auto', marginBottom:'-1px', marginTop:'1px' }}/>
                     <span className="menu_top">FAQs</span>
                     </NavLink>
 
-                    <NavLink href="#" className="nav_link">
-                    <img src={setting} alt="Menu Icon 3" />
+                    <NavLink to="/AccountSettingsPage" className="nav_link">
+                    <img src={setting} alt="Menu Icon 3" style={{ maxWidth: '30px', height: 'auto', marginBottom:'-1px', marginTop:'1px' }}/>
                     <span className="menu_top">Settings</span>
                     </NavLink>
 
@@ -90,27 +98,27 @@ const SecondHeader = () => {
                             </div>
                             <div className="menu_container">
 
-                                <NavLink href="#" className="mobile_nav_link">
+                                <NavLink to="/InstructorHomePage" className="mobile_nav_link">
                                     <img src={home} alt="Menu Icon 3" style={{ maxWidth: '21px', height: 'auto', marginBottom:'-1px', marginTop:'1px' }}/>
                                     <span>Home</span>
                                 </NavLink>
 
-                                <NavLink href="#" className="mobile_nav_link">
+                                <NavLink to="/AnimationIntroductionPage" className="mobile_nav_link">
                                     <img src={animation} alt="Menu Icon 3" style={{ maxWidth: '21px', height: 'auto', marginBottom:'-1px', marginTop:'1px' }}/>
                                     <span>Animation</span>
                                 </NavLink>
 
-                                <NavLink to={"/quiz"} className="mobile_nav_link">
+                                <NavLink to="/QuizzesIntroductionPage" className="mobile_nav_link">
                                     <img src={quizzes} alt="Menu Icon 3" style={{ maxWidth: '16px', height: 'auto', marginBottom:'-1px', marginTop:'1px', marginLeft:'3px'}}/>
                                     <span>Quizzes</span>
                                 </NavLink>
 
-                                <NavLink href="#" className="mobile_nav_link">
+                                <NavLink to="/FaqsPage" className="mobile_nav_link">
                                     <img src={faqs} alt="Menu Icon 3" style={{ maxWidth: '30px', height: 'auto', marginBottom:'-1px', marginTop:'1px' ,marginLeft:'-3px'}}/>
                                     <span style={{ marginLeft: '14px' }}>FAQs</span>
                                 </NavLink>
 
-                                <NavLink href="#" className="mobile_nav_link">
+                                <NavLink to="/AccountSettingsPage" className="mobile_nav_link">
                                     <img src={setting} alt="Menu Icon 3"  style={{ maxWidth: '21px', height: 'auto', marginBottom:'-1px', marginTop:'1px' }}/>
                                     <span>Settings</span>
                                 </NavLink>
