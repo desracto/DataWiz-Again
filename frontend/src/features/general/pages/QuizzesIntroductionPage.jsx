@@ -1,4 +1,6 @@
 import { useCallback } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import SecondHeader from "../../../global_components/SecondHeader";
 import "./QuizzesIntroductionPage.css";
 
 // Image Imports
@@ -8,21 +10,19 @@ import vector71 from '../../../assets/images/vector-71.svg';
 import savedQuizzes from '../../../assets/images/QuizIntro- saved quizes icon.svg';
 import QuizzIntro_Icon from '../../../assets/images/QuizIntro-icon.svg';
 import CreateQuizIcon from '../../../assets/images/QuizIntro- createQuizzesIcon.svg';
-import stackedWaves1 from '../../../assets/images/stacked-waves-haikei.svg'
-import stackedWaves3 from '../../../assets/images/stacked-waves-haikei-red.svg'
-import stackedWaves2 from '../../../assets/images/stacked-waves-haikei-green.svg'
 
-
-import SecondHeader from "../../../global_components/SecondHeader";
 
 const QuizzesIntroductionPage = () => {
-  const onQuizIntroCreateAQuizButtonClick = useCallback(() => {
-    // Please sync "Schema Selection Page" to the project
-  }, []);
 
-  const onQuizIntroViewQuizzesButtonClick = useCallback(() => {
-    // Please sync "Schema Selection Page" to the project
-  }, []);
+    const navigate = useNavigate();
+
+    const onQuizIntroCreateAQuizButtonClick = useCallback(() => {
+        navigate("/quiz");
+        }, [navigate]);
+
+    const onQuizIntroViewQuizzesButtonClick = useCallback(() => {
+        // Please sync "Schema Selection Page" to the project
+    }, []);
 
   return (
     <>
@@ -47,7 +47,6 @@ const QuizzesIntroductionPage = () => {
                 alt="" 
                 src={QuizzIntro_Icon} 
             />
-
         </div>
 
         <div className="Quiz-Intro-Sec2">
@@ -102,7 +101,9 @@ const QuizzesIntroductionPage = () => {
                     className="quizintro-view-quizzes-button"
                     onClick={onQuizIntroViewQuizzesButtonClick}
                 >
-                    <div className="view-saved-quizzes">View Saved Quizzes</div>
+                    <div className="view-saved-quizzes">
+                        View Saved Quizzes
+                    </div>
                 </button>
             </div>
             <img

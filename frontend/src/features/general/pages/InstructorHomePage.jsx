@@ -46,16 +46,16 @@ const InstructorHomePage = () => {
     }, [navigate]);
 
     const onTryOutQuizzesButtonClick = useCallback(() => {
-    // Please sync "Schema Selection Page" to the project
-    }, []);
+        navigate("/quiz");
+    }, [navigate]);
 
     const onSchemaSelectionCardClick = useCallback(() => {
         navigate("/SchemaSelectionPage");
     }, [navigate]);
 
     const onCreateQuizButtonClick = useCallback(() => {
-    // Please sync "Quiz Filters Page" to the project
-    }, []);
+        navigate("/quiz");
+    }, [navigate]);
 
     const onSavedQueryAnimationCardClick = useCallback(() => {
     // Please sync "Saved Animation Page" to the project
