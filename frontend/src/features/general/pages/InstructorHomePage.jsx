@@ -46,11 +46,7 @@ const InstructorHomePage = () => {
     }, [navigate]);
 
     const onTryOutQuizzesButtonClick = useCallback(() => {
-<<<<<<< HEAD
-        navigate("/quiz");
-=======
         navigate("/QuizHomePage");
->>>>>>> df9ddbd419293d4dee0d7e918a47943705f2bf8e
     }, [navigate]);
 
     const onSchemaSelectionCardClick = useCallback(() => {
@@ -58,11 +54,7 @@ const InstructorHomePage = () => {
     }, [navigate]);
 
     const onCreateQuizButtonClick = useCallback(() => {
-<<<<<<< HEAD
-        navigate("/quiz");
-=======
         navigate("/QuizHomePage");
->>>>>>> df9ddbd419293d4dee0d7e918a47943705f2bf8e
     }, [navigate]);
 
     const onSavedQueryAnimationCardClick = useCallback(() => {
