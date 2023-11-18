@@ -1,5 +1,5 @@
 import {React, useState,useCallback} from "react";
-import { NavLink, useNavigate, Link  } from "react-router-dom";
+import { NavLink, useNavigate} from "react-router-dom";
 import "./Header2.css";
 // import { animation, faqs, home, logo, quizzes, setting } from "../assets/images";
 
