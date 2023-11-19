@@ -1,8 +1,5 @@
 import React from "react";
-<<<<<<< HEAD
-=======
 import "./ToggleButton.css"
->>>>>>> df9ddbd419293d4dee0d7e918a47943705f2bf8e
 
 const ToggleSwitch = ({ label, onChange, checked, unique_by }) => {
   return (
