@@ -22,7 +22,7 @@ const QuizzesIntroductionPage = () => {
     }, [navigate]);
 
     const onQuizIntroViewQuizzesButtonClick = useCallback(() => {
-        navigate("/saved_quizzes");
+        navigate("/SavedQuizzesPage");
     }, [navigate]);
 
 
