@@ -1,11 +1,14 @@
+
 .Faqs-container{
     display: flex;
     flex-direction: column;
-    max-width: 1728px;
     width: 100%;
-    height: 3351px;
     padding-top: 100px;
-    padding-left:279px;
+    padding-left:200px;
+    padding-right:200px;
+    position: relative;
+    align-items: center;
+    justify-content: center;
 }
 
 .Faqs-header{
@@ -14,8 +17,8 @@
     font-family: Gilroy-Bold;
     font-size: 40px;
     margin-bottom: 48px;
+    align-items: flex-start;
 }
-
 
 
 

@@ -33,7 +33,7 @@ const QuizzesIntroductionPage = () => {
     }, [navigate]);
 
     const onQuizIntroViewQuizzesButtonClick = useCallback(() => {
-        navigate("/saved_quizzes");
+        navigate("/SavedQuizzesPage");
     }, [navigate]);
 
 >>>>>>> df9ddbd419293d4dee0d7e918a47943705f2bf8e

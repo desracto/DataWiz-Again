@@ -62,7 +62,7 @@ const InstructorHomePage = () => {
     }, []);
 
     const onSavedQuizzesCardClick = useCallback(() => {
-        navigate("/saved_quizzes");
+        navigate("/SavedQuizzesPage");
     }, [navigate]);
 
   return (
