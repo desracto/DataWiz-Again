@@ -1,7 +1,7 @@
 import { useCallback } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import SecondHeader from "../../../global_components/SecondHeader";
+import { NavLink, useNavigate } from "react-router-dom"; 
 import "./QuizzesIntroductionPage.css";
+import SecondHeader from '../../../global_components/SecondHeader';
 
 // Image Imports
 import vector64 from '../../../assets/images/vector-64.svg';
@@ -17,12 +17,13 @@ const QuizzesIntroductionPage = () => {
     const navigate = useNavigate();
 
     const onQuizIntroCreateAQuizButtonClick = useCallback(() => {
-        navigate("/quiz");
-        }, [navigate]);
+        navigate("/QuizHomePage");
+    }, [navigate]);
 
     const onQuizIntroViewQuizzesButtonClick = useCallback(() => {
-        // Please sync "Schema Selection Page" to the project
-    }, []);
+        navigate("/SavedQuizzesPage");
+    }, [navigate]);
+
 
   return (
     <>

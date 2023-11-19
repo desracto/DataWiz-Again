@@ -19,7 +19,7 @@ const SecondHeader = () => {
 
     const GoToHomePage = useCallback(() => {
         navigate("/InstructorHomePage");
-      }, []);
+      }, [navigate]);
 
     return (
         <div className="main">

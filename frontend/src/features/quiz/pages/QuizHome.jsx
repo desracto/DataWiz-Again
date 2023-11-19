@@ -1,10 +1,8 @@
-import React from "react";
-import SecondHeader from '../../../global_components/SecondHeader';
-import {useState, useEffect} from "react"
+import React, { useState, useEffect } from 'react';
 import { FaChevronRight, FaTrash } from "react-icons/fa";
 import { NavLink, useNavigate } from "react-router-dom"; // Import useHistory
 import "./QuizHome.css";
-
+import SecondHeader from '../../../global_components/SecondHeader';
 
 function QuizHome() {
 
@@ -47,76 +45,53 @@ function QuizHome() {
 
   return (
     <>
-    <SecondHeader />   
+    <SecondHeader/>
     <div className="main_container">
-
-        <div className="heading_container">
-            <div className="heading_sub_container">
-                <h1>Quiz Creation</h1>
-                <span>
-                    Welcome to the Quiz Creation Page! Here, you can design SQL
-                    query-based quizzes to test learners' proficiency in SQL. DataWiz
-                    specializes in relational algebra tree-based auto grading of SQL
-                    queries. Craft questions that require SQL queries as answers, and
-                    let DataWiz automatically evaluate and grade the responses,
-                    providing an efficient and insightful learning experience.
-                </span>
-            </div>
-
-            <div className="button">
-                <NavLink to={"/create_quiz"} className="navlink">
-                    Create Quiz
-                </NavLink>
-            </div>
+      <div className="heading_container">
+        <div className="heading_sub_container">
+          <h1>Quiz Creation</h1>
+          <span>
+            Welcome to the Quiz Creation Page! Here, you can design SQL
+            query-based quizzes to test learners' proficiency in SQL. DataWiz
+            specializes in relational algebra tree-based auto grading of SQL
+            queries. Craft questions that require SQL queries as answers, and
+            let DataWiz automatically evaluate and grade the responses,
+            providing an efficient and insightful learning experience.
+          </span>
+        </div>
+        <div className="button">
+          <NavLink to={"/CreateQuizPage"} className="navlink">
+            Create Quiz
+          </NavLink>
+        </div>
+      </div>
+      <div className="content_container">
+        <div className="content_heading">
+          <span>Drafts</span>
+          <FaTrash color="#98989F" size={24} style={{cursor:"pointer"}} onClick={deleteMostRecentDraft}/>
         </div>
 
-        <div className="content_container">
-            <div className="content_heading">
-            <span>Drafts</span>
-            <FaTrash color="#98989F" size={24} style={{cursor:"pointer"}}/>
-            </div>
-
-            <div className="content_card">
-            <div className=" button-div">
-                <span>*Quiz CSCT284 Batch - 1*</span>
-                <small>Date: 9/11/2023</small>
-                <small>Time: 20:43</small>
-                
-            </div>
-            <FaChevronRight style={{cursor:"pointer"}} onSubmit={{}}/>
-            </div>
-
-            <div className="content_card">
-            <div className=" button-div">
-                <span>*Quiz CSCT284 Batch - 2*</span>
-                <small>Date: 9/11/2023</small>
-                <small>Time: 20:43</small>
-            </div>
-            <FaChevronRight style={{cursor:"pointer"}} onSubmit={{}}/>
-            </div>
-
-            <div className="content_card">
-            <div className=" button-div">
-                <span>*Quiz CSCT284 Batch - 3*</span>
-                <small>Date: 9/11/2023</small>
-                <small>Time: 20:43</small>
-            </div>
-            <FaChevronRight style={{cursor:"pointer"}} onSubmit={{}}/>
-            </div>
-
-            <div className="content_card">
-            <div className=" button-div">
-                <span>*Quiz CSCT284 Batch - 4*</span>
-                <small>Date: 9/11/2023</small>
-                <small>Time: 20:43</small>
-                
-            </div>
-            <FaChevronRight style={{cursor:"pointer"}} onSubmit={{}}/>
-            </div>
+        {drafts.map((draft, index) => (
+        <div className="content_card" key={index}  onClick={() => handleDraftClick(draft)}>
+        <div className=" button-div">
+            <span>{draft.name}</span>
+            <small>Date: {draft.date}</small>
+            <small>Time: {draft.time}</small>
+            
+          </div>
+          <FaChevronRight style={{cursor:"pointer"}} onSubmit={{}}/>
         </div>
 
-    </div>
+        
+        
+        ))}
+
+        
+      </div>
+      </div>
+    
     </>
+      
   );
 }
 
