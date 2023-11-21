@@ -1,17 +1,7 @@
-import React from 'react'
+import {useState} from 'react'
 import "./FaqsPage.css"
-
 import SecondHeader from "../../../global_components/SecondHeader";
-const FaqsPage = () => {
-  return (
-    <>
-        <SecondHeader/>
-        <div className = "Faqs-container">
-            <div className='Faqs-header'> Frequently Asked Questions</div>
-        </div>
-    </>
-  )
-}
+import Accordion from '../components/AccordionItem';
 
 // questions and answers for the FAQs page
 const data = [
@@ -94,4 +84,35 @@ const data = [
     }
 ];
 
-export default FaqsPage
+const FaqsPage = () => {
+    const [selected, setSelected] = useState(null);
+  
+    const toggled = (i) => {
+      if (selected === i) {
+        return setSelected(null);
+      }
+      setSelected(i);
+    };
+  
+    return (
+      <>
+        <SecondHeader />
+        <div className="Faqs-container">
+          <div className="Faqs-header"> Frequently Asked Questions</div>
+          <div className="accordion-container">
+            {data.map((item, i) => (
+              <Accordion
+                key={i}
+                question={item.question}
+                answer={item.answer}
+                isSelected={selected === i}
+                onClick={() => toggled(i)}
+              />
+            ))}
+          </div>
+        </div>
+      </>
+    );
+  };
+  
+  export default FaqsPage;

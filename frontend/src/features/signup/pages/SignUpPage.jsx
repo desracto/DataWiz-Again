@@ -221,7 +221,7 @@ const Signup = () => {
                             />
                         </a>
                     
-                        <div className="already-have-an">Already have an account?
+                        <div className="already-have-an">Already have an account? 
                             <Link className="text-button" to="/LoginPage">
                                 Login
                             </Link>

@@ -197,5 +197,3 @@ return(
 )
 }
 export default AccountSettingPage;
-
-

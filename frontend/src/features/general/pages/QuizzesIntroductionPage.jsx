@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { NavLink, useNavigate } from "react-router-dom"; 
 import "./QuizzesIntroductionPage.css";
+import SecondHeader from '../../../global_components/SecondHeader';
 
 // Image Imports
 import vector64 from '../../../assets/images/vector-64.svg';
@@ -11,8 +12,6 @@ import QuizzIntro_Icon from '../../../assets/images/QuizIntro-icon.svg';
 import CreateQuizIcon from '../../../assets/images/QuizIntro- createQuizzesIcon.svg';
 
 
-import SecondHeader from "../../../global_components/SecondHeader";
-
 const QuizzesIntroductionPage = () => {
 
     const navigate = useNavigate();
@@ -22,7 +21,7 @@ const QuizzesIntroductionPage = () => {
     }, [navigate]);
 
     const onQuizIntroViewQuizzesButtonClick = useCallback(() => {
-        navigate("/saved_quizzes");
+        navigate("/SavedQuizzesPage");
     }, [navigate]);
 
 
@@ -49,7 +48,6 @@ const QuizzesIntroductionPage = () => {
                 alt="" 
                 src={QuizzIntro_Icon} 
             />
-
         </div>
 
         <div className="Quiz-Intro-Sec2">
@@ -104,7 +102,9 @@ const QuizzesIntroductionPage = () => {
                     className="quizintro-view-quizzes-button"
                     onClick={onQuizIntroViewQuizzesButtonClick}
                 >
-                    <div className="view-saved-quizzes">View Saved Quizzes</div>
+                    <div className="view-saved-quizzes">
+                        View Saved Quizzes
+                    </div>
                 </button>
             </div>
             <img

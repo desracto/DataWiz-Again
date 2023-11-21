@@ -30,19 +30,19 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route index element={<LandingPage />} /> {/* Root URL when the app is accessed*/}
-          <Route path="/LandingPage" element={<LandingPage />} /> {/* To make sure this path is also valid, without the root path*/}
-          <Route path="/SignUpPage" element={<SignUpPage />} /> {/* To make sure this path is also valid, without the root path*/}
-          <Route path="/LoginPage" element={<LoginPage />} /> {/* To make sure this path is also valid, without the root path*/}
-          <Route path="/ResetPasswordPage" element={<ResetPassword />} /> {/* To make sure this path is also valid, without the root path*/}
-          <Route path="/InstructorHomePage" element={<InstructorHomePage />} /> {/* To make sure this path is also valid, without the root path*/}
-          <Route path="/QuizzesIntroductionPage" element={<QuizzesIntroductionPage />} /> {/* To make sure this path is also valid, without the root path*/}
-          <Route path="/AnimationIntroductionPage" element={<AnimationIntroductionPage />} /> {/* To make sure this path is also valid, without the root path*/}
+          <Route path="/LandingPage" element={<LandingPage />} /> 
+          <Route path="/SignUpPage" element={<SignUpPage />} /> 
+          <Route path="/LoginPage" element={<LoginPage />} /> 
+          <Route path="/ResetPasswordPage" element={<ResetPassword />} /> a
+          <Route path="/InstructorHomePage" element={<InstructorHomePage />} /> 
+          <Route path="/QuizzesIntroductionPage" element={<QuizzesIntroductionPage />} /> 
+          <Route path="/AnimationIntroductionPage" element={<AnimationIntroductionPage />} /> 
           <Route path="/SchemaSelectionPage" element={<SchemaSelectionPage />} /> 
           <Route path="/QueryAnimationPage" element={<QueryAnimationPage />} /> 
           <Route path="/SavedAnimationsPage" element={<SavedAnimationsPage />} /> 
           <Route path="/QuizHomePage" element={<QuizHome />} />
           <Route path="/CreateQuizPage" element={<CreateQuiz />} />
-          <Route path="/saved_quizzes" element={<SavedQuizzes />}/>
+          <Route path="/SavedQuizzesPage" element={<SavedQuizzes />}/>
           <Route path="/UncompletedQuizPage" element={<UNCompletedQuiz />}/>
           <Route path="/AccountSettingsPage" element={<AccountSettingsPage />}/>
           <Route path="/FaqsPage" element={<FaqsPage />}/>
