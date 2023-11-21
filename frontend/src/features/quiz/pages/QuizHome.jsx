@@ -4,7 +4,6 @@ import { NavLink, useNavigate } from "react-router-dom"; // Import useHistory
 import "./QuizHome.css";
 import SecondHeader from '../../../global_components/SecondHeader';
 
-
 function QuizHome() {
 
     const navigate = useNavigate();
