@@ -114,7 +114,13 @@ def subq_formatter():
     return None
 
 def main():
-    q = "SELECT program.name, scores.inspiration, (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price FROM programme INNER JOIN scores ON programme.id = score.id WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) GROUP BY id HAVING something"
+    # q = "SELECT program.name, scores.inspiration, (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price FROM programme INNER JOIN scores ON programme.id = score.id WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) GROUP BY id HAVING something"
+    # q = "SELECT employees.name, employees.id, products.stock AS stock FROM employees, products, inventory, stock WHERE employees.id = products.emp_id AND products.id = inventory.prod_id AND inventory.stockID = stock.id AND inventory.items > 500"
+    # q = "SELECT employees.name, employees.id, products.stock AS stock FROM employees INNER JOIN products ON employees.id = products.emp_id INNER JOIN inventory ON products.id = inventory.prod_id WHERE inventory.stock > 50"
+    # q = "SELECT name FROM employees, product"
+    # q = "SELECT employees.name, employees.id, products.stock AS stock FROM employees INNER JOIN products ON employees.id = products.emp_id WHERE inventory.stock > 50 AND employees.age > 20 AND department = 'sales'"
+    q = "SELECT employees.name FROM employees WHERE employees.id > 100 OR employees.id = 500"
+
     sql = translate_query(query = q,
                                 DEBUG=True,
                                 CLEAN=True)

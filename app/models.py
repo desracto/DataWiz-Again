@@ -34,6 +34,8 @@ class Users(db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password=password)
     
+
+    # what are the following functions for?
     def to_dict(self):
         data = {
             "id": self.id,
@@ -136,6 +138,18 @@ class Quiz_QPA(db.Model):
             "answer": self.answer,
             "quiz_id": self.quiz_id
         }
-
         return data
 
+
+# class Animation(db.Model):
+
+#     # Table name
+#     __tablename__ = 'animation'
+
+#     # Fields
+#     ani_id = db.Column(db.Integer, primary_key=True, unique=True, default=get_uuid) # PK
+#     quiz_id = db.Column(db.String(32), db.ForeignKey('Quiz.id')) # Fk
+
+#     question_number = db.Column(db.Integer)
+#     problem = db.Column(db.String(400))
+#     answer = db.Column(db.String(1000))
