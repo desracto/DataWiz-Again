@@ -65,10 +65,12 @@ class Quiz(db.Model):
     name = db.Column(db.String(120))
     start_time = db.Column(db.DateTime)
     userid = db.Column(db.String(40), db.ForeignKey('Users.id')) # FK
+    img_id = db.Column(db.String(32), db.ForeignKey('Quiz_Image.img_id'))
 
     # Relationships
     user = db.relationship('Users', back_populates='quizzes')
     questions = db.relationship('Quiz_QPA', back_populates='quiz')
+    img = db.relationship('Quiz_Image', back_populates='quiz')
 
     # Functions
     def __repr__(self):
@@ -103,7 +105,22 @@ class Quiz(db.Model):
         }
 
         return data
-            
+
+class Quiz_Image(db.Model):
+    # table name
+    __tablename__ = 'Quiz_Image'
+
+    # Fields
+    img_id = db.Column(db.String(32), primary_key=True, unique=True, defualt=get_uuid)
+    quiz_id = db.Column(db.String(32), db.ForeignKey('Quiz.id')) # Fk
+    img_data = db.Column(db.LargeBinary)
+
+    # Relationship
+    quiz = db.relationship('Quiz', back_populates='img')
+
+    # Function
+    def __repr__(self) -> str:
+        return "<Quiz_Img ID: {}>".format(self.img_id) 
 
 class Quiz_QPA(db.Model):
     # Table name
