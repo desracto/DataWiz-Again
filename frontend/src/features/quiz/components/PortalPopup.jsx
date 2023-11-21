@@ -1,7 +1,7 @@
 import { useMemo, useCallback, useState, useRef, useEffect } from "react";
 
 import { createPortal } from "react-dom";
-import styles from "./PortalPopup.module.css";
+import "./PortalPopup.module.css";
 
 const PortalPopup = ({
   children,
@@ -13,12 +13,13 @@ const PortalPopup = ({
   right = 0,
   top = 0,
   bottom = 0,
-  relativeLayerRef,
+  relativeLayerRef 
 }) => {
   const relContainerRef = useRef(null);
   const [relativeStyle, setRelativeStyle] = useState({
     opacity: 0,
   });
+  
   const popupStyle = useMemo(() => {
     const style = {};
     style.zIndex = zIndex;
@@ -53,11 +54,13 @@ const PortalPopup = ({
           style.alignItems = "flex-end";
           style.justifyContent = "flex-end";
           break;
+        default:
+          break;
       }
     }
     style.opacity = 1;
     return style;
-  }, [placement, overlayColor, zIndex, relativeLayerRef?.current]);
+  }, [placement, overlayColor, zIndex, relativeLayerRef]);
 
   const setPosition = useCallback(() => {
     const relativeItem = relativeLayerRef?.current?.getBoundingClientRect();
@@ -89,6 +92,8 @@ const PortalPopup = ({
           style.top = relativeY + relativeH + bottom;
           style.left = relativeX + relativeW - containerW - right;
           break;
+        default:
+          break;
       }
 
       setRelativeStyle(style);
@@ -103,8 +108,8 @@ const PortalPopup = ({
     top,
     bottom,
     placement,
-    relativeLayerRef?.current,
-    relContainerRef?.current,
+    relativeLayerRef,
+    relContainerRef,
   ]);
 
   useEffect(() => {
@@ -121,10 +126,7 @@ const PortalPopup = ({
 
   const onOverlayClick = useCallback(
     (e) => {
-      if (
-        onOutsideClick &&
-        e.target.classList.contains(styles.portalPopupOverlay)
-      ) {
+      if (onOutsideClick && e.target.classList.contains("portalPopupOverlay")) {
         onOutsideClick();
       }
       e.stopPropagation();
@@ -135,7 +137,7 @@ const PortalPopup = ({
   return (
     <Portal>
       <div
-        className={styles.portalPopupOverlay}
+        className="portalPopupOverlay"
         style={popupStyle}
         onClick={onOverlayClick}
       >
