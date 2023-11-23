@@ -66,11 +66,41 @@
     font-size: 25px;
 }
 
+
+.instructor-label {
+    font-family: Gilroy-Medium;
+    font-size: 20px;
+    margin: 10px;
+}
+
+.cursor-notAllowed {
+    cursor: not-allowed;
+}
+
 .settings-textbox1 {
     border: 0;
     font-family: Gilroy-Regular;
-    font-size: v14px;
-    background-color: #fff;
+    font-size: 16px;
+    background-color: fff;
+    border-radius: 10px;
+    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.08);
+    max-width: 812px;
+    width: 100%;
+    height: 50px;
+    justify-content: center;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    margin: 20px 0 60px 0;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* css if the input can be editable*/
+.settings-textbox1-edit{  
+    border: 0;
+    font-family: Gilroy-Regular;
+    font-size: 14px;
+    background-color: fff;
     border-radius: 10px;
     box-shadow: 0 8px 8px rgba(0, 0, 0, 0.08);
     max-width: 812px;
@@ -82,29 +112,19 @@
     margin: 20px 0 60px 0;
 }
 
-.settings-checkbox-group1 {
-    margin: 20px 25px 20px 0px;
-    display: flex;
-    flex-direction: row;
-}
 
 .settings-checkbox-group2 {
+    margin-top: 25px;
     display: flex;
     flex-direction: row;
     margin-bottom: 20px;
 }
 
-.settings-checkbox-label {
-    font-family: Gilroy-Medium;
-    font-size: 23px;
-    margin-left: 23px;
-    margin-right: 191px;
-}
-
-.settings-checkbox {
-    width: 30px;
-    height: 30px;
-    flex-shrink: 0;
+.instructor-icon{
+    width: 40px;
+    height: 40px;
+    opacity: 0.7;
+    margin-left: 5px;
 }
 
 .settings-delete-account {

@@ -6,7 +6,8 @@ import SaveChangesPopUp from "../components/SaveChangesPopUp.jsx";
 import "./AccountSettingPage.css";
 import { useForm } from "react-hook-form";
 
-import vector from '../../../assets/images/vector.svg'
+import vector from '../../../assets/images/vector.svg';
+import instructorIcon from '../../../assets/images/Settings-Instructor.png';
 import SecondHeader from "../../../global_components/SecondHeader.jsx";
 
 const AccountSettingPage = () => {
@@ -52,7 +53,10 @@ return(
                     <div className="account-settings">
                         Account Settings
                     </div>
-                    <button className="settings-edit-button">
+                    <button 
+                      className="settings-edit-button"
+                      id = "edit-button"
+                    >
                         <img  src={vector} />
                     </button>
                 </div>
@@ -61,33 +65,38 @@ return(
                         <div className="settings-input-label">
                             Full name
                         </div>
-                        <input
-                            className="settings-textbox1"
-                            placeholder="Enter your full name"
-                            type="text"
-                             {...register("fullName", { required: "Full Name is required", pattern : {value:/^[A-Za-z ]+$/i, message: "Full name must contain only letters and spaces"}})}
-                        />
+                        <div className="cursor-notAllowed">
+                          <input
+                              className="settings-textbox1"
+                              placeholder="Mohamed Nihal"
+                              type="text"
+                              {...register("fullName", { required: "Full Name is required", pattern : {value:/^[A-Za-z ]+$/i, message: "Full name must contain only letters and spaces"}})}
+                          />
 
+                        </div>
                         <div className="settings-input-label">Username</div>
-                        <input 
-                            className="settings-textbox1" 
-                            placeholder="Enter your username" 
-                            type="text" 
-                             {...register("username", { required: "Username is required", pattern : {value:/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,20}$/, message: "Username must be between 6 and 20 characters ,include at least 1 uppercase letter and 1 numeric digit"} })}
-                        />
-
+                        <div className="cursor-notAllowed">
+                          <input 
+                              className="settings-textbox1" 
+                              placeholder="Mnk665" 
+                              type="text" 
+                              {...register("username", { required: "Username is required", pattern : {value:/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,20}$/, message: "Username must be between 6 and 20 characters ,include at least 1 uppercase letter and 1 numeric digit"} })}
+                          />
+                        </div>
                         <div className="settings-input-label">Email</div>
-                        <input
-                            className="settings-textbox1"
-                            placeholder="Enter your email"
-                            type="email"
-                             {...register("email", { required: "Email is required",  pattern : {value:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, message: "Enter a valid email address"}})}
-                        />
+                        <div className="cursor-notAllowed">
+                          <input
+                              className="settings-textbox1"
+                              placeholder="mnk665@uowmail.edu.au  "
+                              type="email"
+                              {...register("email", { required: "Email is required",  pattern : {value:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, message: "Enter a valid email address"}})}
+                          />
+                        </div>
                         <div className="settings-subheadings">Change Password</div>
 
                         <div className="settings-input-label">Current Password</div>
                         <input 
-                            className="settings-textbox1" 
+                            className="settings-textbox1-edit" 
                             type="password"
                             placeholder="**********" 
                              {...register("current_password", { required: "Password is required", pattern : {value:/^(?=.*[!@#\$%^&*()\-_=+\[\]{}|;:'",.<>?\/\\]).{8,64}$/, message: "Password must be between 8 and 64 characters and contain at least one special character"}})}
@@ -95,7 +104,7 @@ return(
 
                         <div className="settings-input-label">New Password</div>
                         <input 
-                            className="settings-textbox1" 
+                            className="settings-textbox1-edit" 
                             type="password"
                             placeholder="**********" 
                              {...register("new_password", { required: "Password is required", pattern : {value:/^(?=.*[!@#\$%^&*()\-_=+\[\]{}|;:'",.<>?\/\\]).{8,64}$/, message: "Password must be between 8 and 64 characters and contain at least one special character"}})}
@@ -103,38 +112,17 @@ return(
 
                         <div className="settings-input-label">Confirm Password</div>
                         <input 
-                            className="settings-textbox1" 
+                            className="settings-textbox1-edit" 
                             type="password"
                             placeholder="**********" 
                              {...register("confirm_password", { required: "Password is required", pattern : {value:/^(?=.*[!@#\$%^&*()\-_=+\[\]{}|;:'",.<>?\/\\]).{8,64}$/, message: "Password must be between 8 and 64 characters and contain at least one special character"}})}
                         />
 
-                        <div className="settings-subheadings">Change Account Type</div>
-
-                        <div className="settings-checkbox-group1">
-                                <div className ="settings-checkbox-group2">
-                                    <input
-                                        className="settings-checkbox"
-                                        id="learner check"
-                                        type="radio"
-                                        name="account_type"
-                                        value = "learner"
-                                         {...register("account_type", { required: "Please select an account type" })}
-                                    />
-                                    <label className="settings-checkbox-label">Learner</label>
-                                </div> 
-                                <div className ="settings-checkbox-group2">
-                                    <input
-                                        className="settings-checkbox"
-                                        id="instructor check"
-                                        type="radio"
-                                        name="account_type"
-                                        value="instructor"
-                                        {...register("account_type", { required: "Please select an account type" })}
-                                    />
-                                    <label className="settings-checkbox-label">Instructor</label>
-                                </div>      
-                            </div>
+                        <div className="settings-input-label"> Account Type: </div>
+                        <div className="settings-checkbox-group2">
+                          <img  className = "instructor-icon" src={instructorIcon} alt="instructor-icon" />
+                          <div className="instructor-label">  Instructor</div>
+                        </div>
 
                         <div className ="settings-checkbox-group2">
                             <button 
