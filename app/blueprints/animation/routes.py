@@ -6,7 +6,6 @@ from ...extensions import db
 
 from ..main.errors import bad_request, error_response
 from .scripts.generator import generate_prefixed
-from ...scripts.sqlra import translate_query 
 
 from ._prefixed_models import Schema1_Employee as Employee
 from ._prefixed_models import Schema2_Product as Product, Schema2_Inventory as Inventory
@@ -148,33 +147,52 @@ def schema5():
 
     return jsonify(results=results)
 
-@animation_bp.route('/animate/', methods=['POST'])
-def get_query():
-    """
-        JSON Format:
-        {
-            "query": "query_string": str
-        }
-    """
-    data = request.get_json() or {}
+# @animation_bp.route('/animate/', methods=['POST'])
+# def get_query():
+#     """
+#         JSON Format:
+#         {
+#             "query": "query_string": str
+#         }
+#     """
+#     data = request.get_json() or {}
     
-    # Check if query present
-    if 'query' not in data:
-        return bad_request("query not in request object")
+#     # Check if query present
+#     if 'query' not in data:
+#         return bad_request("query not in request object")
 
-    # Check if query valid & convert to RA
+#     # Check if query valid & convert to RA
+#     try:
+#         tree = translate_query(data['query'])
+#     except ParseException as pe:
+#         # the depth variable states how far up the stacktrace it will go. depth=0
+#         # only the failing input line, marker, and exception string will be shown
+#         return bad_request(pe.explain(depth=0))
+#     except:
+#         return error_response(500)
+
+#     # Rollback all changes
+#     db.session.rollback()
+#     return jsonify(tree)
+
+@animation_bp.route('/animate/', methods=['POST'])
+def animate_query():
     try:
-        tree = translate_query(data['query'])
-    except ParseException as pe:
-        # the depth variable states how far up the stacktrace it will go. depth=0
-        # only the failing input line, marker, and exception string will be shown
-        return bad_request(pe.explain(depth=0))
-    except:
-        return error_response(500)
+        # Get the query from the front-end
+        query_data = request.json  # Assuming JSON data is sent in the request
 
+        # Extract the query from the data
+        query = query_data.get('query', '')
 
+        # Pass the query through the animation_parser.py file
+        parsed_result = parse_query(query)
 
-    # Rollback all changes
-    db.session.rollback()
-    return jsonify(tree)
+        # Retrieve the result of the checker function
+        checker_result = check_query(parsed_result)
 
+        # Return the result as JSON
+        return jsonify({'result': checker_result})
+
+    except Exception as e:
+        # Handle exceptions appropriately
+        return jsonify({'error': str(e)}), 500
