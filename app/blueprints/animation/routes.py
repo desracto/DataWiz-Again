@@ -15,6 +15,9 @@ from ._prefixed_models import Schema5_Album as Album, Schema5_Artist as Artist, 
 
 from pyparsing import ParseException
 
+from app.scripts.Active_animation_parser import main as animation_main
+from app.scripts.Active_sqlra import translate_query
+
 @animation_bp.route('/schema/1/')
 def schema1():
     results = {}
@@ -178,21 +181,25 @@ def schema5():
 @animation_bp.route('/animate/', methods=['POST'])
 def animate_query():
     try:
-        # Get the query from the front-end
-        query_data = request.json  # Assuming JSON data is sent in the request
+        # Get the JSON data from the request
+        query_data = request.get_json()
 
-        # Extract the query from the data
+        # Extract the query from the JSON data
         query = query_data.get('query', '')
 
-        # Pass the query through the animation_parser.py file
-        parsed_result = parse_query(query)
+        # Validate if the 'query' key is present in the JSON data
+        if not query:
+            return jsonify({'error': 'Missing or invalid "query" in JSON data'}), 400
 
-        # Retrieve the result of the checker function
-        checker_result = check_query(parsed_result)
+        # Update the 'sql' variable in sqlra.py with the user's query
+        sql = translate_query(query, DEBUG=True, CLEAN=True)
 
-        # Return the result as JSON
-        return jsonify({'result': checker_result})
+        # Call the animation parser function and retrieve the steps_result
+        steps_result = animation_main()
 
-    except Exception as e:
+        # Return the steps_result as JSON
+        return jsonify({'steps_result': steps_result})
+
         # Handle exceptions appropriately
-        return jsonify({'error': str(e)}), 500
+    except Exception as e:
+        return jsonify({'error': f'An error occurred: {str(e)}'}), 500
