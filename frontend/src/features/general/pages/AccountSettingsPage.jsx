@@ -11,22 +11,54 @@ import instructorIcon from '../../../assets/images/Settings-Instructor.png';
 import SecondHeader from "../../../global_components/SecondHeader.jsx";
 
 const AccountSettingPage = () => {
-    const {register, handleSubmit, setValue, formState: { errors }} = useForm();
+    const {register, handleSubmit, setValue, formState: { errors }, getValues, trigger} = useForm( {reValidateMode: 'onSubmit'} );
     const [isEditMode, setEditMode] = useState(false);
-    
-    const [isSaveChangesPopUpOpen, setSaveChangesPopUpOpen] = useState(false);
+    const [originalValues, setOriginalValues] = useState({});
+    const [isSaveChangesPopUpOpen, setSaveChangesPopUpOpen] = useState(false);  
     const [isLogoutConfirmationPopUpOpen, setLogoutConfirmationPopUpOpen] = useState(false);
     const [isDeleteConfirmationPopUpOpen, setDeleteConfirmationPopUpOpen] = useState(false);
 
     const startEditMode = useCallback(() => {
+      setOriginalValues(getValues());
       setEditMode(true);
-    }, []);
+    }, [getValues()]);
 
-  const onSubmit = (data) => {
+    const onSubmit = async (data) => {
+      // Trigger form validation
+      const isValid = await trigger();
+    
+      if (isValid) {
+        // No validation errors, proceed with opening the Save Changes pop-up
+        openSaveChangesPopUp();
+      }
+    };
+
+
+  const handleSaveChanges = () => {
+    // Update form values with new values
+    const formData = getValues();
+    Object.keys(formData).forEach((field) => {
+      setValue(field, formData[field]);
+    });
+
+    // Exit edit mode
     setEditMode(false);
+
+    // Close the pop-up
+    closeSaveChangesPopUp();
   };
 
-  
+  const handleCancelChanges = () => {
+      // Restore original form values
+      Object.keys(originalValues).forEach((field) => {
+        setValue(field, originalValues[field]);
+      });
+
+    setEditMode(false);
+
+    // Close the pop-up
+    closeSaveChangesPopUp();
+  };
 
   const openSaveChangesPopUp = useCallback(() => {
     setSaveChangesPopUpOpen(true);
@@ -149,7 +181,6 @@ return(
                             <button 
                                 type="submit" 
                                 className="settings-save-changes"
-                                onClick={openSaveChangesPopUp}
                             >
                             <div className="settings-button-label">Save Changes</div>
                             </button>
@@ -191,7 +222,9 @@ return(
           placement="Centered"
           onOutsideClick={closeSaveChangesPopUp}
         >
-          <SaveChangesPopUp  onCancel={closeSaveChangesPopUp} />
+          <SaveChangesPopUp
+          onConfirm={handleSaveChanges}  
+          onCancel={handleCancelChanges} />
         </PortalPopup>
       )}
     </>
