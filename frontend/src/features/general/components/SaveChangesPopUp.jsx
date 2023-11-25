@@ -1,13 +1,14 @@
-import { useCallback } from "react";
+import React,{ useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SaveChangesPopUp.css";
 
-const SaveChangesPopUp = ({ onClose }) => {
+const SaveChangesPopUp = ({ onCancel }) => {
   const navigate = useNavigate();
 
   const onConfirmButtonContainerClick = useCallback(() => {
-    navigate("/");
+    window.location.reload(false);
   }, [navigate]);
+
 
   return (
     <div className="save-changes-pop-up-container">
@@ -18,7 +19,7 @@ const SaveChangesPopUp = ({ onClose }) => {
         <button className="confirm-button" onClick={onConfirmButtonContainerClick}>
           Ok
         </button>
-        <button className="save-changes-pop-up-cancelButton" onClick={onClose}>  
+        <button className="save-changes-pop-up-cancelButton" onClick={onCancel}>  
           Cancel
         </button>
       </div>
