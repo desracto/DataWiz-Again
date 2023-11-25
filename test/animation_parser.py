@@ -115,36 +115,38 @@ def subq_formatter():
 
 def main():
     q = "SELECT program.name, scores.inspiration, (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price FROM programme INNER JOIN scores ON programme.id = score.id WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) GROUP BY id HAVING something"
-    sql = translate_query(query = q,
-                                DEBUG=True,
-                                CLEAN=True)
+    sql = translate_query(query=q, DEBUG=True, CLEAN=True)
     print(f'\nSQL: {sql}\n')
 
     subqueries = find_subqueries(sql)
     subqueries.pop(0)
-    # print(f'subqr: {subqueries}')
+
+    steps_result = ""  # Variable to store the steps
 
     if len(subqueries) > 0:
         sq_list = []
+        step_counter = 1  # Initialize the step counter
         for i in subqueries:
-            # print(f'I : {i}')
             x = converter(i)
             y = checker(x)
-            # print(f'y: {y}')
             z = select_star_fixer(y, i)
-            # print(f"\nz : {z}")
             y.append(z)
-            print(f' new subquery tree: {y}\n')
+            steps_result += f'\nSTEP {step_counter}: new subquery tree: {y}\n'
+            step_counter += 1  # Increment the step counter
             sq_list.append(y)
 
     a = converter(sql)
     b = checker(a)
     b.append(q)
 
-    # final_formatter()
-
+    step_counter = 1  # Reset the step counter for the final queries
     for i in b:
-        print(i)
+        steps_result += f'\nSTEP {step_counter}: {i}\n'  # Added a newline for space between steps
+        step_counter += 1  # Increment the step counter
+
+    # Print all steps with space between them
+    print(steps_result)
+    print(steps_result)
 
 
 if __name__ == "__main__":

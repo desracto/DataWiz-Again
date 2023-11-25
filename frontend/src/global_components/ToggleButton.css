@@ -1,9 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.container {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .toggle-switch {
+    position: relative;
+    width: 46px;
+    display: inline-block;
+    text-align: left;
+    margin-left: 2rem;
+  }
+ 
+ 
+  .label {
+    text-align: center;
+    font-family: 'Gilroy-SemiBold';
+    margin-right: 2rem;
+  }
+  .inner {
+    display: block;
+    width: 200%;
+    margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+  }
+  .inner:before,
+  .inner:after {
+    float: left;
+    width: 50%;
+    height: 25px;
+    padding: 0;
+    line-height: 25px;
+    color: #fff;
+    font-weight: bold;
+    box-sizing: border-box;
+  }
+  .inner:before {
+    content: "";
+    padding-left: 5px;
+    background-color: #F0C64A;
+    color: #fff;
+    font-size: xx-small;
+  }
+  .inner:after {
+    content: "";
+    padding-right: 5px;
+    background-color: #bbb;
+    color: #fff;
+    text-align: right;
+    height: 26.5px;
+  }
+  .switch {
+    display: block;
+    width: 16px;
+    margin: 5px;
+    background: #fff;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 15px;
+    border: 0 solid #bbb;
+    border-radius: 20px;
+    transition: all 0.3s ease-in 0s;
+  }
+  .checkbox:checked + .outer_switch .inner {
+    margin-left: 0;
+  }
+  .checkbox:checked + .outer_switch .switch {
+    right: 0px;
+  }
+  .wrapper{
+    justify-content: space-between;
+  }
+
+
+
+
+
 /* Hide the default checkbox appearance */
 .checkbox {
     opacity: 0;
     width: 0;
     height: 0;
         
+  }
+
+  .outer_switch {
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+    border: 0 solid #bbb;
+    border-radius: 20px; 
+    margin-left: 5px;
+    bottom: 5px;
+    
   }
   
   /* Custom outer switch styles (the track of the switch) */
@@ -15,6 +109,7 @@
     padding-bottom: 10px;
   
   }
+
   
   /* The slider */
   .outer_switch .switch {

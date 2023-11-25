@@ -2,50 +2,51 @@ import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import ToggleSwitch from "../../../global_components/ToggleButton";
+import "./FilterModal.css"
 
 const FilterModal = ({ onClose }) => {
   const navigate = useNavigate();
   return (
-    <div className="flex flex-col h-auto bg-[#D8D8D8] w-[1200px] md:max-w-[868px]  p-10 md:p-14 rounded-3xl shadow-lg items-center">
-      <div className="flex w-full max-w-7xl flex-col mb-8">
-        <div className="text-black mb-8">
-          <div className="text-[3rem] mb-2 font-bold inline-block [text-shadow:0px_2px_2px_rgba(0,_0,_0,_0.25)] font-gilroy-semibold w-[100%] ">
+    <div className="filter-modal-container">
+      <div className="modal-content">
+        <div className="title-section">
+          <div className="title ">
             Auto-Grading Filters
           </div>
-          <div className="text-base font-gilroy-regular flex items-center">
+          <div className="filter-modal-description">
             Enhance the precision of query grading by configure filters to tailor the assessment
             of student answers and ensure accurate evaluations within DataWiz.
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-x-3 gap-y-6 justify-start items-center">
-          <div className="w-2/3 mb-6">
+        <div className="grid-container">
+          <div className="grid-item">
             <ToggleSwitch label="Join VS Inner-Join" unique_by="1" />
           </div>
-          <div className="w-2/3 mb-6">
+          <div className="grid-item">
             <ToggleSwitch label="Spell Checker" unique_by="2" />
           </div>
-          <div className="w-2/3 mb-6">
+          <div className="grid-item">
             <ToggleSwitch label="Case Sensitive" unique_by="3" />
           </div>
-          <div className="w-2/3 mb-6">
+          <div className="grid-item">
             <ToggleSwitch label="Typo" unique_by="4" />
           </div>
-          <div className="w-2/3">
+          <div className="grid-item">
             <ToggleSwitch label="From-Join" unique_by="5" />
           </div>
-          <div className="w-2/3">
+          <div className="grid-item">
             <ToggleSwitch label="Table comparison" unique_by="6" />
           </div>
         </div>
       </div>
-      <div className="flex flex-wrap w-full space-3 gap-3 justify-center items-center mt-8">
+      <div className="button-container">
         <button
-          className=" bg-[#8A5A8E] text-white flex items-center border-none justify-center py-5 rounded-xl shadow-lg w-full md:min-w-[136px] md:w-[40%] !font-bold cursor-pointer font-gilroy-bold"
+          className=" return-button"
           onClick={onClose}
         >
           Return to Quiz
         </button>
-        <button className="flex items-center justify-center py-5 border-none rounded-xl shadow-lg min-w-[136px] w-full md:min-w-[136px] md:w-[40%] bg-primary !font-bold cursor-pointer font-gilroy-bold">
+        <button className="FilterModal-preview-button">
           Preview Quiz
         </button>
       </div>

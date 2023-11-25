@@ -1,0 +1,126 @@
+.filter-modal-container {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    background-color: #D8D8D8;
+    width: 1200px;
+    max-width: 948px; /* This applies to medium-sized devices and above */
+    padding: 20px;
+    border-radius: 24px; /* 'rounded-3xl' typically corresponds to a 24px radius */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1); /* This is an approximation of Tailwind's 'shadow-lg' */
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    /* Adjust this media query breakpoint as needed */
+    .filter-modal-container {
+        padding: 24px;
+    }
+}
+  
+  .modal-content {
+    display: flex;
+    width: 100%; /* Equivalent to w-full */
+    max-width: 90rem; /* Equivalent to max-w-7xl, where 7xl = 80rem */
+    flex-direction: column; /* Equivalent to flex-col */
+    margin-bottom: 2rem; /* Equivalent to mb-8, where 8 = 2rem */
+    
+  }
+  
+  .title-section {
+    color: black;
+    margin-bottom: 8px;
+    
+  }
+  
+  .title {
+    font-size: 3rem; /* Equivalent to text-[3rem] */
+    display: inline-block; /* Equivalent to inline-block */
+    text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25); /* Custom text shadow */
+    font-family: 'Gilroy-Semibold', sans-serif; /* Custom font, ensure 'Gilroy-Semibold' is loaded */
+    width: 100%; /* Equivalent to w-[100%] */
+   
+  }
+  
+  .filter-modal-description {
+    font-size: 15px; /* Equivalent to text-base */
+    font-family: 'Gilroy-Regular', sans-serif; /* Assuming 'Gilroy-Regular' is a custom font */
+    display: flex; /* Creates a flex container */
+    align-items: center; /* Vertically centers items in the flex container */
+  }
+  
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Creates a 2-column grid */
+    column-gap: 2px; /* Equivalent to gap-x-3 */
+    row-gap: 4px; /* Equivalent to gap-y-6 */
+    justify-content: start; /* Aligns items to the start of the grid area */
+    align-items: center; /* Vertically centers items in their grid cell */
+  }
+
+  .grid-container .grid-item {
+    width: 119.67%; /* Equivalent to w-2/3 */
+    margin-bottom: 1.5rem; /* Equivalent to mb-6 */
+}
+  
+  .toggle-switch {
+    width: 66.666%;
+    margin-bottom: 4px;
+    margin-top: 18px;
+  }
+  
+  .button-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%; /* Equivalent to w-full */
+    gap: 36px; /* Equivalent to gap-9 */
+    justify-content: center; /* Centers items horizontally */
+    align-items: center; /* Centers items vertically */
+    margin-top: 2rem; /* Equivalent to mt-8 */
+  }
+  
+  .return-button {
+    background-color: #8A5A8E; 
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px; 
+    border-radius: 6px; 
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1); 
+    width: 100%;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: 'Gilroy-Bold', sans-serif; 
+}
+
+@media (min-width: 768px) {
+    .return-button {
+        min-width: 136px;
+        width: 40%; /* This applies to medium-sized devices and above */
+    }
+}
+
+ .FilterModal-preview-button{
+    background-color: #F0C64A; 
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px; 
+    border-radius: 6px; 
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1); 
+    width: 100%;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: 'Gilroy-Bold', sans-serif;
+ }
+
+ @media (min-width: 768px) {
+    .FilterModal-preview-button {
+        min-width: 136px;
+        width: 40%; /* This applies to medium-sized devices and above */
+    }
+}

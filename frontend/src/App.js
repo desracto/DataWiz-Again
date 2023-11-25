@@ -24,6 +24,8 @@ import QuizHome from './features/quiz/pages/QuizHome';
 import SavedQuizzes from './features/quiz/pages/SavedQuizzesPage';
 import UNCompletedQuiz from './features/quiz/pages/UNCompletedQuiz';
 
+import TestDisplay from './features/animation/pages/TestDisplay';
+
 function App() {
   return (
     <div>
@@ -46,6 +48,7 @@ function App() {
           <Route path="/UncompletedQuizPage" element={<UNCompletedQuiz />}/>
           <Route path="/AccountSettingsPage" element={<AccountSettingsPage />}/>
           <Route path="/FaqsPage" element={<FaqsPage />}/>
+          <Route path="/TestDisplay" element={<TestDisplay />}/>
 
         </Routes>
       </BrowserRouter>

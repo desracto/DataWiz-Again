@@ -6,7 +6,6 @@ from ...extensions import db
 
 from ..main.errors import bad_request, error_response
 from .scripts.generator import generate_prefixed
-from ...scripts.sqlra import translate_query 
 
 from ._prefixed_models import Schema1_Employee as Employee
 from ._prefixed_models import Schema2_Product as Product, Schema2_Inventory as Inventory
@@ -15,6 +14,9 @@ from ._prefixed_models import Schema4_Flight as Flight, Schema4_Passenger as Pas
 from ._prefixed_models import Schema5_Album as Album, Schema5_Artist as Artist, Schema5_Genre as Genre, Schema5_Song as Song
 
 from pyparsing import ParseException
+
+from app.scripts.Active_animation_parser import main as animation_main
+from app.scripts.Active_sqlra import translate_query
 
 @animation_bp.route('/schema/1/')
 def schema1():
@@ -148,33 +150,56 @@ def schema5():
 
     return jsonify(results=results)
 
-@animation_bp.route('/animate/', methods=['POST'])
-def get_query():
-    """
-        JSON Format:
-        {
-            "query": "query_string": str
-        }
-    """
-    data = request.get_json() or {}
+# @animation_bp.route('/animate/', methods=['POST'])
+# def get_query():
+#     """
+#         JSON Format:
+#         {
+#             "query": "query_string": str
+#         }
+#     """
+#     data = request.get_json() or {}
     
-    # Check if query present
-    if 'query' not in data:
-        return bad_request("query not in request object")
+#     # Check if query present
+#     if 'query' not in data:
+#         return bad_request("query not in request object")
 
-    # Check if query valid & convert to RA
+#     # Check if query valid & convert to RA
+#     try:
+#         tree = translate_query(data['query'])
+#     except ParseException as pe:
+#         # the depth variable states how far up the stacktrace it will go. depth=0
+#         # only the failing input line, marker, and exception string will be shown
+#         return bad_request(pe.explain(depth=0))
+#     except:
+#         return error_response(500)
+
+#     # Rollback all changes
+#     db.session.rollback()
+#     return jsonify(tree)
+
+@animation_bp.route('/animate/', methods=['POST'])
+def animate_query():
     try:
-        tree = translate_query(data['query'])
-    except ParseException as pe:
-        # the depth variable states how far up the stacktrace it will go. depth=0
-        # only the failing input line, marker, and exception string will be shown
-        return bad_request(pe.explain(depth=0))
-    except:
-        return error_response(500)
+        # Get the JSON data from the request
+        query_data = request.get_json()
 
+        # Extract the query from the JSON data
+        query = query_data.get('query', '')
 
+        # Validate if the 'query' key is present in the JSON data
+        if not query:
+            return jsonify({'error': 'Missing or invalid "query" in JSON data'}), 400
 
-    # Rollback all changes
-    db.session.rollback()
-    return jsonify(tree)
+        # Update the 'sql' variable in sqlra.py with the user's query
+        sql = translate_query(query, DEBUG=True, CLEAN=True)
 
+        # Call the animation parser function and retrieve the steps_result
+        steps_result = animation_main()
+
+        # Return the steps_result as JSON
+        return jsonify({'steps_result': steps_result})
+
+        # Handle exceptions appropriately
+    except Exception as e:
+        return jsonify({'error': f'An error occurred: {str(e)}'}), 500
