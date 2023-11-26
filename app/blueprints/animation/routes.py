@@ -150,46 +150,18 @@ def schema5():
 
     return jsonify(results=results)
 
-# @animation_bp.route('/animate/', methods=['POST'])
-# def get_query():
-#     """
-#         JSON Format:
-#         {
-#             "query": "query_string": str
-#         }
-#     """
-#     data = request.get_json() or {}
-    
-#     # Check if query present
-#     if 'query' not in data:
-#         return bad_request("query not in request object")
-
-#     # Check if query valid & convert to RA
-#     try:
-#         tree = translate_query(data['query'])
-#     except ParseException as pe:
-#         # the depth variable states how far up the stacktrace it will go. depth=0
-#         # only the failing input line, marker, and exception string will be shown
-#         return bad_request(pe.explain(depth=0))
-#     except:
-#         return error_response(500)
-
-#     # Rollback all changes
-#     db.session.rollback()
-#     return jsonify(tree)
-
 @animation_bp.route('/animate/', methods=['POST'])
 def animate_query():
     try:
         # Get the JSON data from the request
-        query_data = request.get_json()
+        query_data = request.get_json() or {}
 
         # Extract the query from the JSON data
-        query = query_data.get('query', '')
+        query = query_data.get('query', None)
 
         # Validate if the 'query' key is present in the JSON data
         if not query:
-            return jsonify({'error': 'Missing or invalid "query" in JSON data'}), 400
+            return bad_request('Missing or invalid "query" in JSON data')
 
         # Update the 'sql' variable in sqlra.py with the user's query
         sql = translate_query(query, DEBUG=True, CLEAN=True)
