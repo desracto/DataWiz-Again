@@ -468,7 +468,7 @@ def main():
     # sql = "SELECT * FROM Employees WHERE Salary > 54900 AND Age > 30"
     # translate_query(sql, True)
 
-    sql = "SELECT DISTINCT department, position FROM employees"
+    # sql = "SELECT DISTINCT department, position FROM employees"
     translate_query(sql, True)
 
     # sql = "SELECT employees.employee_id, \

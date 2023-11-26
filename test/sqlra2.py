@@ -367,6 +367,8 @@ def translate_query(query: str, DEBUG=True, CLEAN=False):
     # process
     stmt_dict = process(stmt_tokens)
     
+    return stmt_dict
+    
 
 if __name__ == "__main__":
 
