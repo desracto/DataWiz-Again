@@ -1,6 +1,8 @@
+import React, { useState } from 'react';
 import SecondHeader from '../../../global_components/SecondHeader';
 import SchemaTable from '../components/SchemaTable';
 import { useLocation } from 'react-router-dom';
+import axios from 'axios'; 
 import "./QueryAnimationPage.css";
  
 // Image IMports
@@ -12,7 +14,22 @@ export default function SchemaSelectionPage() {
 
     const location = useLocation();
     const selectedSchema = location.state.schemaData;
-    console.log(location.state.schemaData);
+    // console.log(location.state.schemaData);
+    const [query, setQuery] = useState('');
+
+    const handleAnimateQuery = async () => {
+      try {
+        const response = await axios.post('/animate/', { query }); //this wrong in think
+        console.log(response); // Log the response bozo
+  
+        // Axios automatically throws an error for non-2xx responses (what?)
+        const result = response.data;
+        // Handle the result as needed, e.g., update state or display the animation steps
+        console.log(result);
+      } catch (error) {
+        console.error('Error animating query:', error.message);
+      }
+    };
 
   return (
     <>
@@ -72,11 +89,14 @@ export default function SchemaSelectionPage() {
 
             <div className="QueryContainer">
                 <div className="QueryTextbox">
-                    <div className="QueryPlaceholder"> 
-                        Enter Query
-                    </div>
+                    <textarea
+                        className="QueryPlaceholder"
+                        placeholder="Enter Query"
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                    />
                 </div>
-                <button className='AnimateQueryButton'>
+                <button className='AnimateQueryButton' onClick={handleAnimateQuery}>
                     ANIMATE QUERY
                 </button>
             </div>

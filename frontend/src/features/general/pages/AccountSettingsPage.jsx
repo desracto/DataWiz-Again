@@ -6,19 +6,67 @@ import SaveChangesPopUp from "../components/SaveChangesPopUp.jsx";
 import "./AccountSettingPage.css";
 import { useForm } from "react-hook-form";
 
-import vector from '../../../assets/images/vector.svg'
+import vector from '../../../assets/images/vector.svg';
+import instructorIcon from '../../../assets/images/Settings-Instructor.png';
 import SecondHeader from "../../../global_components/SecondHeader.jsx";
 
 const AccountSettingPage = () => {
-    const {register, handleSubmit, formState: { errors }} = useForm();
-    const [userInfo, setUserInfo] = useState();
+    const {register, handleSubmit, setValue, formState: { errors }, getValues, trigger} = useForm( {reValidateMode: 'onSubmit'} );
+    const [isEditMode, setEditMode] = useState(false);
+    const [originalValues, setOriginalValues] = useState({});
+    const [isSaveChangesPopUpOpen, setSaveChangesPopUpOpen] = useState(false);  
+    const [isLogoutConfirmationPopUpOpen, setLogoutConfirmationPopUpOpen] = useState(false);
+    const [isDeleteConfirmationPopUpOpen, setDeleteConfirmationPopUpOpen] = useState(false);
 
-  const [isLogoutConfirmationPopUpOpen, setLogoutConfirmationPopUpOpen] =
-    useState(false);
-  const [isDeleteConfirmationPopUpOpen, setDeleteConfirmationPopUpOpen] =
-    useState(false);
-  const [isSaveChangesPopUpOpen, setSaveChangesPopUpOpen] = useState(false);
+    const startEditMode = useCallback(() => {
+      setOriginalValues(getValues());
+      setEditMode(true);
+    }, [getValues()]);
 
+    const onSubmit = async (data) => {
+      // Trigger form validation
+      const isValid = await trigger();
+    
+      if (isValid) {
+        // No validation errors, proceed with opening the Save Changes pop-up
+        openSaveChangesPopUp();
+      }
+    };
+
+
+  const handleSaveChanges = () => {
+    // Update form values with new values
+    const formData = getValues();
+    Object.keys(formData).forEach((field) => {
+      setValue(field, formData[field]);
+    });
+
+    // Exit edit mode
+    setEditMode(false);
+
+    // Close the pop-up
+    closeSaveChangesPopUp();
+  };
+
+  const handleCancelChanges = () => {
+      // Restore original form values
+      Object.keys(originalValues).forEach((field) => {
+        setValue(field, originalValues[field]);
+      });
+
+    setEditMode(false);
+
+    // Close the pop-up
+    closeSaveChangesPopUp();
+  };
+
+  const openSaveChangesPopUp = useCallback(() => {
+    setSaveChangesPopUpOpen(true);
+  }, []);
+
+  const closeSaveChangesPopUp = useCallback(() => {
+    setSaveChangesPopUpOpen(false);
+  }, []);
   const openLogoutConfirmationPopUp = useCallback(() => {
     setLogoutConfirmationPopUpOpen(true);
   }, []);
@@ -35,14 +83,6 @@ const AccountSettingPage = () => {
     setDeleteConfirmationPopUpOpen(false);
   }, []);
 
-  const openSaveChangesPopUp = useCallback(() => {
-    setSaveChangesPopUpOpen(true);
-  }, []);
-
-  const closeSaveChangesPopUp = useCallback(() => {
-    setSaveChangesPopUpOpen(false);
-  }, []);
-
 return(
     <>
         <SecondHeader/>
@@ -52,89 +92,82 @@ return(
                     <div className="account-settings">
                         Account Settings
                     </div>
-                    <button className="settings-edit-button">
-                        <img  src={vector} />
+                    <button 
+                      className="settings-edit-button"
+                      id = "edit-button"
+                      onClick={startEditMode}
+                    >
+                        <img  src={vector}  alt = "Edit-button"/>
                     </button>
                 </div>
                 <div className="settings-subheadings">Personal Information</div>
-                <form action="">
+                <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="settings-input-label">
                             Full name
                         </div>
-                        <input
-                            className="settings-textbox1"
-                            placeholder="Enter your full name"
-                            type="text"
-                             {...register("fullName", { required: "Full Name is required", pattern : {value:/^[A-Za-z ]+$/i, message: "Full name must contain only letters and spaces"}})}
-                        />
-
+                        <div className={isEditMode ? '' : 'cursor-notAllowed'}>
+                          <input
+                              className={isEditMode ? "settings-textbox1-edit" : "settings-textbox1"}
+                              defaultValue="Mohamed Nihal"
+                              type="text"
+                              {...register("fullName", { required: "Full Name is required", pattern : {value:/^[A-Za-z ]+$/i, message: "Full name must contain only letters and spaces"}})}
+                          />
+                          <p className = "settings-ErrorMessages">{errors.fullName?.message}</p>
+                          
+                        </div>
                         <div className="settings-input-label">Username</div>
-                        <input 
-                            className="settings-textbox1" 
-                            placeholder="Enter your username" 
-                            type="text" 
-                             {...register("username", { required: "Username is required", pattern : {value:/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,20}$/, message: "Username must be between 6 and 20 characters ,include at least 1 uppercase letter and 1 numeric digit"} })}
-                        />
+                        <div className={isEditMode ? '' : 'cursor-notAllowed'}>
+                          <input 
+                              className={isEditMode ? "settings-textbox1-edit" : "settings-textbox1"}
+                              defaultValue="Mnk665" 
+                              type="text"   
+                              {...register("username", { required: "Username is required", pattern : {value:/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,20}$/, message: "Username must be between 6 and 20 characters ,include at least 1 uppercase letter and 1 numeric digit"} })}
+                          />
+                          <p className = "settings-ErrorMessages">{errors.username?.message}</p>
 
+                        </div>
                         <div className="settings-input-label">Email</div>
-                        <input
-                            className="settings-textbox1"
-                            placeholder="Enter your email"
-                            type="email"
-                             {...register("email", { required: "Email is required",  pattern : {value:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, message: "Enter a valid email address"}})}
-                        />
+                        <div className={isEditMode ? '' : 'cursor-notAllowed'}>
+                          <input
+                              className={isEditMode ? "settings-textbox1-edit" : "settings-textbox1"}
+                              defaultValue="mnk665@uowmail.edu.au  "
+                              type="email"
+                              {...register("email", { required: "Email is required",  pattern : {value:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, message: "Enter a valid email address"}})}
+                          />
+                          <p className = "settings-ErrorMessages">{errors.email?.message}</p>
+
+                        </div>
                         <div className="settings-subheadings">Change Password</div>
 
                         <div className="settings-input-label">Current Password</div>
                         <input 
-                            className="settings-textbox1" 
+                            className="settings-textbox1-edit" 
                             type="password"
                             placeholder="**********" 
-                             {...register("current_password", { required: "Password is required", pattern : {value:/^(?=.*[!@#\$%^&*()\-_=+\[\]{}|;:'",.<>?\/\\]).{8,64}$/, message: "Password must be between 8 and 64 characters and contain at least one special character"}})}
+                             //{...register("current_password", { required: "Password is required", pattern : {value:/^(?=.*[!@#\$%^&*()\-_=+\[\]{}|;:'",.<>?\/\\]).{8,64}$/, message: "Password must be between 8 and 64 characters and contain at least one special character"}})}
                         />
 
                         <div className="settings-input-label">New Password</div>
                         <input 
-                            className="settings-textbox1" 
+                            className="settings-textbox1-edit" 
                             type="password"
                             placeholder="**********" 
-                             {...register("new_password", { required: "Password is required", pattern : {value:/^(?=.*[!@#\$%^&*()\-_=+\[\]{}|;:'",.<>?\/\\]).{8,64}$/, message: "Password must be between 8 and 64 characters and contain at least one special character"}})}
+                             //{...register("new_password", { required: "Password is required", pattern : {value:/^(?=.*[!@#\$%^&*()\-_=+\[\]{}|;:'",.<>?\/\\]).{8,64}$/, message: "Password must be between 8 and 64 characters and contain at least one special character"}})}
                         />
 
                         <div className="settings-input-label">Confirm Password</div>
                         <input 
-                            className="settings-textbox1" 
+                            className="settings-textbox1-edit" 
                             type="password"
                             placeholder="**********" 
-                             {...register("confirm_password", { required: "Password is required", pattern : {value:/^(?=.*[!@#\$%^&*()\-_=+\[\]{}|;:'",.<>?\/\\]).{8,64}$/, message: "Password must be between 8 and 64 characters and contain at least one special character"}})}
+                            //  {...register("confirm_password", { required: "Password is required", pattern : {value:/^(?=.*[!@#\$%^&*()\-_=+\[\]{}|;:'",.<>?\/\\]).{8,64}$/, message: "Password must be between 8 and 64 characters and contain at least one special character"}})}
                         />
 
-                        <div className="settings-subheadings">Change Account Type</div>
-
-                        <div className="settings-checkbox-group1">
-                                <div className ="settings-checkbox-group2">
-                                    <input
-                                        className="settings-checkbox"
-                                        id="learner check"
-                                        type="radio"
-                                        name="account_type"
-                                        value = "learner"
-                                         {...register("account_type", { required: "Please select an account type" })}
-                                    />
-                                    <label className="settings-checkbox-label">Learner</label>
-                                </div> 
-                                <div className ="settings-checkbox-group2">
-                                    <input
-                                        className="settings-checkbox"
-                                        id="instructor check"
-                                        type="radio"
-                                        name="account_type"
-                                        value="instructor"
-                                        {...register("account_type", { required: "Please select an account type" })}
-                                    />
-                                    <label className="settings-checkbox-label">Instructor</label>
-                                </div>      
-                            </div>
+                        <div className="settings-input-label"> Account Type: </div>
+                        <div className="settings-checkbox-group2">
+                          <img  className = "instructor-icon" src={instructorIcon} alt="instructor-icon" />
+                          <div className="instructor-label">  Instructor</div>
+                        </div>
 
                         <div className ="settings-checkbox-group2">
                             <button 
@@ -146,9 +179,8 @@ return(
                             </button>
 
                             <button 
-                                type="button" // Do not remove, import so button does not submit the form
+                                type="submit" 
                                 className="settings-save-changes"
-                                onClick={openSaveChangesPopUp}
                             >
                             <div className="settings-button-label">Save Changes</div>
                             </button>
@@ -190,7 +222,9 @@ return(
           placement="Centered"
           onOutsideClick={closeSaveChangesPopUp}
         >
-          <SaveChangesPopUp onClose={closeSaveChangesPopUp} />
+          <SaveChangesPopUp
+          onConfirm={handleSaveChanges}  
+          onCancel={handleCancelChanges} />
         </PortalPopup>
       )}
     </>

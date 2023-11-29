@@ -1,14 +1,15 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { useLocation } from "react-router-dom"; // Import useLocation
 import { FaFilter, FaSave, FaTrash } from "react-icons/fa";
 import { MdOutlineAddCircleOutline } from "react-icons/md";
 import FilterModal from "../components/FilterModal";
 import SuccessModal from "../components/SuccessModal";
+import PortalPopup from '../components/PortalPopup.jsx';
 import "./CreateQuiz.css";
 import SecondHeader from "../../../global_components/SecondHeader";
 
-function CreateQuiz() {
+const CreateQuiz =() => {
   const [schemaAdded, setSchemaAdded] = useState(false);
   const [files, setFiles] = useState([]);
   const [showSubmitButton, setShowSubmitButton] = useState(false);
@@ -22,11 +23,31 @@ function CreateQuiz() {
   const [isSaved, setIsSaved] = useState(false);
   const quizNameRef = useRef(quizName);
 
+
+  const [isFilterModalOpen, setFilterModalOpen] =
+  useState(false);
+
+  const openFilterModal = useCallback(() => {
+    setFilterModalOpen(true);
+  }, []);
+
+ 
+
+  const closeFilterModal = useCallback(() => {
+    setFilterModalOpen(false);
+  }, []);
+
   // Function to generate a unique ID
   function generateUniqueId() {
     // Creates a unique identifier based on the current time and a random number
     return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
   }
+
+
+
+
+  
+
 
   useEffect(() => {
     quizNameRef.current = quizName;
@@ -211,7 +232,7 @@ function CreateQuiz() {
     <>
       <SecondHeader />
       <div className="create-quiz-container">
-        {filterModal ? <FilterModal onClose={() => setFilterModal(false)} /> : null}
+        {filterModal ? <FilterModal onClose={() => closeFilterModal(true)} /> : null}
         {successModal ? <SuccessModal onClose={() => setSuccessModal(false)} /> : null}
 
         <div className="flex w-full max-w-3xl flex-col mb-8">
@@ -220,7 +241,7 @@ function CreateQuiz() {
               <div className="createquiz-style">Create Quiz</div>
               {schemasList?.length > 0 ? (
                 <div className="flex-row-container">
-                  <div className="flex-center-filter-save" onClick={() => setFilterModal(true)}>
+                  <div className="flex-center-filter-save" onClick={openFilterModal}>
                     <FaFilter size={25} color="#98989F" />
                     <span className="text-gilroy-semibold ">Auto-Grading Filters</span>
                   </div>
@@ -426,6 +447,19 @@ function CreateQuiz() {
           </div>
         </div>
       </div>
+
+{/* ------------------------------- */}    
+
+{isFilterModalOpen && (
+    <PortalPopup
+    overlayColor="rgba(65, 62, 62, 0.5)"
+    placement="Centered"
+    onOutsideClick={closeFilterModal}
+>
+    <FilterModal onClose={closeFilterModal} />
+    </PortalPopup>
+)}
+
     </>
   );
 }

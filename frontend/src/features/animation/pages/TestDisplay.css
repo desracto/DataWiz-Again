@@ -1,0 +1,35 @@
+/* TestDisplay.css */
+.app-container {
+    max-width: 600px;
+    margin: 50px auto;
+  }
+  
+  .query-input {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 10px;
+    background-color: #d4d7db;
+    border-radius: 20px;
+    padding: 20px;
+  }
+  
+  .run-query-btn {
+    display: block;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .result-box {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #ff3333;
+    color: #000;
+  }
+  
+  .result-text {
+    margin: 0;
+  }
+  
