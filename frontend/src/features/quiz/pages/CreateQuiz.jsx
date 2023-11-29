@@ -135,33 +135,44 @@ const CreateQuiz =() => {
     }
   };
 
-  const onDrop = (acceptedFiles) => {
-    const currentRef = getInputProps()?.ref;
+  const onDrop = useCallback((acceptedFiles, fileRejections) => {
+    if (fileRejections.length > 0) {
+      // Alert the user about the incorrect file format
+      alert('Invalid file type. Only .png, .jpg, and .jpeg files are accepted.');
+    } else {
+      // Handle the accepted files
+      const currentRef = getInputProps()?.ref;
 
-    setSchemasList((prev) =>
-      prev.map((item) => {
-        if (item.id == currentRef?.current?.id) {
-          return {
-            ...item,
-            files: [
-              ...acceptedFiles.map((file) => ({
-                ...file,
-                preview: URL.createObjectURL(file),
-              })),
-            ],
-          };
-        } else {
-          return item;
-        }
-      })
-    );
-  };
+      setSchemasList((prev) =>
+        prev.map((item) => {
+          if (item.id == currentRef?.current?.id) {
+            return {
+              ...item,
+              files: [
+                ...acceptedFiles.map((file) => ({
+                  ...file,
+                  preview: URL.createObjectURL(file),
+                })),
+              ],
+            };
+          } else {
+            return item;
+          }
+        })
+      );
+    }
+  }, []);
 
   const { getRootProps, getInputProps, open, isDragActive } = useDropzone({
     noClick: true,
     noKeyboard: true,
     onDrop,
     multiple: false,
+    accept: {
+      "image/png": [".png"],
+      "image/jpb": [".jpg"],
+      "image/jpeg": [".jpeg"],
+    },
   });
   const [schema, setSchema] = useState(false);
   const [filterModal, setFilterModal] = useState(false);
