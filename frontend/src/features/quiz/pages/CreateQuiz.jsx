@@ -10,99 +10,93 @@ import "./CreateQuiz.css";
 import SecondHeader from "../../../global_components/SecondHeader";
 
 const CreateQuiz =() => {
-  const [schemaAdded, setSchemaAdded] = useState(false);
-  const [files, setFiles] = useState([]);
-  const [showSubmitButton, setShowSubmitButton] = useState(false);
+        const [schemaAdded, setSchemaAdded] = useState(false);
+        const [files, setFiles] = useState([]);
+        const [showSubmitButton, setShowSubmitButton] = useState(false);
 
-  const location = useLocation(); // Get the location hook
+        const location = useLocation(); // Get the location hook
 
-  const [quizName, setQuizName] = useState("");
-  const [quizDescription, setQuizDescription] = useState("");
+        const [quizName, setQuizName] = useState("");
+        const [quizDescription, setQuizDescription] = useState("");
 
-  const [schemasList, setSchemasList] = useState([]);
-  const [isSaved, setIsSaved] = useState(false);
-  const quizNameRef = useRef(quizName);
-
-
-  const [isFilterModalOpen, setFilterModalOpen] =
-  useState(false);
-
-  const openFilterModal = useCallback(() => {
-    setFilterModalOpen(true);
-  }, []);
-
- 
-
-  const closeFilterModal = useCallback(() => {
-    setFilterModalOpen(false);
-  }, []);
-
-  // Function to generate a unique ID
-  function generateUniqueId() {
-    // Creates a unique identifier based on the current time and a random number
-    return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-  }
+        const [schemasList, setSchemasList] = useState([]);
+        const [isSaved, setIsSaved] = useState(false);
+        const quizNameRef = useRef(quizName);
 
 
+        const [isFilterModalOpen, setFilterModalOpen] =
+        useState(false);
 
+        const openFilterModal = useCallback(() => {
+            setFilterModalOpen(true);
+        }, []);
 
-  
+        
 
+        const closeFilterModal = useCallback(() => {
+            setFilterModalOpen(false);
+        }, []);
 
-  useEffect(() => {
-    quizNameRef.current = quizName;
-  }, [quizName]);
+        // Function to generate a unique ID
+        function generateUniqueId() {
+            // Creates a unique identifier based on the current time and a random number
+            return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+        }
 
-  // Save draft function
-  const saveDraft = () => {
-    const currentQuizName = quizNameRef.current; // Use current value from the ref
-    if (!currentQuizName.trim()) return;
+        useEffect(() => {
+            quizNameRef.current = quizName;
+        }, [quizName]);
 
-    const drafts = JSON.parse(localStorage.getItem("drafts") || "[]");
-    const newDraft = {
-      id: generateUniqueId(),
-      name: currentQuizName,
-      date: new Date().toLocaleDateString(),
-      time: new Date().toLocaleTimeString(),
-      isDraft: true,
+        // Save draft function
+        const saveDraft = () => {
+            const currentQuizName = quizNameRef.current; // Use current value from the ref
+            if (!currentQuizName.trim()) return;
+
+        const drafts = JSON.parse(localStorage.getItem("drafts") || "[]");
+        const newDraft = {
+            id: generateUniqueId(),
+            name: currentQuizName,
+            date: new Date().toLocaleDateString(),
+            time: new Date().toLocaleTimeString(),
+            isDraft: true,
+        };
+
+        // Add new draft at the start of the array
+        drafts.unshift(newDraft);
+        // Save the updated drafts array to local storage
+        localStorage.setItem("drafts", JSON.stringify(drafts));
     };
 
-    // Add new draft at the start of the array
-    drafts.unshift(newDraft);
-    // Save the updated drafts array to local storage
-    localStorage.setItem("drafts", JSON.stringify(drafts));
-  };
+    // Effect for handling the saving of draft when component unmounts
+    useEffect(() => {
+        // Cleanup function that runs when the component unmounts
+        return saveDraft;
+    }, []);
 
-  // Effect for handling the saving of draft when component unmounts
-  useEffect(() => {
-    // Cleanup function that runs when the component unmounts
-    return saveDraft;
-  }, []);
-
-  useEffect(() => {
-    // If there's a draft in the state, load it
-    if (location.state && location.state.draft) {
-      const { name, description } = location.state.draft;
-      setQuizName(name);
-      setQuizDescription(description);
-      // Handle loading questions or other parts of the draft as needed
-    }
-  }, [location]);
+    useEffect(() => {
+        // If there's a draft in the state, load it
+        if (location.state && location.state.draft) {
+            const { name, description } = location.state.draft;
+            setQuizName(name);
+            setQuizDescription(description);
+            // Handle loading questions or other parts of the draft as needed
+        }
+    }, [location]);
 
   const saveQuiz = () => {
     if (!quizName.trim()) {
-      alert("Please enter a quiz name.");
-      return;
+        alert("Please enter a quiz name.");
+        return;
     }
 
     const currentDate = new Date();
     const newQuiz = {
-      id: Date.now(), // Simple unique ID for demonstration
-      name: quizName,
-      description: quizDescription,
-      questions: questions,
-      date: currentDate.toLocaleDateString(), // Saves only the date
-      time: currentDate.toLocaleTimeString(), // Saves only the time
+        id: Date.now(), // Simple unique ID for demonstration
+        name: quizName,
+        description: quizDescription,
+        questions: questions,
+        date: currentDate.toLocaleDateString(), // Saves only the date
+        time: currentDate.toLocaleTimeString(), // Saves only the time
     };
 
     const savedQuizzes = JSON.parse(localStorage.getItem("quizzes") || "[]");
@@ -115,25 +109,25 @@ const CreateQuiz =() => {
     alert("Quiz saved successfully!");
   };
 
-  const handleSubmission = (id) => {
-    const exist = schemasList.find((schema) => schema?.id == id);
-    if (exist?.files?.length == 0) {
-      alert("Please upload an image before submitting.");
-    } else {
-      setSchemasList((prev) =>
-        prev.map((item) => {
-          if (item.id == id) {
-            return {
-              ...item,
-              isSubmitted: false,
-            };
-          } else {
-            return item;
-          }
-        })
-      );
-    }
-  };
+    const handleSubmission = (id) => {
+        const exist = schemasList.find((schema) => schema?.id == id);
+        if (exist?.files?.length == 0) {
+        alert("Please upload an image before submitting.");
+        } else {
+        setSchemasList((prev) =>
+            prev.map((item) => {
+            if (item.id == id) {
+                return {
+                ...item,
+                isSubmitted: false,
+                };
+            } else {
+                return item;
+            }
+            })
+        );
+        }
+    };
 
   const onDrop = useCallback((acceptedFiles, fileRejections) => {
     if (fileRejections.length > 0) {

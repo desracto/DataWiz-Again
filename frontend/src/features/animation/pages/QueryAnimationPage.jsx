@@ -32,18 +32,35 @@ export default function SchemaSelectionPage() {
   
 
     const handleAnimateQuery = async () => {
-        try {
-            const response = await axios.post('/animate/', { query }); //this wrong in think
-            console.log(response); // Log the response bozo
-    
-            // Axios automatically throws an error for non-2xx responses (what?)
-            const result = response.data;
-            // Handle the result as needed, e.g., update state or display the animation steps
-            console.log(result);
-        } catch (error) {
-            console.error('Error animating query:', error.message);
-        }
-    };
+        // try {
+        //     const response = await axios.post('http://localhost:5000/api/animation/animate/', { query }); 
+        //     console.log(response); 
+        //     // Axios automatically throws an error for non-2xx responses (what?)
+        //     const result = response.data;
+        //     // Handle the result as needed, e.g., update state or display the animation steps
+        //     console.log(result);
+        // } catch (error) {
+        //     console.error('Error animating query:', error.message);
+        // }
+
+        // Code from Ejax for testing
+        const request = axios.create({
+            baseURL: "http://localhost:5000",
+            headers: {
+                "Content-Type" : "application/json"
+            },
+            withCredentials: true,
+            timeout: 300000
+        })
+
+        request({
+            url: 'api/animation/animate',
+            method: 'post',
+            data: query})
+        .then(response => {
+            console.log(response.data)})
+        .catch(error => {
+            console.log(error)})    };
 
   return (
     <>
