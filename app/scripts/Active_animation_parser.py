@@ -1,5 +1,5 @@
 # keywords = ['SELECT', 'FROM', 'WHERE', 'GROUP BY', 'HAVING', "LIMIT", 'ORDER BY']
-from Active_sqlra import *
+from .Active_sqlra import *
 
 def find_subqueries(d):
     subqueries = []
@@ -145,7 +145,7 @@ def main():
         step_counter += 1  # Increment the step counter
 
     # Print all steps with space between them
-    print(steps_result)
+    return steps_result
 
 
 if __name__ == "__main__":

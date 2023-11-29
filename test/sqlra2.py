@@ -2,7 +2,6 @@ from sqlparse import parse
 from sqlparse.sql import Identifier, Function
 import pprint
 
-
 # ---------------------- PRE-PROCESS ----------------------
 def pre_process(query: str):
     # remove ; at the end if present
@@ -42,6 +41,8 @@ def split_keywords(stmt_tokens) -> dict:
         if token.is_keyword:            
             if not stmt_dict.get(token.value):
                 stmt_dict[token.value] = []
+                current_keyword = token.value
+            else:
                 current_keyword = token.value
         # value tokens
         else:
@@ -165,44 +166,33 @@ def join_clause(stmt_dict: dict):
         if key in join_types:
             join_type = key
 
-    # retrieves the left table from the FROM clause
-    left_table = 'none'
-    if stmt_dict.get('FROM'):
-        left_table = stmt_dict['FROM'][0]
+    # RIGHT table(s)
+    right_table = stmt_dict.get("INNER JOIN", [])
 
-    # retrieves the right table from the JOIN clause
-    right_table = stmt_dict[join_type][0]
+    # left table
+    left_table = stmt_dict.get("FROM", [])[0]
 
-    # retrieve ON condition
-    on_values = stmt_dict['ON'][0].tokens
-    on_values = [x for x in on_values if not x.is_whitespace]
+    # ON condition(s)
+    on_values = stmt_dict.get("ON", [])
 
-    join = {
-        "LEFT": left_table,
-        "RIGHT": right_table,
-        "ON": on_values
-    }
+    # create pairs of the join-table and it's matching condition
+    pairs = []
+    for i in range(len(on_values)):
+        pairs.append([right_table[i], on_values[i]])
 
-    stmt_dict[join_type] = join
-    del stmt_dict['ON']
-    del stmt_dict['FROM']
+    print(pairs)
 
-def from_clause(stmt_dict: dict):
-    # retrieve all tables
-    # and where conditions, empty arrays if they dont exist
-    tables = stmt_dict['FROM']
-    conditions = stmt_dict.get('WHERE', []) + stmt_dict.get('AND', [])
+    # find which pair has the inital condition
+    # condition will be 1st index
+    for pair in pairs:
+        if left_table.value in pair[1].value:
+            print(pair) 
 
+
+def __create_matching_pairs(tables: list, conditions: list):
     join_nodes = []
     completed_conditions = []
 
-    # tables and conditions found
-    # creates matching pairs
-    # {
-    #   "LEFT": left-table,
-    #   "RIGHT": right-table,
-    #   "ON": On-condition
-    # }
     for left_table in tables:
         for condition in conditions:
             for right_table in tables:
@@ -213,6 +203,9 @@ def from_clause(stmt_dict: dict):
                 # check if condition has equality operator
                 if '=' in condition.value:
                     equality_operator = condition.value.find('=')
+                    # Split the condition into three parts
+                    # check if table is present in both parts
+
                     if  left_table.value in condition.value and \
                         right_table.value in condition.value and \
                         condition.value not in completed_conditions:
@@ -225,53 +218,76 @@ def from_clause(stmt_dict: dict):
                         
                         completed_conditions.append(condition.value)
 
-    pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(join_nodes)
+    return completed_conditions, join_nodes                     
 
-    # Create one overall node
-    join = {
+def __create_master_node(join_pairs):
+    outter_node = {
         "LEFT": None,
         "RIGHT": None,
         "ON": None
     }
 
-    for match in join_nodes:
-        # outter node has not been established yet
-        if not join['LEFT']:
-            join['LEFT'] = match['LEFT']
-            join['RIGHT'] = match['RIGHT']
-            join['ON'] = match['ON']
-        elif join['RIGHT']:
+    for pair in join_pairs:
+        # check if outter_node has been initalized
+        if not outter_node['LEFT']:
+            outter_node['LEFT'] = pair['LEFT']
+            outter_node['RIGHT'] = pair['RIGHT']
+            outter_node['ON'] = pair['ON']
+        
+        elif outter_node['RIGHT'] == pair['LEFT']:
             temp = {
-                'LEFT': join['LEFT'],
-                'RIGHT': join['RIGHT'],
-                'ON': join['ON']
+                "LEFT": outter_node["LEFT"],
+                "RIGHT": outter_node["RIGHT"],
+                "ON": outter_node["ON"]
             }
 
-            join['LEFT'] = match['RIGHT']
-            join['RIGHT'] = temp
-            join['ON'] = match['ON']
+            # swap the outter node
+            outter_node["LEFT"] = temp
+            outter_node["RIGHT"] = pair['RIGHT']
+            outter_node["ON"] = pair['ON']
 
-    # remove matched conditions from selection array
-    # naive way
+    return outter_node
+
+def __clean_conditions(conditions, completed_conditions):   
     cleaned_conditions = []
     for condition in conditions:
         if condition.value in completed_conditions:
             continue
+        elif condition.is_keyword:
+            continue
         else:
             cleaned_conditions.append(condition)
+
+    return cleaned_conditions
+
+def from_clause(stmt_dict: dict):
+    # retrieve all tables
+    # and selection nodes, empty arrays if they dont exist
+    tables = stmt_dict['FROM']
+    conditions = stmt_dict.get('WHERE', []) + stmt_dict.get('AND', [])
+    
+    # match all tables to their conditions
+    completed_conditions, join_pairs = __create_matching_pairs(tables, conditions)
+
+    # Create one overall node
+    master_join_node = __create_master_node(join_pairs)
+
+    # remove all matched conditions
+    cleaned_conditions = __clean_conditions(conditions, completed_conditions)
+    
+    # Delete old nodes
+    del stmt_dict['FROM']
+    del stmt_dict['WHERE']
+    del stmt_dict['AND']
 
     # multiple conditions
     if len(cleaned_conditions) > 1:
         stmt_dict['WHERE'] = cleaned_conditions[0]
         stmt_dict['AND'] = cleaned_conditions[1:]
+    else:
+        stmt_dict['WHERE'] = cleaned_conditions
 
-    stmt_dict['WHERE'] = cleaned_conditions
-    
-    # Delete old nodes
-    del stmt_dict['FROM']
-    del stmt_dict['AND']
-
-    stmt_dict['INNER JOIN'] = join
+    stmt_dict['INNER JOIN'] = master_join_node
 
 def join_processing(stmt_dict: dict, type: str):
     if type == 'JOIN':

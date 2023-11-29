@@ -114,7 +114,7 @@ class Quiz_Image(db.Model):
     __tablename__ = 'Quiz_Image'
 
     # Fields
-    img_id = db.Column(db.String(32), primary_key=True, unique=True, defualt=get_uuid)
+    img_id = db.Column(db.String(32), primary_key=True, unique=True, default=get_uuid)
     quiz_id = db.Column(db.String(32), db.ForeignKey('Quiz.id')) # Fk
     img_data = db.Column(db.LargeBinary)
 
