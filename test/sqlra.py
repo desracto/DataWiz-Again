@@ -426,14 +426,14 @@ def main():
 
 
 
-    # sql = " SELECT program.name, scores.inspiration, \
-    #                 (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price \
-    #         FROM programme \
-    #         INNER JOIN scores \
-    #             ON programme.id = score.id \
-    #         WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) \
-    #             AND s.age = 20 \
-    #         GROUP BY id"
+    sql = " SELECT program.name, scores.inspiration, \
+                    (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price \
+            FROM programme \
+            INNER JOIN scores \
+                ON programme.id = score.id \
+            WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) \
+                AND s.age = 20 \
+            GROUP BY id"
     
     # sql = "SELECT * FROM employees"
 
@@ -469,7 +469,7 @@ def main():
     # translate_query(sql, True)
 
     # sql = "SELECT DISTINCT department, position FROM employees"
-    # translate_query(sql, True)
+    translate_query(sql, True)
 
     # sql = "SELECT employees.employee_id, \
     #         FROM employees \

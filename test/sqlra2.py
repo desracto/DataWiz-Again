@@ -514,6 +514,8 @@ def translate_query(query: str, DEBUG=True, CLEAN=False):
 
     return stmt_dict
     
+    return stmt_dict
+    
 
 if __name__ == "__main__":
 

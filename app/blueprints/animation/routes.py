@@ -163,14 +163,17 @@ def animate_query():
         if not query:
             return bad_request('Missing or invalid "query" in JSON data')
 
-        # Update the 'sql' variable in sqlra.py with the user's query
-        sql = translate_query(query, DEBUG=True, CLEAN=True)
+        # # Update the 'sql' variable in sqlra.py with the user's query
+        # sql = translate_query(query, DEBUG=True, CLEAN=True)
 
-        # Call the animation parser function and retrieve the steps_result
-        steps_result = animation_main()
+        # # Call the animation parser function and retrieve the steps_result
+        # steps_result = animation_main()
 
-        # Return the steps_result as JSON
-        return jsonify({'steps_result': steps_result})
+        # # Return the steps_result as JSON
+        # return jsonify({'steps_result': steps_result})
+
+        return jsonify({'query': 'query'})
+
 
         # Handle exceptions appropriately
     except Exception as e:
