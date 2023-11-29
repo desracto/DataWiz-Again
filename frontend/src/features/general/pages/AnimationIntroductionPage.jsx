@@ -21,7 +21,7 @@ const AnimationIntroductionPage = () => {
   }, [navigate]);
   const onAnimIntroSavedQueriesButtonClick = useCallback(() => {
     navigate("/SavedAnimationsPage")
-  }, []);
+  }, [navigate]);
 
 
   return (

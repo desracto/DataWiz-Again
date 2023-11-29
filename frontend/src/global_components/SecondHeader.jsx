@@ -43,9 +43,9 @@ const SecondHeader = () => {
     <div className="main">
       <div className="Header2Container">
         {/* Logo */}
-        <button className="logo-button" onClick={GoToHomePage}>
-          <div className="logo">
-            <img src={logo} alt="Logo" />
+        <button className="logo-button" >
+          <div className="logo" style={{cursor:'pointer'}} onClick={GoToHomePage}>
+            <img src={logo} alt="Logo"  />
             <span>
               Data
               <span>Wiz.</span>
@@ -126,7 +126,7 @@ const SecondHeader = () => {
         {isMobile ? (
           <div className="overlay">
             <div className="fixed_panel" ref={modalRef}>
-              <div className="mobile_logo">
+              <div className="mobile_logo" onClick={GoToHomePage} style={{cursor:'pointer'}}>
                 <img src={logo} alt="Logo" />
                 <span>
                   Data

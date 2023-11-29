@@ -70,8 +70,8 @@
 }
   
 .QueryInputCard {
-    width: 78%;
-    height: 1100px;
+    width: 80%;
+    height: 1130px;
     background: #D4C1CE;
     border-radius: 45px;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
@@ -87,7 +87,7 @@
     display: flex;
     position: relative;
     flex-direction: column;
-    margin-top: 30px;
+    margin-top: 50px;
     align-items: flex-start;
     gap: 10px;
 }
@@ -126,12 +126,11 @@
     justify-content: center;
     align-items: center;
     margin-top: 30px;
-    background-color: aqua;
     width: 80%;
     display: inline-flex; /* Use inline-flex to align buttons horizontally */
   }
  
-  .SchemaButton {
+.SchemaButton {
     width: 30%;
     max-width: 120px;
     height: 40px;
@@ -145,34 +144,57 @@
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
     border: none;
     transition: background-color 0.3s ease;
-  }
+}
+
+.button-container1 {
+    /* background-color: rgb(191, 255, 0); */
+    margin-top: 152px;
+    position: absolute;
+    width: 80%;
+    height: 40px;
+    align-items: flex-start; 
+}
 
 .ReturnSchemaSelectionButton {
     align-items: flex-start; 
-    position: absolute;
-    width: 40%;
-    max-width: 150px;
-    height: 40px;
+    height: 100%;
+    width: 20%;
+    max-width: 170px;
+    min-width: 130px;
     background: #ffffff;
     border-radius: 100px;
     color: #454141;
-    font-size: 14px;
+    font-size: 13px;
     font-family: Gilroy-Bold;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+    border: none;
+    transition: background-color 0.3s ease;
+    word-wrap: break-word;
+    cursor: pointer;
 }
 
-.SelectedSchemaCard {
-    width: 85%;
+.ReturnSchemaSelectionButton:hover {
+    background: #fbf2df;
+}
+
+.SelectedSchemaDisplayCard {
+    display: flex;
+    width: 83%;
+    max-width: 95%;
     height: 700px;
     background: #f5ecf4;
-    border-radius: 45px;
+    border-radius: 40px;
+    position: relative;
+    margin-top: 35px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.20);
-    max-width: 900px; 
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-    margin-top: 40px;
     overflow: auto; 
 }
+
+.SelectedSchemaCardContent {
+    padding: 30px; /* Add padding to separate content from edges */
+    padding-bottom: 20px; 
+
+  }
 
 .QueryContainer {
     width: 80%;
@@ -182,8 +204,12 @@
     margin-top: 30px;
     align-items: center;
 }
-
-.QueryTextbox {
+  
+.QueryPlaceholder {
+    color: #706D6D;
+    font-size: 12px;
+    font-family: Gilroy-Regular;
+    word-wrap: break-word;
     align-self: stretch;
     width: 100%;
     height: 55px;
@@ -196,13 +222,14 @@
     justify-content: center;
     align-items: flex-start;
     gap: 10px;
+    resize: none;
+    overflow: hidden;
 }
-  
-.QueryPlaceholder {
-    color: #706D6D;
-    font-size: 12px;
-    font-family: Gilroy-Regular;
-    word-wrap: break-word;
+
+.QueryPlaceholder:focus,
+.QueryPlaceholder:hover {
+  outline: none !important;
+  border: 2px solid #8A5A8E;
 }
 
 .AnimateQueryButton {
