@@ -2,6 +2,12 @@ from sqlparse import parse
 from sqlparse.sql import Identifier, Function
 import pprint
 
+# ---------------------- SUPPORTING FUNCTIONS ----------------------
+def __print_dictionary(stmt_dict: dict, msg: str = ""):
+    print(msg)
+    pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(stmt_dict)
+    print("\n")
+
 # ---------------------- PRE-PROCESS ----------------------
 def pre_process(query: str):
     # remove ; at the end if present
@@ -31,6 +37,18 @@ def split_keywords(stmt_tokens) -> dict:
     """
         Assigns the values to each keyword
     """
+    keyword = [
+        'SELECT',
+        'FROM',
+        'WHERE', 'AND',
+        'INNER JOIN', 'LEFT JOIN', 'RIGHT JOIN', 'FULL OUTER JOIN',
+        'HAVING',
+        'GROUP BY', 'ORDER BY',
+        'ASC', 'DESC',
+        'EXISTS', 'NOT EXISTS',
+        'AVG', 'MIN', 'MAX', 'SUM', 'COUNT'
+    ]
+
     stmt_dict = {}
     current_keyword = ""
     for token in stmt_tokens:
@@ -38,7 +56,7 @@ def split_keywords(stmt_tokens) -> dict:
             continue
 
         # for all keyword tokens
-        if token.is_keyword:            
+        if token.is_keyword and token.value in keyword:            
             if not stmt_dict.get(token.value):
                 stmt_dict[token.value] = []
                 current_keyword = token.value
@@ -96,9 +114,9 @@ def identify_processes(stmt_dict: dict) -> dict:
             if hasattr(stmt_dict['SELECT'][0], 'tokens'):
                 bool_processes['SELECT'] = True
     
-    # WHERE block
-    if 'WHERE' in keys:
-        bool_processes['WHERE'] = True
+    # # WHERE block
+    # if 'WHERE' in keys:
+    #     bool_processes['WHERE'] = True
     
     # FROM block
     if 'FROM' in keys:
@@ -149,6 +167,31 @@ def process_keyword(stmt_dict:dict, keyword=None):
     stmt_dict[keyword] = new_keyword_values
 
 # JOIN processing functions
+def __order_condition_list(left_table, condition_pairs):
+    # find inital condition
+    inital_cond = None
+    ordered_conditions = []
+    for pair in condition_pairs:
+        if left_table.value in pair["ON"].value:
+            inital_cond = {
+                "LEFT": left_table,
+                "RIGHT": pair["RIGHT"],
+                "ON": pair["ON"]
+            }
+            ordered_conditions.append(pair)
+
+    # loop again to order all conditions
+    while (ordered_conditions.__len__() != condition_pairs.__len__()):
+        for pair in condition_pairs:
+            # skip past inital
+            if pair["RIGHT"] == inital_cond["RIGHT"]:
+                continue
+
+            if ordered_conditions[-1]["RIGHT"].value in pair["ON"].value:
+                ordered_conditions.append(pair)
+
+    return ordered_conditions
+
 def join_clause(stmt_dict: dict):
     # find the join type
     join_types = [
@@ -167,7 +210,7 @@ def join_clause(stmt_dict: dict):
             join_type = key
 
     # RIGHT table(s)
-    right_table = stmt_dict.get("INNER JOIN", [])
+    right_tables = stmt_dict.get("INNER JOIN", [])
 
     # left table
     left_table = stmt_dict.get("FROM", [])[0]
@@ -175,19 +218,48 @@ def join_clause(stmt_dict: dict):
     # ON condition(s)
     on_values = stmt_dict.get("ON", [])
 
-    # create pairs of the join-table and it's matching condition
+    # convert each right table and its condition into pairs
     pairs = []
     for i in range(len(on_values)):
-        pairs.append([right_table[i], on_values[i]])
+        pairs.append({
+            "RIGHT": right_tables[i],
+            "ON": on_values[i]
+        })
 
-    print(pairs)
+    # order all conditions
+    paired_conditions = __order_condition_list(left_table, pairs)
 
-    # find which pair has the inital condition
-    # condition will be 1st index
-    for pair in pairs:
-        if left_table.value in pair[1].value:
-            print(pair) 
+    # loop through all conditions and make master node
+    join = {
+        "LEFT": None,
+        "RIGHT": None,
+        "ON": None
+    }
 
+    for condition in paired_conditions:
+        if not join["LEFT"]:
+            join["LEFT"] = left_table
+            join["RIGHT"] = condition["RIGHT"]
+            join["ON"] = condition["ON"]
+        else:
+            # store join in seperate temp node
+            temp = {
+                "LEFT": join["LEFT"],
+                "RIGHT": join["RIGHT"],
+                "ON": join["ON"]
+            }
+
+            join["LEFT"] = temp
+            join["RIGHT"] = condition["RIGHT"]
+            join["ON"] = condition["ON"]
+
+    pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(join)
+
+    del stmt_dict["FROM"]
+    del stmt_dict[join_type]
+    del stmt_dict["ON"]
+    
+    stmt_dict[join_type] = join
 
 def __create_matching_pairs(tables: list, conditions: list):
     join_nodes = []
@@ -289,89 +361,146 @@ def from_clause(stmt_dict: dict):
 
     stmt_dict['INNER JOIN'] = master_join_node
 
-def join_processing(stmt_dict: dict, type: str):
-    if type == 'JOIN':
-        join_clause(stmt_dict)
-    elif type == 'FROM':
-        from_clause(stmt_dict)
+def process_subqueries(stmt_dict: dict):
+    """
+        Seperates subqueries
+    """
+    sub_queries = {}
+
+    # filter origianl dictionary
+    # to include only keywords and values which contain subqueries
+    for key, values in stmt_dict.items():
+        if 'JOIN' in key:
+            continue 
+
+        for token in values:
+            # Extract key and values
+            if 'SELECT' in token.value.upper():
+                sub_queries[key] = values
+
+    # Process subqueries
+    for key, values in sub_queries.items():
+
+        # Loop through all keyword's values
+        for i in range(len(values)):
+
+            # Find subquery statment 
+            if 'SELECT' in values[i].value.upper():
+                
+                # Renamed queries need to be handled a bit differently
+                if ' AS ' in values[i].value.upper():
+                    as_value = values[i].tokens[-1]  
+                    sub_query_tokens_ = [x for x in values[i].tokens[0].tokens if not x.value in ['(', ')', ' ']]
+                    sub_query = ""
+                    for token in sub_query_tokens_:
+                        sub_query += token.value + " "
+                    
+                    sub_query_dict = translate_query(sub_query, False)
+                    sub_query_dict['AS'] = [as_value]
+
+                    stmt_dict[key][i] = sub_query_dict         
+                else:
+                    # Non-renamed queries
+                    # remove the paranthesis at the beginning and end
+                    sub_query_tokens = [x for x in values[i].tokens if not x.value in ['(', ')', ' ']]
+                    sub_query = ""
+                    for token in sub_query_tokens:
+                        sub_query += token.value + " "
+
+                    sub_query_dict = translate_query(sub_query, False)
+
+                    # Since sub_queries is a filtered stmt_dict,
+                    # the keys will return the same values
+                    # Using this, we change the original directly as by this step, 
+                    # we have created a dictionary for the sub query
+                    stmt_dict[key][i] = sub_query_dict
+
+def normalizing(stmt_dict: dict):
+    # ex. 1: IN
+    # identify 2 parts:
+        # before the IN
+        # after the IN
+
+    # find the IN keyword within the WHERE clause
+    
+
+    pass
+
+
 
 def process(stmt_tokens, DEBUG = True) -> dict:
     # isolate the where keyword first
     # if it exists
     isolate_where(stmt_tokens)
     if DEBUG:
-        print("PROCESS STEP: KEYWORD-VALUE SPLIT")
+        print("PROCESS STEP: WHERE PARSE")
         pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint([token for token in stmt_tokens if not token.is_whitespace])
         print("\n")
 
     # split keywords into keyword-value pairs
     stmt_dict = split_keywords(stmt_tokens)
-    if DEBUG:
-        print("PROCESS STEP: KEYWORD-VALUE SPLIT")
-        pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(stmt_dict)
-        print("\n")
-        
+    if DEBUG: 
+        __print_dictionary(stmt_dict, msg="PROCESS STEP: KEYWORD-VALUE SPLIT")
+
     # capatilize all keywords
     stmt_dict = {key.upper(): value for key, value in stmt_dict.items()}
 
     # identify required processing functions
     bool_processes = identify_processes(stmt_dict)
-    if DEBUG:
-        print("PROCESS STEP: PROCESS-IDENTIFICATION")
-        pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(bool_processes)
-        print("\n")
+    if DEBUG: 
+        __print_dictionary(bool_processes, msg="PROCESS STEP: PROCESS-IDENTIFICATION")
+
+    # SELECT/DISTINCT
+    if bool_processes['DISTINCT']:
+        process_keyword(stmt_dict, 'DISTINCT')
+        stmt_dict['SELECT'] = stmt_dict['DISTINCT']
+        stmt_dict['DISTINCT'] = []
+
+        if DEBUG:
+            __print_dictionary(stmt_dict, "PROCESS STEP: DISTINCT PARSE")
+    elif bool_processes['SELECT']:
+        process_keyword(stmt_dict, 'SELECT')
+
+        if DEBUG:
+            __print_dictionary(stmt_dict, "PROCESS STEP: SELECT PARSE")
+
+    # WHERE
+    if bool_processes['WHERE']:
+        process_keyword(stmt_dict, 'WHERE')
+
+        if DEBUG:
+            print("PROCESS STEP: WHERE PARSE")
+            pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(stmt_dict)
+            print("\n")
 
     # JOINs
     if bool_processes['FROM']:
         process_keyword(stmt_dict, 'FROM')
-        join_processing(stmt_dict, 'FROM')
+        from_clause(stmt_dict)
 
         if DEBUG:
-            print("PROCESS STEP: JOIN PROCESSING")
-            pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(stmt_dict)
-            print("\n")
+            __print_dictionary(stmt_dict, "PROCESS STEP: JOIN PROCESSING")
     elif bool_processes['JOIN']:
-        join_processing(stmt_dict, 'JOIN')
+        join_clause(stmt_dict)
 
-        # if DEBUG:
-        #     print("PROCESS STEP: JOIN PROCESSING")
-        #     pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(stmt_dict)
-        #     print("\n")
+        if DEBUG:
+            __print_dictionary(stmt_dict, "PROCESS STEP: JOIN PROCESSING")
+
+    # SUB QUERY
+    if bool_processes['SUB_QUERY']:
+        print("SHIFTING TO SUB-QUERY")
+        process_subqueries(stmt_dict)
+
+        if DEBUG:
+            __print_dictionary(stmt_dict, "PROCESS STEP: SUB QUERY PARSE")
 
 
-
-
-    # # SELECT/DISTINCT
-    # if bool_processes['DISTINCT']:
-    #     process_keyword(stmt_dict, 'DISTINCT')
-    #     stmt_dict['SELECT'] = stmt_dict['DISTINCT']
-    #     stmt_dict['DISTINCT'] = []
-
-    #     if DEBUG:
-    #         print("PROCESS STEP: DISTINCT PARSE")
-    #         pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(stmt_dict)
-    #         print("\n")
-    # elif bool_processes['SELECT']:
-    #     process_keyword(stmt_dict, 'SELECT')
-
-    #     if DEBUG:
-    #         print("PROCESS STEP: SELECT PARSE")
-    #         pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(stmt_dict)
-    #         print("\n")
-
-    # # WHERE
-    # if bool_processes['WHERE']:
-    #     process_keyword(stmt_dict, 'WHERE')
-
-    #     if DEBUG:
-    #         print("PROCESS STEP: WHERE PARSE")
-    #         pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(stmt_dict)
-    #         print("\n")
-
+    # NORMALIZING
 
 
 
     return stmt_dict
+
 
 
 # ---------------------- MAIN ----------------------
@@ -382,6 +511,8 @@ def translate_query(query: str, DEBUG=True, CLEAN=False):
 
     # process
     stmt_dict = process(stmt_tokens)
+
+    return stmt_dict
     
 
 if __name__ == "__main__":
@@ -415,8 +546,22 @@ if __name__ == "__main__":
     #             "ON products.id = inventory.prod_id " \
     #         "WHERE inventory.stock > 50"
     
-    translate_query(sql)
+    # sql =   "SELECT employees.name, employees.id, products.stock AS stock " \
+    #         "FROM employees " \
+    #         "INNER JOIN inventory " \
+    #             "ON products.id = inventory.prod_id " \
+    #         "INNER JOIN products " \
+    #             "ON employees.id = products.emp_id " \
+    #         "WHERE inventory.stock > 50"
 
+    sql = " SELECT movieTitle \
+            FROM StarsIn \
+            WHERE starsName IN ( \
+                SELECT name \
+                FROM MovieStar \
+                WHERE birthDate = 1960)"
+
+    stmt_dict = translate_query(sql)
 
 
 # Cant handle multiple inner joins

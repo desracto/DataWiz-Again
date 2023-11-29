@@ -18,8 +18,8 @@ class Users(db.Model):
     username = db.Column(db.String(40), unique=True)
     email = db.Column(db.String(345), unique=True)
     password_hash = db.Column(db.Text, nullable=False)
-    account_type = db.Column(db.String(10))
-    gender = db.Column(db.String(6))
+    account_type = db.Column(db.String(10)) # Learner | Instructor
+    gender = db.Column(db.String(6)) # Male | Female
 
     # Relationships
     quizzes = db.relationship('Quiz', back_populates='user')
@@ -38,7 +38,9 @@ class Users(db.Model):
         data = {
             "id": self.id,
             "username": self.username,
-            "email": self.email  
+            "email": self.email,
+            "account_type": self.account_type,
+            "gender": self.gender
         }
 
         return data
@@ -107,11 +109,12 @@ class Quiz(db.Model):
         return data
 
 class Quiz_Image(db.Model):
+    # HAS NOT BEEN ADDED TO MYSQL DB YET
     # table name
     __tablename__ = 'Quiz_Image'
 
     # Fields
-    img_id = db.Column(db.String(32), primary_key=True, unique=True, defualt=get_uuid)
+    img_id = db.Column(db.String(32), primary_key=True, unique=True, default=get_uuid)
     quiz_id = db.Column(db.String(32), db.ForeignKey('Quiz.id')) # Fk
     img_data = db.Column(db.LargeBinary)
 
