@@ -1,37 +1,91 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import LogoutConfirmationPopUp from "../components/LogoutConfirmationPopUp.jsx";
 import PortalPopup from '../components/PortalPopup.jsx';
 import DeleteConfirmationPopUp from "../components/DeleteConfirmationPopUp.jsx";
 import SaveChangesPopUp from "../components/SaveChangesPopUp.jsx";
 import "./AccountSettingPage.css";
 import { useForm } from "react-hook-form";
+import axios from 'axios'
 
 import vector from '../../../assets/images/vector.svg';
 import instructorIcon from '../../../assets/images/Settings-Instructor.png';
 import SecondHeader from "../../../global_components/SecondHeader.jsx";
 
-const AccountSettingPage = () => {
+ 
+
+const AccountSettingPage = ({request}) => {
     const {register, handleSubmit, setValue, formState: { errors }, getValues, trigger} = useForm( {reValidateMode: 'onSubmit'} );
     const [isEditMode, setEditMode] = useState(false);
     const [originalValues, setOriginalValues] = useState({});
+    const [trackedChanges, setTrackedChanges] = useState({});
     const [isSaveChangesPopUpOpen, setSaveChangesPopUpOpen] = useState(false);  
     const [isLogoutConfirmationPopUpOpen, setLogoutConfirmationPopUpOpen] = useState(false);
     const [isDeleteConfirmationPopUpOpen, setDeleteConfirmationPopUpOpen] = useState(false);
+    const [userData, setUserData] = useState(null); 
+
+    //loading user data 
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                // Replace the following URL with your actual API endpoint to fetch user data
+                const response = await request.get("/api/user/load_user/");
+                const userData = response.data;
+    
+                // Update form fields with fetched data
+                setValue("fullName", userData.fullName);
+                setValue("username", userData.username);
+                setValue("email", userData.email);
+    
+                // Set the user data in the state
+                setUserData(userData);
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            }
+        };
+    
+        fetchUserData();
+    }, [setValue]);
+    
+
 
     const startEditMode = useCallback(() => {
       setOriginalValues(getValues());
       setEditMode(true);
     }, [getValues()]);
 
+    //Submit function
     const onSubmit = async (data) => {
-      // Trigger form validation
-      const isValid = await trigger();
+        // Trigger form validation
+        const isValid = await trigger();
     
-      if (isValid) {
+        if (isValid) {
+          const changes = {};
+        // Update tracked changes for fields that have changed
+        Object.keys(data).forEach((field) => {
+          if (data[field] !== originalValues[field]) {
+            changes[field] = data[field];
+          }
+        });
+
+        // Update trackedChanges with the new changes
+        setTrackedChanges(changes);
+
         // No validation errors, proceed with opening the Save Changes pop-up
         openSaveChangesPopUp();
       }
     };
+
+    useEffect(() => {
+        console.log("Tracked Changes (Updated):", trackedChanges);
+      }, [trackedChanges]);
+
+    // New state to track changes
+    const updateTrackedChanges = useCallback((field, value) => {
+        setTrackedChanges((prevChanges) => ({
+          ...prevChanges,
+          [field]: value,
+        }));
+    }, []);
 
 
   const handleSaveChanges = () => {
@@ -108,7 +162,7 @@ return(
                         <div className={isEditMode ? '' : 'cursor-notAllowed'}>
                           <input
                               className={isEditMode ? "settings-textbox1-edit" : "settings-textbox1"}
-                              defaultValue="Mohamed Nihal"
+                              defaultValue="loading..."
                               type="text"
                               {...register("fullName", { required: "Full Name is required", pattern : {value:/^[A-Za-z ]+$/i, message: "Full name must contain only letters and spaces"}})}
                           />
@@ -119,7 +173,7 @@ return(
                         <div className={isEditMode ? '' : 'cursor-notAllowed'}>
                           <input 
                               className={isEditMode ? "settings-textbox1-edit" : "settings-textbox1"}
-                              defaultValue="Mnk665" 
+                              defaultValue="loading..." 
                               type="text"   
                               {...register("username", { required: "Username is required", pattern : {value:/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,20}$/, message: "Username must be between 6 and 20 characters ,include at least 1 uppercase letter and 1 numeric digit"} })}
                           />
@@ -130,7 +184,7 @@ return(
                         <div className={isEditMode ? '' : 'cursor-notAllowed'}>
                           <input
                               className={isEditMode ? "settings-textbox1-edit" : "settings-textbox1"}
-                              defaultValue="mnk665@uowmail.edu.au  "
+                              defaultValue="loading..."
                               type="email"
                               {...register("email", { required: "Email is required",  pattern : {value:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, message: "Enter a valid email address"}})}
                           />

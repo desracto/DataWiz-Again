@@ -25,35 +25,45 @@ import SavedQuizzes from './features/quiz/pages/SavedQuizzesPage';
 import UNCompletedQuiz from './features/quiz/pages/UNCompletedQuiz';
 
 import TestDisplay from './features/animation/pages/TestDisplay';
+import axios from 'axios'
 
 function App() {
-  return (
-    <div>
-      <BrowserRouter>
-        <Routes>
-          <Route index element={<LandingPage />} /> {/* Root URL when the app is accessed*/}
-          <Route path="/LandingPage" element={<LandingPage />} /> 
-          <Route path="/SignUpPage" element={<SignUpPage />} /> 
-          <Route path="/LoginPage" element={<LoginPage />} /> 
-          <Route path="/ResetPasswordPage" element={<ResetPassword />} /> a
-          <Route path="/InstructorHomePage" element={<InstructorHomePage />} /> 
-          <Route path="/QuizzesIntroductionPage" element={<QuizzesIntroductionPage />} /> 
-          <Route path="/AnimationIntroductionPage" element={<AnimationIntroductionPage />} /> 
-          <Route path="/SchemaSelectionPage" element={<SchemaSelectionPage />} /> 
-          <Route path="/QueryAnimationPage" element={<QueryAnimationPage />} /> 
-          <Route path="/SavedAnimationsPage" element={<SavedAnimationsPage />} /> 
-          <Route path="/QuizHomePage" element={<QuizHome />} />
-          <Route path="/CreateQuizPage" element={<CreateQuiz />} />
-          <Route path="/SavedQuizzesPage" element={<SavedQuizzes />}/>
-          <Route path="/UncompletedQuizPage" element={<UNCompletedQuiz />}/>
-          <Route path="/AccountSettingsPage" element={<AccountSettingsPage />}/>
-          <Route path="/FaqsPage" element={<FaqsPage />}/>
-          <Route path="/TestDisplay" element={<TestDisplay />}/>
+    const request = axios.create({
+        baseURL: "http://localhost:5000",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        withCredentials: true,
+        timeout: 300000
+    })
 
-        </Routes>
-      </BrowserRouter>
-    </div>
-  );
+    return (
+        <div>
+            <BrowserRouter>
+                <Routes>
+                    <Route index element={<LandingPage />} /> {/* Root URL when the app is accessed*/}
+                    <Route path="/LandingPage" element={<LandingPage />} />
+                    <Route path="/SignUpPage" element={<SignUpPage />} />
+                    <Route path="/LoginPage" element={<LoginPage />} />
+                    <Route path="/ResetPasswordPage" element={<ResetPassword />} /> a
+                    <Route path="/InstructorHomePage" element={<InstructorHomePage />} />
+                    <Route path="/QuizzesIntroductionPage" element={<QuizzesIntroductionPage />} />
+                    <Route path="/AnimationIntroductionPage" element={<AnimationIntroductionPage />} />
+                    <Route path="/SchemaSelectionPage" element={<SchemaSelectionPage />} />
+                    <Route path="/QueryAnimationPage" element={<QueryAnimationPage />} />
+                    <Route path="/SavedAnimationsPage" element={<SavedAnimationsPage />} />
+                    <Route path="/QuizHomePage" element={<QuizHome />} />
+                    <Route path="/CreateQuizPage" element={<CreateQuiz />} />
+                    <Route path="/SavedQuizzesPage" element={<SavedQuizzes />} />
+                    <Route path="/UncompletedQuizPage" element={<UNCompletedQuiz />} />
+                    <Route path="/AccountSettingsPage" element={<AccountSettingsPage request={request}/>} />
+                    <Route path="/FaqsPage" element={<FaqsPage />} />
+                    <Route path="/TestDisplay" element={<TestDisplay />} />
+
+                </Routes>
+            </BrowserRouter>
+        </div>
+    );
 }
 
 export default App;
