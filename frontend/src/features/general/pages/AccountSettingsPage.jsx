@@ -11,8 +11,6 @@ import vector from '../../../assets/images/vector.svg';
 import instructorIcon from '../../../assets/images/Settings-Instructor.png';
 import SecondHeader from "../../../global_components/SecondHeader.jsx";
 
- 
-
 const AccountSettingPage = ({request}) => {
     const {register, handleSubmit, setValue, formState: { errors }, getValues, trigger} = useForm( {reValidateMode: 'onSubmit'} );
     const [isEditMode, setEditMode] = useState(false);
@@ -28,16 +26,21 @@ const AccountSettingPage = ({request}) => {
         const fetchUserData = async () => {
             try {
                 // Replace the following URL with your actual API endpoint to fetch user data
-                const response = await request.get("/api/user/load_user/");
-                const userData = response.data;
-    
-                // Update form fields with fetched data
-                setValue("fullName", userData.fullName);
-                setValue("username", userData.username);
-                setValue("email", userData.email);
-    
-                // Set the user data in the state
-                setUserData(userData);
+                request({
+                    url:"api/user/load_user/",
+                    method: 'get',
+                    credentials: 'include'})
+                .then(response => {
+                    userData = response.data;
+
+                    setValue("fullName", userData.fullName);
+                    setValue("username", userData.username);
+                    setValue("email", userData.email)
+
+                    setUserData(userData)})
+                .catch(error => {
+                    console.error(error.response)})
+
             } catch (error) {
                 console.error("Error fetching user data:", error);
             }

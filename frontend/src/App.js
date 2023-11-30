@@ -30,10 +30,12 @@ import axios from 'axios'
 function App() {
     const request = axios.create({
         baseURL: "http://localhost:5000",
+        withCredentials: true,
+        credentials: 'include',
         headers: {
+            'Access-Control-Allow-Origin': 'http://localhost:5000',
             "Content-Type": "application/json"
         },
-        withCredentials: true,
         timeout: 300000
     })
 
