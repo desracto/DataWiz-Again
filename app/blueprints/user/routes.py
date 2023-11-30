@@ -111,8 +111,8 @@ def login():
         # User not found
         if not user:
             return error_response(404, 'ACNF01')
-    except:
-        return error_response(500, 'internal server error')
+    except Exception as e:
+        return error_response(500, 'Internal server error. Error: ' + str(e))
 
     # If user present and password match, login user
     if user and user.check_password(data['password']):
@@ -160,8 +160,11 @@ def update_user(username:str):
     """
         update_user function recieves a response object following this format:\n 
         {
+            [OPTIONAL] "fullname"
             [OPTIONAL] "username": "username",\n
             [OPTIONAL] "email": "email"\n
+            [OPTIONAL] "current_password": "current_password"
+            [OPTIONAL] "new_password": "new_password"
         }
 
         Error handling checks if the new username/email aren't the same as
