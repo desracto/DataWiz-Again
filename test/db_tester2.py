@@ -3,33 +3,33 @@ from sqlalchemy import create_engine, text
 # print("\nDB 2 - Schema DB - rfa71")
 
 # Connect to the database
-engine = create_engine("mysql+mysqlconnector://sql12658112:yFlLxXMggz@sql12.freemysqlhosting.net/sql12658112")
+# engine = create_engine("mysql+mysqlconnector://sql12658112:yFlLxXMggz@sql12.freemysqlhosting.net/sql12658112")
 
-# Test the connection
-connection = engine.connect()
+# # Test the connection
+# connection = engine.connect()
 
-# (emp_id, first_name, last_name, age, dept, salary) 
-# q = text("INSERT INTO employees VALUES (102, 'John', 'Doe', 30, 'Sales', 50000)")
-# connection.execute(q)
-q2 = text("INSERT INTO employees (emp_id, first_name, last_name, age, dept, salary) VALUES (101, 'John', 'Doe', 30, 'Sales', 50000), (102, 'Jane', 'Smith', 28, 'Marketing', 48000), (103, 'Michael', 'Johnson', 35, 'HR', 55000), (104, 'Emily', 'Williams', 24, 'IT', 52000),(105, 'Robert', 'Brown', 32, 'Finance', 60000), (106, 'Lisa', 'Lee', 29, 'Sales', 49000), (107, 'David', 'Kim', 27, 'Marketing', 47000), (108, 'Sarah', 'Anderson', 33, 'HR', 56000), (109, 'James', 'Martinez', 25, 'IT', 53000), (110, 'Olivia', 'Harris', 31, 'Finance', 61000), (111, 'Ethan', 'Lewis', 26, 'Sales', 48000), (112, 'Mia', 'Clark', 34, 'Marketing', 49000), (113, 'Alexander', 'Allen', 29, 'HR', 55000), (114, 'Sophia', 'Wright', 27, 'IT', 54000), (115, 'Daniel', 'Scott', 32, 'Finance', 60000)")
-connection.execute(q2)
+# # (emp_id, first_name, last_name, age, dept, salary) 
+# # q = text("INSERT INTO employees VALUES (102, 'John', 'Doe', 30, 'Sales', 50000)")
+# # connection.execute(q)
+# q2 = text("INSERT INTO employees (emp_id, first_name, last_name, age, dept, salary) VALUES (101, 'John', 'Doe', 30, 'Sales', 50000), (102, 'Jane', 'Smith', 28, 'Marketing', 48000), (103, 'Michael', 'Johnson', 35, 'HR', 55000), (104, 'Emily', 'Williams', 24, 'IT', 52000),(105, 'Robert', 'Brown', 32, 'Finance', 60000), (106, 'Lisa', 'Lee', 29, 'Sales', 49000), (107, 'David', 'Kim', 27, 'Marketing', 47000), (108, 'Sarah', 'Anderson', 33, 'HR', 56000), (109, 'James', 'Martinez', 25, 'IT', 53000), (110, 'Olivia', 'Harris', 31, 'Finance', 61000), (111, 'Ethan', 'Lewis', 26, 'Sales', 48000), (112, 'Mia', 'Clark', 34, 'Marketing', 49000), (113, 'Alexander', 'Allen', 29, 'HR', 55000), (114, 'Sophia', 'Wright', 27, 'IT', 54000), (115, 'Daniel', 'Scott', 32, 'Finance', 60000)")
+# connection.execute(q2)
 
 
-query = text("SELECT * FROM employees")
+# query = text("SELECT * FROM employees")
 
-result1 = connection.execute(query)
-print("query executed")
+# result1 = connection.execute(query)
+# print("query executed")
 
-ans = []
+# ans = []
 
-for i in result1:
-    print(i)
-    ans.append(i)
+# for i in result1:
+#     print(i)
+#     ans.append(i)
 
-print(len(ans[0]))
+# print(len(ans[0]))
 
-print(type(ans[0]))
-# print(type(ans[0][0]))
+# print(type(ans[0]))
+# # print(type(ans[0][0]))
 
 def run(query_list):
     # Connect to the database
@@ -42,7 +42,7 @@ def run(query_list):
     connection.execute(ins1)
 
     ins2 = text("INSERT INTO Product (product_id, product_name, category, price) VALUES (101, 'Laptop', 'Electronics', 800), (102, 'Smartphone', 'Electronics', 500), (103, 'Headphones', 'Electronics', 100), (104, 'T-shirt', 'Apparel', 25), (105, 'Jeans', 'Apparel', 50), (106, 'Sneakers', 'Footwear', 80), (107, 'Backpack', 'Accessories', 40), (108, 'Watch', 'Accessories', 120), (109, 'Blender', 'Appliances', 150), (110, 'Coffee Maker', 'Appliances', 100), (111, 'Book', 'Books', 15), (112, 'Tablet', 'Electronics', 300), (113, 'Camera', 'Electronics', 400), (114, 'Dress', 'Apparel', 60), (115, 'Sandals', 'Footwear', 30), (116, 'Sunglasses', 'Accessories', 20), (117, 'Microwave', 'Appliances', 200), (118, 'Smart Speaker', 'Electronics', 120), (119, 'Fitness Tracker', 'Electronics', 70), (120, 'Wallet', 'Accessories', 35)")
-    ins3 = text("INSERT INTO Inventory (inventory_id, product_id, quantity) VALUES (1, 101, 50), (102, 80), (3, 103, 100), (4, 104, 70), (5, 105, 90), (6, 106, 60), (7, 107, 40), (8, 108, 30), (9, 109, 20), (10, 110, 25), (11, 111, 100), (12, 112, 45), (13, 113, 35), (14, 114, 75), (15, 115, 85), (16, 116, 95), (17, 117, 15), (18, 118, 50), (19, 119, 60), (20, 120, 80)")
+    ins3 = text("INSERT INTO Inventory (inventory_id, product_id, quantity) VALUES (1, 101, 50), (2, 102, 80), (3, 103, 100), (4, 104, 70), (5, 105, 90), (6, 106, 60), (7, 107, 40), (8, 108, 30), (9, 109, 20), (10, 110, 25), (11, 111, 100), (12, 112, 45), (13, 113, 35), (14, 114, 75), (15, 115, 85), (16, 116, 95), (17, 117, 15), (18, 118, 50), (19, 119, 60), (20, 120, 80)")
     connection.execute(ins2)
     connection.execute(ins3)
 
@@ -66,3 +66,13 @@ def run(query_list):
     connection.execute(ins10)
     connection.execute(ins11)
     connection.execute(ins12)
+
+    final_result = []
+    for i in range(0, len(query_list)):
+        q = text(query_list[i])
+        result = connection.execute(q)
+        final_result.append(result)
+    
+    return final_result
+
+    
