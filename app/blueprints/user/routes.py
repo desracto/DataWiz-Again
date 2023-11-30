@@ -143,7 +143,7 @@ def logout():
     unset_cookies(response)
     return response
 
-@user_bp.route('/load_user', methods=['GET'])
+@user_bp.route('/load_user/', methods=['GET'])
 @jwt_required()
 def get_user():
     """
