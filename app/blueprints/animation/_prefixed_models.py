@@ -17,15 +17,15 @@ class Schema1_Employee(db.Model, Object):
     __bind_key__ = "prefixed"
 
     # Fields
-    employee_ID = db.Column(db.Integer, primary_key=True)
-    employee_FirstName = db.Column(db.String(50))
-    employee_LastName = db.Column(db.String(50))
-    employee_Age = db.Column(db.Integer)
-    employee_Dept = db.Column(db.String(50))
-    employee_Salary = db.Column(db.Integer)
+    emp_id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(50))
+    last_name = db.Column(db.String(50))
+    age = db.Column(db.Integer)
+    dept = db.Column(db.String(50))
+    salary = db.Column(db.Integer)
 
     def __repr__(self):
-        return "<Schema 1: Employee(ID: {})>".format(self.employee_ID)
+        return "<Schema 1: Employee(ID: {})>".format(self.emp_id)
     
 # Schema 2
 class Schema2_Product(db.Model, Object):
@@ -34,16 +34,16 @@ class Schema2_Product(db.Model, Object):
     __bind_key__ = "prefixed"
 
     # Fields
-    products_ID = db.Column(db.Integer, primary_key=True)
-    products_Name = db.Column(db.String(50))
-    products_Category = db.Column(db.String(50))
-    products_Price = db.Column(db.Integer)
+    product_id = db.Column(db.Integer, primary_key=True)
+    product_name = db.Column(db.String(50))
+    category = db.Column(db.String(50))
+    price = db.Column(db.Integer)
 
     # Relationship
     inventory = db.relationship('Schema2_Inventory', back_populates='product')
     
     def __repr__(self):
-        return "<Schema 2: Product(ID: {})>".format(self.products_ID)
+        return "<Schema 2: Product(ID: {})>".format(self.products_id)
         
 class Schema2_Inventory(db.Model, Object):
     # Table Name
@@ -51,15 +51,15 @@ class Schema2_Inventory(db.Model, Object):
     __bind_key__ = "prefixed"
 
     # Field Names
-    inventory_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    inventory_Quantity = db.Column(db.Integer)
-    products_ProductID = db.Column(db.Integer, db.ForeignKey('Product.products_ID'))
+    inventory_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    quantity = db.Column(db.Integer)
+    product_id = db.Column(db.Integer, db.ForeignKey('Product.product_id'))
 
     # Relationship
     product = db.relationship('Schema2_Product', back_populates='inventory')
 
     def __repr__(self):
-        return "<Schema 2: Inventory(ID: {})>".format(self.inventory_ID)
+        return "<Schema 2: Inventory(ID: {})>".format(self.inventory_id)
 
 # Schema 3
 class Schema3_Course(db.Model, Object):
@@ -68,17 +68,17 @@ class Schema3_Course(db.Model, Object):
     __bind_key__ = "prefixed"
 
     # Fields
-    course_ID = db.Column(db.String(10), primary_key=True)
-    course_Name = db.Column(db.String(100))
-    course_Credit = db.Column(db.Integer)
-    course_Dept = db.Column(db.String(50))
+    course_id = db.Column(db.String(10), primary_key=True)
+    course_name = db.Column(db.String(100))
+    credits = db.Column(db.Integer)
+    dept = db.Column(db.String(50))
 
     # Relationships
     enrollment = db.relationship('Schema3_Enrollment', back_populates='course')
 
     # Functions
     def __repr__(self):
-        return "<Schema 3: Course(ID: {})>".format(self.course_ID)
+        return "<Schema 3: Course(ID: {})>".format(self.course_id)
     
 class Schema3_Enrollment(db.Model, Object):
     # Table name
@@ -86,17 +86,17 @@ class Schema3_Enrollment(db.Model, Object):
     __bind_key__ = "prefixed"
 
     # Field Name
-    enrollment_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    enrollment_StudentID = db.Column(db.Integer)
-    enrollment_CourseID = db.Column(db.String(10), db.ForeignKey('Course.course_ID'))
-    enrollment_Grade = db.Column(db.String(2))
+    enroll_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    student_id = db.Column(db.Integer)
+    course_id = db.Column(db.String(10), db.ForeignKey('Course.course_id'))
+    grade = db.Column(db.String(2))
 
     # Relationship
     course = db.relationship('Schema3_Course', back_populates='enrollment')
 
     # Functions
     def __repr__(self):
-        return "<Schema 3: Enrollment(ID: {})>".format(self.enrollment_ID)
+        return "<Schema 3: Enrollment(ID: {})>".format(self.enroll_id)
 
 # Schema 4
 class Schema4_Flight(db.Model, Object):
@@ -105,19 +105,19 @@ class Schema4_Flight(db.Model, Object):
     __bind_key__ = "prefixed"
 
     # Fields
-    flight_ID = db.Column(db.Integer, primary_key=True)
-    flight_AirlineName = db.Column(db.String(100))
-    flight_DepartureCity = db.Column(db.String(100))
-    flight_ArrivalCity = db.Column(db.String(100))
-    flight_DepartureTime = db.Column(db.DateTime)
-    flight_ArrivalTime = db.Column(db.DateTime)
+    flight_id = db.Column(db.Integer, primary_key=True)
+    airline_name = db.Column(db.String(100))
+    departure = db.Column(db.String(100))
+    arrival = db.Column(db.String(100))
+    departure_time = db.Column(db.DateTime)
+    arrival_time = db.Column(db.DateTime)
 
     # Relationships
     ticket = db.relationship('Schema4_Ticket', back_populates='flight')
 
     # Functions
     def __repr__(self):
-        return "<Schema 4: Flight(ID: {})>".format(self.flight_ID)
+        return "<Schema 4: Flight(ID: {})>".format(self.flight_id)
     
 class Schema4_Passenger(db.Model, Object):
     # Table name
@@ -125,18 +125,18 @@ class Schema4_Passenger(db.Model, Object):
     __bind_key__ = "prefixed"
 
     # Fields
-    passenger_ID = db.Column(db.Integer, primary_key=True)
-    passenger_FirstName = db.Column(db.String(50))
-    passenger_LastName = db.Column(db.String(50))
-    passenger_Gender = db.Column(db.String(5))
-    passenger_Age = db.Column(db.Integer)
+    passenger_id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(50))
+    last_name = db.Column(db.String(50))
+    gender = db.Column(db.String(5))
+    age = db.Column(db.Integer)
 
     # Relationships
     ticket = db.relationship('Schema4_Ticket', back_populates='passenger')
 
     # Functions
     def __repr__(self):
-        return "<Scheam 4: Passenger(ID: {})>".format(self.passenger_ID)
+        return "<Scheam 4: Passenger(ID: {})>".format(self.passenger_id)
     
 class Schema4_Ticket(db.Model, Object):
     # Table name
@@ -144,11 +144,11 @@ class Schema4_Ticket(db.Model, Object):
     __bind_key__ = "prefixed"
 
     # Fields
-    ticket_ID = db.Column(db.Integer, primary_key=True)
-    ticket_FlightID = db.Column(db.Integer, db.ForeignKey('Flight.flight_ID'))
-    ticket_PassengerID = db.Column(db.Integer, db.ForeignKey('Passenger.passenger_ID'))
-    ticket_SeatNumber = db.Column(db.String(4))
-    ticket_Price = db.Column(db.Float)
+    ticket_id = db.Column(db.Integer, primary_key=True)
+    flight_id = db.Column(db.Integer, db.ForeignKey('Flight.flight_id'))
+    passenger_id = db.Column(db.Integer, db.ForeignKey('Passenger.passenger_id'))
+    seat_number = db.Column(db.String(4))
+    price = db.Column(db.Float)
 
     # Relationships
     flight = db.relationship("Schema4_Flight", back_populates='ticket')
@@ -156,7 +156,7 @@ class Schema4_Ticket(db.Model, Object):
 
     # Functions
     def __repr__(self):
-        return "<Schema 4: Ticket(ID: {})>".format(self.ticket_ID)
+        return "<Schema 4: Ticket(ID: {})>".format(self.ticket_id)
 
 # Schema 5 
 class Schema5_Album(db.Model, Object):
@@ -165,10 +165,10 @@ class Schema5_Album(db.Model, Object):
     __bind_key__ = "prefixed"
 
     # Fields
-    album_ID = db.Column(db.Integer, primary_key=True)
-    album_Name = db.Column(db.String(150))
-    album_ReleaseYear = db.Column(db.Integer)
-    album_ArtistID = db.Column(db.Integer, db.ForeignKey('Artist.artist_ID'))
+    album_id = db.Column(db.Integer, primary_key=True)
+    album_name = db.Column(db.String(150))
+    year = db.Column(db.Integer)
+    artist_id = db.Column(db.Integer, db.ForeignKey('Artist.artist_id'))
 
     # Function
     song = db.relationship('Schema5_Song', back_populates='album')
@@ -176,7 +176,7 @@ class Schema5_Album(db.Model, Object):
 
     # Function
     def __repr__(self):
-        return "<Schema 5: Album(ID: {})>".format(self.album_ID)
+        return "<Schema 5: Album(ID: {})>".format(self.album_id)
     
 class Schema5_Genre(db.Model, Object):
     # Table name
@@ -184,15 +184,15 @@ class Schema5_Genre(db.Model, Object):
     __bind_key__ = "prefixed"
 
     # Fields
-    genre_ID = db.Column(db.Integer, primary_key=True)
-    genre_Name = db.Column(db.String(30))
+    genre_id = db.Column(db.Integer, primary_key=True)
+    genre_name = db.Column(db.String(30))
 
     # Relationship
     artist = db.relationship('Schema5_Artist', back_populates='genre')
 
     # Function
     def __repr__(self):
-        return "<Schema 5: Genre(ID: {})>".format(self.genre_ID)
+        return "<Schema 5: Genre(ID: {})>".format(self.genre_id)
 
 class Schema5_Song(db.Model, Object):
     # Table name
@@ -200,16 +200,16 @@ class Schema5_Song(db.Model, Object):
     __bind_key__ = "prefixed"
 
     # Fields
-    song_ID = db.Column(db.Integer, primary_key=True)
-    song_Title = db.Column(db.String(150))
-    song_AlbumID = db.Column(db.Integer, db.ForeignKey('Album.album_ID'))
+    song_id = db.Column(db.Integer, primary_key=True)
+    song_title = db.Column(db.String(150))
+    album_id = db.Column(db.Integer, db.ForeignKey('Album.album_id'))
     
     # Relationships
     album = db.relationship('Schema5_Album', back_populates='song')
 
     # Function 
     def __repr__(self):
-        return "<Schema 5: Song(ID: {})>".format(self.song_ID)
+        return "<Schema 5: Song(ID: {})>".format(self.song_id)
 
 class Schema5_Artist(db.Model, Object):
     # Table name
@@ -217,10 +217,10 @@ class Schema5_Artist(db.Model, Object):
     __bind_key__ = "prefixed"
 
     # Fields
-    artist_ID = db.Column(db.Integer, primary_key=True)
-    artist_Name = db.Column(db.String(100))
-    artist_Country = db.Column(db.String(60))
-    artist_GenreID = db.Column(db.Integer, db.ForeignKey('Genre.genre_ID'))
+    artist_id = db.Column(db.Integer, primary_key=True)
+    artist_name = db.Column(db.String(100))
+    country = db.Column(db.String(60))
+    genre_id = db.Column(db.Integer, db.ForeignKey('Genre.genre__D'))
 
     # Relationship
     genre = db.relationship('Schema5_Genre', back_populates='artist')
@@ -228,4 +228,4 @@ class Schema5_Artist(db.Model, Object):
 
     # Function
     def __repr__(self):
-        return "<Schema 5: Artist(ID: {})>".format(self.artist_ID)
+        return "<Schema 5: Artist(ID: {})>".format(self.artist_id)

@@ -162,6 +162,7 @@
 
 
 from sqlra import *
+from db_tester2 import *
 
 def find_subqueries(d):
     subqueries = []
@@ -200,12 +201,17 @@ def converter(sql_dict):
             sql_dict_new[key] = value
         elif isinstance(value, dict):
             sql_dict_new[key] = convert_dict_values(value)
+            print(sql_dict_new[key])
+            print("Used VDict this")
         elif isinstance(value, (list, tuple)):
             sql_dict_new[key] = ' '.join(map(str, value))
+            print(sql_dict_new[key])
+            print("Used LTuple this")
         else:
             sql_dict_new[key] = value
 
     return sql_dict_new
+
 
 
 join_types = ['INNER JOIN', 'LEFT JOIN', 'LEFT OUTER JOIN', 'RIGHT JOIN', 'RIGHT OUTER JOIN', 'FULL JOIN', 'FULL OUTER JOIN', 'JOIN', 'NATURAL JOIN', 'SELF JOIN']
@@ -279,7 +285,8 @@ def subq_formatter():
     return None
 
 def main():
-    q = "SELECT albums.AlbumName, songs.SongTitle, (SELECT MAX(ReleaseYear) FROM albums WHERE ArtistID = artists.ArtistID) AS max_release_year FROM albums INNER JOIN songs ON albums.AlbumID = songs.AlbumID WHERE songs.SongTitle > (SELECT AVG(ReleaseYear) FROM albums) GROUP BY albums.AlbumID"
+    # q = "SELECT albums.AlbumName, songs.SongTitle, (SELECT MAX(ReleaseYear) FROM albums WHERE ArtistID = artists.ArtistID) AS max_release_year FROM albums INNER JOIN songs ON albums.AlbumID = songs.AlbumID WHERE songs.SongTitle > (SELECT AVG(ReleaseYear) FROM albums) GROUP BY albums.AlbumID"
+    q = "SELECT albums.AlbumName, songs.SongTitle FROM albums INNER JOIN songs ON albums.AlbumID = songs.AlbumID GROUP BY albums.AlbumID"
 
     # q = "SELECT program.name, scores.inspiration, (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price FROM programme INNER JOIN scores ON programme.id = score.id WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) GROUP BY id HAVING something"
     # q = "SELECT employees.name, employees.id, products.stock AS stock FROM employees, products, inventory, stock WHERE employees.id = products.emp_id AND products.id = inventory.prod_id AND inventory.stockID = stock.id AND inventory.items > 500"
@@ -310,6 +317,7 @@ def main():
 
     for i in b:
         print(i)
+
 
 if __name__ == "__main__":
     main()
