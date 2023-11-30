@@ -435,6 +435,8 @@ def main():
                 AND s.age = 20 \
             GROUP BY id"
     
+    sql = "SELECT albums.AlbumName, songs.SongTitle, (SELECT MAX(ReleaseYear) FROM albums WHERE ArtistID = artists.ArtistID) AS max_release_year FROM albums INNER JOIN songs ON albums.AlbumID = songs.AlbumID WHERE songs.SongTitle > (SELECT AVG(ReleaseYear) FROM albums) GROUP BY albums.AlbumID"
+    
     # sql = "SELECT * FROM employees"
 
     # sql = "SELECT DISTINCT department, position FROM employees"
