@@ -319,9 +319,9 @@ def main():
     for i in b:
         print(i)
 
-    c = run(b)
-    print(f"Length B {len(c)}")
-    for i in c:
+    db_results = run(b)
+    print(f"Length C {len(db_results)}")
+    for i in db_results:
         for j in i:
             print(j)
             # print(type(j))
