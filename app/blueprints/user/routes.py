@@ -177,8 +177,8 @@ def update_user(username:str):
     """
     try:
         user:Users = Users.query.filter_by(username=username).first()
-    except:
-        return error_response(500, 'internal server error')
+    except Exception as e:  
+        return error_response(500, 'Internal server error. Error: ' + str(e))
     data = request.get_json() or {}
 
     # Checking if the new data already exists in the database
@@ -195,9 +195,9 @@ def update_user(username:str):
     user.from_dict(data, new_user=False)
     try:
         db.session.commit()
-    except:
+    except Exception as e:
         db.session.rollback()
-        return error_response(500, 'internal server error')
+        return error_response(500, 'Internal server error. Error: ' + str(e))
 
     # return new user resource represnetation
     return url_for('user.get_user', username=user.username)
@@ -215,9 +215,9 @@ def delete_user(username:str):
         user:Users = Users.query.filter_by(username=username).first()
         db.session.delete(user)
         db.session.commit()
-    except:
+    except Exception as e:
         db.session.rollback()
-        return error_response(500, 'internal server error')
+        return error_response(500, 'Internal server error. Error: ' + str(e))
 
     response = jsonify({
         "message": "account has been successfully deleted" 
