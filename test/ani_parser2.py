@@ -207,10 +207,11 @@ def converter(sql_dict):
 
     return sql_dict_new
 
+
 join_types = ['INNER JOIN', 'LEFT JOIN', 'LEFT OUTER JOIN', 'RIGHT JOIN', 'RIGHT OUTER JOIN', 'FULL JOIN', 'FULL OUTER JOIN', 'JOIN', 'NATURAL JOIN', 'SELF JOIN']
 
 
-def checker(query):
+def query_generator(query):
     query_list = []
     # print(f"Query: {query}")
 
@@ -239,6 +240,8 @@ def checker(query):
         # print(f'Type of FROM from the query: {type(query['WHERE'])}')
     if 'WHERE' in query.keys():
         lenl = len(query_list)
+        print("TEST TYPE")
+        print(type(query_list[lenl-1]))
         query_list.append(query_list[lenl-1] + " WHERE "+ query['WHERE'])
     if 'GROUP BY' in query.keys():
         lenl = len(query_list)
@@ -290,20 +293,20 @@ def main():
                                 CLEAN=True)
     print(f'\nSQL: {sql}\n')
 
-    subqueries = find_subqueries(sql)
-    subqueries.pop(0)
+    # subqueries = find_subqueries(sql)
+    # subqueries.pop(0)
 
-    if len(subqueries) > 0:
-        sq_list = []
-        for i in subqueries:
-            x = converter(i)
-            y = checker(x)
-            z = select_star_fixer(y, i)
-            y.append(z)
-            sq_list.append(y)
+    # if len(subqueries) > 0:
+    #     sq_list = []
+    #     for i in subqueries:
+    #         x = converter(i)
+    #         y = query_generator(x)
+    #         z = select_star_fixer(y, i)
+    #         y.append(z)
+    #         sq_list.append(y)
 
     a = converter(sql)
-    b = checker(a)
+    b = query_generator(a)
 
     for i in b:
         print(i)
