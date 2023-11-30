@@ -135,7 +135,6 @@ def login():
 @user_bp.route('/logout/', methods=['POST'])
 @jwt_required()
 def logout():
-
     """
         logout function unsets the JWT and CSRF tokens from the client's cookies, thus logging them out of the server
     """
@@ -143,7 +142,7 @@ def logout():
     unset_cookies(response)
     return response
 
-@user_bp.route('/load_user', methods=['GET'])
+@user_bp.route('/load_user/', methods=['GET'])
 @jwt_required()
 def get_user():
     """
