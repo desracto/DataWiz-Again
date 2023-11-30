@@ -10,6 +10,14 @@ import "./QueryAnimationPage.css";
 import svgImage from '../../../assets/images/vector-31.svg'; 
 import svgImage2 from '../../../assets/images/blob-haikei.svg'; 
 
+const request = axios.create({
+    baseURL: "http://localhost:5000",
+    headers: {
+        "Content-Type" : "application/json"
+    },
+    withCredentials: true,
+    timeout: 300000
+})
 
 export default function SchemaSelectionPage() {
 
@@ -32,35 +40,17 @@ export default function SchemaSelectionPage() {
   
 
     const handleAnimateQuery = async () => {
-        // try {
-        //     const response = await axios.post('http://localhost:5000/api/animation/animate/', { query }); 
-        //     console.log(response); 
-        //     // Axios automatically throws an error for non-2xx responses (what?)
-        //     const result = response.data;
-        //     // Handle the result as needed, e.g., update state or display the animation steps
-        //     console.log(result);
-        // } catch (error) {
-        //     console.error('Error animating query:', error.message);
-        // }
-
-        // Code from Ejax for testing
-        const request = axios.create({
-            baseURL: "http://localhost:5000",
-            headers: {
-                "Content-Type" : "application/json"
-            },
-            withCredentials: true,
-            timeout: 300000
-        })
+        console.log(query) // testing purposes
 
         request({
-            url: 'api/animation/animate',
+            url: 'api/animation/animate/',
             method: 'post',
-            data: query})
+            data: {query: query}})
         .then(response => {
             console.log(response.data)})
         .catch(error => {
-            console.log(error)})    };
+            console.log(error.response)}
+        )};
 
   return (
     <>
