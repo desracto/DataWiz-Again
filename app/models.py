@@ -1,6 +1,7 @@
 from uuid import uuid4
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
+from sqlalchemy import types
 
 from .extensions import db
 from .blueprints.animation import _prefixed_models
@@ -176,7 +177,8 @@ class Quiz_Attempts(db.Model):
 
     stu_id = db.Column(db.String(60))
     answer = db.Column(db.String(1000))
-    score = db.Column(db.Decimal(5,2)) # DOUBT - how the score is calculated 
+    # score = db.Column(db.Decimal(5,2)) # DOUBT - how the score is calculated 
+    score = db.Column(types.DECIMAL(5, 2))
     feedback = db.Column(db.String(1000))
     # DOUBT - how can we record the attempt_time and time_taken?  
 
@@ -207,7 +209,7 @@ class Quiz_Attempts(db.Model):
     
 
 # ----------------------------- Filters
-class Filters(db.model):
+class Filters(db.Model):
 
     # Table name
     __tablename__ = 'filters'
@@ -217,7 +219,8 @@ class Filters(db.model):
 
     filter_name = db.Column(db.String(50))
     filter_desc = db.Column(db.String(200))
-    mark = db.Column(db.Decimal(5,2))
+    # mark = db.Column(db.Decimal(5,2))
+    mark = db.Column(types.DECIMAL(5, 2))
 
         # Functions    
     def __repr__(self):
