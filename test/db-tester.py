@@ -32,7 +32,7 @@ engine2 = create_engine("mysql+mysqlconnector://sql12658112:yFlLxXMggz@sql12.fre
 connection2 = engine2.connect()
 
 # ------------------ schema 1
-# q1 = text("CREATE TABLE employees (emp_id INT, first_name VARCHAR(50), last_name VARCHAR(50), age INT, dept VARCHAR(50), salary DECIMAL(10, 2))")
+# q1 = text("CREATE TABLE employees (emp_id INT PRIMARY KEY, first_name VARCHAR(50), last_name VARCHAR(50), age INT, dept VARCHAR(50), salary DECIMAL(10, 2))")
 # q2 = text("INSERT INTO employees (emp_id, first_name, last_name, age, dept, salary) VALUES (101, 'John', 'Doe', 30, 'Sales', 50000), (102, 'Jane', 'Smith', 28, 'Marketing', 48000), (103, 'Michael', 'Johnson', 35, 'HR', 55000), (104, 'Emily', 'Williams', 24, 'IT', 52000),(105, 'Robert', 'Brown', 32, 'Finance', 60000), (106, 'Lisa', 'Lee', 29, 'Sales', 49000), (107, 'David', 'Kim', 27, 'Marketing', 47000), (108, 'Sarah', 'Anderson', 33, 'HR', 56000), (109, 'James', 'Martinez', 25, 'IT', 53000), (110, 'Olivia', 'Harris', 31, 'Finance', 61000), (111, 'Ethan', 'Lewis', 26, 'Sales', 48000), (112, 'Mia', 'Clark', 34, 'Marketing', 49000), (113, 'Alexander', 'Allen', 29, 'HR', 55000), (114, 'Sophia', 'Wright', 27, 'IT', 54000), (115, 'Daniel', 'Scott', 32, 'Finance', 60000)")
 # connection2.execute(q1)
 # connection2.execute(q2)

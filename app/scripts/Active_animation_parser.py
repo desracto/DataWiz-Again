@@ -113,6 +113,40 @@ def select_star_fixer(ql_list, q_dict,):
 def subq_formatter():
     return None
 
+
+def generate_animation_steps(query: str):
+    sql = translate_query(query=query, DEBUG=True, CLEAN=True)
+
+    subqueries = find_subqueries(sql)
+    subqueries.pop(0)
+
+    steps_result = ""  # Variable to store the steps
+
+    if len(subqueries) > 0:
+        sq_list = []
+        step_counter = 1  # Initialize the step counter
+        for i in subqueries:
+            x = converter(i)
+            y = checker(x)
+            z = select_star_fixer(y, i)
+            y.append(z)
+            steps_result += f'\nSTEP {step_counter}: new subquery tree: {y}\n'
+            step_counter += 1  # Increment the step counter
+            sq_list.append(y)
+
+    a = converter(sql)
+    b = checker(a)
+    b.append(query)
+
+    step_counter = 1  # Reset the step counter for the final queries
+    for i in b:
+        steps_result += f'\nSTEP {step_counter}: {i}\n'  # Added a newline for space between steps
+        step_counter += 1  # Increment the step counter
+
+    # Print all steps with space between them
+    return b
+
+
 def main():
     q = "SELECT program.name, scores.inspiration, (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price FROM programme INNER JOIN scores ON programme.id = score.id WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) GROUP BY id HAVING something"
     sql = translate_query(query=q, DEBUG=True, CLEAN=True)

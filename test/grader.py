@@ -109,11 +109,11 @@ def check(dict1, dict2):
 
 def main():
     
-    # correct_ans = "SELECT student_name, grade FROM students WHERE grade >= 90"
-    # stu_ans = "SELECT name, score FROM students WHERE grade > 80"
+    correct_ans = "SELECT student.name FROM students WHERE grade >= 90"
+    stu_ans = "SELECT student.name FROM students WHERE grade > 80"
     
-    correct_ans = "SELECT course_name, professor_name FROM courses WHERE department = 'Computer Science'"
-    stu_ans = "SELECT subject, instructor FROM classes WHERE field = 'CS"
+    # correct_ans = "SELECT course_name, professor_name FROM courses WHERE department = 'Computer Science'"
+    # stu_ans = "SELECT subject, instructor FROM classes WHERE field = 'CS"
     
     # correct_ans = "SELECT name, inspiration FROM programme INNER JOIN scores ON programme.id = score.id WHERE s.inspiration > 18 GROUP BY id HAVING something"
     # stu_ans = "SELECT name FROM programme INNER JOIN scores ON programme.id = score.id WHERE s.inspiration > 18 GROUP BY id HAVING something"
@@ -121,8 +121,8 @@ def main():
     # correct_ans = "SELECT employees, employee_id FROM employees RIGHT JOIN departments ON employees.department_id = departments.department_id where employees.employee_id = 100"
     # stu_ans = "SELECT employees, employee_id FROM emp RIGHT JOIN departments ON employees.department_id = departments.department_id where employees.employee_id > 100"
 
-    # correct_ans = "SELECT first_name, last_name FROM employees WHERE department = 'Sales' GROUP BY department HAVING COUNT(*) > 5 ORDER BY last_name ASC LIMIT 10"
-    # stu_ans = "SELECT first_name, last_name FROM employees WHERE department = 'Sales' GROUP BY department LIMIT 10"
+    correct_ans = "SELECT first_name, last_name FROM employees WHERE department = 'Sales' GROUP BY department HAVING COUNT(*) > 5 ORDER BY last_name ASC LIMIT 10"
+    stu_ans = "SELECT first_name, last_name FROM employees WHERE department = 'Sales' GROUP BY department LIMIT 10"
    
     sql_c = translate_query(query = correct_ans,
                                 DEBUG=True,

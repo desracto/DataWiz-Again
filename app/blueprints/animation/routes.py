@@ -15,7 +15,7 @@ from ._prefixed_models import Schema5_Album as Album, Schema5_Artist as Artist, 
 
 from pyparsing import ParseException
 
-from app.scripts.Active_animation_parser import main as animation_main
+from app.scripts.Active_animation_parser import generate_animation_steps
 from app.scripts.Active_sqlra import translate_query
 
 @animation_bp.route('/schema/1/')
@@ -163,15 +163,11 @@ def animate_query():
         if not query:
             return bad_request('Missing or invalid "query" in JSON data')
 
-        # Update the 'sql' variable in sqlra.py with the user's query
-        sql = translate_query(query, DEBUG=True, CLEAN=True)
-
         # Call the animation parser function and retrieve the steps_result
-        steps_result = animation_main()
+        steps_result = generate_animation_steps(query)
 
         # Return the steps_result as JSON
         return jsonify({'steps_result': steps_result})
 
-        # Handle exceptions appropriately
     except Exception as e:
         return jsonify({'error': f'An error occurred: {str(e)}'}), 500
