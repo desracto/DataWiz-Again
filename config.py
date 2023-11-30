@@ -26,3 +26,9 @@ class Config(object):
     # Flask-JWT-Extended
     JWT_SECRET_KEY = 'sic-1/)to06#WV$~XB;u,JO=#%AmXV+b'
     JWT_TOKEN_LOCATION = ["cookies"]
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=1)
+    JWT_COOKIE_SECURE = False
+
+
+
+
