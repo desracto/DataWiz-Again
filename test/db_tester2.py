@@ -68,11 +68,28 @@ def run(query_list):
     connection.execute(ins12)
 
     final_result = []
+    col_names = []
     for i in range(0, len(query_list)):
         q = text(query_list[i])
         result = connection.execute(q)
+        column_names = result.keys()
         final_result.append(result)
+        col_names.append(column_names)
     
-    return final_result
+    return final_result, col_names
 
     
+    # def create_result_dict(colu_names, db_results):
+    # results = {}
+
+    # for idx, cols in enumerate(colu_names):
+    #     key_name = cols[0] + "s"  # Assuming plural naming convention
+    #     results[key_name] = []
+
+    #     for row in db_results[idx]:
+    #         row_dict = {}
+    #         for i, col_name in enumerate(cols):
+    #             row_dict[col_name] = row[i]
+    #         results[key_name].append(row_dict)
+
+    # return {"results": results}
