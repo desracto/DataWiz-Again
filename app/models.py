@@ -9,7 +9,6 @@ from .blueprints.animation import _prefixed_models
 def get_uuid():
     return uuid4().hex
 
-#  ----------------------------- Users tables
 class Users(db.Model):
     # Table name
     __tablename__ = 'Users'
@@ -60,8 +59,6 @@ class Users(db.Model):
     def retrieve_quizes(self):
         return self.quizzes
 
-
-# ----------------------------- main quiz table 
 class Quiz(db.Model):
     # Table name
     __tablename__ = 'Quiz'
@@ -111,25 +108,7 @@ class Quiz(db.Model):
         }
 
         return data
-
-# class Quiz_Image(db.Model):
-#     # HAS NOT BEEN ADDED TO MYSQL DB YET
-#     # table name
-#     __tablename__ = 'Quiz_Image'
-
-#     # Fields
-#     img_id = db.Column(db.String(32), primary_key=True, unique=True, default=get_uuid)
-#     quiz_id = db.Column(db.String(32), db.ForeignKey('Quiz.id')) # Fk
-#     img_data = db.Column(db.LargeBinary)
-
-#     # Relationship
-#     quiz = db.relationship('Quiz', back_populates='img')
-
-#     # Function
-#     def __repr__(self) -> str:
-#         return "<Quiz_Img ID: {}>".format(self.img_id) 
-
-# ----------------------------- a single quiz details
+    
 class Quiz_QPA(db.Model):
     # Table name
     __tablename__ = 'Quiz_QPA'
@@ -163,8 +142,6 @@ class Quiz_QPA(db.Model):
         }
         return data
 
-
-# ----------------------------- a single quiz attempt
 class Quiz_Attempts(db.Model):
     # Table name
     __tablename__ = 'Quiz_Attempts'
@@ -207,10 +184,7 @@ class Quiz_Attempts(db.Model):
         }
         return data
     
-
-# ----------------------------- Filters
 class Filters(db.Model):
-
     # Table name
     __tablename__ = 'filters'
 
@@ -239,10 +213,7 @@ class Filters(db.Model):
         }
         return data
 
-
-# ----------------------------- animation 
 class Animation(db.Model):
-
     # Table name
     __tablename__ = 'animation'
 
@@ -269,36 +240,7 @@ class Animation(db.Model):
 
 
 
-# ----------------------------- feedback 
-# class Feedback(db.model):
-
-#     # Table name
-#     __tablename__ = 'feedback'
-
-#     # Fields
-#     feedback_id = db.Column(db.Integer, primary_key=True, unique=True, default=get_uuid) # PK
-#     user_id = db.Column(db.String(32), db.ForeignKey('Users.id')) # Fk - Teacher
-#     quiz_id = db.Column(db.String(32), db.ForeignKey('Quiz.id')) # Fk
-#     ques_id = db.Column(db.String(32), db.ForeignKey('Quiz_QPA.qaid')) # Fk
-
-#     stu_id = db.Column(db.String(60))
-#     feedback = db.Column(db.String(1000))
-
-#     # Functions    
-#     def __repr__(self):
-#         return "<Feedback | ID: {}, \
-#              Student ID: {}, \
-#              Quiz ID: {}, \
-#              Query: {}>".format(self.feedback_id, self.stu_id, self.quiz_id, self.feedback)
 
 
-#     def to_dict(self):
-#         data = {
-#             "feedback_id": self.feedback_id,
-#             "quiz_id": self.quiz_id,
-#             "ques_id": self.ques_id,
-#             "user_id": self.user_id,
-#             "stu_id": self.stu_id,
-#             "feedback": self.feedback
-#         }
-#         return data
+
+
