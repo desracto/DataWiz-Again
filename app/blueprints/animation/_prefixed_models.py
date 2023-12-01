@@ -43,7 +43,7 @@ class Schema2_Product(db.Model, Object):
     inventory = db.relationship('Schema2_Inventory', back_populates='product')
     
     def __repr__(self):
-        return "<Schema 2: Product(ID: {})>".format(self.products_id)
+        return "<Schema 2: Product(ID: {})>".format(self.product_id)
         
 class Schema2_Inventory(db.Model, Object):
     # Table Name
@@ -113,7 +113,7 @@ class Schema4_Flight(db.Model, Object):
     arrival_time = db.Column(db.DateTime)
 
     # Relationships
-    ticket = db.relationship('Schema4_Ticket', back_populates='flight')
+    tickets = db.relationship('Schema4_Ticket', back_populates='flight')
 
     # Functions
     def __repr__(self):
@@ -151,7 +151,7 @@ class Schema4_Ticket(db.Model, Object):
     price = db.Column(db.Float)
 
     # Relationships
-    flight = db.relationship("Schema4_Flight", back_populates='ticket')
+    flight = db.relationship("Schema4_Flight", back_populates='tickets')
     passenger = db.relationship('Schema4_Passenger', back_populates='ticket')
 
     # Functions
@@ -220,7 +220,7 @@ class Schema5_Artist(db.Model, Object):
     artist_id = db.Column(db.Integer, primary_key=True)
     artist_name = db.Column(db.String(100))
     country = db.Column(db.String(60))
-    genre_id = db.Column(db.Integer, db.ForeignKey('Genre.genre__D'))
+    genre_id = db.Column(db.Integer, db.ForeignKey('Genre.genre_id'))
 
     # Relationship
     genre = db.relationship('Schema5_Genre', back_populates='artist')

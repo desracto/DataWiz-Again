@@ -25,6 +25,7 @@ export default function SchemaSelectionPage() {
     const selectedSchema = location.state.schemaData;
     // console.log(location.state.schemaData);
     const [query, setQuery] = useState('');
+    const [stepsResult, setStepsResult] = useState(null); // this state to stores the result
 
     const navigate = useNavigate();
     const returnToSchemaSelection = useCallback(() => {
@@ -39,18 +40,35 @@ export default function SchemaSelectionPage() {
       };
   
 
-    const handleAnimateQuery = async () => {
-        console.log(query) // testing purposes
+    // const handleAnimateQuery = async () => {
+    //     console.log(query) // testing purposes
 
-        request({
-            url: 'api/animation/animate/',
-            method: 'post',
-            data: {query: query}})
-        .then(response => {
-            console.log(response.data)})
-        .catch(error => {
-            console.log(error.response)}
-        )};
+    //     request({
+    //         url: 'api/animation/animate/',
+    //         method: 'post',
+    //         data: {query: query}})
+    //     .then(response => {
+    //         console.log(response.data)})
+    //     .catch(error => {
+    //         console.log(error.response)}
+    //     )};
+
+    const handleAnimateQuery = async () => {
+        try {
+            const response = await request.post('/api/animation/animate/', { query });
+            const data = response.data;
+
+            // Log the response to the console (for testing purposes)
+            console.log(data);
+
+            // Update state with the steps_result
+            setStepsResult(data.steps_result);
+
+            // Further handling of the response, if needed
+        } catch (error) {
+            console.error('An error occurred:', error);
+        }
+    };
 
   return (
     <>
@@ -87,11 +105,15 @@ export default function SchemaSelectionPage() {
         </div>
 
         <div className="QueryInputCard">
-            <div className="AnimationNameContainer">
-                <div className="AnimationNameLabel">Enter Animation Name:</div>
-                <div className="AnimationNameTextbox">
-                    <div className="AnimationNamePlaceholder">Animation 1</div>
+                <div className="AnimationNameLabel">
+                    Enter Animation Name:
                 </div>
+            <div className="AnimationNameContainer1">
+                <textarea
+                    className="AnimationNameTextbox"
+                    type="text"
+                    placeholder="Animation 1"
+                />
             </div>
             <div className='button-container1' >
                 <button className='ReturnSchemaSelectionButton'
@@ -137,7 +159,13 @@ export default function SchemaSelectionPage() {
         </div>
 
         <div className='VisualizationDisplayCard'>
-
+            {/* Display steps_result if available */}
+            {stepsResult && (
+                <>
+                    <h3>Steps Result:</h3>
+                    <pre>{JSON.stringify(stepsResult, null, 2)}</pre>
+                </>
+            )}
         </div>
     </div>
 
