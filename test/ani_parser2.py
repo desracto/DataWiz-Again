@@ -286,7 +286,7 @@ def subq_formatter():
 
 def main():
     # q = "SELECT albums.AlbumName, songs.SongTitle, (SELECT MAX(ReleaseYear) FROM albums WHERE ArtistID = artists.ArtistID) AS max_release_year FROM albums INNER JOIN songs ON albums.AlbumID = songs.AlbumID WHERE songs.SongTitle > (SELECT AVG(ReleaseYear) FROM albums) GROUP BY albums.AlbumID"
-    q = "SELECT Album.album_name, Song.song_title FROM Album INNER JOIN Song ON Album.album_id = Song.album_id GROUP BY Album.album_id"
+    q = "SELECT Album.album_name, Song.song_title FROM Album INNER JOIN Song ON Album.album_id = Song.album_id LIMIT 10"
 
     # q = "SELECT program.name, scores.inspiration, (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price FROM programme INNER JOIN scores ON programme.id = score.id WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) GROUP BY id HAVING something"
     # q = "SELECT employees.name, employees.id, products.stock AS stock FROM employees, products, inventory, stock WHERE employees.id = products.emp_id AND products.id = inventory.prod_id AND inventory.stockID = stock.id AND inventory.items > 500"
