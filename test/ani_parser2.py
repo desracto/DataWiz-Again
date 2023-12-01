@@ -284,16 +284,39 @@ def select_star_fixer(ql_list, q_dict,):
 def subq_formatter():
     return None
 
-def main():
-    # q = "SELECT albums.AlbumName, songs.SongTitle, (SELECT MAX(ReleaseYear) FROM albums WHERE ArtistID = artists.ArtistID) AS max_release_year FROM albums INNER JOIN songs ON albums.AlbumID = songs.AlbumID WHERE songs.SongTitle > (SELECT AVG(ReleaseYear) FROM albums) GROUP BY albums.AlbumID"
-    q = "SELECT Album.album_name, Song.song_title FROM Album INNER JOIN Song ON Album.album_id = Song.album_id LIMIT 10"
 
-    # q = "SELECT program.name, scores.inspiration, (SELECT MAX(price) FROM product_prices WHERE product_id = products.product_id) AS max_price FROM programme INNER JOIN scores ON programme.id = score.id WHERE s.inspiration > (SELECT AVG(INSPIRATION) FROM SCORES) GROUP BY id HAVING something"
-    # q = "SELECT employees.name, employees.id, products.stock AS stock FROM employees, products, inventory, stock WHERE employees.id = products.emp_id AND products.id = inventory.prod_id AND inventory.stockID = stock.id AND inventory.items > 500"
-    # q = "SELECT employees.name, employees.id, products.stock AS stock FROM employees INNER JOIN products ON employees.id = products.emp_id INNER JOIN inventory ON products.id = inventory.prod_id WHERE inventory.stock > 50"
-    # q = "SELECT name FROM employees, product"
-    # q = "SELECT employees.name, employees.id, products.stock AS stock FROM employees INNER JOIN products ON employees.id = products.emp_id WHERE inventory.stock > 50 AND employees.age > 20 AND department = 'sales'"
-    # q = "SELECT employees.name FROM employees WHERE employees.id > 100 OR employees.id = 500"
+def json_comp_converter(db_results, rm_keys):
+    colu_names = []
+    for key in rm_keys:
+        t = []
+        for k in key:
+            t.append(k)
+        colu_names.append(t)
+
+    # for i in range(0, len(db_results)):
+    #     print(colu_names[i][0])
+    #     for j in db_results[i]:
+    #         print(j)
+    #     print("")
+
+    results = {}
+    for idx, cols in enumerate(colu_names):
+        # key_name = cols[0] + "s"  # Assuming plural naming convention
+        results[idx] = []
+
+        for row in db_results[idx]:
+            row_dict = {}
+            for i, col_name in enumerate(cols):
+                row_dict[col_name] = row[i]
+            results[idx].append(row_dict)
+
+    return {"results": results}
+
+
+def main():
+   
+    q = "SELECT Album.album_name, Song.song_title FROM Album INNER JOIN Song ON Album.album_id = Song.album_id LIMIT 5"
+   
 
     sql = translate_query(query = q,
                                 DEBUG=True,
@@ -319,14 +342,11 @@ def main():
     for i in b:
         print(i)
 
-    db_results = run(b)
-    print(f"Length C {len(db_results)}")
-    for i in db_results:
-        for j in i:
-            print(j)
-            # print(type(j))
-        print("")
+    db_results, rm_keys = run(b)
+    ans = json_comp_converter(db_results, rm_keys)
 
-
+    print(ans)
+    
+    
 if __name__ == "__main__":
     main()

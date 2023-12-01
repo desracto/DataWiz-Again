@@ -3,6 +3,7 @@
 
 from flask import Flask
 from config import Config
+from flask_cors import CORS
 from .extensions import register_app
 
 def create_app():

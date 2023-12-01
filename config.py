@@ -14,12 +14,13 @@ class Config(object):
 
     # Flask-SQLAlchemy
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-        'mysql://sql12657821:dyMDPWtEP5@sql12.freemysqlhosting.net/sql12657821'
+        'mysql://avnadmin:AVNS_RpJJfd42UmhF5jXnw0n@dw-users-datawiz-users.a.aivencloud.com:27940/defaultdb'
     
     SQLALCHEMY_BINDS = {
-        "prefixed": "sqlite:///" + os.path.join(basedir, "app\\database\\db_files\\prefixed_sc.db")
+        "prefixed": "sqlite:///" + os.path.join(basedir, "app\\database\\db_files\\prefixed_sc.db"),
+        "prefixed_mysql": "mysql://avnadmin:AVNS_RpJJfd42UmhF5jXnw0n@dw-users-datawiz-users.a.aivencloud.com:27940/prefixed_db"
         }
-    
+
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = False
 
