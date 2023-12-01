@@ -82,24 +82,29 @@
     position: relative;
 }
 
-.AnimationNameContainer {
-    width: 80%;
-    display: flex;
-    position: relative;
-    flex-direction: column;
-    margin-top: 50px;
-    align-items: flex-start;
-    gap: 10px;
-}
-  
 .AnimationNameLabel {
+    width: 80%;
     color: #454141;
     font-size: 18px;
     font-family: 'Gilroy-SemiBold';
     word-wrap: break-word;
+    margin-top: 50px;
+}
+
+.AnimationNameContainer1 {
+    width: 80%;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    margin-top: 10px;
+    align-items: center;
 }
   
 .AnimationNameTextbox {
+    color: #706D6D;
+    font-size: 14px;
+    font-family: Gilroy-Regular;
+    word-wrap: break-word;
     align-self: stretch;
     width: 100%;
     height: 40px;
@@ -112,13 +117,14 @@
     justify-content: center;
     align-items: flex-start;
     gap: 10px;
+    resize: none;
+    overflow: hidden;  
 }
-  
-.AnimationNamePlaceholder {
-    color: #706D6D;
-    font-size: 14px;
-    font-family: Gilroy-Regular;
-    word-wrap: break-word;
+
+.AnimationNameTextbox:focus,
+.AnimationNameTextbox:hover {
+  outline: none !important;
+  border: 2px solid #8A5A8E;
 }
   
   .button-container2 {
@@ -304,7 +310,9 @@
     max-width: 1200px; 
     display: flex;
     flex-direction: column;
-    align-items: center; 
+    align-items: flex-start; 
     margin-top: 40px;
     margin-bottom: 40px;
+    overflow: auto; 
+    padding: 30px;
 }
