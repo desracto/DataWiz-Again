@@ -1,5 +1,5 @@
 import { React, useState, useCallback } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./Header2.css";
 // import { animation, faqs, home, logo, quizzes, setting } from "../assets/images";
 
@@ -43,15 +43,17 @@ const SecondHeader = () => {
     <div className="main">
       <div className="Header2Container">
         {/* Logo */}
-        <button className="logo-button" >
-          <div className="logo" style={{cursor:'pointer'}} onClick={GoToHomePage}>
-            <img src={logo} alt="Logo"  />
-            <span>
-              Data
-              <span>Wiz.</span>
-            </span>
-          </div>
-        </button>
+        <Link to="/InstructorHomePage">
+          <button className="logo-button z-10">
+            <div className="logo">
+              <img src={logo} alt="Logo" />
+              <span>
+                Data
+                <span>Wiz.</span>
+              </span>
+            </div>
+          </button>
+        </Link>
 
         <button
           className="header-icon-button"
@@ -126,7 +128,7 @@ const SecondHeader = () => {
         {isMobile ? (
           <div className="overlay">
             <div className="fixed_panel" ref={modalRef}>
-              <div className="mobile_logo" onClick={GoToHomePage} style={{cursor:'pointer'}}>
+              <div className="mobile_logo">
                 <img src={logo} alt="Logo" />
                 <span>
                   Data
