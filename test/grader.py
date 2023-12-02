@@ -119,18 +119,29 @@ def compare_join_types(teacher_sql, student_sql):
 
 
 def check_unnecessary_additions(teacher_sql, student_sql):
-    teacher_conditions = set(teacher_sql.get('WHERE', []))
-    student_conditions = set(student_sql.get('WHERE', []))
+    teacher_keys = set(teacher_sql.keys())
+    student_keys = set(student_sql.keys())
 
-    unnecessary_additions = student_conditions.difference(teacher_conditions)
+    # Check for extra keys in the student's query
+    extra_keys = student_keys.difference(teacher_keys)
 
-    if unnecessary_additions:
-        print(f"Unnecessary additions found: {', '.join(unnecessary_additions)}")
-        return len(unnecessary_additions)  # Deduct points for each unnecessary addition
-    else:
-        print("No unnecessary additions found")
-        return 0  # No deductions if no unnecessary additions are present
+    unnecessary_additions = 0
 
+    if extra_keys:
+        print(f"Extra keys found in student's query: {', '.join(extra_keys)}")
+        unnecessary_additions += len(extra_keys)  # Counting extra keys as unnecessary additions
+
+    for key in teacher_keys.intersection(student_keys):
+        teacher_values = set(teacher_sql[key])
+        student_values = set(student_sql[key])
+
+        # Check for extra elements in the values of matching keys
+        extra_values = student_values.difference(teacher_values)
+        if extra_values:
+            print(f"Extra values found for key '{key}' in student's query: {', '.join(extra_values)}")
+            unnecessary_additions += len(extra_values)  # Counting extra values as unnecessary additions
+
+    return unnecessary_additions
 
 
 def main():
@@ -156,11 +167,11 @@ def main():
     # correct_ans = "SELECT professor_name FROM courses WHERE department = 'Computer Science'"
     # stu_ans = "SELECT subject, professor_name FROM classes WHERE field = 'CS' and department = 'Computer Science'"
 
-    # correct_ans = "SELECT professor_name FROM courses WHERE department = 'Computer Science'"
-    # stu_ans = "SELECT subject, professor_name FROM classes WHERE field = 'CS' and department = 'Computer Science'"
+    correct_ans = "SELECT professor_name FROM courses WHERE department = 'Computer Science'"
+    stu_ans = "SELECT subject, professor_name FROM classes WHERE field = 'CS' and department = 'Computer Science'"
 
-    correct_ans = "SELECT employees.employee_id, employees.employee_name, departments.department_name FROM employees, departments WHERE employees.department_id = departments.department_id"
-    stu_ans = "SELECT employees.employee_id, employees.employee_name, departments.department_name FROM employees JOIN departments ON employees.department_id = departments.department_id"
+    # correct_ans = "SELECT employees.employee_id, employees.employee_name, departments.department_name FROM employees, departments WHERE employees.department_id = departments.department_id"
+    # stu_ans = "SELECT employees.employee_id, employees.employee_name, departments.department_name FROM employees JOIN departments ON employees.department_id = departments.department_id"
 
     sql_c = translate_query(query = correct_ans,
                                 DEBUG=True,
@@ -170,7 +181,7 @@ def main():
                                 CLEAN=True)
     
     print(f'SQL from teacher: {sql_c}')
-    print(f'SQL from student: {sql_s}')
+    print(f'SQL from student: {sql_s}\n')
 
     # major_minor(sql_c, sql_s)
 
