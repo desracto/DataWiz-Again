@@ -1,5 +1,5 @@
 from sqlparse import parse
-from sqlparse.sql import Identifier, Function
+from sqlparse.sql import Identifier, Function, Comparison
 import pprint
 
 # ---------------------- SUPPORTING FUNCTIONS ----------------------
@@ -7,6 +7,13 @@ def __print_dictionary(stmt_dict: dict, msg: str = ""):
     print(msg)
     pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(stmt_dict)
     print("\n")
+
+def pretty_print(item):
+    pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(item)
+
+def retrieve_token(keyword):
+    keyword = parse(keyword)[0].tokens
+    return keyword
 
 # ---------------------- PRE-PROCESS ----------------------
 def pre_process(query: str):
@@ -65,6 +72,13 @@ def split_keywords(stmt_tokens) -> dict:
         # value tokens
         else:
             stmt_dict[current_keyword].append(token)
+
+
+    # EDGE CASES
+    # WHERE EXISTS
+    if stmt_dict.get('EXISTS', None):
+        print('true')
+
 
     return stmt_dict
 
@@ -421,8 +435,45 @@ def normalizing(stmt_dict: dict):
         # before the IN
         # after the IN
 
-    # find the IN keyword within the WHERE clause
+    # find the IN keyword within the selection (where, and) clauses
+    # normalize them
+
+    # retrieve selection nodes
+    selection_nodes = stmt_dict.get('WHERE', []) + stmt_dict.get('AND', [])
+
+
+    if selection_nodes.__len__() == 0:
+        return None
     
+    # find the IN
+    for i in range(len(selection_nodes)):
+        # checks if it is a token and if it is IN
+        if hasattr(selection_nodes[i], 'value'):
+            if selection_nodes[i].value == 'IN':
+                left_node = selection_nodes[i-1]
+                in_node = selection_nodes[i]
+                right_node = selection_nodes[i+1]
+
+                # check if the right node is a sub-query
+                if type(right_node) is dict:
+                    # retrieve the column in SELECT
+                    column = right_node['SELECT']
+
+                    if column.__len__() > 1:
+                        return Exception("Too many values in SELECT clause with IN outer clause")
+                    
+                    # add AND token to right-node subquery
+                    right_node['AND'] = [left_node.value, '=', selection_nodes[i-1].value]
+
+                    # change outer node to WHERE EXISTS
+
+
+    pretty_print(selection_nodes)
+
+
+
+        
+
 
     pass
 
@@ -496,7 +547,7 @@ def process(stmt_tokens, DEBUG = True) -> dict:
 
 
     # NORMALIZING
-
+    normalizing(stmt_dict)
 
 
     return stmt_dict
@@ -513,9 +564,7 @@ def translate_query(query: str, DEBUG=True, CLEAN=False):
     stmt_dict = process(stmt_tokens)
 
     return stmt_dict
-    
-    return stmt_dict
-    
+        
 
 if __name__ == "__main__":
 
@@ -556,14 +605,28 @@ if __name__ == "__main__":
     #             "ON employees.id = products.emp_id " \
     #         "WHERE inventory.stock > 50"
 
-    sql = " SELECT movieTitle \
-            FROM StarsIn \
-            WHERE starsName IN ( \
-                SELECT name \
-                FROM MovieStar \
-                WHERE birthDate = 1960)"
+    # sql = " SELECT movieTitle \
+    #         FROM StarsIn \
+    #         WHERE starsName IN ( \
+    #             SELECT name \
+    #             FROM MovieStar \
+    #             WHERE birthDate = 1960) \
+    #         AND date IN ( \
+    #             SELECT date \
+    #             FROM releaseDates \
+    #             where release > 2000)\
+    #         AND movieTitle LIKE 'L%'"
+    
+    # sql = " SELECT movieTitle \
+    #         FROM StarsIn \
+    #         WHERE EXISTS ( \
+    #             SELECT name \
+    #             FROM MovieStar \
+    #             WHERE birthdate = 190 and name=starName)"
 
     stmt_dict = translate_query(sql)
+
+
 
 
 # Cant handle multiple inner joins
