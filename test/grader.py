@@ -153,8 +153,14 @@ def main():
     # correct_ans = "SELECT firstname, lastname FROM employees WHERE dept = 'Sales' GROUP BY dept HAVING COUNT(*) > 5 ORDER BY lastname ASC LIMIT 10"
     # stu_ans = "SELECT first_name, last_name FROM employees WHERE department = 'Sales' GROUP BY department LIMIT 10"
 
-    correct_ans = "SELECT professor_name FROM courses WHERE department = 'Computer Science'"
-    stu_ans = "SELECT subject, professor_name FROM classes WHERE field = 'CS' and department = 'Computer Science'"
+    # correct_ans = "SELECT professor_name FROM courses WHERE department = 'Computer Science'"
+    # stu_ans = "SELECT subject, professor_name FROM classes WHERE field = 'CS' and department = 'Computer Science'"
+
+    # correct_ans = "SELECT professor_name FROM courses WHERE department = 'Computer Science'"
+    # stu_ans = "SELECT subject, professor_name FROM classes WHERE field = 'CS' and department = 'Computer Science'"
+
+    correct_ans = "SELECT employees.employee_id, employees.employee_name, departments.department_name FROM employees, departments WHERE employees.department_id = departments.department_id"
+    stu_ans = "SELECT employees.employee_id, employees.employee_name, departments.department_name FROM employees JOIN departments ON employees.department_id = departments.department_id"
 
     sql_c = translate_query(query = correct_ans,
                                 DEBUG=True,
@@ -178,7 +184,7 @@ def main():
     #     if join_type_difference is not None:
     #         print(f"Deduction: {join_type_difference}")
 
-    check_unnecessary_additions(sql_c, sql_s)
+    # check_unnecessary_additions(sql_c, sql_s)
 
 if __name__ == "__main__":
     main()
