@@ -98,7 +98,7 @@ def retrieve_schema(id: int):
         table_names.append('GENRE')
 
     result = {}
-    with open("animation\\schemas.txt", "r") as file:
+    with open("app\\blueprints\\animation\\scripts\\schema.txt", "r") as file:
         for line in file:
             if line.find('#') == 0:
                 continue
@@ -120,28 +120,28 @@ def generate_prefixed(id: int):
     if id == 1 or id == 6:
         # Employee 
         for arr in result['EMPLOYEE']:
-            obj = emp = Employee(employee_ID=arr[0], 
-                                 employee_FirstName=arr[1], 
-                                 employee_LastName=arr[2], 
-                                 employee_Age=int(arr[3]), 
-                                 employee_Dept=arr[4], 
-                                 employee_Salary=int(arr[5]))
+            obj = Employee(emp_id=arr[0], 
+                            first_name=arr[1], 
+                                 last_name=arr[2], 
+                                 age=int(arr[3]), 
+                                 dept=arr[4], 
+                                 salary=int(arr[5]))
             db.session.add(obj)
         db.session.commit()
 
     if id == 2 or id == 6:
         # Product Table
         for arr in result['PRODUCT']:
-            prod = Product(products_ID=int(arr[0]),
-                        products_Name=arr[1],
-                        products_Category=arr[2],
-                        products_Price=int(arr[3]))
+            prod = Product( product_id=int(arr[0]),
+                            product_name=arr[1],
+                            category=arr[2],
+                            price=int(arr[3]))
             db.session.add(prod)
         
         # Inventory table
         for arr in result['INVENTORY']:
-            inv = Inventory(products_ProductID=int(arr[0]),
-                            inventory_Quantity=int(arr[1])) 
+            inv = Inventory(product_id=int(arr[0]),
+                            quantity=int(arr[1])) 
 
             db.session.add(inv)
         db.session.commit()
@@ -149,84 +149,84 @@ def generate_prefixed(id: int):
     if id == 3 or id == 6:
         # Course 
         for arr in result['COURSE']:
-            obj = Course(course_ID=arr[0],
-                         course_Name=arr[1],
-                         course_Credit=int(arr[2]),
-                         course_Dept=arr[3])
+            obj = Course(course_id=arr[0],
+                         course_name=arr[1],
+                         credits=int(arr[2]),
+                         dept=arr[3])
             
             db.session.add(obj)
         
         # Inventory
         for arr in result['ENROLLMENT']:
-            obj = Enrollment(enrollment_ID=int(arr[0]),
-                                    enrollment_StudentID=int(arr[1]),
-                                    enrollment_CourseID=arr[2],
-                                    enrollment_Grade=arr[3])           
+            obj = Enrollment(enroll_id=int(arr[0]),
+                                    student_id=int(arr[1]),
+                                    course_id=arr[2],
+                                    grade=arr[3])           
             db.session.add(obj)
         db.session.commit()
 
     if id == 4 or id == 6:
         # Flight table
         for arr in result['FLIGHT']:
-            obj = Flight(flight_ID = int(arr[0]),
-                         flight_AirlineName = arr[1],
-                         flight_DepartureCity = arr[2],
-                         flight_ArrivalCity = arr[3],
-                         flight_DepartureTime = datetime.strptime(arr[4], '%m/%d/%Y %H:%M'),
-                         flight_ArrivalTime = datetime.strptime(arr[5], '%m/%d/%Y %H:%M'))
+            obj = Flight(flight_id = int(arr[0]),
+                         airline_name = arr[1],
+                         departure = arr[2],
+                         arrival = arr[3],
+                         departure_time = datetime.strptime(arr[4], '%m/%d/%Y %H:%M'),
+                         arrival_time = datetime.strptime(arr[5], '%m/%d/%Y %H:%M'))
 
             db.session.add(obj)
 
         # Passenger Table
         for arr in result['PASSENGER']:
-            obj = Passenger(passenger_ID = int(arr[0]),
-                            passenger_FirstName = arr[1],
-                            passenger_LastName = arr[2],
-                            passenger_Gender = arr[3],
-                            passenger_Age = arr[4])
+            obj = Passenger(passenger_id = int(arr[0]),
+                            first_name = arr[1],
+                            last_name = arr[2],
+                            gender = arr[3],
+                            age = arr[4])
 
             db.session.add(obj)
 
         # Ticket Table
         for arr in result['TICKET']:
-            obj = Ticket(ticket_ID = int(arr[0]),
-                            ticket_FlightID = int(arr[1]),
-                            ticket_PassengerID = int(arr[2]),
-                            ticket_SeatNumber = arr[3],
-                            ticket_Price = float(arr[4]))
+            obj = Ticket(ticket_id = int(arr[0]),
+                            flight_id = int(arr[1]),
+                            passenger_id = int(arr[2]),
+                            seat_number = arr[3],
+                            price = float(arr[4]))
             db.session.add(obj)
         db.session.commit()
 
     if id == 5 or id == 6:
         # Album Table
         for arr in result['ALBUM']:
-            obj = Album(album_ID = int(arr[0]),
-                        album_Name = arr[1],
-                        album_ReleaseYear = int(arr[2]),
-                        album_ArtistID = int(arr[3]))
+            obj = Album(album_id = int(arr[0]),
+                        album_name = arr[1],
+                        year = int(arr[2]),
+                        artist_id = int(arr[3]))
             db.session.add(obj)
 
         # Genre
         for arr in result['GENRE']:
-            obj = Genre(genre_ID = int(arr[0]),
-                        genre_Name = arr[1])
+            obj = Genre(genre_id = int(arr[0]),
+                        genre_name = arr[1])
 
             db.session.add(obj)
 
         # Artist
         for arr in result['ARTIST']:
-            obj = Artist(artist_ID = int(arr[0]),
-                         artist_Name = arr[1],
-                         artist_Country = arr[2],
-                         artist_GenreID = int(arr[3]))
+            obj = Artist(artist_id = int(arr[0]),
+                         artist_name = arr[1],
+                         country = arr[2],
+                         genre_id = int(arr[3]))
             
             db.session.add(obj)
 
         # Song
         for arr in result['SONG']:
-            obj = Song(song_ID = int(arr[0]),
-                       song_Title = arr[1],
-                       song_AlbumID = int(arr[2]))
+            obj = Song(song_id = int(arr[0]),
+                       song_title = arr[1],
+                       album_id = int(arr[2]))
 
             db.session.add(obj)
         db.session.commit()        

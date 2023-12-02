@@ -1,0 +1,270 @@
+
+# Schema 1 Tables
+
+EMPLOYEE,101,John,Doe,30,Sales,500000
+EMPLOYEE,102,Jane,Smith,28,Marketing,48000
+EMPLOYEE,103,Michael,Johnson,35,HR,55000
+EMPLOYEE,104,Emily,Williams,24,IT,52000
+EMPLOYEE,105,Robert,Brown,32,Finance,60000
+EMPLOYEE,106,Lisa,Lee,29,Sales,49000
+EMPLOYEE,107,David,Kim,27,Marketing,47000
+EMPLOYEE,108,Sarah,Anderson,33,HR,56000
+EMPLOYEE,109,James,Martinez,25,IT,53000
+EMPLOYEE,110,Olivia,Harris,31,Finance,61000
+EMPLOYEE,111,Ethan,Lewis,26,Sales,48000
+EMPLOYEE,112,Mia,Clark,34,Marketing,49000
+EMPLOYEE,113,Alexander,Allen,29,HR,55000
+EMPLOYEE,114,Sophia,Wright,27,IT,54000
+EMPLOYEE,115,Daniel,Scott,32,Finance,60000
+
+# Schema 2 Tables
+
+PRODUCT,101,Laptop,Electronics,800
+PRODUCT,102,Smartphone,Electronics,500
+PRODUCT,103,Headphones,Electronics,100
+PRODUCT,104,T-shirt,Apparel,25
+PRODUCT,105,Jeans,Apparel,50
+PRODUCT,106,Sneakers,Footwear,80
+PRODUCT,107,Backpack,Accessories,40
+PRODUCT,108,Watch,Accessories,120
+PRODUCT,109,Blender,Appliances,150
+PRODUCT,110,Coffee Maker,Appliances,100
+PRODUCT,111,Book,Books,15
+PRODUCT,112,Tablet,Electronics,300
+PRODUCT,113,Camera,Electronics,400
+PRODUCT,114,Dress,Apparel,60
+PRODUCT,115,Sandals,Footwear,30
+PRODUCT,116,Sunglasses,Accessories,20
+PRODUCT,117,Microwave,Appliances,200
+PRODUCT,118,Smart Speaker,Electronics,120
+PRODUCT,119,Fitness Tracker,Electronics,70
+PRODUCT,120,Wallet,Accessories,35
+
+INVENTORY,101,50
+INVENTORY,102,80
+INVENTORY,103,100
+INVENTORY,104,70
+INVENTORY,105,90
+INVENTORY,106,60
+INVENTORY,107,40
+INVENTORY,108,30
+INVENTORY,109,20
+INVENTORY,110,25
+INVENTORY,111,100
+INVENTORY,112,45
+INVENTORY,113,35
+INVENTORY,114,75
+INVENTORY,115,85
+INVENTORY,116,95
+INVENTORY,117,15
+INVENTORY,118,50
+INVENTORY,119,60
+INVENTORY,120,80
+
+COURSE,CS101,Introduction to CS,3,Computer Sci	
+COURSE,MATH201,Calculus I,4,Mathematics	
+COURSE,ENG101,English Composition,3,English	
+COURSE,HIS202,World History,3,History	
+COURSE,BIO301,Biology Concepts,4,Biology	
+COURSE,ECON102,Microeconomics,3,Economics	
+COURSE,PHY202,Physics II,4,Physics	
+COURSE,CHEM101,General Chemistry,4,Chemistry	
+COURSE,PSYCH201,Intro to Psychology,3,Psychology	
+COURSE,ARTS101,Introduction to Art,3,Arts	
+COURSE,SOC101,Sociology Fundamentals,3,Sociology	
+COURSE,POLSCI201,Political Science,3,Political Sci	
+COURSE,SPAN101,Spanish I,3,Languages	
+COURSE,GEOL201,Earth Science,4,Geology	
+COURSE,MUS101,Music Appreciation,3,Music	
+COURSE,PHIL202,Ethics,3,Philosophy	
+COURSE,FIN202,Finance Principles,3,Finance	
+COURSE,MKT101,Marketing Fundamentals,3,Marketing	
+COURSE,CUL101,Culinary Arts,3,Culinary	
+COURSE,STAT201,Statistics,3,Mathematics	
+COURSE,ANTHRO101,Introduction to Anthrop,3,Anthropology	
+COURSE,LIT101,English Literature,3,English	
+COURSE,FREN101,French I,3,Languages	
+COURSE,THEA101,Introduction to Theater,3,Theater	
+COURSE,PHOT101,Photography Basics,3,Photography	
+COURSE,NUTR201,Nutrition and Health,3,Nutrition	
+COURSE,GYM101,Physical Education,2,Physical Edu	
+COURSE,ENVSCI201,Environmental Science,4,Environmental	
+COURSE,ECON201,Macroeconomics,3,Economics	
+COURSE,BIOL101,Biology Foundations,3,Biology	
+
+ENROLLMENT,1,101,CS101,A	
+ENROLLMENT,2,102,MATH201,B	
+ENROLLMENT,3,103,ENG101,A	
+ENROLLMENT,4,104,HIS202,C	
+ENROLLMENT,5,105,BIO301,A	
+ENROLLMENT,6,106,ECON102,B	
+ENROLLMENT,7,107,PHY202,B	
+ENROLLMENT,8,108,CHEM101,C	
+ENROLLMENT,9,109,PSYCH201,A	
+ENROLLMENT,10,110,ARTS101,A	
+ENROLLMENT,11,111,SOC101,B	
+ENROLLMENT,12,112,POLSCI201,B	
+ENROLLMENT,13,113,SPAN101,A	
+ENROLLMENT,14,114,GEOL201,C	
+ENROLLMENT,15,115,MUS101,A	
+ENROLLMENT,16,116,PHIL202,B	
+ENROLLMENT,17,117,FIN202,B	
+ENROLLMENT,18,118,MKT101,C	
+ENROLLMENT,19,119,CUL101,A	
+ENROLLMENT,20,120,STAT201,A	
+ENROLLMENT,21,121,ANTHRO101,B	
+ENROLLMENT,22,122,LIT101,C	
+ENROLLMENT,23,123,FREN101,A	
+ENROLLMENT,24,124,THEA101,B	
+ENROLLMENT,25,125,PHOT101,B	
+ENROLLMENT,26,126,NUTR201,C	
+ENROLLMENT,27,127,GYM101,A	
+ENROLLMENT,28,128,ENVSCI201,A	
+ENROLLMENT,29,129,ECON201,B	
+ENROLLMENT,30,130,BIOL101,C	
+
+
+# Schema 4 Tables
+
+FLIGHT,1001,Delta Airlines,New York,Los Angeles,05/25/2023 08:00,05/25/2023 12:00	
+FLIGHT,1002,United Airlines,Chicago,Denver,05/25/2023 09:30,05/25/2023 11:30	
+FLIGHT,1003,American Airlines,Los Angeles,New York,05/25/2023 15:00,05/25/2023 23:00	
+FLIGHT,1004,Southwest Airlines,Dallas,Las Vegas,05/26/2023 07:45,05/26/2023 09:30	
+FLIGHT,1005,JetBlue Airways,Boston,Miami,05/26/2023 10:15,05/26/2023 13:30	
+FLIGHT,1006,British Airways,London,Paris,05/26/2023 14:30,05/26/2023 16:00	
+FLIGHT,1007,Emirates,Dubai,Sydney,05/27/2023 00:00,05/27/2023 06:30	
+FLIGHT,1008,Singapore Airlines,Singapore,Tokyo,05/27/2023 08:45,05/27/2023 15:30	
+FLIGHT,1009,Qantas,Sydney,Melbourne,05/28/2023 11:15,05/28/2023 12:30	
+FLIGHT,1010,Air Canada,Toronto,Vancouver,05/28/2023 13:00,05/28/2023 15:15	
+FLIGHT,1011,Lufthansa,Frankfurt,Beijing,05/28/2023 02:00,05/28/2023 07:30	
+FLIGHT,1012,Cathay Pacific,Hong Kong,Singapore,05/29/2023 06:45,05/29/2023 09:30	
+FLIGHT,1013,Virgin Atlantic,London,New York,05/29/2023 08:30,05/29/2023 14:15	
+FLIGHT,1014,Air France,Paris,Rome,05/29/2023 15:45,05/29/2023 17:30	
+FLIGHT,1015,Qatar Airways,Doha,Dubai,05/30/2023 10:00,05/30/2023 10:45	
+FLIGHT,1016,Etihad Airways,Abu Dhabi,Mumbai,05/30/2023 12:30,05/30/2023 14:45	
+FLIGHT,1017,KLM Royal Dutch,Amsterdam,Barcelona,05/30/2023 16:15,05/30/2023 18:00	
+FLIGHT,1018,Turkish Airlines,Istanbul,Athens,05/31/2023 11:00,05/31/2023 12:45	
+FLIGHT,1019,EgyptAir,Cairo,Johannesburg,05/31/2023 14:30,05/31/2023 20:15	
+FLIGHT,1020,Japan Airlines,Tokyo,Seoul,05/31/2023 09:00,05/31/2023 11:30	
+
+PASSENGER,2001,John,Doe,Male,35	
+PASSENGER,2002,Sarah,Johnson,Female,28	
+PASSENGER,2003,Michael,Smith,Male,45	
+PASSENGER,2004,Emily,Williams,Female,32	
+PASSENGER,2005,David,Brown,Male,29	
+PASSENGER,2006,Jessica,Anderson,Female,26	
+PASSENGER,2007,Robert,Jones,Male,41	
+PASSENGER,2008,Olivia,Martinez,Female,30	
+PASSENGER,2009,William,Davis,Male,38	
+PASSENGER,2010,Sophia,Garcia,Female,24	
+PASSENGER,2011,James,Rodriguez,Male,33	
+PASSENGER,2012,Mia,Hernandez,Female,22	
+PASSENGER,2013,Benjamin,Gonzalez,Male,39	
+PASSENGER,2014,Charlotte,Wilson,Female,27	
+PASSENGER,2015,Daniel,Taylor,Male,36	
+PASSENGER,2016,Ava,Thomas,Female,25	
+PASSENGER,2017,Matthew,Moore,Male,34	
+PASSENGER,2018,Harper,Lee,Female,23	
+PASSENGER,2019,Joseph,Turner,Male,37	
+PASSENGER,2020,Amelia,King,Female,31	
+
+TICKET,3001,1001,2001,A1,350.5	
+TICKET,3002,1001,2002,B2,450.25	
+TICKET,3003,1002,2003,C3,280	
+TICKET,3004,1003,2004,D4,500	
+TICKET,3005,1004,2005,E5,200.75	
+TICKET,3006,1005,2006,F6,320.8	
+TICKET,3007,1006,2007,G7,400	
+TICKET,3008,1007,2008,H8,280.5	
+TICKET,3009,1008,2009,I9,380	
+TICKET,3010,1009,2010,J10,420.25	
+TICKET,3011,1010,2011,K11,330	
+TICKET,3012,1011,2012,L12,460.75	
+TICKET,3013,1012,2013,M13,340	
+TICKET,3014,1013,2014,N14,420.5	
+TICKET,3015,1014,2015,O15,280.8	
+TICKET,3016,1015,2016,P16,390	
+TICKET,3017,1016,2017,Q17,320.25	
+TICKET,3018,1017,2018,R18,410.5	
+TICKET,3019,1018,2019,S19,290	
+TICKET,3020,1019,2020,T20,370.75	
+
+# Schema 5 Tables
+
+ALBUM,101,Greatest Hits,1995,201	
+ALBUM,102,Rock Anthems,2002,202	
+ALBUM,103,Pop Sensations,2010,203	
+ALBUM,104,Classic Jazz,1998,204	
+ALBUM,105,Country Roads,2005,205	
+ALBUM,106,R&B Grooves,2012,206	
+ALBUM,107,Indie Classics,2008,207	
+ALBUM,108,Hip Hop Hits,2015,208	
+ALBUM,109,Electronic Vibes,2006,209	
+ALBUM,110,Blues Legends,1997,210	
+ALBUM,111,Reggae Roots,2011,211	
+ALBUM,112,Classical Masterpieces,2000,212	
+ALBUM,113,Alternative Rewind,2009,213	
+ALBUM,114,Metal Mayhem,2014,214	
+ALBUM,115,Latin Salsa,2003,215	
+ALBUM,116,Funky Grooves,2007,216	
+ALBUM,117,Bollywood Beats,2013,217	
+ALBUM,118,Soulful Sounds,1999,218	
+ALBUM,119,Ambient Dreams,2016,219	
+ALBUM,120,Gospel Favorites,2004,220	
+
+ARTIST,201,Queen,United Kingdom,301	
+ARTIST,202,The Rolling Stones,United Kingdom,301	
+ARTIST,203,Taylor Swift,United States,302	
+ARTIST,204,Miles Davis,United States,303	
+ARTIST,205,Johnny Cash,United States,304	
+ARTIST,206,Beyoncé,United States,302	
+ARTIST,207,Arctic Monkeys,United Kingdom,305	
+ARTIST,208,Eminem,United States,306	
+ARTIST,209,Daft Punk,France,307	
+ARTIST,210,B.B. King,United States,304	
+ARTIST,211,Bob Marley,Jamaica,308	
+ARTIST,212,Ludwig van Beethoven,Germany,309	
+ARTIST,213,Nirvana,United States,305	
+ARTIST,214,Metallica,United States,306	
+ARTIST,215,Celia Cruz,Cuba,310	
+ARTIST,216,James Brown,United States,311	
+ARTIST,217,A.R. Rahman,India,312	
+ARTIST,218,Aretha Franklin,United States,313	
+ARTIST,219,Brian Eno,United Kingdom,307	
+ARTIST,220,Mahalia Jackson,United States,314	
+
+SONG,1001,Bohemian Rhapsody,101	
+SONG,1002,Paint It Black,102	
+SONG,1003,Shake It Off,103	
+SONG,1004,So What,104	
+SONG,1005,Ring of Fire,105	
+SONG,1006,Love On Top,106	
+SONG,1007,Do I Wanna Know?,107	
+SONG,1008,Lose Yourself,108	
+SONG,1009,Around the World,109	
+SONG,1010,The Thrill Is Gone,110	
+SONG,1011,One Love,111	
+SONG,1012,Moonlight Sonata,112	
+SONG,1013,Smells Like Teen Spirit,113	
+SONG,1014,Enter Sandman,114	
+SONG,1015,Suavemente,115	
+SONG,1016,Get Up (I Feel Like A),116	
+SONG,1017,Chaiyya Chaiyya,117	
+SONG,1018,Respect,118	
+SONG,1019,Ambient Bliss,119	
+SONG,1020,Amazing Grace,120	
+
+GENRE,301,Rock	
+GENRE,302,Pop	
+GENRE,303,Jazz	
+GENRE,304,Country	
+GENRE,305,Indie	
+GENRE,306,Hip Hop	
+GENRE,307,Electronic	
+GENRE,308,Reggae	
+GENRE,309,Classical	
+GENRE,310,Salsa	
+GENRE,311,Funk	
+GENRE,312,Bollywood	
+GENRE,313,Soul	
+GENRE,314,Gospel	

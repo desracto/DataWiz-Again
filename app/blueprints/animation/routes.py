@@ -15,7 +15,7 @@ from ._prefixed_models import Schema5_Album as Album, Schema5_Artist as Artist, 
 
 from pyparsing import ParseException
 
-from app.scripts.Active_animation_parser import generate_animation_steps
+from app.scripts.active_animation_parser import generate_animation_steps
 from app.scripts.Active_sqlra import translate_query
 
 @animation_bp.route('/schema/1/')
@@ -55,8 +55,14 @@ def schema2():
         invens_json.append(inv.as_dict())
 
     results = {
-        "products": prods_json,
-        "inventory": invens_json
+        0: {
+            'table_name': 'Products',
+            'data': prods_json
+        },
+        1: {
+            'table_name': 'Inventory',
+            'data': invens_json
+        }
     }
 
     return jsonify(results=results)
