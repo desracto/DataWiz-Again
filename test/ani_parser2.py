@@ -262,11 +262,12 @@ def query_generator(query):
         lenl = len(query_list)
         query_list.append(query_list[lenl-1] + " LIMIT "+ query['LIMIT'])
 
-    # print(', '.join(query['SELECT']))
-    # lenl = len(query_list)
-    # squery = query_list[lenl-1]#.replace('*', ', '.join(query['SELECT']))
-    # print(f'Select stuff: {query['SELECT']}')
-    # query_list.append(squery)
+    print(', '.join(query['SELECT']))
+    lenl = len(query_list)
+    squery = query_list[lenl-1].replace('*', ', '.join(query['SELECT']))
+    print(f'Select stuff: {query['SELECT']}')
+    print(f'Select query {squery}')
+    query_list.append(squery)
 
     return query_list
 
@@ -339,8 +340,10 @@ def main():
     b = query_generator(a)
     print(f"Length B {len(b)}")
 
+    print(f"B starts - query generator")
     for i in b:
         print(i)
+    print(f"B ends - query generator")
 
     db_results, rm_keys = run(b)
     ans = json_comp_converter(db_results, rm_keys)
