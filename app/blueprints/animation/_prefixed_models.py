@@ -128,7 +128,7 @@ class Schema4_Passenger(db.Model, Object):
     passenger_id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(50))
     last_name = db.Column(db.String(50))
-    gender = db.Column(db.String(5))
+    gender = db.Column(db.String(6))
     age = db.Column(db.Integer)
 
     # Relationships

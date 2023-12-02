@@ -31,9 +31,7 @@ function App() {
     const request = axios.create({
         baseURL: "http://localhost:5000",
         withCredentials: true,
-        credentials: 'include',
         headers: {
-            'Access-Control-Allow-Origin': 'http://localhost:5000',
             "Content-Type": "application/json"
         },
         timeout: 300000
@@ -47,7 +45,7 @@ function App() {
                     <Route path="/LandingPage" element={<LandingPage />} />
                     <Route path="/SignUpPage" element={<SignUpPage />} />
                     <Route path="/LoginPage" element={<LoginPage />} />
-                    <Route path="/ResetPasswordPage" element={<ResetPassword />} /> a
+                    <Route path="/ResetPasswordPage" element={<ResetPassword />} />
                     <Route path="/InstructorHomePage" element={<InstructorHomePage />} />
                     <Route path="/QuizzesIntroductionPage" element={<QuizzesIntroductionPage />} />
                     <Route path="/AnimationIntroductionPage" element={<AnimationIntroductionPage />} />
