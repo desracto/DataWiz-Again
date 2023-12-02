@@ -17,6 +17,7 @@ import FaqsPage from './features/general/pages/FaqsPage';
 import SchemaSelectionPage from './features/animation/pages/SchemaSelectionPage'
 import QueryAnimationPage from './features/animation/pages/QueryAnimationPage'
 import SavedAnimationsPage from './features/animation/pages/SavedAnimationsPage';
+import TestAniPage from './features/animation/pages/TestAni';
 
 //Quizz Pages
 import CreateQuiz from './features/quiz/pages/CreateQuiz';
@@ -24,7 +25,6 @@ import QuizHome from './features/quiz/pages/QuizHome';
 import SavedQuizzes from './features/quiz/pages/SavedQuizzesPage';
 import UNCompletedQuiz from './features/quiz/pages/UNCompletedQuiz';
 
-import TestDisplay from './features/animation/pages/TestDisplay';
 import axios from 'axios'
 
 function App() {
@@ -58,7 +58,7 @@ function App() {
                     <Route path="/UncompletedQuizPage" element={<UNCompletedQuiz />} />
                     <Route path="/AccountSettingsPage" element={<AccountSettingsPage request={request}/>} />
                     <Route path="/FaqsPage" element={<FaqsPage />} />
-                    <Route path="/TestDisplay" element={<TestDisplay />} />
+                    <Route path="/TestAni" element={<TestAniPage />} />
 
                 </Routes>
             </BrowserRouter>
