@@ -4,375 +4,353 @@ import React, { useState } from 'react';
 import TableTest from '../components/TableTest';
 
 const TestAni = () => {
-  const [isAnimating, setIsAnimating] = useState(false);
+    const [isAnimating, setIsAnimating] = useState(false);
 
-  const handleAnimateClick = () => {
-    setIsAnimating(true);
-    // Add your animation logic here if needed
-  };
+    const handleAnimateClick = () => {
+        setIsAnimating(true);
+        // Add your animation logic here if needed
+    };
 
-  // Nested dictionary
-  const results = {
-        0: {
-            table_name: 'Albums',
-            data: [
+    // Function to find matching rows between two tables
+    const highlightMatchingRows = (prevTableData, nextTableData, query) => {
+        const highlightedRows = [];
+
+        // get the index of the first occurrence of SELECT in the query
+        const selectIndex = query.toUpperCase().indexOf('SELECT');
+
+        // check if there is a * after the index of SELECT
+        const selectAll = query.charAt(selectIndex + 7) === '*';
+
+        if (selectAll) {
+            // If the query has SELECT * in it, then highlight rows for rows that match in the next table
+            prevTableData.forEach((prevRow, prevRowIndex) => {
+                const matchingRows = nextTableData.filter((nextRow) => {
+                    const commonColumns = Object.keys(prevRow).filter((column) =>
+                        Object.keys(nextRow).includes(column)
+                    );
+
+                    return commonColumns.every((column) => prevRow[column] === nextRow[column]);
+                });
+
+                if (matchingRows.length > 0) {
+                    highlightedRows.push({
+                        prevRowIndex,
+                        matchingRows,
+                    });
+                }
+            });
+        } else {
+            // Check if nextTableData is not empty
+            if (nextTableData.length > 0) {
+                // get the columns that are matching in both the tables without the help of the query
+                const commonColumns = Object.keys(prevTableData[0]).filter((column) =>
+                    Object.keys(nextTableData[0]).includes(column)
+                );
+
+                if (commonColumns.length > 0) {
+                    highlightedRows.push(...commonColumns);
+                }
+            }
+        }
+
+
+        return highlightedRows;
+    };
+
+    
+    const queries = [
+        "select * FROM Artist",
+        "select * FROM Artist WHERE country = 'United Kingdom'",
+        "select * FROM Artist WHERE country = 'United Kingdom' AND genre_id = 302",
+        "select * FROM Artist WHERE country = 'United Kingdom' AND genre_id = 302 OR genre_id = 301",
+        "select artist_id, artist_name FROM Artist WHERE country = 'United Kingdom' AND genre_id = 302 OR genre_id = 301"
+    ];
+    
+// Nested dictionary
+const results = {
+    0: {
+        "table_name": "Artist",
+        "data": [
             {
-                "album_id": 101,
-                "album_name": "Greatest Hits",
-                "year": 1995,
                 "artist_id": 201,
-            },
-            {"album_id": 102, "album_name": "Rock Anthems", "year": 2002, "artist_id": 202},
-            {
-                "album_id": 103,
-                "album_name": "Pop Sensations",
-                "year": 2010,
-                "artist_id": 203,
-            },
-            {"album_id": 104, "album_name": "Classic Jazz", "year": 1998, "artist_id": 204},
-            {
-                "album_id": 105,
-                "album_name": "Country Roads",
-                "year": 2005,
-                "artist_id": 205,
-            },
-            {"album_id": 106, "album_name": "R&B Grooves", "year": 2012, "artist_id": 206},
-            {
-                "album_id": 107,
-                "album_name": "Indie Classics",
-                "year": 2008,
-                "artist_id": 207,
-            },
-            {"album_id": 108, "album_name": "Hip Hop Hits", "year": 2015, "artist_id": 208},
-            {
-                "album_id": 109,
-                "album_name": "Electronic Vibes",
-                "year": 2006,
-                "artist_id": 209,
+                "artist_name": "Queen",
+                "country": "United Kingdom",
+                "genre_id": 301
             },
             {
-                "album_id": 110,
-                "album_name": "Blues Legends",
-                "year": 1997,
-                "artist_id": 210,
-            },
-            {"album_id": 111, "album_name": "Reggae Roots", "year": 2011, "artist_id": 211},
-            {
-                "album_id": 112,
-                "album_name": "Classical Masterpieces",
-                "year": 2000,
-                "artist_id": 212,
-            },
-            {
-                "album_id": 113,
-                "album_name": "Alternative Rewind",
-                "year": 2009,
-                "artist_id": 213,
-            },
-            {"album_id": 114, "album_name": "Metal Mayhem", "year": 2014, "artist_id": 214},
-            {"album_id": 115, "album_name": "Latin Salsa", "year": 2003, "artist_id": 215},
-            {
-                "album_id": 116,
-                "album_name": "Funky Grooves",
-                "year": 2007,
-                "artist_id": 216,
-            },
-            {
-                "album_id": 117,
-                "album_name": "Bollywood Beats",
-                "year": 2013,
-                "artist_id": 217,
-            },
-            {
-                "album_id": 118,
-                "album_name": "Soulful Sounds",
-                "year": 1999,
-                "artist_id": 218,
-            },
-            {
-                "album_id": 119,
-                "album_name": "Ambient Dreams",
-                "year": 2016,
-                "artist_id": 219,
-            },
-            {
-                "album_id": 120,
-                "album_name": "Gospel Favorites",
-                "year": 2004,
-                "artist_id": 220,
-            },    
-        ],
-    },
-            1: {
-                table_name: 'Songs',
-                data: [
-            {"song_id": 1001, "song_title": "Bohemian Rhapsody", "album_id": 101},
-            {"song_id": 1002, "song_title": "Paint It Black", "album_id": 102},
-            {"song_id": 1003, "song_title": "Shake It Off", "album_id": 103},
-            {"song_id": 1004, "song_title": "So What", "album_id": 104},
-            {"song_id": 1005, "song_title": "Ring of Fire", "album_id": 105},
-            {"song_id": 1006, "song_title": "Love On Top", "album_id": 106},
-            {"song_id": 1007, "song_title": "Do I Wanna Know?", "album_id": 107},
-            {"song_id": 1008, "song_title": "Lose Yourself", "album_id": 108},
-            {"song_id": 1009, "song_title": "Around the World", "album_id": 109},
-            {"song_id": 1010, "song_title": "The Thrill Is Gone", "album_id": 110},
-            {"song_id": 1011, "song_title": "One Love", "album_id": 111},
-            {"song_id": 1012, "song_title": "Moonlight Sonata", "album_id": 112},
-            {"song_id": 1013, "song_title": "Smells Like Teen Spirit", "album_id": 113},
-            {"song_id": 1014, "song_title": "Enter Sandman", "album_id": 114},
-            {"song_id": 1015, "song_title": "Suavemente", "album_id": 115},
-            {"song_id": 1016, "song_title": "Get Up (I Feel Like A)", "album_id": 116},
-            {"song_id": 1017, "song_title": "Chaiyya Chaiyya", "album_id": 117},
-            {"song_id": 1018, "song_title": "Respect", "album_id": 118},
-            {"song_id": 1019, "song_title": "Ambient Bliss", "album_id": 119},
-            {"song_id": 1020, "song_title": "Amazing Grace", "album_id": 120},    
-        ],
-    },
-            2: {
-                table_name: 'Albums and Songs',
-                data: [
-            {
-                "album_id": 101,
-                "album_name": "Greatest Hits",
-                "year": 1995,
-                "artist_id": 201,
-                "song_id": 1001,
-                "song_title": "Bohemian Rhapsody",
-            },
-            {
-                "album_id": 102,
-                "album_name": "Rock Anthems",
-                "year": 2002,
                 "artist_id": 202,
-                "song_id": 1002,
-                "song_title": "Paint It Black",
+                "artist_name": "The Rolling Stones",
+                "country": "United Kingdom",
+                "genre_id": 301
             },
             {
-                "album_id": 103,
-                "album_name": "Pop Sensations",
-                "year": 2010,
                 "artist_id": 203,
-                "song_id": 1003,
-                "song_title": "Shake It Off",
+                "artist_name": "Taylor Swift",
+                "country": "United States",
+                "genre_id": 302
             },
             {
-                "album_id": 104,
-                "album_name": "Classic Jazz",
-                "year": 1998,
                 "artist_id": 204,
-                "song_id": 1004,
-                "song_title": "So What",
+                "artist_name": "Miles Davis",
+                "country": "United States",
+                "genre_id": 303
             },
             {
-                "album_id": 105,
-                "album_name": "Country Roads",
-                "year": 2005,
                 "artist_id": 205,
-                "song_id": 1005,
-                "song_title": "Ring of Fire",
+                "artist_name": "Johnny Cash",
+                "country": "United States",
+                "genre_id": 304
             },
             {
-                "album_id": 106,
-                "album_name": "R&B Grooves",
-                "year": 2012,
                 "artist_id": 206,
-                "song_id": 1006,
-                "song_title": "Love On Top",
+                "artist_name": "Beyoncé",
+                "country": "United States",
+                "genre_id": 302
             },
             {
-                "album_id": 107,
-                "album_name": "Indie Classics",
-                "year": 2008,
                 "artist_id": 207,
-                "song_id": 1007,
-                "song_title": "Do I Wanna Know?",
+                "artist_name": "Arctic Monkeys",
+                "country": "United Kingdom",
+                "genre_id": 305
             },
             {
-                "album_id": 108,
-                "album_name": "Hip Hop Hits",
-                "year": 2015,
                 "artist_id": 208,
-                "song_id": 1008,
-                "song_title": "Lose Yourself",
+                "artist_name": "Eminem",
+                "country": "United States",
+                "genre_id": 306
             },
             {
-                "album_id": 109,
-                "album_name": "Electronic Vibes",
-                "year": 2006,
                 "artist_id": 209,
-                "song_id": 1009,
-                "song_title": "Around the World",
+                "artist_name": "Daft Punk",
+                "country": "France",
+                "genre_id": 307
             },
             {
-                "album_id": 110,
-                "album_name": "Blues Legends",
-                "year": 1997,
                 "artist_id": 210,
-                "song_id": 1010,
-                "song_title": "The Thrill Is Gone",
+                "artist_name": "B.B. King",
+                "country": "United States",
+                "genre_id": 304
             },
             {
-                "album_id": 111,
-                "album_name": "Reggae Roots",
-                "year": 2011,
                 "artist_id": 211,
-                "song_id": 1011,
-                "song_title": "One Love",
+                "artist_name": "Bob Marley",
+                "country": "Jamaica",
+                "genre_id": 308
             },
             {
-                "album_id": 112,
-                "album_name": "Classical Masterpieces",
-                "year": 2000,
                 "artist_id": 212,
-                "song_id": 1012,
-                "song_title": "Moonlight Sonata",
+                "artist_name": "Ludwig van Beethoven",
+                "country": "Germany",
+                "genre_id": 309
             },
             {
-                "album_id": 113,
-                "album_name": "Alternative Rewind",
-                "year": 2009,
                 "artist_id": 213,
-                "song_id": 1013,
-                "song_title": "Smells Like Teen Spirit",
+                "artist_name": "Nirvana",
+                "country": "United States",
+                "genre_id": 305
             },
             {
-                "album_id": 114,
-                "album_name": "Metal Mayhem",
-                "year": 2014,
                 "artist_id": 214,
-                "song_id": 1014,
-                "song_title": "Enter Sandman",
+                "artist_name": "Metallica",
+                "country": "United States",
+                "genre_id": 306
             },
             {
-                "album_id": 115,
-                "album_name": "Latin Salsa",
-                "year": 2003,
                 "artist_id": 215,
-                "song_id": 1015,
-                "song_title": "Suavemente",
+                "artist_name": "Celia Cruz",
+                "country": "Cuba",
+                "genre_id": 310
             },
             {
-                "album_id": 116,
-                "album_name": "Funky Grooves",
-                "year": 2007,
                 "artist_id": 216,
-                "song_id": 1016,
-                "song_title": "Get Up (I Feel Like A)",
+                "artist_name": "James Brown",
+                "country": "United States",
+                "genre_id": 311
             },
             {
-                "album_id": 117,
-                "album_name": "Bollywood Beats",
-                "year": 2013,
                 "artist_id": 217,
-                "song_id": 1017,
-                "song_title": "Chaiyya Chaiyya",
+                "artist_name": "A.R. Rahman",
+                "country": "India",
+                "genre_id": 312
             },
             {
-                "album_id": 118,
-                "album_name": "Soulful Sounds",
-                "year": 1999,
                 "artist_id": 218,
-                "song_id": 1018,
-                "song_title": "Respect",
+                "artist_name": "Aretha Franklin",
+                "country": "United States",
+                "genre_id": 313
             },
             {
-                "album_id": 119,
-                "album_name": "Ambient Dreams",
-                "year": 2016,
                 "artist_id": 219,
-                "song_id": 1019,
-                "song_title": "Ambient Bliss",
+                "artist_name": "Brian Eno",
+                "country": "United Kingdom",
+                "genre_id": 307
             },
             {
-                "album_id": 120,
-                "album_name": "Gospel Favorites",
-                "year": 2004,
                 "artist_id": 220,
-                "song_id": 1020,
-                "song_title": "Amazing Grace",
-            },    
-        ],
+                "artist_name": "Mahalia Jackson",
+                "country": "United States",
+                "genre_id": 314
+            }
+        ]
     },
-            3: {
-                table_name: 'Partial Data',
-                data: [
+    1: {
+        "table_name": "Artist",
+        "data": [
             {
-                "album_id": 101,
-                "album_name": "Greatest Hits",
-                "year": 1995,
                 "artist_id": 201,
-                "song_id": 1001,
-                "song_title": "Bohemian Rhapsody",
+                "artist_name": "Queen",
+                "country": "United Kingdom",
+                "genre_id": 301
             },
             {
-                "album_id": 102,
-                "album_name": "Rock Anthems",
-                "year": 2002,
                 "artist_id": 202,
-                "song_id": 1002,
-                "song_title": "Paint It Black",
+                "artist_name": "The Rolling Stones",
+                "country": "United Kingdom",
+                "genre_id": 301
             },
             {
-                "album_id": 103,
-                "album_name": "Pop Sensations",
-                "year": 2010,
-                "artist_id": 203,
-                "song_id": 1003,
-                "song_title": "Shake It Off",
+                "artist_id": 207,
+                "artist_name": "Arctic Monkeys",
+                "country": "United Kingdom",
+                "genre_id": 305
             },
             {
-                "album_id": 104,
-                "album_name": "Classic Jazz",
-                "year": 1998,
-                "artist_id": 204,
-                "song_id": 1004,
-                "song_title": "So What",
-            },
-            {
-                "album_id": 105,
-                "album_name": "Country Roads",
-                "year": 2005,
-                "artist_id": 205,
-                "song_id": 1005,
-                "song_title": "Ring of Fire",
-            },    
-        ],
+                "artist_id": 219,
+                "artist_name": "Brian Eno",
+                "country": "United Kingdom",
+                "genre_id": 307
+            }
+        ]
     },
-  };
-
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <button onClick={handleAnimateClick} style={{ padding: '10px', fontSize: '16px', margin: '10px' }}>
-        Animate
-      </button>
-      <div
-        style={{
-          width: '1000px',
-          height: '1000px',
-          backgroundColor: isAnimating ? '#f2f2f2' : 'transparent', // Initial background color
-          borderRadius: '10px',
-          margin: '10px',
-          overflow: 'auto',
-          transition: 'background-color 1s ease-in-out',
-        }}
-      >
-        {isAnimating && (
-          <>
-            {Object.keys(results).map((key, index, array) => (
-              <React.Fragment key={key}>
-                <TableTest tableName={results[key].table_name} data={results[key].data} />
-                {index < array.length - 1 && (
-                  <div style={{ textAlign: 'center', margin: '10px', fontSize: '50px' }}>
-                    <span>&#8595;</span>
-                  </div>
-                )}
-              </React.Fragment>
-            ))}
-          </>
-        )}
-      </div>
-    </div>
-  );
+    2: {
+        "table_name": "Artist",
+        "data": []
+    },
+    3: {
+        "table_name": "Artist",
+        "data": [
+            {
+                "artist_id": 201,
+                "artist_name": "Queen",
+                "country": "United Kingdom",
+                "genre_id": 301
+            },
+            {
+                "artist_id": 202,
+                "artist_name": "The Rolling Stones",
+                "country": "United Kingdom",
+                "genre_id": 301
+            }
+        ]
+    },
+    4: {
+        "table_name": "Artist",
+        "data": [
+            {"artist_id": 201, "artist_name": "Queen"},
+            {"artist_id": 202, "artist_name": "The Rolling Stones"}
+        ]
+    }
 };
 
-export default TestAni;
+    // Define the @keyframes directly within the component
+    const fadeInKeyframes = `
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    `;
+
+
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <button onClick={handleAnimateClick} style={{ padding: '10px', fontSize: '16px', margin: '10px' }}>
+                Animate
+            </button>
+            <div
+                style={{
+                    width: '1000px',
+                    height: '1000px',
+                    backgroundColor: isAnimating ? '#f2f2f2' : 'transparent', // Initial background color
+                    borderRadius: '10px',
+                    margin: '10px',
+                    overflow: 'auto',
+                    transition: 'background-color 1s ease-in-out',
+                }}
+            >
+                {isAnimating && (
+                    <>
+                        {Object.keys(results).map((key, index, array) => (
+                            <React.Fragment key={key}>
+                                {/* Container that displays information about the table */}
+                                <div
+                                    style={{
+                                        textAlign: 'left',
+                                        backgroundColor: '#D4C1CE',
+                                        padding: '15px',
+                                        margin: '20px',
+                                        borderRadius: '15px',
+                                        boxShadow: '0px 8px 8px rgba(0, 0, 0, 0.05)',
+                                        animation: 'fadeIn 5s forwards'
+                                    }}
+                                >
+                                    {/* Displaying the query here */}
+                                    <p style={{ fontSize: '16px', fontWeight: '400', margin: '10px' }}>
+                                        <b>Query {index + 1}: &nbsp;</b>
+                                        {queries[index]}
+                                    </p>
+                                    {/* Displaying The queries passed to the next table */}
+                                    <p style={{ fontSize: '16px', fontWeight: '400', margin: '10px' }}>
+                                        <b>Descriptiomn: &nbsp;</b>
+                                        {index === array.length - 1
+                                            ? 'This is the result table.'
+                                            : results[key].data.length === 0
+                                                ? 'No result for this query.'
+                                                : typeof highlightMatchingRows(results[key].data, results[array[index + 1]]?.data || [], queries[index + 1] || '')[0] === 'string'
+                                                    ? `${highlightMatchingRows(results[key].data, results[array[index + 1]]?.data || [], queries[index + 1] || '').length} columns are being used in the next query.`
+                                                    : highlightMatchingRows(results[key].data, results[array[index + 1]]?.data || [], queries[index + 1] || '').length === results[key].data.length
+                                                        ? 'All rows are being used in the next query.'
+                                                        : highlightMatchingRows(results[key].data, results[array[index + 1]]?.data || [], queries[index + 1] || '').length === 0
+                                                            ? 'No rows are being used in the next query.'
+                                                            : `${highlightMatchingRows(results[key].data, results[array[index + 1]]?.data || [], queries[index + 1] || '').length} rows are being used in the next query.`
+                                    }
+                                    </p>
+                                </div>
+                                {/* Displaying the table or the "No result for this query" message */}
+                                {results[key].data.length > 0 ? (
+                                    <TableTest
+                                        tableName={results[key].table_name}
+                                        data={results[key].data}
+                                        // Sending what rows to highlight to the component
+                                        highlightedRows={highlightMatchingRows(
+                                            results[key].data,
+                                            results[array[index + 1]]?.data || [],
+                                            queries[index + 1] || ''
+                                        )}
+                                    />
+                                ) : (
+                                    <p style={{ fontSize: '16px', fontWeight: '400', margin: '10px', textAlign: 'center' }}>
+                                        {/* No result for this query. */}
+                                    </p>
+                                )}
+                                {index < array.length - 1 && (
+                                    <div style={{ textAlign: 'center', margin: '35px', fontSize: '50px', animation: 'fadeIn 5s forwards' }}>
+                                        <span>&#8595;</span>
+                                    </div>
+                                )}
+                            </React.Fragment>
+                        ))}
+
+                    </>
+                )}
+            </div>
+            {/* Include the style tag with keyframes */}
+            <style>{fadeInKeyframes}</style>
+        </div>
+    );
+};
+
+export default TestAni;                                                                                                                    

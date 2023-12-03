@@ -40,19 +40,6 @@ export default function SchemaSelectionPage() {
       };
   
 
-    // const handleAnimateQuery = async () => {
-    //     console.log(query) // testing purposes
-
-    //     request({
-    //         url: 'api/animation/animate/',
-    //         method: 'post',
-    //         data: {query: query}})
-    //     .then(response => {
-    //         console.log(response.data)})
-    //     .catch(error => {
-    //         console.log(error.response)}
-    //     )};
-
     const handleAnimateQuery = async () => {
         try {
             const response = await request.post('/api/animation/animate/', { query });
