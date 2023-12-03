@@ -183,7 +183,7 @@ def main():
     print(f'SQL from teacher: {sql_c}')
     print(f'SQL from student: {sql_s}\n')
 
-    # major_minor(sql_c, sql_s)
+    major_minor(sql_c, sql_s)
 
     # spellchecker(sql_c, sql_s)
 
