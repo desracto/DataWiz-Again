@@ -25,6 +25,7 @@ import CreateQuiz from './features/quiz/pages/CreateQuiz';
 import QuizHome from './features/quiz/pages/QuizHome';
 import SavedQuizzes from './features/quiz/pages/SavedQuizzesPage';
 import UNCompletedQuiz from './features/quiz/pages/UNCompletedQuiz';
+import AllAttempts from './features/quiz/pages/AllAttemptsPage';
 
 import axios from 'axios'
 
@@ -34,9 +35,7 @@ function App() {
     const request = axios.create({
         baseURL: "http://localhost:5000",
         withCredentials: true,
-        credentials: 'include',
         headers: {
-            'Access-Control-Allow-Origin': 'http://localhost:5000',
             "Content-Type": "application/json"
         },
         timeout: 300000

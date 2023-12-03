@@ -142,6 +142,7 @@ def process_keyword(stmt_dict:dict, keyword=None):
 
 def process_join(stmt_dict: dict):
     join_types = [
+        'JOIN',
         'INNER JOIN',
         'LEFT JOIN',
         'LEFT OUTTER JOIN',
