@@ -24,26 +24,20 @@ const AccountSettingPage = ({request}) => {
     //loading user data 
     useEffect(() => {
         const fetchUserData = async () => {
-            try {
-                // Replace the following URL with your actual API endpoint to fetch user data
-                request({
-                    url:"api/user/load_user/",
-                    method: 'get',
-                    credentials: 'include'})
-                .then(response => {
-                    userData = response.data;
-
-                    setValue("fullName", userData.fullName);
-                    setValue("username", userData.username);
-                    setValue("email", userData.email)
-
-                    setUserData(userData)})
-                .catch(error => {
-                    console.error(error.response)})
-
-            } catch (error) {
-                console.error("Error fetching user data:", error);
-            }
+            request({
+                url:"api/user/load_user/",
+                method: 'get',
+                withCredentials
+                : true})
+            .then(response => {
+                console.log(response.data)
+                setValue("fullName", response.data.fullname);
+                setValue("username", response.data.username);
+                setValue("email", response.data.email)
+            })
+            .catch(error => {
+                console.error(error.response)
+            })
         };
     
         fetchUserData();
