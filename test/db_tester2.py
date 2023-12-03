@@ -77,6 +77,7 @@ def run(query_list):
         col_names.append(column_names)
     
     return final_result, col_names
+    # return None
 
     
     # def create_result_dict(colu_names, db_results):
