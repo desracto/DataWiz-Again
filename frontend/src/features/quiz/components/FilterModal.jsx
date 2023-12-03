@@ -20,23 +20,15 @@ const FilterModal = ({ onClose }) => {
         </div>
         <div className="grid-container">
           <div className="grid-item">
-            <ToggleSwitch label="Join VS Inner-Join" unique_by="1" />
+            <ToggleSwitch label="Matching Join types" unique_by="1" />
           </div>
           <div className="grid-item">
-            <ToggleSwitch label="Spell Checker" unique_by="2" />
+            <ToggleSwitch label="Spell checker / Typo" unique_by="2" />
           </div>
           <div className="grid-item">
-            <ToggleSwitch label="Case Sensitive" unique_by="3" />
+            <ToggleSwitch label="Additional data" unique_by="3" />
           </div>
-          <div className="grid-item">
-            <ToggleSwitch label="Typo" unique_by="4" />
-          </div>
-          <div className="grid-item">
-            <ToggleSwitch label="From-Join" unique_by="5" />
-          </div>
-          <div className="grid-item">
-            <ToggleSwitch label="Table comparison" unique_by="6" />
-          </div>
+          
         </div>
       </div>
       <div className="button-container">
