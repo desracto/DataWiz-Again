@@ -249,6 +249,16 @@ def query_generator(query):
         print("TEST TYPE")
         print(type(query_list[lenl-1]))
         query_list.append(query_list[lenl-1] + " WHERE "+ query['WHERE'])
+    if 'AND' in query.keys():
+        lenl = len(query_list)
+        print("AND TYPE")
+        print(type(query_list[lenl-1]))
+        query_list.append(query_list[lenl-1] + " AND "+ query['AND'])
+    if 'OR' in query.keys():
+        lenl = len(query_list)
+        print("AND TYPE")
+        print(type(query_list[lenl-1]))
+        query_list.append(query_list[lenl-1] + " OR "+ query['OR'])
     if 'GROUP BY' in query.keys():
         lenl = len(query_list)
         query_list.append(query_list[lenl-1] + " GROUP BY "+ query['GROUP BY'])
@@ -316,8 +326,13 @@ def json_comp_converter(db_results, rm_keys):
 
 def main():
    
-    q = "SELECT Album.album_name, Song.song_title FROM Album INNER JOIN Song ON Album.album_id = Song.album_id LIMIT 5"
-   
+    # q = "SELECT Album.album_name, Song.song_title FROM Album INNER JOIN Song ON Album.album_id = Song.album_id LIMIT 5"
+    # q = "SELECT id FROM users WHERE username=’” + uname + “’ AND password=’” + passwd + "
+    q = "Select count(artist_id), country from Artist group by country order by country desc"
+    # q = "Select artist_id, artist_name from Artist where country = 'United Kingdom' and genre_id = 301"
+    # q = "Select artist_id, artist_name from Artist where country = 'United Kingdom' OR genre_id = 301"
+    # q = "Select artist_id, artist_name from Artist where country = 'United Kingdom' AND genre_id = 302 OR genre_id = 301"
+    # q = "Select artist_id, artist_name from Artist where country = 'United Kingdom' AND (genre_id = 302 OR genre_id = 301)"
 
     sql = translate_query(query = q,
                                 DEBUG=True,

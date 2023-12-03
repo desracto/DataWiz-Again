@@ -41,6 +41,26 @@ export default function SchemaSelectionPage() {
   
 
     const handleAnimateQuery = async () => {
+        const trimmedQuery = query.trim();
+
+        // Check if the query contains 'DROP' or 'DELETE'
+        if (/drop|delete/i.test(query)) {
+        window.alert("DROP and DELETE statements are not allowed.");
+        return;
+        }
+
+         // Check for multiple query terminators
+         if ((query.match(/;/g) || []).length > 1) {
+            window.alert("Batch queries are not allowed.");
+            return;
+        }
+        /*
+        if (!trimmedQuery.startsWith("SELECT")) {
+            window.alert("Only SELECT queries are allowed.");
+            return;
+        }
+        */
+
         try {
             const response = await request.post('/api/animation/animate/', { query });
             const data = response.data;

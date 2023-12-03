@@ -17,6 +17,7 @@ from pyparsing import ParseException
 
 from app.scripts.Active_animation_parser import generate_animation_steps
 from app.scripts.Active_sqlra import translate_query
+from .functions import create_prefixed_connection, retrieve_query_results
 
 @animation_bp.route('/schema/1/')
 def schema1():
@@ -32,9 +33,11 @@ def schema1():
         emps_json.append(emp.as_dict())
     
     results = {
-        "employees": emps_json
+        0: {
+            'table_name': 'Employees',
+            'data': emps_json
+        },
     }
-    
     return jsonify(results=results)
 
 @animation_bp.route('/schema/2/')
@@ -85,9 +88,15 @@ def schema3():
         enrolls_json.append(enroll.as_dict())
 
     results = {
-        'course': course_json,
-        'enrollments': enrolls_json
-    } 
+        0: {
+            'table_name': 'Courses',
+            'data': course_json
+        },
+        1: {
+            'table_name': 'Enrollment',
+            'data': enrolls_json
+        }
+    }
 
     return jsonify(results=results)
 
@@ -114,9 +123,18 @@ def schema4():
         tickets_json.append(ticket.as_dict())
 
     results = {
-        'flight': flights_json,
-        'passenger': passengers_json,
-        'ticket': tickets_json
+        0: {
+            'table_name': 'Flight',
+            'data': flights_json
+        },
+        1: {
+            'table_name': 'Passenger',
+            'data': passengers_json
+        },
+        2: {
+            'table_name': 'Tickets',
+            'data': tickets_json
+        }
     }
 
     return jsonify(results=results)
@@ -148,32 +166,44 @@ def schema5():
         artists_json.append(artist.as_dict())
 
     results = {
-        'album': albums_json,
-        'genre': genres_json,
-        'song': songs_json,
-        'artist': artists_json
+        0: {
+            'table_name': 'Albums',
+            'data': albums_json
+        },
+        1: {
+            'table_name': 'Genres',
+            'data': genres_json
+        },
+        2: {
+            'table_name': 'Songs',
+            'data': songs_json
+        },
+        3: {
+            'table_name': 'Artists',
+            'data': artists_json
+        }
     }
 
     return jsonify(results=results)
 
 @animation_bp.route('/animate/', methods=['POST'])
 def animate_query():
-    try:
-        # Get the JSON data from the request
-        query_data = request.get_json() or {}
+    # Get the JSON data from the request
+    query_data = request.get_json() or {}
 
-        # Extract the query from the JSON data
-        query = query_data.get('query', None)
+    # Extract the query from the JSON data
+    query = query_data.get('query', None)
 
-        # Validate if the 'query' key is present in the JSON data
-        if not query:
-            return bad_request('Missing or invalid "query" in JSON data')
+    # Validate if the 'query' key is present in the JSON data
+    if not query:
+        return bad_request('Missing or invalid "query" in JSON data')
 
-        # Call the animation parser function and retrieve the steps_result
-        steps_result = generate_animation_steps(query)
+    # Call the animation parser function and retrieve the steps_result
+    steps_result = generate_animation_steps(query)
 
-        # Return the steps_result as JSON
-        return jsonify({'steps_result': steps_result})
+    conn = create_prefixed_connection()
+    query_results = retrieve_query_results(steps_result, conn)
+    
 
-    except Exception as e:
-        return jsonify({'error': f'An error occurred: {str(e)}'}), 500
+    # Return the steps_result as JSON
+    return jsonify({'steps_result': query_results})

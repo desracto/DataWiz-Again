@@ -17,3 +17,5 @@ def register_app(app):
     migrate.init_app(app, db, app.config["MIGRATION_DIR"])
     jwt.init_app(app)
     cors.init_app(app, supports_credentials=True)
+
+

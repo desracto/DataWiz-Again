@@ -229,3 +229,6 @@ class Schema5_Artist(db.Model, Object):
     # Function
     def __repr__(self):
         return "<Schema 5: Artist(ID: {})>".format(self.artist_id)
+    
+
+from flask_sqlalchemy.session import Session
