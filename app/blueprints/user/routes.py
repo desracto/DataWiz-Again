@@ -4,6 +4,8 @@ from flask_jwt_extended import create_access_token, create_refresh_token, \
                                jwt_required, \
                                set_access_cookies, unset_jwt_cookies, set_refresh_cookies, \
                                get_jwt_identity
+from flask_cors import cross_origin
+
 
 from ..main.errors import bad_request, error_response
 from ...extensions import db
@@ -30,7 +32,6 @@ def unset_cookies(response: Response):
     """
     # JWT Tokens
     unset_jwt_cookies(response)
-
 
 @user_bp.route('/', methods=['POST'])
 def register_user():
@@ -95,10 +96,6 @@ def login():
 
         If the credentials are invalid, return 401 code for invalid credentials.
     """
-    # current_app.logger.info(
-    #     msg="Login Function called with: " + str(request.get_json())
-    # )
-
     data = request.get_json() or {}
 
     if 'email' not in data or 'password' not in data:

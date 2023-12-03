@@ -41,7 +41,8 @@ class Users(db.Model):
             "username": self.username,
             "email": self.email,
             "account_type": self.account_type,
-            "gender": self.gender
+            "gender": self.gender,
+            "fullname": self.fullname
         }
 
         return data

@@ -17,6 +17,7 @@ from pyparsing import ParseException
 
 from app.scripts.Active_animation_parser import generate_animation_steps
 from app.scripts.Active_sqlra import translate_query
+from .functions import create_prefixed_connection, retrieve_query_results
 
 @animation_bp.route('/schema/1/')
 def schema1():
@@ -187,22 +188,22 @@ def schema5():
 
 @animation_bp.route('/animate/', methods=['POST'])
 def animate_query():
-    try:
-        # Get the JSON data from the request
-        query_data = request.get_json() or {}
+    # Get the JSON data from the request
+    query_data = request.get_json() or {}
 
-        # Extract the query from the JSON data
-        query = query_data.get('query', None)
+    # Extract the query from the JSON data
+    query = query_data.get('query', None)
 
-        # Validate if the 'query' key is present in the JSON data
-        if not query:
-            return bad_request('Missing or invalid "query" in JSON data')
+    # Validate if the 'query' key is present in the JSON data
+    if not query:
+        return bad_request('Missing or invalid "query" in JSON data')
 
-        # Call the animation parser function and retrieve the steps_result
-        steps_result = generate_animation_steps(query)
+    # Call the animation parser function and retrieve the steps_result
+    steps_result = generate_animation_steps(query)
 
-        # Return the steps_result as JSON
-        return jsonify({'steps_result': steps_result})
+    conn = create_prefixed_connection()
+    query_results = retrieve_query_results(steps_result, conn)
+    
 
-    except Exception as e:
-        return jsonify({'error': f'An error occurred: {str(e)}'}), 500
+    # Return the steps_result as JSON
+    return jsonify({'steps_result': query_results})

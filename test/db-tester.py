@@ -136,7 +136,8 @@ connection2 = engine2.connect()
 # connection2.execute(Q)
 #---------------------------------------
 
-qf = text("Show TABLES")
+qf = text("Select count(artist_id) as Count from Artist group by country ")
+# qf = text("Show TABLES")
 resultf = connection2.execute(qf)
 for i in resultf:
     print(i)
