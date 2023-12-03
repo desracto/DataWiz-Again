@@ -5,8 +5,11 @@ import schemaImg from "../../../assets/images/image-14@2x.png";
 import GeneratedQuizLinkComp from "../components/GeneratedQuizLink";
 import { useParams } from 'react-router-dom';
 import SecondHeader from "../../../global_components/SecondHeader";
+import { useNavigate} from "react-router-dom";
 
 const UNCompletedQuiz = () => {
+    const navigate = useNavigate();
+
   const onDataWizTextClick = useCallback(() => {
     // Please sync "Instructor Home Page" to the project
   }, []);
@@ -58,11 +61,44 @@ const UNCompletedQuiz = () => {
     setShowGeneratedQuizLink(true); // Show the popup
   };
 
+  const handleBackClick = useCallback(() => {
+    navigate("/SavedQuizzesPage");
+}, [navigate]);
+
+const ViewButtonClick = useCallback(() => {
+    navigate("/AllAttemptsPage");
+}, [navigate]);
 
   return (
     <>
     <SecondHeader/>
+
+
     <div className="main_Page">
+
+       
+        {/* Back arrow button */}
+        <button onClick={handleBackClick} className="back-arrow-button">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        
+    <div className={" max-w-7xl content_container_bgcolor mx-auto h-auto rounded-2xl z-10"}>
+        <div className="px-20 mt-[80px]">
+          
+          <div className=" view-attempts-text py-10">View All Attempts and Results</div>
+          <div className="flex justify-center pb-10">
+            <button 
+              className="viewAll-Attempts-Button md:w-[35%]" // Add your button styles here
+              onClick={ViewButtonClick}
+            >
+              View
+            </button>
+
+          </div>
+          </div>
+          </div>
       
       
       <div className={" max-w-7xl content_container_bgcolor mx-auto h-auto rounded-2xl z-10"}>

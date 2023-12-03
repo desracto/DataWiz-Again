@@ -67,11 +67,12 @@ export default function SchemaSelectionPage() {
             window.alert("Batch queries are not allowed.");
             return;
         }
-
+        /*
         if (!trimmedQuery.startsWith("SELECT")) {
             window.alert("Only SELECT queries are allowed.");
             return;
         }
+        */
 
         try {
             const response = await request.post('/api/animation/animate/', { query });

@@ -24,6 +24,7 @@ import CreateQuiz from './features/quiz/pages/CreateQuiz';
 import QuizHome from './features/quiz/pages/QuizHome';
 import SavedQuizzes from './features/quiz/pages/SavedQuizzesPage';
 import UNCompletedQuiz from './features/quiz/pages/UNCompletedQuiz';
+import AllAttempts from './features/quiz/pages/AllAttemptsPage';
 
 import axios from 'axios'
 
@@ -59,6 +60,7 @@ function App() {
                     <Route path="/AccountSettingsPage" element={<AccountSettingsPage request={request}/>} />
                     <Route path="/FaqsPage" element={<FaqsPage />} />
                     <Route path="/TestAni" element={<TestAniPage />} />
+                    <Route path="/AllAttemptsPage" element={<AllAttempts />} />
 
                 </Routes>
             </BrowserRouter>
