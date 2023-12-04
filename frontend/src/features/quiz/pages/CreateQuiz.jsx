@@ -9,7 +9,7 @@ import PortalPopup from '../components/PortalPopup.jsx';
 import "./CreateQuiz.css";
 import SecondHeader from "../../../global_components/SecondHeader";
 
-const CreateQuiz =() => {
+const CreateQuiz =(request) => {
         const [schemaAdded, setSchemaAdded] = useState(false);
         const [files, setFiles] = useState([]);
         const [showSubmitButton, setShowSubmitButton] = useState(false);
@@ -22,6 +22,7 @@ const CreateQuiz =() => {
         const [schemasList, setSchemasList] = useState([]);
         const [isSaved, setIsSaved] = useState(false);
         const quizNameRef = useRef(quizName);
+        const quizDescriptionRef =useRef(quizDescription)
 
 
         const [isFilterModalOpen, setFilterModalOpen] =
@@ -46,42 +47,92 @@ const CreateQuiz =() => {
         useEffect(() => {
             quizNameRef.current = quizName;
         }, [quizName]);
+        
+        useEffect(() => {
+            quizDescriptionRef.current = quizDescription;
+          }, [quizDescription]);
 
-        // Save draft function
-        const saveDraft = () => {
-            const currentQuizName = quizNameRef.current; // Use current value from the ref
-            if (!currentQuizName.trim()) return;
 
-        const drafts = JSON.parse(localStorage.getItem("drafts") || "[]");
-        const newDraft = {
-            id: generateUniqueId(),
-            name: currentQuizName,
-            date: new Date().toLocaleDateString(),
-            time: new Date().toLocaleTimeString(),
-            isDraft: true,
+      
+
+        const [isDraftLoaded, setIsDraftLoaded] = useState(false);
+
+        const [hasChanges, setHasChanges] = useState(false);
+
+  // Inside CreateQuiz component
+  const [loadedDraftId, setLoadedDraftId] = useState(null);
+
+  useEffect(() => {
+    if (location.state?.draft) {
+      const { id, name, description, questions } = location.state.draft;
+      setQuizName(name);
+      setQuizDescription(description);
+      setSchemasList(questions);
+      setIsDraftLoaded(true);
+      setLoadedDraftId(id); // Store the loaded draft's ID
+    }
+  }, [location]);
+
+  const saveDraft = () => {
+    if (!hasChanges) return; // Exit if no changes
+    const currentQuizName = quizNameRef.current;
+    const currentQuizDescription = quizDescriptionRef.current;
+    if (!currentQuizName.trim()) return;
+  
+    const drafts = JSON.parse(localStorage.getItem("drafts") || "[]");
+  
+    // Check if we are updating an existing draft
+    if (loadedDraftId) {
+      const draftIndex = drafts.findIndex(draft => draft.id === loadedDraftId);
+      if (draftIndex !== -1) {
+        drafts[draftIndex] = {
+          ...drafts[draftIndex],
+          name: currentQuizName,
+          description: currentQuizDescription,
+          date: new Date().toLocaleDateString(), // Update the date to the current date
+          time: new Date().toLocaleTimeString(),
+          // Update other properties as necessary
         };
+      }
+    } else {
+      // Create a new draft if no draft is loaded
+      const newDraft = {
+        id: generateUniqueId(),
+        name: currentQuizName,
+        description: currentQuizDescription,
+        date: new Date().toLocaleDateString(),
+        time: new Date().toLocaleTimeString(),
+        isDraft: true,
+      };
+      drafts.unshift(newDraft);
+    }
+  
+    localStorage.setItem("drafts", JSON.stringify(drafts));
+    setHasChanges(false); // Reset the hasChanges state
+  };
 
-        // Add new draft at the start of the array
-        drafts.unshift(newDraft);
-        // Save the updated drafts array to local storage
-        localStorage.setItem("drafts", JSON.stringify(drafts));
+  const handleQuizNameChange = (e) => {
+    setQuizName(e.target.value);
+    setHasChanges(true);
+  };
+  
+  const handleQuizDescriptionChange = (e) => {
+    setQuizDescription(e.target.value);
+    setHasChanges(true);
+  };
+
+
+  /* cleanup function to save the draft only if changes have been made. */
+  useEffect(() => {
+    return () => {
+      if (hasChanges) {
+        saveDraft();
+      }
     };
+  }, [hasChanges]);
 
-    // Effect for handling the saving of draft when component unmounts
-    useEffect(() => {
-        // Cleanup function that runs when the component unmounts
-        return saveDraft;
-    }, []);
-
-    useEffect(() => {
-        // If there's a draft in the state, load it
-        if (location.state && location.state.draft) {
-            const { name, description } = location.state.draft;
-            setQuizName(name);
-            setQuizDescription(description);
-            // Handle loading questions or other parts of the draft as needed
-        }
-    }, [location]);
+  
+   
 
   const saveQuiz = () => {
     if (!quizName.trim()) {
@@ -108,6 +159,10 @@ const CreateQuiz =() => {
     setQuestions([]);
     alert("Quiz saved successfully!");
   };
+
+
+
+  
 
     const handleSubmission = (id) => {
         const exist = schemasList.find((schema) => schema?.id == id);
@@ -233,6 +288,8 @@ const CreateQuiz =() => {
     );
   };
 
+
+
   return (
     <>
       <SecondHeader />
@@ -267,7 +324,10 @@ const CreateQuiz =() => {
                   className="input"
                   placeholder="Enter Quiz Name"
                   value={quizName}
-                  onChange={(e) => setQuizName(e.target.value)}
+                  onChange={(e) => {
+                    setQuizName(e.target.value); 
+                    setHasChanges(true);
+                  }}
                 />
               </div>
             </div>
@@ -281,7 +341,10 @@ const CreateQuiz =() => {
                   placeholder="Description"
                   rows={5}
                   value={quizDescription}
-                  onChange={(e) => setQuizDescription(e.target.value)}
+                  onChange={(e) => {
+                    setQuizDescription(e.target.value); 
+                    setHasChanges(true);
+                  }}
                   style={{ resize: "none" }} // Add this line
                 />
               </div>

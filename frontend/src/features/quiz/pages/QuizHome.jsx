@@ -64,6 +64,13 @@ function QuizHome() {
             Create Quiz
           </NavLink>
         </div>
+
+        <div className="SavedQuizzes-button">
+          <NavLink to={"/SavedQuizzesPage"} className="SavedQuizzes-button-navlink">
+            Saved Quizzes
+          </NavLink>
+        </div>
+
       </div>
       <div className="content_container">
         <div className="content_heading">

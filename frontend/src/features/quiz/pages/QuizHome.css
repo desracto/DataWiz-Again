@@ -13,7 +13,7 @@
     display: flex;
     flex-direction: column;
     margin-top: 60px;
-    max-width: 75rem;
+    max-width: 80rem;
     margin-bottom: 2rem;
     padding-left: 20px;
     padding-right: 20px;
@@ -65,7 +65,7 @@
     justify-content: center;
     cursor: pointer;
     min-width: 136px;
-    width: 50%;
+    width: 40%;
     color:black;
     
 }
@@ -79,6 +79,48 @@
     color: white;
     transition: 0.45s;
 }
+
+
+
+/*saved quizzes button*/
+.heading_container .SavedQuizzes-button {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: -4.4rem;
+    margin-left: 420px;
+    transform: translateY(-60px);
+    transform: translateX(-70px);
+    
+    
+}
+
+.heading_container .SavedQuizzes-button .SavedQuizzes-button-navlink {
+    display: flex;
+    align-items: center;
+    text-decoration-line: none;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    font-weight: 700 !important;
+    font-family: Gilroy-Bold;
+    padding-top: 1.2rem;
+    padding-bottom: 1.2rem;
+    background-color: #F0C64A;
+    border-style: none;
+    border-radius: 0.25rem;
+    justify-content: center;
+    cursor: pointer;
+    min-width: 136px;
+    width: 90%;
+    color:black;
+    
+}
+
+.heading_container .SavedQuizzes-button .SavedQuizzes-button-navlink:hover {
+    background: #331B3B;
+    color: white;
+    transition: 0.45s;
+}
+
 
 .content_container {
     display: flex;
