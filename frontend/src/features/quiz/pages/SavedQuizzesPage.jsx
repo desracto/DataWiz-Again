@@ -55,7 +55,10 @@ function SavedQuizzes() {
                 <span> {quiz.name}</span>
                 <small>Date: {quiz.date}</small>
                 <small>Time: {quiz.time}</small> 
-                <span3>UNATTEMPTED</span3> 
+                {quiz.isAttempted ? 
+                <span2>ATTEMPTED</span2> : 
+                <span3>UNATTEMPTED</span3>
+                } 
             
                 </div>
                 
