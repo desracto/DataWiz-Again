@@ -15,7 +15,7 @@ from ._prefixed_models import Schema5_Album as Album, Schema5_Artist as Artist, 
 
 from pyparsing import ParseException
 
-from app.scripts.active_animation_parser import generate_animation_steps
+from app.scripts.Active_animation_parser import generate_animation_steps
 from app.scripts.Active_sqlra import translate_query
 from .functions import create_prefixed_connection, retrieve_query_results
 
@@ -45,6 +45,10 @@ def schema2():
     # Prefixed database not generated
     if products is None or invens is None:
         generate_prefixed(2)
+
+    # if len(products) == 0 or len(invens) == 0:
+    #     generate_prefixed(2)
+
 
     prods_json = []
     for prod in products:
