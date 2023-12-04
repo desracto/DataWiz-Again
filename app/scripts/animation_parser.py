@@ -148,32 +148,71 @@ def select_star_fixer(ql_list, q_dict,):
 def subq_formatter():
     return None
 
-def json_comp_converter(db_results, rm_keys):
+def json_converter(db_results, rm_keys, table_names):
     colu_names = []
     for key in rm_keys:
         t = []
         for k in key:
             t.append(k)
         colu_names.append(t)
-
-    # for i in range(0, len(db_results)):
-    #     print(colu_names[i][0])
-    #     for j in db_results[i]:
-    #         print(j)
-    #     print("")
-
+    
+    x = {
+        'table_name': '',
+        'data': ''
+    }
     results = {}
     for idx, cols in enumerate(colu_names):
-        # key_name = cols[0] + "s"  # Assuming plural naming convention
-        results[idx] = []
+        results[idx] = x.copy()
+        results[idx]['table_name'] = table_names[idx]
+        results[idx]['data'] = []
 
         for row in db_results[idx]:
             row_dict = {}
             for i, col_name in enumerate(cols):
                 row_dict[col_name] = row[i]
-            results[idx].append(row_dict)
+            results[idx]['data'].append(row_dict)
+            # print(f'ROW DICT: {row_dict}')
+    
+    print(results)
 
-    return {"results": results}
+def animation_table_names(b):
+    
+    table_names = []
+    for i in range(0, len(b)):
+        query = b[i].split(' ')
+        # print(query)
+
+        joiners = ['INNER', 'LEFT', 'RIGHT', 'FULL', 'NATURAL', 'SELF']
+        filters = ['AND', 'WHERE', 'OR', "LIMIT", 'GROUP', 'ORDER', 'HAVING']
+        filters_check = list(set(filters).intersection(set(query)))
+        # print(f"Filter check {filters_check}")
+        
+        if i < len(b)-1 :  
+            if 'JOIN' in query:
+                query_table_names = ''
+                # join_check = list(set(joiners).intersection(set(query)))
+                # print(join_check)
+                from_index = query.index('FROM')
+                query_table_names += query[from_index+1]
+                join_index = query.index('JOIN')
+                if len(filters_check) > 0:
+                    query_table_names += ' and ' + query[join_index+1] + " with applied filter"
+                else: 
+                    query_table_names += ' and ' + query[join_index+1]
+                table_names.append(query_table_names)
+            else:
+                from_index = query.index('FROM')
+                if len(filters_check) > 0:
+                    query_table_names = ''
+                    query_table_names += query[from_index+1] + " with applied filter"
+                    table_names.append(query_table_names)
+                else: 
+                    table_names.append(query[from_index+1])
+        else: 
+            table_names.append("Final Result")
+
+    return table_names
+
 
 def retrieve_query_results(q: str):
     sql = translate_query(query = q,
@@ -184,14 +223,9 @@ def retrieve_query_results(q: str):
 
     a = converter(sql)
     b = query_generator(a)
-    # print(f"Length B {len(b)}")
 
-    # print(f"B starts - query generator")
-    # for i in b:
-    #     print(i)
-    # print(f"B ends - query generator")
-
+    table_names = animation_table_names(b)
     db_results, rm_keys = fetch_query_results(b)
-    ans = json_comp_converter(db_results, rm_keys)
+    ans = json_converter(db_results, rm_keys, table_names)
 
     return ans
