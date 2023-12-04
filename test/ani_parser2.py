@@ -324,6 +324,27 @@ def json_comp_converter(db_results, rm_keys):
     return {"results": results}
 
 
+def retrieve_query_results(q: str):
+    sql = translate_query(query = q,
+                            DEBUG=True,
+                            CLEAN=True)
+
+    print(f'\nSQL: {sql}\n')
+
+    a = converter(sql)
+    b = query_generator(a)
+    print(f"Length B {len(b)}")
+
+    print(f"B starts - query generator")
+    for i in b:
+        print(i)
+    print(f"B ends - query generator")
+
+    db_results, rm_keys = run(b)
+    ans = json_comp_converter(db_results, rm_keys)
+
+    return ans
+
 def main():
    
     # q = "SELECT Album.album_name, Song.song_title FROM Album INNER JOIN Song ON Album.album_id = Song.album_id LIMIT 5"
@@ -363,8 +384,7 @@ def main():
     db_results, rm_keys = run(b)
     ans = json_comp_converter(db_results, rm_keys)
 
-    print(ans)
-    
+    print(ans)    
     
 if __name__ == "__main__":
     main()

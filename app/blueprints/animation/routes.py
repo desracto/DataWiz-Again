@@ -7,17 +7,13 @@ from ...extensions import db
 from ..main.errors import bad_request, error_response
 from .scripts.generator import generate_prefixed
 
-from ._prefixed_models import Schema1_Employee as Employee
-from ._prefixed_models import Schema2_Product as Product, Schema2_Inventory as Inventory
-from ._prefixed_models import Schema3_Course as Course, Schema3_Enrollment as Enrollment
-from ._prefixed_models import Schema4_Flight as Flight, Schema4_Passenger as Passenger, Schema4_Ticket as Ticket
-from ._prefixed_models import Schema5_Album as Album, Schema5_Artist as Artist, Schema5_Genre as Genre, Schema5_Song as Song
-
-from pyparsing import ParseException
-
-from app.scripts.active_animation_parser import generate_animation_steps
-from app.scripts.Active_sqlra import translate_query
-from .functions import create_prefixed_connection, retrieve_query_results
+from ...database.models._prefixed_models import Schema1_Employee as Employee, \
+                                                Schema2_Product as Product, Schema2_Inventory as Inventory, \
+                                                Schema3_Course as Course, Schema3_Enrollment as Enrollment, \
+                                                Schema4_Flight as Flight, Schema4_Passenger as Passenger, Schema4_Ticket as Ticket, \
+                                                Schema5_Album as Album, Schema5_Artist as Artist, Schema5_Genre as Genre, Schema5_Song as Song
+                                                
+from ...scripts.animation_parser import retrieve_query_results
 
 @animation_bp.route('/schema/1/')
 def schema1():
@@ -162,12 +158,7 @@ def animate_query():
     if not query:
         return bad_request('Missing or invalid "query" in JSON data')
 
-    # Call the animation parser function and retrieve the steps_result
-    steps_result = generate_animation_steps(query)
-
-    conn = create_prefixed_connection()
-    query_results = retrieve_query_results(steps_result, conn)
-    
+    query_results = retrieve_query_results(query)
 
     # Return the steps_result as JSON
     return jsonify({'steps_result': query_results})

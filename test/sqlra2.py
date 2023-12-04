@@ -561,7 +561,7 @@ def translate_query(query: str, DEBUG=True, CLEAN=False):
     stmt_tokens = parse(query)[0].tokens
 
     # process
-    stmt_dict = process(stmt_tokens)
+    stmt_dict = process(stmt_tokens, DEBUG)
 
     return stmt_dict
         

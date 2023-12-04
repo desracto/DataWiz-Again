@@ -14,10 +14,10 @@ class Config(object):
 
     # Flask-SQLAlchemy
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-        'mysql://avnadmin:AVNS_RpJJfd42UmhF5jXnw0n@dw-users-datawiz-users.a.aivencloud.com:27940/defaultdb'
+        'mysql+pymysql://avnadmin:AVNS_RpJJfd42UmhF5jXnw0n@dw-users-datawiz-users.a.aivencloud.com:27940/defaultdb'
     
     SQLALCHEMY_BINDS = {
-        "prefixed": 'mysql://avnadmin:AVNS_RpJJfd42UmhF5jXnw0n@dw-users-datawiz-users.a.aivencloud.com:27940/prefixed_db'
+        "prefixed": 'mysql+pymysql://avnadmin:AVNS_RpJJfd42UmhF5jXnw0n@dw-users-datawiz-users.a.aivencloud.com:27940/prefixed_db'
         }
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
