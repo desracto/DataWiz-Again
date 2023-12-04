@@ -9,7 +9,7 @@ import PortalPopup from '../components/PortalPopup.jsx';
 import "./CreateQuiz.css";
 import SecondHeader from "../../../global_components/SecondHeader";
 
-const CreateQuiz =(request) => {
+const CreateQuiz = (request) => {
         const [schemaAdded, setSchemaAdded] = useState(false);
         const [files, setFiles] = useState([]);
         const [showSubmitButton, setShowSubmitButton] = useState(false);
@@ -31,8 +31,6 @@ const CreateQuiz =(request) => {
         const openFilterModal = useCallback(() => {
             setFilterModalOpen(true);
         }, []);
-
-        
 
         const closeFilterModal = useCallback(() => {
             setFilterModalOpen(false);

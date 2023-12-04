@@ -177,7 +177,7 @@ def json_comp_converter(db_results, rm_keys):
 
 def retrieve_query_results(q: str):
     sql = translate_query(query = q,
-                            DEBUG=True,
+                            DEBUG=False,
                             CLEAN=True)
 
     # print(f'\nSQL: {sql}\n')
@@ -194,4 +194,4 @@ def retrieve_query_results(q: str):
     db_results, rm_keys = fetch_query_results(b)
     ans = json_comp_converter(db_results, rm_keys)
 
-    return ans
+    return ans, b

@@ -162,7 +162,7 @@ def animate_query():
     if not query:
         return bad_request('Missing or invalid "query" in JSON data')
 
-    query_results = retrieve_query_results(query)
-
+    query_results, step_results = retrieve_query_results(query)
+    query_results['steps'] = step_results
     # Return the steps_result as JSON
-    return jsonify({'steps_result': query_results})
+    return jsonify(query_results)

@@ -54,7 +54,7 @@ function App() {
                     <Route path="/QueryAnimationPage" element={<QueryAnimationPage />} />
                     <Route path="/SavedAnimationsPage" element={<SavedAnimationsPage />} />
                     <Route path="/QuizHomePage" element={<QuizHome />} />
-                    <Route path="/CreateQuizPage" element={<CreateQuiz />} />
+                    <Route path="/CreateQuizPage" element={<CreateQuiz request={request} />} />
                     <Route path="/SavedQuizzesPage" element={<SavedQuizzes />} />
                     <Route path="/CompletedQuizPage" element={<UNCompletedQuiz />} />
                     <Route path="/AccountSettingsPage" element={<AccountSettingsPage request={request}/>} />
