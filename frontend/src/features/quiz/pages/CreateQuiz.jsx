@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { useLocation } from "react-router-dom"; // Import useLocation
+import { useNavigate } from "react-router-dom";
 import { FaFilter, FaSave, FaTrash } from "react-icons/fa";
 import { MdOutlineAddCircleOutline } from "react-icons/md";
 import FilterModal from "../components/FilterModal";
@@ -8,8 +9,22 @@ import SuccessModal from "../components/SuccessModal";
 import PortalPopup from '../components/PortalPopup.jsx';
 import "./CreateQuiz.css";
 import SecondHeader from "../../../global_components/SecondHeader";
+import axios from "axios";
 
-const CreateQuiz = (request) => {
+
+
+const request = axios.create({
+    baseURL: "http://localhost:5000", 
+    headers: {
+        "Content-Type": "application/json"
+    },
+    withCredentials: true,
+    timeout: 300000
+});
+
+
+const CreateQuiz = () => {
+        const navigate = useNavigate();
         const [schemaAdded, setSchemaAdded] = useState(false);
         const [files, setFiles] = useState([]);
         const [showSubmitButton, setShowSubmitButton] = useState(false);
@@ -20,7 +35,7 @@ const CreateQuiz = (request) => {
         const [quizDescription, setQuizDescription] = useState("");
 
         const [schemasList, setSchemasList] = useState([]);
-        const [isSaved, setIsSaved] = useState(false);
+        
         const quizNameRef = useRef(quizName);
         const quizDescriptionRef =useRef(quizDescription)
 
@@ -286,6 +301,31 @@ const CreateQuiz = (request) => {
     );
   };
 
+
+  const handleSubmitQuiz = async () => {
+    const quizData = {
+        name: quizName,
+        description: quizDescription,
+        questions: schemasList.map(schema => schema.questions.map(q => {
+            return {
+                question: q.question,
+                answer: q.answer
+            };
+        })).flat()
+    };
+    
+    request.post('/api/quiz/', quizData)
+    .then(response => {
+        if (response.status === 201) {
+            // Navigate to a different page or show success message
+            navigate("/QuizHomePage"); 
+        }
+    })
+    .catch(error => {
+        console.error("Error creating quiz", error);
+        // Handle error
+    });
+  };
 
 
   return (

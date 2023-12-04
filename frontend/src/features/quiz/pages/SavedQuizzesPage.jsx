@@ -5,6 +5,16 @@ import { useNavigate } from 'react-router-dom';
 import "./SavedQuizzes.css";
 import UNCompletedQuiz from "./UNCompletedQuiz.jsx"
 import SecondHeader from '../../../global_components/SecondHeader';
+import axios from 'axios';
+
+// Axios instance
+const request = axios.create({
+    baseURL: "http://localhost:5000",
+    headers: {
+        "Content-Type" : "application/json"
+    },
+    withCredentials: true
+  });
 
 
 function SavedQuizzes() {
