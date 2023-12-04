@@ -173,7 +173,8 @@ def json_converter(db_results, rm_keys, table_names):
             results[idx]['data'].append(row_dict)
             # print(f'ROW DICT: {row_dict}')
     
-    print(results)
+    return results
+
 
 def animation_table_names(b):
     
