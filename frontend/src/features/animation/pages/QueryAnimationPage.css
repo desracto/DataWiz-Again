@@ -302,10 +302,10 @@
     transition: background-color 0.3s ease;
 }
 
-.VisualizationDisplayCard {
-    width: 90%;
-    height: 800px;
-    background: #e9e7e9;
+.QueryStepsDisplayCard {
+    width: 95%;
+    height: 250px;
+    background: #f2f2f2;
     border-radius: 45px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.20);
     max-width: 1200px; 
@@ -313,6 +313,21 @@
     flex-direction: column;
     align-items: flex-start; 
     margin-top: 40px;
+    overflow: auto; 
+    padding: 30px;
+}
+
+.VisualizationDisplayCard {
+    width: 95%;
+    height: 800px;
+    background: #f2f2f2;
+    border-radius: 45px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.20);
+    max-width: 1200px; 
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+    margin-top: 20px;
     margin-bottom: 40px;
     overflow: auto; 
     padding: 30px;

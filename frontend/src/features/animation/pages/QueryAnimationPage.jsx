@@ -23,7 +23,9 @@ const request = axios.create({
 const QueryAnimationPage = () => {
     const location = useLocation();
     const [query, setQuery] = useState('');
-    const [stepsResult, setStepsResult] = useState(null);
+    const [queryResults, setQueryResults] = useState(null);
+
+    const [querySteps, setQuerySteps] = useState(null);
 
     const navigate = useNavigate();
     const returnToSchemaSelection = useCallback(() => {
@@ -70,14 +72,18 @@ const QueryAnimationPage = () => {
             const data = response.data;
 
             // Log the response to the console (for testing purposes)
-            console.log(data);
+            // console.log(data);
 
             // Update state with the steps_result
-            setStepsResult(data.steps_result);
+            setQueryResults(data.results);
+            setQuerySteps(data.steps);
+            console.log(queryResults);
 
             // Further handling of the response, if needed
         } catch (error) {
             console.error('An error occurred:', error);
+            // Log the entire error object
+            console.error(error)
         }
     };
 
@@ -176,15 +182,25 @@ const QueryAnimationPage = () => {
             </button>
         </div>
 
-        <div className='VisualizationDisplayCard'>
-            {/* Display steps_result if available */}
-            {stepsResult && (
+        <div className='QueryStepsDisplayCard'>
+            {/* Display steps_results if available */}
+            {querySteps &&  (
                 <>
-                    <h3>Steps Result:</h3>
-                    <pre>{JSON.stringify(stepsResult, null, 2)}</pre>
+                    {/* <h3>Steps Results:</h3> */}
+                    <pre>{JSON.stringify(querySteps, null, 2)}</pre>
                 </>
             )}
         </div>
+
+        <div className='VisualizationDisplayCard'>
+                {/* Display query_results if available */}
+                {queryResults &&  (
+                    <>
+                        {/* <h3>Query Results:</h3> */}
+                        <pre>{JSON.stringify(queryResults, null, 2)}</pre>
+                    </>
+                )}
+          </div>
     </div>
 
     </>
