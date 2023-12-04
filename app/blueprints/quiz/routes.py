@@ -19,7 +19,7 @@ def retrieve_quizzes():
     # retrieve all their quizzes
     return user.retrieve_quizes()
 
-@quiz_bp.route("/retrieve_quiz/<quiz_id>", methods=['GET'])
+@quiz_bp.route("/retrieve-quiz/<quiz_id>", methods=['GET'])
 @jwt_required()
 def retrieve_quiz(quiz_id):
     quiz:Quiz = Quiz.query.filter_by(id=quiz_id).first_or_404()

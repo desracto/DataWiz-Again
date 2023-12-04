@@ -361,6 +361,7 @@ def main():
     # q = "Select artist_id, artist_name from Artist where country = 'United Kingdom' AND (genre_id = 302 OR genre_id = 301)"
     q = "SELECT album_id, album_name, year FROM Album WHERE artist_id IN (SELECT artist_id FROM Artist WHERE country = 'United States')"
     q = "SELECT artist_id FROM Artist WHERE country = 'United States'"
+    q = "Select count(artist_id), country, Genre.genre_id FROM Artist INNER JOIN Genre ON Artist.genre_id = Genre.genre_id GROUP BY country ORDER BY Genre.genre_id ASC"
 
     sql = translate_query(query = q,
                                 DEBUG=True,
