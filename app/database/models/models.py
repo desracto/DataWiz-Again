@@ -89,7 +89,7 @@ class Quiz(db.Model):
             it will always send it out in the following format:
                 %d/%m/%Y, %H:%M:%S -> d/m/YYYY HH:MM:SS
         """
-        return datetime.datetime.strftime(self.start_time, "%d/%m/%Y, %H:%M:%S")
+        return datetime.datetime.strftime(self.start_time, "%d/%m/%Y - %H:%M:%S")
 
     def add_time(self, year, month, day, hour, minute, second):
         self.start_time = datetime.datetime(year, month, day, hour, minute, second)
@@ -110,9 +110,28 @@ class Quiz(db.Model):
             "userid": self.user.id,
             "questions": questions
         }
+        
 
         return data
-    
+
+    def filter_quiz(self):
+        questions = list(self.questions)
+        for i in range(len(questions)):
+            questions[i] = {
+                'problem': questions[i].problem, 
+                'question_number': questions[i].question_number
+            }
+
+        data = {
+            'id': self.id,
+            'quiz_name': self.name,
+            'start_time': self.get_time(),
+            'questions': questions
+        }
+
+        return data
+
+
 class Quiz_QPA(db.Model):
     # Table name
     __tablename__ = 'Quiz_QPA'

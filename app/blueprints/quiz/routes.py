@@ -25,6 +25,12 @@ def retrieve_quiz(quiz_id):
     quiz:Quiz = Quiz.query.filter_by(id=quiz_id).first_or_404()
     return quiz.to_dict()
 
+@quiz_bp.route("/retrieve-filtered-quiz/<quiz_id>", methods=['GET'])
+@jwt_required()
+def retrieve_filtered_quiz(quiz_id):
+    quiz:Quiz = Quiz.query.filter_by(id=quiz_id).first_or_404()
+    return quiz.filter_quiz()
+
 
 @quiz_bp.route("/", methods=['POST'])
 @jwt_required()
