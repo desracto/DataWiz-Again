@@ -56,7 +56,7 @@ function App() {
                     <Route path="/QuizHomePage" element={<QuizHome />} />
                     <Route path="/CreateQuizPage" element={<CreateQuiz />} />
                     <Route path="/SavedQuizzesPage" element={<SavedQuizzes />} />
-                    <Route path="/UncompletedQuizPage" element={<UNCompletedQuiz />} />
+                    <Route path="/CompletedQuizPage" element={<UNCompletedQuiz />} />
                     <Route path="/AccountSettingsPage" element={<AccountSettingsPage request={request}/>} />
                     <Route path="/FaqsPage" element={<FaqsPage />} />
                     <Route path="/TestAni" element={<TestAniPage />} />
