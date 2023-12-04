@@ -34,10 +34,10 @@ class Schema2_Product(db.Model, Object):
     __bind_key__ = "prefixed"
 
     # Fields
-    product_id = db.Column(db.Integer, primary_key=True)
-    product_name = db.Column(db.String(50))
-    category = db.Column(db.String(50))
-    price = db.Column(db.Integer)
+    product_id = db.Column(db.Integer, primary_key=True, nullable=False)
+    product_name = db.Column(db.String(50), nullable=False)
+    category = db.Column(db.String(50), nullable=False)
+    price = db.Column(db.Integer, nullable=False)
 
     # Relationship
     inventory = db.relationship('Schema2_Inventory', back_populates='product')
@@ -51,9 +51,9 @@ class Schema2_Inventory(db.Model, Object):
     __bind_key__ = "prefixed"
 
     # Field Names
-    inventory_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    quantity = db.Column(db.Integer)
-    product_id = db.Column(db.Integer, db.ForeignKey('Product.product_id'))
+    inventory_id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)
+    inv_ProductID = db.Column(db.Integer, db.ForeignKey('Product.product_id'), nullable=False)
 
     # Relationship
     product = db.relationship('Schema2_Product', back_populates='inventory')

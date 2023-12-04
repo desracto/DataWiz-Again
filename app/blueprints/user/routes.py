@@ -10,7 +10,7 @@ from flask_cors import cross_origin
 from ..main.errors import bad_request, error_response
 from ...extensions import db
 from flask_cors import cross_origin
-from ...models import Users
+from ...database.models.models import Users
 
 from flask import Response, current_app
 import logging

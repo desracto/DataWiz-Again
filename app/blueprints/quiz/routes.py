@@ -3,7 +3,7 @@ from datetime import datetime
 
 from . import quiz_bp
 
-from app.models import Quiz, Users, Quiz_QPA
+from app.database.models.models import Quiz, Users, Quiz_QPA
 from ...extensions import db
 from ..main.errors import bad_request, error_response
 
@@ -36,8 +36,8 @@ def create_quiz():
             [REQUIRED] "start_time": "time": str,
             [REQUIRED] "user_id": "id": str,
 
-            [OPTIONAL] "question": [[problem, answer], [problem, answer]]: array,
-            [OPTIONAL] "schema"
+            [OPTIONAL] "question": [{'question': problem, 'answer': answer}, {'question': problem, 'answer': answer}]: array
+            [OPTIONAL] "img_data": img_data
         }
     """
     data = request.get_json() or {}

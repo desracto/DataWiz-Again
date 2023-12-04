@@ -7,20 +7,12 @@ from ....extensions import db
 import re
 from datetime import datetime
 
-from .._prefixed_models import Schema1_Employee as Employee
-from .._prefixed_models import Schema2_Product as Product, \
-                                  Schema2_Inventory as Inventory
-from .._prefixed_models import Schema3_Course as Course, \
-                                  Schema3_Enrollment as Enrollment
-from .._prefixed_models import Schema4_Flight as Flight, \
-                                  Schema4_Passenger as Passenger, \
-                                  Schema4_Ticket as Ticket 
 
-from .._prefixed_models import Schema5_Album as Album, \
-                                  Schema5_Artist as Artist, \
-                                  Schema5_Genre as Genre, \
-                                  Schema5_Song as Song
-
+from ....database.models._prefixed_models import Schema1_Employee as Employee, \
+                                                Schema2_Product as Product, Schema2_Inventory as Inventory, \
+                                                Schema3_Course as Course, Schema3_Enrollment as Enrollment, \
+                                                Schema4_Flight as Flight, Schema4_Passenger as Passenger, Schema4_Ticket as Ticket, \
+                                                Schema5_Album as Album, Schema5_Artist as Artist, Schema5_Genre as Genre, Schema5_Song as Song
 
 def delete_db(id: int):
     if id == 1 or id == 6:
@@ -140,7 +132,7 @@ def generate_prefixed(id: int):
         
         # Inventory table
         for arr in result['INVENTORY']:
-            inv = Inventory(product_id=int(arr[0]),
+            inv = Inventory(inv_ProductID=int(arr[0]),
                             quantity=int(arr[1])) 
 
             db.session.add(inv)
