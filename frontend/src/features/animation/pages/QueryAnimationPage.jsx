@@ -186,7 +186,7 @@ const QueryAnimationPage = () => {
             {/* Display steps_results if available */}
             {querySteps &&  (
                 <>
-                    {/* <h3>Steps Results:</h3> */}
+                    <h3>Steps Results:</h3>
                     <pre>{JSON.stringify(querySteps, null, 2)}</pre>
                 </>
             )}
