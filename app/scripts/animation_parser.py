@@ -129,10 +129,10 @@ def query_generator(query):
     print(', '.join(query['SELECT']))
     lenl = len(query_list)
     squery = query_list[lenl-1].replace('*', ', '.join(query['SELECT']))
-    print(f'Select stuff: {query['SELECT']}')
+    print(f'Select stuff: {query["SELECT"]}')
     print(f'Select query {squery}')
     query_list.append(squery)
-
+ 
     return query_list
 
 def select_star_fixer(ql_list, q_dict,):

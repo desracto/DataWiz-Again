@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import TableTest from '../components/TableTest';
+import './TestAni.css'; 
 
 const TestAni = () => {
     const [isAnimating, setIsAnimating] = useState(false);
@@ -58,16 +59,16 @@ const TestAni = () => {
     };
 
     
-    const queries = [
-        "select * FROM Artist",
-        "select * FROM Artist WHERE country = 'United Kingdom'",
-        "select * FROM Artist WHERE country = 'United Kingdom' AND genre_id = 302",
-        "select * FROM Artist WHERE country = 'United Kingdom' AND genre_id = 302 OR genre_id = 301",
-        "select artist_id, artist_name FROM Artist WHERE country = 'United Kingdom' AND genre_id = 302 OR genre_id = 301"
-    ];
+const querySteps = [
+    "select * FROM Artist",
+    "select * FROM Artist WHERE country = 'United Kingdom'",
+    "select * FROM Artist WHERE country = 'United Kingdom' AND genre_id = 302",
+    "select * FROM Artist WHERE country = 'United Kingdom' AND genre_id = 302 OR genre_id = 301",
+    "select artist_id, artist_name FROM Artist WHERE country = 'United Kingdom' AND genre_id = 302 OR genre_id = 301"
+];
     
 // Nested dictionary
-const results = {
+const queryResults = {
     0: {
         "table_name": "Artist",
         "data": [
@@ -264,93 +265,68 @@ const results = {
         }
     `;
 
-
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <button onClick={handleAnimateClick} style={{ padding: '10px', fontSize: '16px', margin: '10px' }}>
+        <div className="test-ani-container">
+            <button onClick={handleAnimateClick} className="animate-button">
                 Animate
             </button>
-            <div
-                style={{
-                    width: '1000px',
-                    height: '1000px',
-                    backgroundColor: isAnimating ? '#f2f2f2' : 'transparent', // Initial background color
-                    borderRadius: '10px',
-                    margin: '10px',
-                    overflow: 'auto',
-                    transition: 'background-color 1s ease-in-out',
-                }}
-            >
+            <div className={`result-container ${isAnimating ? 'animating' : ''}`}>
                 {isAnimating && (
                     <>
-                        {Object.keys(results).map((key, index, array) => (
+                        {Object.keys(queryResults).map((key, index, array) => (
                             <React.Fragment key={key}>
                                 {/* Container that displays information about the table */}
-                                <div
-                                    style={{
-                                        textAlign: 'left',
-                                        backgroundColor: '#D4C1CE',
-                                        padding: '15px',
-                                        margin: '20px',
-                                        borderRadius: '15px',
-                                        boxShadow: '0px 8px 8px rgba(0, 0, 0, 0.05)',
-                                        animation: 'fadeIn 5s forwards'
-                                    }}
-                                >
+                                <div className="table-info-container">
                                     {/* Displaying the query here */}
-                                    <p style={{ fontSize: '16px', fontWeight: '400', margin: '10px' }}>
+                                    <p className="query-description">
                                         <b>Query {index + 1}: &nbsp;</b>
-                                        {queries[index]}
+                                        {querySteps[index]}
                                     </p>
                                     {/* Displaying The queries passed to the next table */}
-                                    <p style={{ fontSize: '16px', fontWeight: '400', margin: '10px' }}>
+                                    <p className="query-description">
                                         <b>Descriptiomn: &nbsp;</b>
                                         {index === array.length - 1
                                             ? 'This is the result table.'
-                                            : results[key].data.length === 0
+                                            : queryResults[key].data.length === 0
                                                 ? 'No result for this query.'
-                                                : typeof highlightMatchingRows(results[key].data, results[array[index + 1]]?.data || [], queries[index + 1] || '')[0] === 'string'
-                                                    ? `${highlightMatchingRows(results[key].data, results[array[index + 1]]?.data || [], queries[index + 1] || '').length} columns are being used in the next query.`
-                                                    : highlightMatchingRows(results[key].data, results[array[index + 1]]?.data || [], queries[index + 1] || '').length === results[key].data.length
+                                                : typeof highlightMatchingRows(queryResults[key].data, queryResults[array[index + 1]]?.data || [], querySteps[index + 1] || '')[0] === 'string'
+                                                    ? `${highlightMatchingRows(queryResults[key].data, queryResults[array[index + 1]]?.data || [], querySteps[index + 1] || '').length} columns are being used in the next query.`
+                                                    : highlightMatchingRows(queryResults[key].data, queryResults[array[index + 1]]?.data || [], querySteps[index + 1] || '').length === queryResults[key].data.length
                                                         ? 'All rows are being used in the next query.'
-                                                        : highlightMatchingRows(results[key].data, results[array[index + 1]]?.data || [], queries[index + 1] || '').length === 0
+                                                        : highlightMatchingRows(queryResults[key].data, queryResults[array[index + 1]]?.data || [], querySteps[index + 1] || '').length === 0
                                                             ? 'No rows are being used in the next query.'
-                                                            : `${highlightMatchingRows(results[key].data, results[array[index + 1]]?.data || [], queries[index + 1] || '').length} rows are being used in the next query.`
+                                                            : `${highlightMatchingRows(queryResults[key].data, queryResults[array[index + 1]]?.data || [], querySteps[index + 1] || '').length} rows are being used in the next query.`
                                     }
                                     </p>
                                 </div>
                                 {/* Displaying the table or the "No result for this query" message */}
-                                {results[key].data.length > 0 ? (
+                                {queryResults[key].data.length > 0 ? (
                                     <TableTest
-                                        tableName={results[key].table_name}
-                                        data={results[key].data}
-                                        // Sending what rows to highlight to the component
+                                        tableName={queryResults[key].table_name}
+                                        data={queryResults[key].data}
                                         highlightedRows={highlightMatchingRows(
-                                            results[key].data,
-                                            results[array[index + 1]]?.data || [],
-                                            queries[index + 1] || ''
+                                            queryResults[key].data,
+                                            queryResults[array[index + 1]]?.data || [],
+                                            querySteps[index + 1] || ''
                                         )}
                                     />
                                 ) : (
-                                    <p style={{ fontSize: '16px', fontWeight: '400', margin: '10px', textAlign: 'center' }}>
+                                    <p className="no-result-message">
                                         {/* No result for this query. */}
                                     </p>
                                 )}
                                 {index < array.length - 1 && (
-                                    <div style={{ textAlign: 'center', margin: '35px', fontSize: '50px', animation: 'fadeIn 5s forwards' }}>
+                                    <div className="arrow-indicator">
                                         <span>&#8595;</span>
                                     </div>
                                 )}
                             </React.Fragment>
                         ))}
-
                     </>
                 )}
             </div>
-            {/* Include the style tag with keyframes */}
-            <style>{fadeInKeyframes}</style>
         </div>
     );
 };
 
-export default TestAni;                                                                                                                    
+export default TestAni;
