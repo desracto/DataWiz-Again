@@ -2,11 +2,12 @@ import React, { useState, useCallback } from 'react';
 import SecondHeader from '../../../global_components/SecondHeader';
 import SchemaTable from '../components/SchemaTable';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { schemaIdToProperty } from './SchemaSelectionPage';
 
 import axios from 'axios'; 
 import "./QueryAnimationPage.css";
- 
-// Image IMports
+
+// Image Imports
 import svgImage from '../../../assets/images/vector-31.svg'; 
 import svgImage2 from '../../../assets/images/blob-haikei.svg'; 
 
@@ -17,27 +18,30 @@ const request = axios.create({
     },
     withCredentials: true,
     timeout: 300000
-})
+});
 
-export default function SchemaSelectionPage() {
-
+const QueryAnimationPage = () => {
     const location = useLocation();
-    const selectedSchema = location.state.schemaData;
-    // console.log(location.state.schemaData);
     const [query, setQuery] = useState('');
-    const [stepsResult, setStepsResult] = useState(null); // this state to stores the result
+    const [stepsResult, setStepsResult] = useState(null);
 
     const navigate = useNavigate();
     const returnToSchemaSelection = useCallback(() => {
-      navigate("/SchemaSelectionPage")
+        navigate("/SchemaSelectionPage");
     }, [navigate]);
+
+    // Extract selected schema and schemaId from location.state
+    console.log("Location state:", location.state);
+    const selectedSchema = location.state ? location.state.selectedSchema : null;
+    const schemaId = location.state ? location.state.schemaId : null;
+    console.log("Selected Schema ID:", schemaId);
 
     const handleEnterKey = (e) => {
         if (e.key === "Enter" && !e.shiftKey) {
-          e.preventDefault();
-          setQuery((prevQuery) => prevQuery + "\n");
+            e.preventDefault();
+            setQuery((prevQuery) => prevQuery + "\n");
         }
-      };
+    };
   
 
     const handleAnimateQuery = async () => {
@@ -136,7 +140,14 @@ export default function SchemaSelectionPage() {
             </div>
             <div className="SelectedSchemaDisplayCard">
                 <div className='SelectedSchemaCardContent'>
-                    <SchemaTable schemaData ={selectedSchema}/>
+                    {/* Display the selected schema using SchemaTable */}
+                    {selectedSchema && schemaId && (
+                        <SchemaTable
+                            schemaData={selectedSchema}
+                            schemaIdToProperty={schemaIdToProperty}
+                            selectedSchemaId={schemaId}
+                        />
+                     )}
                 </div>
             </div>
 
@@ -178,4 +189,6 @@ export default function SchemaSelectionPage() {
 
     </>
   );
-}
+};
+
+export default QueryAnimationPage;

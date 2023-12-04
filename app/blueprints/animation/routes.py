@@ -42,6 +42,10 @@ def schema2():
     if products is None or invens is None:
         generate_prefixed(2)
 
+    # if len(products) == 0 or len(invens) == 0:
+    #     generate_prefixed(2)
+
+
     prods_json = []
     for prod in products:
         prods_json.append(prod.as_dict())

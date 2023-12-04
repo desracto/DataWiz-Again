@@ -259,6 +259,11 @@ def query_generator(query):
         print("AND TYPE")
         print(type(query_list[lenl-1]))
         query_list.append(query_list[lenl-1] + " OR "+ query['OR'])
+    if 'IN' in query.keys():
+        lenl = len(query_list)
+        print("IN TYPE")
+        print(type(query_list[lenl-1]))
+        query_list.append(query_list[lenl-1] + " IN "+ query['IN'])
     if 'GROUP BY' in query.keys():
         lenl = len(query_list)
         query_list.append(query_list[lenl-1] + " GROUP BY "+ query['GROUP BY'])
@@ -321,7 +326,7 @@ def json_comp_converter(db_results, rm_keys):
                 row_dict[col_name] = row[i]
             results[idx].append(row_dict)
 
-    return {"results": results}
+    return results
 
 
 def retrieve_query_results(q: str):
@@ -349,11 +354,13 @@ def main():
    
     # q = "SELECT Album.album_name, Song.song_title FROM Album INNER JOIN Song ON Album.album_id = Song.album_id LIMIT 5"
     # q = "SELECT id FROM users WHERE username=’” + uname + “’ AND password=’” + passwd + "
-    q = "Select count(artist_id), country from Artist group by country order by country desc"
+    # q = "Select count(artist_id), country from Artist group by country order by country desc"
     # q = "Select artist_id, artist_name from Artist where country = 'United Kingdom' and genre_id = 301"
     # q = "Select artist_id, artist_name from Artist where country = 'United Kingdom' OR genre_id = 301"
     # q = "Select artist_id, artist_name from Artist where country = 'United Kingdom' AND genre_id = 302 OR genre_id = 301"
     # q = "Select artist_id, artist_name from Artist where country = 'United Kingdom' AND (genre_id = 302 OR genre_id = 301)"
+    q = "SELECT album_id, album_name, year FROM Album WHERE artist_id IN (SELECT artist_id FROM Artist WHERE country = 'United States')"
+    q = "SELECT artist_id FROM Artist WHERE country = 'United States'"
 
     sql = translate_query(query = q,
                                 DEBUG=True,
@@ -380,6 +387,12 @@ def main():
     for i in b:
         print(i)
     print(f"B ends - query generator")
+
+    # b = [
+    #     "select * FROM Album",
+    #     "select * FROM Album WHERE artist_id IN (SELECT artist_id FROM Artist WHERE country = 'United States')",
+    #     "select album_id, album_name, year FROM Album WHERE artist_id IN (SELECT artist_id FROM Artist WHERE country = 'United States')"
+    # ]
 
     db_results, rm_keys = run(b)
     ans = json_comp_converter(db_results, rm_keys)
