@@ -242,7 +242,7 @@ def retrieve_query_results(q: str):
     print(f"B ends - query generator")
 
     db_results, rm_keys = run(b)
-    ans = json_comp_converter(db_results, rm_keys)
+    ans = json_converter(db_results, rm_keys)
 
     return ans
 
