@@ -1,0 +1,1 @@
+FLASK_APP = 'datawiz_api.py'

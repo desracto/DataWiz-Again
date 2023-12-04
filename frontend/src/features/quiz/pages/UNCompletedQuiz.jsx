@@ -10,52 +10,6 @@ import { useNavigate} from "react-router-dom";
 const UNCompletedQuiz = () => {
     const navigate = useNavigate();
 
-  const onDataWizTextClick = useCallback(() => {
-    // Please sync "Instructor Home Page" to the project
-  }, []);
-
-  const { quizId } = useParams();
-
-  const onAnimationTextClick = useCallback(() => {
-    // Please sync "Animation Introduction Page" to the project
-  }, []);
-
-  const onQuizzesTextClick = useCallback(() => {
-    // Please sync "Quizzes Introduction Page" to the project
-  }, []);
-
-  const onSettingsTextClick = useCallback(() => {
-    // Please sync "Account Setting Page " to the project
-  }, []);
-
-  const onFAQsTextClick = useCallback(() => {
-    // Please sync "FAQ Page" to the project
-  }, []);
-
-  const onAnimationRemovebgPreview1ImageClick = useCallback(() => {
-    // Please sync "Animation Introduction Page" to the project
-  }, []);
-
-  const onScreenshot20230929135459RIconClick = useCallback(() => {
-    // Please sync "Instructor Home Page" to the project
-  }, []);
-
-  const onCreateQuizzesLogo23IconClick = useCallback(() => {
-    // Please sync "Quizzes Introduction Page" to the project
-  }, []);
-
-  const onScreenshot20230929133935RImageClick = useCallback(() => {
-    // Please sync "FAQ Page" to the project
-  }, []);
-
-  const onSettingsLogoClick = useCallback(() => {
-    // Please sync "Account Setting Page " to the project
-  }, []);
-
-  const onLogoContainerClick = useCallback(() => {
-    // Please sync "Instructor Home Page" to the project
-  }, []);
-
   const [showGeneratedQuizLink, setShowGeneratedQuizLink] = useState(false);
   const handleGenerateQuizLinkClick = () => {
     setShowGeneratedQuizLink(true); // Show the popup
@@ -76,13 +30,14 @@ const ViewButtonClick = useCallback(() => {
 
     <div className="main_Page">
 
-       
+    <div className="back-arrow-container">
         {/* Back arrow button */}
-        <button onClick={handleBackClick} className="back-arrow-button">
+        <button onClick={handleBackClick} className="back-arrow-button ">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" />
           </svg>
         </button>
+        </div>
         
     <div className={" max-w-7xl content_container_bgcolor mx-auto h-auto rounded-2xl z-10"}>
         <div className="px-20 mt-[80px]">

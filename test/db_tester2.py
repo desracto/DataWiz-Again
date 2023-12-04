@@ -1,5 +1,6 @@
 from sqlalchemy import create_engine, text
 
+
 # print("\nDB 2 - Schema DB - rfa71")
 
 # Connect to the database
@@ -33,7 +34,7 @@ from sqlalchemy import create_engine, text
 
 def run(query_list):
     # Connect to the database
-    engine = create_engine("mysql+mysqlconnector://sql12658112:yFlLxXMggz@sql12.freemysqlhosting.net/sql12658112")
+    engine = create_engine("mysql+pymysql://sql12658112:yFlLxXMggz@sql12.freemysqlhosting.net/sql12658112")
 
     # Test the connection
     connection = engine.connect()
@@ -66,7 +67,7 @@ def run(query_list):
     connection.execute(ins10)
     connection.execute(ins11)
     connection.execute(ins12)
-
+    
     final_result = []
     col_names = []
     for i in range(0, len(query_list)):
@@ -94,3 +95,4 @@ def run(query_list):
     #         results[key_name].append(row_dict)
 
     # return {"results": results}
+

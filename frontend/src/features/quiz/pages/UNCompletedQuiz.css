@@ -700,15 +700,23 @@
   font-family: var(--font-poppins);
 }
 
+.back-arrow-container {
+    position: absolute;
+    top: -20px;
+    left: -10px;
+    padding: 20px; /* Adjust the padding to position the arrow inside the container */
+    
+  }
+
+
+
 .back-arrow-button {
   background-color: #ffffff;
   border-radius: 75px;
   box-shadow: 0px 4px 20px #00000040;
   height: 40px;
-  position: relative;
+  position: absolute;
   width: 40px;
-  top: 190px;
-  left: 290px;
   cursor: pointer;
   
   }
@@ -722,6 +730,7 @@
     width: 20px; /* Adjust the size of the SVG as needed */
     height: 20px; /* Adjust the size of the SVG as needed */
     margin-top: 4px;
+    margin-right: 1px;
     align-items: center;
   }
 

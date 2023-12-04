@@ -3,8 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
 from sqlalchemy import types
 
-from .extensions import db
-from .blueprints.animation import _prefixed_models
+from ...extensions import db
 
 def get_uuid():
     return uuid4().hex
