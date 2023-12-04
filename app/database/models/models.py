@@ -57,7 +57,11 @@ class Users(db.Model):
         return self
     
     def retrieve_quizes(self):
-        return self.quizzes
+        json_quizzes = []
+        for quiz in self.quizzes:
+            json_quizzes.append(quiz.to_dict())
+        
+        return json_quizzes
 
 class Quiz(db.Model):
     # Table name
