@@ -126,7 +126,7 @@ def query_generator(query):
         lenl = len(query_list)
         query_list.append(query_list[lenl-1] + " LIMIT "+ query['LIMIT'])
 
-    print(', '.join(query['SELECT']))
+    # print(', '.join(query['SELECT']))
     lenl = len(query_list)
     squery = query_list[lenl-1].replace('*', ', '.join(query['SELECT']))
     print(f'Select stuff: {query["SELECT"]}')
