@@ -173,4 +173,4 @@ def delete_quiz_question(quiz_id, qaid):
 
 @quiz_bp("/<quiz_id/<user_id>/submit-response", methods=['POST'])
 def submit_response(quiz_id):
-    
+    pass

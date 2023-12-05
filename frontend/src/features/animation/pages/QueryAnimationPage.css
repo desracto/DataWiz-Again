@@ -304,11 +304,11 @@
 
 .QueryStepsDisplayCard {
     width: 95%;
-    height: 250px;
-    background: #f2f2f2;
+    height: 300px;
+    background: #e0e0e0;
     border-radius: 45px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.20);
-    max-width: 1200px; 
+    max-width: 1300px; 
     display: flex;
     flex-direction: column;
     align-items: flex-start; 
@@ -317,18 +317,62 @@
     padding: 30px;
 }
 
+/* -------------------------------- */
+
+.QueryStepsDisplayCard {
+    text-align: left;
+}
+
+.QueryStepsDisplayCard h3 {
+    font-family: Gilroy-Bold;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.QueryStep {
+    font-family: Gilroy-Semibold;
+}
+
+.QueryStep p {
+    font-family: 'Your-Code-Font', monospace; /* Replace 'Your-Code-Font' with the actual font used for code blocks */
+    margin-left: 20px; 
+    margin-bottom: 15px;
+}
+
+.QueryStep p strong {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
 .VisualizationDisplayCard {
     width: 95%;
-    height: 800px;
+    height: 1000px;
     background: #f2f2f2;
-    border-radius: 45px;
+    border-radius: 20px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.20);
-    max-width: 1200px; 
-    display: flex;
+    max-width: 1400px; 
     flex-direction: column;
-    align-items: flex-start; 
+    display: flex;
     margin-top: 20px;
     margin-bottom: 40px;
     overflow: auto; 
     padding: 30px;
+}
+
+.arrow-indicator1 {
+    text-align: center;
+    margin: 35px;
+    font-size: 50px;
+    animation: fadeIn 5s forwards;
+}
+
+
+.table-info-container {
+    background-color: #D4C1CE;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.05);
+    width: 100%; /* Taking up 95% of its container */
+    text-align: left;
+    animation: fadeIn 5s forwards;
 }
