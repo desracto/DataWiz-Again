@@ -162,11 +162,12 @@ def json_converter(db_results, rm_keys, table_names):
     }
     results = {}
     for idx, cols in enumerate(colu_names):
+        idx = str(idx)
         results[idx] = x.copy()
-        results[idx]['table_name'] = table_names[idx]
+        results[idx]['table_name'] = table_names[int(idx)]
         results[idx]['data'] = []
 
-        for row in db_results[idx]:
+        for row in db_results[int(idx)]:
             row_dict = {}
             for i, col_name in enumerate(cols):
                 row_dict[col_name] = row[i]
@@ -229,4 +230,8 @@ def retrieve_query_results(q: str):
     db_results, rm_keys = fetch_query_results(b)
     ans = json_converter(db_results, rm_keys, table_names)
 
-    return ans, b
+    # print(b)
+    ans['steps'] = b
+    # print(ans)
+
+    return ans

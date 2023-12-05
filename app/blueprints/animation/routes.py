@@ -42,10 +42,6 @@ def schema2():
     if products is None or invens is None:
         generate_prefixed(2)
 
-    # if len(products) == 0 or len(invens) == 0:
-    #     generate_prefixed(2)
-
-
     prods_json = []
     for prod in products:
         prods_json.append(prod.as_dict())
@@ -162,7 +158,7 @@ def animate_query():
     if not query:
         return bad_request('Missing or invalid "query" in JSON data')
 
-    query_results, step_results = retrieve_query_results(query)
-    query_results['steps'] = step_results
+    query_results = retrieve_query_results(query)
+    
     # Return the steps_result as JSON
     return jsonify(query_results)
