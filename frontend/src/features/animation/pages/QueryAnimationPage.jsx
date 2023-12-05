@@ -3,6 +3,7 @@ import SecondHeader from '../../../global_components/SecondHeader';
 import SchemaTable from '../components/SchemaTable';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { schemaIdToProperty } from './SchemaSelectionPage';
+import QueryTable from '../components/QueryTable';
 
 import axios from 'axios'; 
 import "./QueryAnimationPage.css";
@@ -201,39 +202,54 @@ const QueryAnimationPage = () => {
             )}
         </div>
 
-
         <div className='VisualizationDisplayCard'>
-            {/* Display steps_results if available */}
-            {/* {querySteps && (
-                <>
-                    {querySteps.map((step, index) => (
-                        <div key={index}>
-                            <div className="table-info-container">
-                                <p>{`Query ${index + 1}: ${step}`}</p>
-                            </div>
-                            {index < querySteps.length - 1 && (
-                                <div className="arrow-indicator1">
-                                    <span>&#8595;</span>
-                                </div>
-                            )}
-                        </div>
-                    ))}
-                </>
-            )} */}
+            {querySteps && (
+            <>
+                {querySteps.map((step, index, array) => (
+                <React.Fragment key={index}>
+                    {/* Container for displaying information about the query step */}
+                    <div className="table-info-container">
+                    {/* Display the query step index and description */}
+                    <p style={{ marginBottom: '15px' }}>
+                        <b>{`Query ${index + 1}:`}</b> {step}
+                    </p>
+                    {/* Displaying The queries passed to the next table */}
+                    <p>
+                        <b>Description: </b>
+                        {index === array.length - 1
+                        ? 'This is the result table.'
+                        : queryResults[index].data.length === 0
+                        ? 'No result for this query.'
+                        : `${queryResults[index].data.length} rows are being used in the next query.`
+                        }
+                    </p>
+                    </div>
 
-            {/* Display query_results if available */}
-            {queryResults &&  (
-                    <>
-                        {/* <h3>Query Results:</h3> */}
-                        <pre>{JSON.stringify(queryResults, null, 2)}</pre>
-                    </>
-                )}
+                    {/* Displaying the table or the "No result for this query" message */}
+                    {queryResults[index].data.length > 0 ? (
+                    <QueryTable
+                        tableName={queryResults[index].table_name}
+                        data={queryResults[index].data}
+                    />
+                    ) : (
+                    <p className="no-result-message">
+                        {/* No result for this query. */}
+                    </p>
+                    )}
 
-
+                    {/* Display an arrow indicator if not the last query step */}
+                    {index < array.length - 1 && (
+                    <div className="arrow-indicator1">
+                        <span>&#8595;</span>
+                    </div>
+                    )}
+                </React.Fragment>
+                ))}
+            </>
+            )}
         </div>
 
-    </div>
-
+        </div>
     </>
   );
 };

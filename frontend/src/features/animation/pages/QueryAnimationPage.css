@@ -304,7 +304,7 @@
 
 .QueryStepsDisplayCard {
     width: 95%;
-    height: 300px;
+    height: 350px;
     background: #e0e0e0;
     border-radius: 45px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.20);
@@ -361,8 +361,9 @@
 
 .arrow-indicator1 {
     text-align: center;
-    margin: 35px;
-    font-size: 50px;
+    margin-top: 15px;
+    margin-bottom: 35px;
+    font-size: 70px;
     animation: fadeIn 5s forwards;
 }
 
