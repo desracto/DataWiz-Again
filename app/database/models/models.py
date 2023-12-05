@@ -131,6 +131,8 @@ class Quiz(db.Model):
 
         return data
 
+    
+
 
 class Quiz_QPA(db.Model):
     # Table name
@@ -260,11 +262,4 @@ class Animation(db.Model):
             "query": self.query
         }
         return data
-
-
-
-
-
-
-
 
