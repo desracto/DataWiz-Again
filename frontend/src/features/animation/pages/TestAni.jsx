@@ -276,7 +276,7 @@ const queryResults = {
                         {Object.keys(queryResults).map((key, index, array) => (
                             <React.Fragment key={key}>
                                 {/* Container that displays information about the table */}
-                                <div className="table-info-container">
+                                <div className="table-info-container1">
                                     {/* Displaying the query here */}
                                     <p className="query-description">
                                         <b>Query {index + 1}: &nbsp;</b>

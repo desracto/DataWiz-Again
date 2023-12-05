@@ -24,7 +24,6 @@ const QueryAnimationPage = () => {
     const location = useLocation();
     const [query, setQuery] = useState('');
     const [queryResults, setQueryResults] = useState(null);
-
     const [querySteps, setQuerySteps] = useState(null);
 
     const navigate = useNavigate();
@@ -77,7 +76,8 @@ const QueryAnimationPage = () => {
             // Update state with the steps_result
             setQueryResults(data.results);
             setQuerySteps(data.steps);
-            console.log(queryResults);
+            console.log("HERE", queryResults);
+            console.log("HERE", querySteps);
 
             // Further handling of the response, if needed
         } catch (error) {
@@ -184,23 +184,54 @@ const QueryAnimationPage = () => {
 
         <div className='QueryStepsDisplayCard'>
             {/* Display steps_results if available */}
-            {querySteps &&  (
+            {querySteps && (
                 <>
-                    <h3>Steps Results:</h3>
-                    <pre>{JSON.stringify(querySteps, null, 2)}</pre>
+                    <h3>The Query Steps:</h3>
+                    {querySteps.slice(0, -1).map((step, index) => (
+                        <div key={index} className="QueryStep">
+                            <p><strong>{`STEP ${index + 1}:`}</strong> <span>{step}</span></p>
+                        </div>
+                    ))}
+                    {querySteps.length > 0 && (
+                        <div className="QueryStep">
+                            <p><strong>Your Query:</strong> <span>{querySteps[querySteps.length - 1]}</span></p>
+                        </div>
+                    )}
                 </>
             )}
         </div>
 
+
         <div className='VisualizationDisplayCard'>
-                {/* Display query_results if available */}
-                {queryResults &&  (
+            {/* Display steps_results if available */}
+            {/* {querySteps && (
+                <>
+                    {querySteps.map((step, index) => (
+                        <div key={index}>
+                            <div className="table-info-container">
+                                <p>{`Query ${index + 1}: ${step}`}</p>
+                            </div>
+                            {index < querySteps.length - 1 && (
+                                <div className="arrow-indicator1">
+                                    <span>&#8595;</span>
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </>
+            )} */}
+
+            {/* Display query_results if available */}
+            {queryResults &&  (
                     <>
                         {/* <h3>Query Results:</h3> */}
                         <pre>{JSON.stringify(queryResults, null, 2)}</pre>
                     </>
                 )}
-          </div>
+
+
+        </div>
+
     </div>
 
     </>

@@ -217,9 +217,9 @@ def animation_table_names(b):
 
 
 def retrieve_query_results(q: str):
-    sql = translate_query(query = q,
-                            DEBUG=False,
-                            CLEAN=True)
+    sql = translate_query(query=q,
+                          DEBUG=False,
+                          CLEAN=True)
 
     # print(f'\nSQL: {sql}\n')
 
@@ -231,7 +231,10 @@ def retrieve_query_results(q: str):
     ans = json_converter(db_results, rm_keys, table_names)
 
     # print(b)
-    ans['steps'] = b
-    # print(ans)
 
-    return ans
+    query_results = {}
+    query_results['results'] = ans
+    query_results['steps'] = b
+    print(query_results)
+
+    return query_results
