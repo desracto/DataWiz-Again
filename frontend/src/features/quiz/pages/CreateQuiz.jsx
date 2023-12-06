@@ -171,6 +171,7 @@ const CreateQuiz = () => {
     setQuizDescription("");
     setQuestions([]);
     alert("Quiz saved successfully!");
+    setSuccessModal(true);
   };
 
 
@@ -345,9 +346,13 @@ const CreateQuiz = () => {
                     <FaFilter size={25} color="#98989F" />
                     <span className="text-gilroy-semibold ">Auto-Grading Filters</span>
                   </div>
-                  <div className="flex-center-filter-save" onClick={() => setSuccessModal(true)}>
+                  <div 
+                  className="flex-center-filter-save" 
+                  //onClick={() => setSuccessModal(true)}
+                  onClick={saveQuiz}
+                  >
                     <FaSave size={30} color="#98989F" />
-                    <span className="text-gilroy-semibold " onClick={saveQuiz}>
+                    <span className="text-gilroy-semibold " >
                       Save Quiz
                     </span>
                   </div>
