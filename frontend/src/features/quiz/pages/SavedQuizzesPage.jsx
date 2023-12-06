@@ -6,10 +6,13 @@ import "./SavedQuizzes.css";
 import UNCompletedQuiz from "./CompletedQuizPage.jsx"
 import SecondHeader from '../../../global_components/SecondHeader';
 import axios from 'axios';
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+
 
 
 const SavedQuizzes = ({request}) => {
+    const [quizInfo, setQuizInfo] = useState({ name: '', startTime: '' });
+
     // on render
     useEffect(() => {
         request({
@@ -17,6 +20,8 @@ const SavedQuizzes = ({request}) => {
             method: "get"
         })
         .then(response => {
+            const quizData = response.data; 
+            setQuizInfo({ name: quizData.quiz_name, startTime: quizData.start_time });
             console.log(response.data)
         })
         .catch(error => {
@@ -39,9 +44,9 @@ const SavedQuizzes = ({request}) => {
     window.location.reload(); // Refresh the page to update the UI
   };
   
-  const goToUncompletedQuiz = (quizId) => {
+  const goToCompletedQuiz = (quizId) => {
     // Navigate to the UNCompletedQuiz page with the quiz ID as a parameter
-    navigate(`/uncompleted-quiz/${quizId}`);
+    navigate("/CompletedQuizPage");
   };
 
   return (
@@ -78,9 +83,9 @@ const SavedQuizzes = ({request}) => {
             <div key={quiz.id} className="content_card">
             <div className="button-div completed ">
                     
-                <span> {quiz.name}</span>
+                <span> {quizInfo.name}</span>
                 <small>Date: {quiz.date}</small>
-                <small>Time: {quiz.time}</small> 
+                <small>Time: {quizInfo.startTime}</small> 
                 {quiz.isAttempted ? 
                 <span2>ATTEMPTED</span2> : 
                 <span3>UNATTEMPTED</span3>
@@ -89,7 +94,7 @@ const SavedQuizzes = ({request}) => {
                 </div>
                 
             <FaChevronRight style={{cursor:"pointer"}} 
-            onClick={() => goToUncompletedQuiz(quiz.id)}
+            onClick={() => goToCompletedQuiz(quiz.id)}
             />
             
             </div>
@@ -104,11 +109,11 @@ const SavedQuizzes = ({request}) => {
             <div key={quiz.id} className="content_card">
             <div className="button-div completed ">
                     
-            <span> {quiz.name}</span>
+            <span> {quizInfo.name}</span>
                 <small>Date: {quiz.date}</small>
-                <small>Time: {quiz.time}</small> 
+                <small>Time: {quizInfo.startTime}</small> 
                 <span3>UNATTEMPTED</span3> 
-            
+                
             </div>
             
             <FaChevronRight style={{cursor:"pointer"}} onSubmit={{}}/>
