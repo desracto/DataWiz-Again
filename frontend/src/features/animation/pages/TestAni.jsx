@@ -67,490 +67,489 @@ const TestAni = () => {
         "SELECT * FROM Artist JOIN Genre ON Artist.genre_id = Genre.genre_id GROUP BY country ORDER BY Genre.genre_id ASC",
         "SELECT COUNT(artist_id), country, Genre.genre_id FROM Artist JOIN Genre ON Artist.genre_id = Genre.genre_id GROUP BY country ORDER BY Genre.genre_id ASC"
     ];
-    
-    
+
 // Nested dictionary
-const queryResults = {
-    "0": {
-      "data": [
-        {
-          "artist_id": 201,
-          "artist_name": "Queen",
-          "country": "United Kingdom",
-          "genre_id": 301
+    const queryResults = {
+        "0": {
+        "data": [
+            {
+            "artist_id": 201,
+            "artist_name": "Queen",
+            "country": "United Kingdom",
+            "genre_id": 301
+            },
+            {
+            "artist_id": 202,
+            "artist_name": "The Rolling Stones",
+            "country": "United Kingdom",
+            "genre_id": 301
+            },
+            {
+            "artist_id": 203,
+            "artist_name": "Taylor Swift",
+            "country": "United States",
+            "genre_id": 302
+            },
+            {
+            "artist_id": 204,
+            "artist_name": "Miles Davis",
+            "country": "United States",
+            "genre_id": 303
+            },
+            {
+            "artist_id": 205,
+            "artist_name": "Johnny Cash",
+            "country": "United States",
+            "genre_id": 304
+            },
+            {
+            "artist_id": 206,
+            "artist_name": "Beyoncé",
+            "country": "United States",
+            "genre_id": 302
+            },
+            {
+            "artist_id": 207,
+            "artist_name": "Arctic Monkeys",
+            "country": "United Kingdom",
+            "genre_id": 305
+            },
+            {
+            "artist_id": 208,
+            "artist_name": "Eminem",
+            "country": "United States",
+            "genre_id": 306
+            },
+            {
+            "artist_id": 209,
+            "artist_name": "Daft Punk",
+            "country": "France",
+            "genre_id": 307
+            },
+            {
+            "artist_id": 210,
+            "artist_name": "B.B. King",
+            "country": "United States",
+            "genre_id": 304
+            },
+            {
+            "artist_id": 211,
+            "artist_name": "Bob Marley",
+            "country": "Jamaica",
+            "genre_id": 308
+            },
+            {
+            "artist_id": 212,
+            "artist_name": "Ludwig van Beethoven",
+            "country": "Germany",
+            "genre_id": 309
+            },
+            {
+            "artist_id": 213,
+            "artist_name": "Nirvana",
+            "country": "United States",
+            "genre_id": 305
+            },
+            {
+            "artist_id": 214,
+            "artist_name": "Metallica",
+            "country": "United States",
+            "genre_id": 306
+            },
+            {
+            "artist_id": 215,
+            "artist_name": "Celia Cruz",
+            "country": "Cuba",
+            "genre_id": 310
+            },
+            {
+            "artist_id": 216,
+            "artist_name": "James Brown",
+            "country": "United States",
+            "genre_id": 311
+            },
+            {
+            "artist_id": 217,
+            "artist_name": "A.R. Rahman",
+            "country": "India",
+            "genre_id": 312
+            },
+            {
+            "artist_id": 218,
+            "artist_name": "Aretha Franklin",
+            "country": "United States",
+            "genre_id": 313
+            },
+            {
+            "artist_id": 219,
+            "artist_name": "Brian Eno",
+            "country": "United Kingdom",
+            "genre_id": 307
+            },
+            {
+            "artist_id": 220,
+            "artist_name": "Mahalia Jackson",
+            "country": "United States",
+            "genre_id": 314
+            }
+        ],
+        "table_name": "Artist"
         },
-        {
-          "artist_id": 202,
-          "artist_name": "The Rolling Stones",
-          "country": "United Kingdom",
-          "genre_id": 301
+        "1": {
+        "data": [
+            {
+            "genre_id": 301,
+            "genre_name": "Rock"
+            },
+            {
+            "genre_id": 302,
+            "genre_name": "Pop"
+            },
+            {
+            "genre_id": 303,
+            "genre_name": "Jazz"
+            },
+            {
+            "genre_id": 304,
+            "genre_name": "Country"
+            },
+            {
+            "genre_id": 305,
+            "genre_name": "Indie"
+            },
+            {
+            "genre_id": 306,
+            "genre_name": "Hip Hop"
+            },
+            {
+            "genre_id": 307,
+            "genre_name": "Electronic"
+            },
+            {
+            "genre_id": 308,
+            "genre_name": "Reggae"
+            },
+            {
+            "genre_id": 309,
+            "genre_name": "Classical"
+            },
+            {
+            "genre_id": 310,
+            "genre_name": "Salsa"
+            },
+            {
+            "genre_id": 311,
+            "genre_name": "Funk"
+            },
+            {
+            "genre_id": 312,
+            "genre_name": "Bollywood"
+            },
+            {
+            "genre_id": 313,
+            "genre_name": "Soul"
+            },
+            {
+            "genre_id": 314,
+            "genre_name": "Gospel"
+            }
+        ],
+        "table_name": "Genre"
         },
-        {
-          "artist_id": 203,
-          "artist_name": "Taylor Swift",
-          "country": "United States",
-          "genre_id": 302
+        "2": {
+        "data": [
+            {
+            "artist_id": 201,
+            "artist_name": "Queen",
+            "country": "United Kingdom",
+            "genre_id": 301,
+            "genre_name": "Rock"
+            },
+            {
+            "artist_id": 202,
+            "artist_name": "The Rolling Stones",
+            "country": "United Kingdom",
+            "genre_id": 301,
+            "genre_name": "Rock"
+            },
+            {
+            "artist_id": 203,
+            "artist_name": "Taylor Swift",
+            "country": "United States",
+            "genre_id": 302,
+            "genre_name": "Pop"
+            },
+            {
+            "artist_id": 206,
+            "artist_name": "Beyoncé",
+            "country": "United States",
+            "genre_id": 302,
+            "genre_name": "Pop"
+            },
+            {
+            "artist_id": 204,
+            "artist_name": "Miles Davis",
+            "country": "United States",
+            "genre_id": 303,
+            "genre_name": "Jazz"
+            },
+            {
+            "artist_id": 205,
+            "artist_name": "Johnny Cash",
+            "country": "United States",
+            "genre_id": 304,
+            "genre_name": "Country"
+            },
+            {
+            "artist_id": 210,
+            "artist_name": "B.B. King",
+            "country": "United States",
+            "genre_id": 304,
+            "genre_name": "Country"
+            },
+            {
+            "artist_id": 207,
+            "artist_name": "Arctic Monkeys",
+            "country": "United Kingdom",
+            "genre_id": 305,
+            "genre_name": "Indie"
+            },
+            {
+            "artist_id": 213,
+            "artist_name": "Nirvana",
+            "country": "United States",
+            "genre_id": 305,
+            "genre_name": "Indie"
+            },
+            {
+            "artist_id": 208,
+            "artist_name": "Eminem",
+            "country": "United States",
+            "genre_id": 306,
+            "genre_name": "Hip Hop"
+            },
+            {
+            "artist_id": 214,
+            "artist_name": "Metallica",
+            "country": "United States",
+            "genre_id": 306,
+            "genre_name": "Hip Hop"
+            },
+            {
+            "artist_id": 209,
+            "artist_name": "Daft Punk",
+            "country": "France",
+            "genre_id": 307,
+            "genre_name": "Electronic"
+            },
+            {
+            "artist_id": 219,
+            "artist_name": "Brian Eno",
+            "country": "United Kingdom",
+            "genre_id": 307,
+            "genre_name": "Electronic"
+            },
+            {
+            "artist_id": 211,
+            "artist_name": "Bob Marley",
+            "country": "Jamaica",
+            "genre_id": 308,
+            "genre_name": "Reggae"
+            },
+            {
+            "artist_id": 212,
+            "artist_name": "Ludwig van Beethoven",
+            "country": "Germany",
+            "genre_id": 309,
+            "genre_name": "Classical"
+            },
+            {
+            "artist_id": 215,
+            "artist_name": "Celia Cruz",
+            "country": "Cuba",
+            "genre_id": 310,
+            "genre_name": "Salsa"
+            },
+            {
+            "artist_id": 216,
+            "artist_name": "James Brown",
+            "country": "United States",
+            "genre_id": 311,
+            "genre_name": "Funk"
+            },
+            {
+            "artist_id": 217,
+            "artist_name": "A.R. Rahman",
+            "country": "India",
+            "genre_id": 312,
+            "genre_name": "Bollywood"
+            },
+            {
+            "artist_id": 218,
+            "artist_name": "Aretha Franklin",
+            "country": "United States",
+            "genre_id": 313,
+            "genre_name": "Soul"
+            },
+            {
+            "artist_id": 220,
+            "artist_name": "Mahalia Jackson",
+            "country": "United States",
+            "genre_id": 314,
+            "genre_name": "Gospel"
+            }
+        ],
+        "table_name": "Artist and Genre"
         },
-        {
-          "artist_id": 204,
-          "artist_name": "Miles Davis",
-          "country": "United States",
-          "genre_id": 303
+        "3": {
+        "data": [
+            {
+            "artist_id": 215,
+            "artist_name": "Celia Cruz",
+            "country": "Cuba",
+            "genre_id": 310,
+            "genre_name": "Salsa"
+            },
+            {
+            "artist_id": 209,
+            "artist_name": "Daft Punk",
+            "country": "France",
+            "genre_id": 307,
+            "genre_name": "Electronic"
+            },
+            {
+            "artist_id": 212,
+            "artist_name": "Ludwig van Beethoven",
+            "country": "Germany",
+            "genre_id": 309,
+            "genre_name": "Classical"
+            },
+            {
+            "artist_id": 217,
+            "artist_name": "A.R. Rahman",
+            "country": "India",
+            "genre_id": 312,
+            "genre_name": "Bollywood"
+            },
+            {
+            "artist_id": 211,
+            "artist_name": "Bob Marley",
+            "country": "Jamaica",
+            "genre_id": 308,
+            "genre_name": "Reggae"
+            },
+            {
+            "artist_id": 201,
+            "artist_name": "Queen",
+            "country": "United Kingdom",
+            "genre_id": 301,
+            "genre_name": "Rock"
+            },
+            {
+            "artist_id": 203,
+            "artist_name": "Taylor Swift",
+            "country": "United States",
+            "genre_id": 302,
+            "genre_name": "Pop"
+            }
+        ],
+        "table_name": "Artist and Genre with applied filter"
         },
-        {
-          "artist_id": 205,
-          "artist_name": "Johnny Cash",
-          "country": "United States",
-          "genre_id": 304
+        "4": {
+        "data": [
+            {
+            "artist_id": 201,
+            "artist_name": "Queen",
+            "country": "United Kingdom",
+            "genre_id": 301,
+            "genre_name": "Rock"
+            },
+            {
+            "artist_id": 203,
+            "artist_name": "Taylor Swift",
+            "country": "United States",
+            "genre_id": 302,
+            "genre_name": "Pop"
+            },
+            {
+            "artist_id": 209,
+            "artist_name": "Daft Punk",
+            "country": "France",
+            "genre_id": 307,
+            "genre_name": "Electronic"
+            },
+            {
+            "artist_id": 211,
+            "artist_name": "Bob Marley",
+            "country": "Jamaica",
+            "genre_id": 308,
+            "genre_name": "Reggae"
+            },
+            {
+            "artist_id": 212,
+            "artist_name": "Ludwig van Beethoven",
+            "country": "Germany",
+            "genre_id": 309,
+            "genre_name": "Classical"
+            },
+            {
+            "artist_id": 215,
+            "artist_name": "Celia Cruz",
+            "country": "Cuba",
+            "genre_id": 310,
+            "genre_name": "Salsa"
+            },
+            {
+            "artist_id": 217,
+            "artist_name": "A.R. Rahman",
+            "country": "India",
+            "genre_id": 312,
+            "genre_name": "Bollywood"
+            }
+        ],
+        "table_name": "Artist and Genre with applied filter"
         },
-        {
-          "artist_id": 206,
-          "artist_name": "Beyoncé",
-          "country": "United States",
-          "genre_id": 302
-        },
-        {
-          "artist_id": 207,
-          "artist_name": "Arctic Monkeys",
-          "country": "United Kingdom",
-          "genre_id": 305
-        },
-        {
-          "artist_id": 208,
-          "artist_name": "Eminem",
-          "country": "United States",
-          "genre_id": 306
-        },
-        {
-          "artist_id": 209,
-          "artist_name": "Daft Punk",
-          "country": "France",
-          "genre_id": 307
-        },
-        {
-          "artist_id": 210,
-          "artist_name": "B.B. King",
-          "country": "United States",
-          "genre_id": 304
-        },
-        {
-          "artist_id": 211,
-          "artist_name": "Bob Marley",
-          "country": "Jamaica",
-          "genre_id": 308
-        },
-        {
-          "artist_id": 212,
-          "artist_name": "Ludwig van Beethoven",
-          "country": "Germany",
-          "genre_id": 309
-        },
-        {
-          "artist_id": 213,
-          "artist_name": "Nirvana",
-          "country": "United States",
-          "genre_id": 305
-        },
-        {
-          "artist_id": 214,
-          "artist_name": "Metallica",
-          "country": "United States",
-          "genre_id": 306
-        },
-        {
-          "artist_id": 215,
-          "artist_name": "Celia Cruz",
-          "country": "Cuba",
-          "genre_id": 310
-        },
-        {
-          "artist_id": 216,
-          "artist_name": "James Brown",
-          "country": "United States",
-          "genre_id": 311
-        },
-        {
-          "artist_id": 217,
-          "artist_name": "A.R. Rahman",
-          "country": "India",
-          "genre_id": 312
-        },
-        {
-          "artist_id": 218,
-          "artist_name": "Aretha Franklin",
-          "country": "United States",
-          "genre_id": 313
-        },
-        {
-          "artist_id": 219,
-          "artist_name": "Brian Eno",
-          "country": "United Kingdom",
-          "genre_id": 307
-        },
-        {
-          "artist_id": 220,
-          "artist_name": "Mahalia Jackson",
-          "country": "United States",
-          "genre_id": 314
+        "5": {
+        "data": [
+            {
+            "count(artist_id)": 4,
+            "country": "United Kingdom",
+            "genre_id": 301
+            },
+            {
+            "count(artist_id)": 11,
+            "country": "United States",
+            "genre_id": 302
+            },
+            {
+            "count(artist_id)": 1,
+            "country": "France",
+            "genre_id": 307
+            },
+            {
+            "count(artist_id)": 1,
+            "country": "Jamaica",
+            "genre_id": 308
+            },
+            {
+            "count(artist_id)": 1,
+            "country": "Germany",
+            "genre_id": 309
+            },
+            {
+            "count(artist_id)": 1,
+            "country": "Cuba",
+            "genre_id": 310
+            },
+            {
+            "count(artist_id)": 1,
+            "country": "India",
+            "genre_id": 312
+            }
+        ],
+        "table_name": "Final Result"
         }
-      ],
-      "table_name": "Artist"
-    },
-    "1": {
-      "data": [
-        {
-          "genre_id": 301,
-          "genre_name": "Rock"
-        },
-        {
-          "genre_id": 302,
-          "genre_name": "Pop"
-        },
-        {
-          "genre_id": 303,
-          "genre_name": "Jazz"
-        },
-        {
-          "genre_id": 304,
-          "genre_name": "Country"
-        },
-        {
-          "genre_id": 305,
-          "genre_name": "Indie"
-        },
-        {
-          "genre_id": 306,
-          "genre_name": "Hip Hop"
-        },
-        {
-          "genre_id": 307,
-          "genre_name": "Electronic"
-        },
-        {
-          "genre_id": 308,
-          "genre_name": "Reggae"
-        },
-        {
-          "genre_id": 309,
-          "genre_name": "Classical"
-        },
-        {
-          "genre_id": 310,
-          "genre_name": "Salsa"
-        },
-        {
-          "genre_id": 311,
-          "genre_name": "Funk"
-        },
-        {
-          "genre_id": 312,
-          "genre_name": "Bollywood"
-        },
-        {
-          "genre_id": 313,
-          "genre_name": "Soul"
-        },
-        {
-          "genre_id": 314,
-          "genre_name": "Gospel"
-        }
-      ],
-      "table_name": "Genre"
-    },
-    "2": {
-      "data": [
-        {
-          "artist_id": 201,
-          "artist_name": "Queen",
-          "country": "United Kingdom",
-          "genre_id": 301,
-          "genre_name": "Rock"
-        },
-        {
-          "artist_id": 202,
-          "artist_name": "The Rolling Stones",
-          "country": "United Kingdom",
-          "genre_id": 301,
-          "genre_name": "Rock"
-        },
-        {
-          "artist_id": 203,
-          "artist_name": "Taylor Swift",
-          "country": "United States",
-          "genre_id": 302,
-          "genre_name": "Pop"
-        },
-        {
-          "artist_id": 206,
-          "artist_name": "Beyoncé",
-          "country": "United States",
-          "genre_id": 302,
-          "genre_name": "Pop"
-        },
-        {
-          "artist_id": 204,
-          "artist_name": "Miles Davis",
-          "country": "United States",
-          "genre_id": 303,
-          "genre_name": "Jazz"
-        },
-        {
-          "artist_id": 205,
-          "artist_name": "Johnny Cash",
-          "country": "United States",
-          "genre_id": 304,
-          "genre_name": "Country"
-        },
-        {
-          "artist_id": 210,
-          "artist_name": "B.B. King",
-          "country": "United States",
-          "genre_id": 304,
-          "genre_name": "Country"
-        },
-        {
-          "artist_id": 207,
-          "artist_name": "Arctic Monkeys",
-          "country": "United Kingdom",
-          "genre_id": 305,
-          "genre_name": "Indie"
-        },
-        {
-          "artist_id": 213,
-          "artist_name": "Nirvana",
-          "country": "United States",
-          "genre_id": 305,
-          "genre_name": "Indie"
-        },
-        {
-          "artist_id": 208,
-          "artist_name": "Eminem",
-          "country": "United States",
-          "genre_id": 306,
-          "genre_name": "Hip Hop"
-        },
-        {
-          "artist_id": 214,
-          "artist_name": "Metallica",
-          "country": "United States",
-          "genre_id": 306,
-          "genre_name": "Hip Hop"
-        },
-        {
-          "artist_id": 209,
-          "artist_name": "Daft Punk",
-          "country": "France",
-          "genre_id": 307,
-          "genre_name": "Electronic"
-        },
-        {
-          "artist_id": 219,
-          "artist_name": "Brian Eno",
-          "country": "United Kingdom",
-          "genre_id": 307,
-          "genre_name": "Electronic"
-        },
-        {
-          "artist_id": 211,
-          "artist_name": "Bob Marley",
-          "country": "Jamaica",
-          "genre_id": 308,
-          "genre_name": "Reggae"
-        },
-        {
-          "artist_id": 212,
-          "artist_name": "Ludwig van Beethoven",
-          "country": "Germany",
-          "genre_id": 309,
-          "genre_name": "Classical"
-        },
-        {
-          "artist_id": 215,
-          "artist_name": "Celia Cruz",
-          "country": "Cuba",
-          "genre_id": 310,
-          "genre_name": "Salsa"
-        },
-        {
-          "artist_id": 216,
-          "artist_name": "James Brown",
-          "country": "United States",
-          "genre_id": 311,
-          "genre_name": "Funk"
-        },
-        {
-          "artist_id": 217,
-          "artist_name": "A.R. Rahman",
-          "country": "India",
-          "genre_id": 312,
-          "genre_name": "Bollywood"
-        },
-        {
-          "artist_id": 218,
-          "artist_name": "Aretha Franklin",
-          "country": "United States",
-          "genre_id": 313,
-          "genre_name": "Soul"
-        },
-        {
-          "artist_id": 220,
-          "artist_name": "Mahalia Jackson",
-          "country": "United States",
-          "genre_id": 314,
-          "genre_name": "Gospel"
-        }
-      ],
-      "table_name": "Artist and Genre"
-    },
-    "3": {
-      "data": [
-        {
-          "artist_id": 215,
-          "artist_name": "Celia Cruz",
-          "country": "Cuba",
-          "genre_id": 310,
-          "genre_name": "Salsa"
-        },
-        {
-          "artist_id": 209,
-          "artist_name": "Daft Punk",
-          "country": "France",
-          "genre_id": 307,
-          "genre_name": "Electronic"
-        },
-        {
-          "artist_id": 212,
-          "artist_name": "Ludwig van Beethoven",
-          "country": "Germany",
-          "genre_id": 309,
-          "genre_name": "Classical"
-        },
-        {
-          "artist_id": 217,
-          "artist_name": "A.R. Rahman",
-          "country": "India",
-          "genre_id": 312,
-          "genre_name": "Bollywood"
-        },
-        {
-          "artist_id": 211,
-          "artist_name": "Bob Marley",
-          "country": "Jamaica",
-          "genre_id": 308,
-          "genre_name": "Reggae"
-        },
-        {
-          "artist_id": 201,
-          "artist_name": "Queen",
-          "country": "United Kingdom",
-          "genre_id": 301,
-          "genre_name": "Rock"
-        },
-        {
-          "artist_id": 203,
-          "artist_name": "Taylor Swift",
-          "country": "United States",
-          "genre_id": 302,
-          "genre_name": "Pop"
-        }
-      ],
-      "table_name": "Artist and Genre with applied filter"
-    },
-    "4": {
-      "data": [
-        {
-          "artist_id": 201,
-          "artist_name": "Queen",
-          "country": "United Kingdom",
-          "genre_id": 301,
-          "genre_name": "Rock"
-        },
-        {
-          "artist_id": 203,
-          "artist_name": "Taylor Swift",
-          "country": "United States",
-          "genre_id": 302,
-          "genre_name": "Pop"
-        },
-        {
-          "artist_id": 209,
-          "artist_name": "Daft Punk",
-          "country": "France",
-          "genre_id": 307,
-          "genre_name": "Electronic"
-        },
-        {
-          "artist_id": 211,
-          "artist_name": "Bob Marley",
-          "country": "Jamaica",
-          "genre_id": 308,
-          "genre_name": "Reggae"
-        },
-        {
-          "artist_id": 212,
-          "artist_name": "Ludwig van Beethoven",
-          "country": "Germany",
-          "genre_id": 309,
-          "genre_name": "Classical"
-        },
-        {
-          "artist_id": 215,
-          "artist_name": "Celia Cruz",
-          "country": "Cuba",
-          "genre_id": 310,
-          "genre_name": "Salsa"
-        },
-        {
-          "artist_id": 217,
-          "artist_name": "A.R. Rahman",
-          "country": "India",
-          "genre_id": 312,
-          "genre_name": "Bollywood"
-        }
-      ],
-      "table_name": "Artist and Genre with applied filter"
-    },
-    "5": {
-      "data": [
-        {
-          "count(artist_id)": 4,
-          "country": "United Kingdom",
-          "genre_id": 301
-        },
-        {
-          "count(artist_id)": 11,
-          "country": "United States",
-          "genre_id": 302
-        },
-        {
-          "count(artist_id)": 1,
-          "country": "France",
-          "genre_id": 307
-        },
-        {
-          "count(artist_id)": 1,
-          "country": "Jamaica",
-          "genre_id": 308
-        },
-        {
-          "count(artist_id)": 1,
-          "country": "Germany",
-          "genre_id": 309
-        },
-        {
-          "count(artist_id)": 1,
-          "country": "Cuba",
-          "genre_id": 310
-        },
-        {
-          "count(artist_id)": 1,
-          "country": "India",
-          "genre_id": 312
-        }
-      ],
-      "table_name": "Final Result"
-    }
-  };
+    };
 
     // Define the @keyframes directly within the component
     const fadeInKeyframes = `
