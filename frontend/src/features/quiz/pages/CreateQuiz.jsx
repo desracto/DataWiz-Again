@@ -211,22 +211,24 @@ const CreateQuiz = () => {
       const binaryFiles = await Promise.all(acceptedFiles.map(file => convertImageToBinary(file)));
       
       setSchemasList((prev) =>
-        prev.map((item) => {
-          if (item.id == currentRef?.current?.id) {
-            return {
-                ...schema,
-                files: [...schema.files, ...binaryFiles.map((binary, index) => ({
-                  name: acceptedFiles[index].name,
-                  binaryData: binary
-                }))]
-            };
-          } else {
-            return item;
-          }
-        })
-      );
-    }
-  }, []);
+      prev.map((item) => {
+        if (item.id == currentRef?.current?.id) {
+          return {
+            ...item,
+            files: [
+              ...acceptedFiles.map((file) => ({
+                ...file,
+                preview: URL.createObjectURL(file),
+              })),
+            ],
+          };
+        } else {
+          return item;
+        }
+      })
+    );
+  }
+}, []);
 
   const { getRootProps, getInputProps, open, isDragActive } = useDropzone({
     noClick: true,
@@ -416,8 +418,9 @@ const CreateQuiz = () => {
               <div className="w-full flex flex-col gap-5">
                 {schemasList.map((schema, index) => (
                   <div key={index}>
+                    
                     <div className="flex-justify-between">
-                      <span className="text-Gilroy-Mediumm">Schema - {index + 1}</span>
+                      <span className="text-Gilroy-Mediumm">Schema - {index + 1} </span>
                       <FaTrash
                         color="#98989F"
                         size={24}
@@ -427,6 +430,7 @@ const CreateQuiz = () => {
                         }}
                         style={{ cursor: "pointer" }}
                       />
+                      
                     </div>
                     <div className="schema-box">
                       {schema?.files?.length === 0 ? (
