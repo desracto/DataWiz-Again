@@ -6,18 +6,26 @@ import "./SavedQuizzes.css";
 import UNCompletedQuiz from "./CompletedQuizPage.jsx"
 import SecondHeader from '../../../global_components/SecondHeader';
 import axios from 'axios';
-
-// Axios instance
-const request = axios.create({
-    baseURL: "http://localhost:5000",
-    headers: {
-        "Content-Type" : "application/json"
-    },
-    withCredentials: true
-  });
+import { useEffect } from "react";
 
 
-function SavedQuizzes() {
+const SavedQuizzes = ({request}) => {
+    // on render
+    useEffect(() => {
+        request({
+            url: "api/quiz/retrieve-quizzes",
+            method: "get"
+        })
+        .then(response => {
+            console.log(response.data)
+        })
+        .catch(error => {
+            console.error(error)
+        })
+
+    }, [])
+
+    
   const navigate = useNavigate();
   const savedQuizzes = JSON.parse(localStorage.getItem('quizzes') || '[]');
   const deleteMostRecentQuiz = () => {
