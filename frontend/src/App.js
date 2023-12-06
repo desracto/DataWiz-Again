@@ -25,6 +25,7 @@ import QuizHome from './features/quiz/pages/QuizHome';
 import SavedQuizzes from './features/quiz/pages/SavedQuizzesPage';
 import UNCompletedQuiz from './features/quiz/pages/UNCompletedQuiz';
 import AllAttempts from './features/quiz/pages/AllAttemptsPage';
+import QuizAttempt from './features/quiz/pages/QuizAttemptPage';
 
 import axios from 'axios'
 
@@ -61,6 +62,7 @@ function App() {
                     <Route path="/FaqsPage" element={<FaqsPage />} />
                     <Route path="/TestAni" element={<TestAniPage />} />
                     <Route path="/AllAttemptsPage" element={<AllAttempts />} />
+                    <Route path="/QuizAttemptPage" element={<QuizAttempt />} />
 
                 </Routes>
             </BrowserRouter>
