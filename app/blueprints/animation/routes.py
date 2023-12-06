@@ -7,17 +7,13 @@ from ...extensions import db
 from ..main.errors import bad_request, error_response
 from .scripts.generator import generate_prefixed
 
-from ._prefixed_models import Schema1_Employee as Employee
-from ._prefixed_models import Schema2_Product as Product, Schema2_Inventory as Inventory
-from ._prefixed_models import Schema3_Course as Course, Schema3_Enrollment as Enrollment
-from ._prefixed_models import Schema4_Flight as Flight, Schema4_Passenger as Passenger, Schema4_Ticket as Ticket
-from ._prefixed_models import Schema5_Album as Album, Schema5_Artist as Artist, Schema5_Genre as Genre, Schema5_Song as Song
-
-from pyparsing import ParseException
-
-from app.scripts.Active_animation_parser import generate_animation_steps
-from app.scripts.Active_sqlra import translate_query
-from .functions import create_prefixed_connection, retrieve_query_results
+from ...database.models._prefixed_models import Schema1_Employee as Employee, \
+                                                Schema2_Product as Product, Schema2_Inventory as Inventory, \
+                                                Schema3_Course as Course, Schema3_Enrollment as Enrollment, \
+                                                Schema4_Flight as Flight, Schema4_Passenger as Passenger, Schema4_Ticket as Ticket, \
+                                                Schema5_Album as Album, Schema5_Artist as Artist, Schema5_Genre as Genre, Schema5_Song as Song
+                                                
+from ...scripts.animation_parser import retrieve_query_results
 
 @animation_bp.route('/schema/1/')
 def schema1():
@@ -33,10 +29,7 @@ def schema1():
         emps_json.append(emp.as_dict())
     
     results = {
-        0: {
-            'table_name': 'Employees',
-            'data': emps_json
-        },
+        "employees": emps_json
     }
     return jsonify(results=results)
 
@@ -58,14 +51,8 @@ def schema2():
         invens_json.append(inv.as_dict())
 
     results = {
-        0: {
-            'table_name': 'Products',
-            'data': prods_json
-        },
-        1: {
-            'table_name': 'Inventory',
-            'data': invens_json
-        }
+        'products': prods_json,
+        'inventory': invens_json
     }
 
     return jsonify(results=results)
@@ -88,15 +75,9 @@ def schema3():
         enrolls_json.append(enroll.as_dict())
 
     results = {
-        0: {
-            'table_name': 'Courses',
-            'data': course_json
-        },
-        1: {
-            'table_name': 'Enrollment',
-            'data': enrolls_json
-        }
-    }
+        'course': course_json,
+        'enrollments': enrolls_json
+    } 
 
     return jsonify(results=results)
 
@@ -123,18 +104,9 @@ def schema4():
         tickets_json.append(ticket.as_dict())
 
     results = {
-        0: {
-            'table_name': 'Flight',
-            'data': flights_json
-        },
-        1: {
-            'table_name': 'Passenger',
-            'data': passengers_json
-        },
-        2: {
-            'table_name': 'Tickets',
-            'data': tickets_json
-        }
+        'flight': flights_json,
+        'passenger': passengers_json,
+        'ticket': tickets_json
     }
 
     return jsonify(results=results)
@@ -166,22 +138,10 @@ def schema5():
         artists_json.append(artist.as_dict())
 
     results = {
-        0: {
-            'table_name': 'Albums',
-            'data': albums_json
-        },
-        1: {
-            'table_name': 'Genres',
-            'data': genres_json
-        },
-        2: {
-            'table_name': 'Songs',
-            'data': songs_json
-        },
-        3: {
-            'table_name': 'Artists',
-            'data': artists_json
-        }
+        'album': albums_json,
+        'genre': genres_json,
+        'song': songs_json,
+        'artist': artists_json
     }
 
     return jsonify(results=results)
@@ -198,12 +158,7 @@ def animate_query():
     if not query:
         return bad_request('Missing or invalid "query" in JSON data')
 
-    # Call the animation parser function and retrieve the steps_result
-    steps_result = generate_animation_steps(query)
-
-    conn = create_prefixed_connection()
-    query_results = retrieve_query_results(steps_result, conn)
+    query_results = retrieve_query_results(query)
     
-
     # Return the steps_result as JSON
-    return jsonify({'steps_result': query_results})
+    return jsonify(query_results)

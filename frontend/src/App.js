@@ -26,6 +26,7 @@ import QuizHome from './features/quiz/pages/QuizHome';
 import SavedQuizzes from './features/quiz/pages/SavedQuizzesPage';
 import UNCompletedQuiz from './features/quiz/pages/UNCompletedQuiz';
 import AllAttempts from './features/quiz/pages/AllAttemptsPage';
+import QuizAttempt from './features/quiz/pages/QuizAttemptPage';
 
 import axios from 'axios'
 
@@ -57,32 +58,15 @@ function App() {
                     <Route path="/SchemaSelectionPage" element={<SchemaSelectionPage />} />
                     <Route path="/QueryAnimationPage" element={<QueryAnimationPage />} />
                     <Route path="/SavedAnimationsPage" element={<SavedAnimationsPage />} />
-                    <Route path="/AccountSettingsPage" element={<AccountSettingsPage request={request} />} />
+                    <Route path="/QuizHomePage" element={<QuizHome />} />
+                    <Route path="/CreateQuizPage" element={<CreateQuiz request={request} />} />
+                    <Route path="/SavedQuizzesPage" element={<SavedQuizzes />} />
+                    <Route path="/CompletedQuizPage" element={<UNCompletedQuiz />} />
+                    <Route path="/AccountSettingsPage" element={<AccountSettingsPage request={request}/>} />
                     <Route path="/FaqsPage" element={<FaqsPage />} />
                     <Route path="/TestAni" element={<TestAniPage />} />
-                    <Route path="*" element={<div>Page not Found </div>} />
-
-                    {/* Routes accessible only to instructors */}
-                    {userRole === 'instructor' && (
-                        <>
-                            <Route path="/QuizzesIntroductionPage" element={<QuizzesIntroductionPage />} />
-                            <Route path="/QuizHomePage" element={<QuizHome />} />
-                            <Route path="/CreateQuizPage" element={<CreateQuiz />} />
-                            <Route path="/SavedQuizzesPage" element={<SavedQuizzes />} />
-                            <Route path="/UncompletedQuizPage" element={<UNCompletedQuiz />} />
-                        </>
-                        
-                    )}
-                    {/* Redirect to 404 if user tries to access instructor-only routes */}
-                    {userRole === 'student' && (
-                        <>
-                            <Route path="/QuizHomePage" element={<div>Page not Found </div>} />
-                            <Route path="/CreateQuizPage" element={<div>Page not Found </div>} />
-                            <Route path="/QuizzesIntroductionPage" element={<div>Page not Found </div>} />
-                            <Route path="/SavedQuizzesPage" element={<div>Page not Found </div>} />
-                            <Route path="/UncompletedQuizPage" element={<div>Page not Found </div>} />
-                        </>
-                    )}
+                    <Route path="/AllAttemptsPage" element={<AllAttempts />} />
+                    <Route path="/QuizAttemptPage" element={<QuizAttempt />} />
 
                 </Routes>
             </BrowserRouter>

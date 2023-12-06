@@ -1,38 +1,36 @@
 .view-attempts-container {
-    background: #D8D8D8;
-    border-radius: 1.5rem;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
-  }
+  background: #d8d8d8;
+  border-radius: 1.5rem;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
 
-  .view-attempts-text{
-    font-size: 20px;
-    font-family: Gilroy-Bold;
-    text-align: center;
-  }
+.view-attempts-text {
+  font-size: 20px;
+  font-family: Gilroy-Bold;
+  text-align: center;
+}
 
-  .viewAll-Attempts-Button {
-    padding: 10px 20px;
-    background-color: #8A5A8E;
-    color: white;
-    font-family: Gilroy-Bold;
-    font-size: 13px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    align-items: center;
-    justify-content: center;
-    margin-top: -8px;
-    letter-spacing: 0.5px;
-   
-  }
-  
-  .viewAll-Attempts-Button:hover {
-    background-color: #331B3B;
-    transition-duration: 450ms;
-  }
+.viewAll-Attempts-Button {
+  padding: 10px 20px;
+  background-color: #8a5a8e;
+  color: white;
+  font-family: Gilroy-Bold;
+  font-size: 13px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  align-items: center;
+  justify-content: center;
+  margin-top: -8px;
+  letter-spacing: 0.5px;
+}
 
+.viewAll-Attempts-Button:hover {
+  background-color: #331b3b;
+  transition-duration: 450ms;
+}
 
 .bgdesign2Icon {
   position: absolute;
@@ -173,7 +171,6 @@
 
 .inputLabel {
   position: relative;
-
 }
 
 .inputfield,
@@ -445,18 +442,17 @@
   height: 70px;
   font-size: var(--font-size-4xl);
   font-family: var(--font-gilroy-bold);
-  background: #D8D8D8;
+  background: #d8d8d8;
   border-radius: 1rem;
 }
 
 .buttonFilteredGradetoolbar {
   cursor: pointer;
   position: relative;
-
 }
 
 .content_container_bgcolor {
-  background: #D8D8D8;
+  background: #d8d8d8;
   border-radius: 1.5rem;
   margin-bottom: 30px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
@@ -705,25 +701,25 @@
   border-radius: 75px;
   box-shadow: 0px 4px 20px #00000040;
   height: 40px;
-  position: relative;
+  position: absolute;
   width: 40px;
-  top: 190px;
-  left: 290px;
+  top: 50%;
+  transform: translateY(-50%);
+  left: -70px;
   cursor: pointer;
-  
-  }
+}
 
-  .back-arrow-button:hover{
-    background-color: #d8d8d8;
-    transition-duration: 700ms;
-  }
+.back-arrow-button:hover {
+  background-color: #d8d8d8;
+  transition-duration: 700ms;
+}
 
-  .back-arrow-button svg {
-    width: 20px; /* Adjust the size of the SVG as needed */
-    height: 20px; /* Adjust the size of the SVG as needed */
-    margin-top: 4px;
-    align-items: center;
-  }
+.back-arrow-button svg {
+  width: 20px; /* Adjust the size of the SVG as needed */
+  height: 20px; /* Adjust the size of the SVG as needed */
+  margin-top: 4px;
+  align-items: center;
+}
 
 .main_Page {
   position: relative;
@@ -737,41 +733,10 @@
   font-family: var(--font-gilroy-semibold);
 }
 
-
 .generateQuizButton {
-    padding: 12px 20px;
-    /* Adjust size as needed */
-    background-color: #8A5A8E;
-    /* Purple background color */
-    color: white;
-    /* White text */
-    font-family: Gilroy-Bold;
-    font-size: 13px;
-    /* Font size */
-    border: none;
-    /* No border */
-    border-radius: 5px;
-    /* Rounded corners */
-    cursor: pointer;
-    /* Pointer cursor on hover */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    /* Optional: Adds a subtle shadow */
-  
-  }
-  
-  .generateQuizButton:hover {
-    background-color: #331B3B;
-    /* Slightly darker purple background on hover */
-    transition-duration: 450ms;
-    /* Smooth background color transition on hover */
-  }
-
-
-
-viewAllAttempts {
   padding: 12px 20px;
   /* Adjust size as needed */
-  background-color: #8A5A8E;
+  background-color: #8a5a8e;
   /* Purple background color */
   color: white;
   /* White text */
@@ -786,11 +751,37 @@ viewAllAttempts {
   /* Pointer cursor on hover */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   /* Optional: Adds a subtle shadow */
+}
 
+.generateQuizButton:hover {
+  background-color: #331b3b;
+  /* Slightly darker purple background on hover */
+  transition-duration: 450ms;
+  /* Smooth background color transition on hover */
+}
+
+viewAllAttempts {
+  padding: 12px 20px;
+  /* Adjust size as needed */
+  background-color: #8a5a8e;
+  /* Purple background color */
+  color: white;
+  /* White text */
+  font-family: Gilroy-Bold;
+  font-size: 13px;
+  /* Font size */
+  border: none;
+  /* No border */
+  border-radius: 5px;
+  /* Rounded corners */
+  cursor: pointer;
+  /* Pointer cursor on hover */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* Optional: Adds a subtle shadow */
 }
 
 viewAllAttempts:hover {
-  background-color: #331B3B;
+  background-color: #331b3b;
   /* Slightly darker purple background on hover */
   transition-duration: 450ms;
   /* Smooth background color transition on hover */

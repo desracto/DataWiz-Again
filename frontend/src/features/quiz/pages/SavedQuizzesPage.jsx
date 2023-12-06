@@ -5,6 +5,16 @@ import { useNavigate } from 'react-router-dom';
 import "./SavedQuizzes.css";
 import UNCompletedQuiz from "./UNCompletedQuiz.jsx"
 import SecondHeader from '../../../global_components/SecondHeader';
+import axios from 'axios';
+
+// Axios instance
+const request = axios.create({
+    baseURL: "http://localhost:5000",
+    headers: {
+        "Content-Type" : "application/json"
+    },
+    withCredentials: true
+  });
 
 
 function SavedQuizzes() {
@@ -55,7 +65,10 @@ function SavedQuizzes() {
                 <span> {quiz.name}</span>
                 <small>Date: {quiz.date}</small>
                 <small>Time: {quiz.time}</small> 
-                <span3>UNATTEMPTED</span3> 
+                {quiz.isAttempted ? 
+                <span2>ATTEMPTED</span2> : 
+                <span3>UNATTEMPTED</span3>
+                } 
             
                 </div>
                 

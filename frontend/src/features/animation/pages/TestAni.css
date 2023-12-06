@@ -1,0 +1,56 @@
+/* TestAni.css */
+
+.test-ani-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.animate-button {
+    padding: 10px;
+    font-size: 16px;
+    margin: 10px;
+}
+
+.result-container {
+    width: 1000px;
+    height: 1000px;
+    border-radius: 10px;
+    margin: 10px;
+    overflow: auto;
+    transition: background-color 1s ease-in-out;
+}
+
+.result-container.animating {
+    background-color: #f2f2f2;
+}
+
+.table-info-container1 {
+    text-align: left;
+    background-color: #D4C1CE;
+    padding: 15px;
+    margin: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.05);
+    animation: fadeIn 5s forwards;
+}
+
+.query-description {
+    font-size: 16px;
+    font-weight: 400;
+    margin: 10px;
+}
+
+.no-result-message {
+    font-size: 16px;
+    font-weight: 400;
+    margin: 10px;
+    text-align: center;
+}
+
+.arrow-indicator {
+    text-align: center;
+    margin: 35px;
+    font-size: 50px;
+    animation: fadeIn 5s forwards;
+}

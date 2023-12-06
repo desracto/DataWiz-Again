@@ -2,11 +2,13 @@ import React, { useState, useCallback } from 'react';
 import SecondHeader from '../../../global_components/SecondHeader';
 import SchemaTable from '../components/SchemaTable';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { schemaIdToProperty } from './SchemaSelectionPage';
+import QueryTable from '../components/QueryTable';
 
 import axios from 'axios'; 
 import "./QueryAnimationPage.css";
- 
-// Image IMports
+
+// Image Imports
 import svgImage from '../../../assets/images/vector-31.svg'; 
 import svgImage2 from '../../../assets/images/blob-haikei.svg'; 
 
@@ -17,41 +19,32 @@ const request = axios.create({
     },
     withCredentials: true,
     timeout: 300000
-})
+});
 
-export default function SchemaSelectionPage() {
-
+const QueryAnimationPage = () => {
     const location = useLocation();
-    const selectedSchema = location.state.schemaData;
-    // console.log(location.state.schemaData);
     const [query, setQuery] = useState('');
-    const [stepsResult, setStepsResult] = useState(null); // this state to stores the result
+    const [queryResults, setQueryResults] = useState(null);
+    const [querySteps, setQuerySteps] = useState(null);
 
     const navigate = useNavigate();
     const returnToSchemaSelection = useCallback(() => {
-      navigate("/SchemaSelectionPage")
+        navigate("/SchemaSelectionPage");
     }, [navigate]);
+
+    // Extract selected schema and schemaId from location.state
+    console.log("Location state:", location.state);
+    const selectedSchema = location.state ? location.state.selectedSchema : null;
+    const schemaId = location.state ? location.state.schemaId : null;
+    console.log("Selected Schema ID:", schemaId);
 
     const handleEnterKey = (e) => {
         if (e.key === "Enter" && !e.shiftKey) {
-          e.preventDefault();
-          setQuery((prevQuery) => prevQuery + "\n");
+            e.preventDefault();
+            setQuery((prevQuery) => prevQuery + "\n");
         }
-      };
+    };
   
-
-    // const handleAnimateQuery = async () => {
-    //     console.log(query) // testing purposes
-
-    //     request({
-    //         url: 'api/animation/animate/',
-    //         method: 'post',
-    //         data: {query: query}})
-    //     .then(response => {
-    //         console.log(response.data)})
-    //     .catch(error => {
-    //         console.log(error.response)}
-    //     )};
 
     const handleAnimateQuery = async () => {
         const trimmedQuery = query.trim();
@@ -79,14 +72,19 @@ export default function SchemaSelectionPage() {
             const data = response.data;
 
             // Log the response to the console (for testing purposes)
-            console.log(data);
+            // console.log(data);
 
             // Update state with the steps_result
-            setStepsResult(data.steps_result);
+            setQueryResults(data.results);
+            setQuerySteps(data.steps);
+            console.log("HERE", queryResults);
+            console.log("HERE", querySteps);
 
             // Further handling of the response, if needed
         } catch (error) {
             console.error('An error occurred:', error);
+            // Log the entire error object
+            console.error(error)
         }
     };
 
@@ -149,7 +147,14 @@ export default function SchemaSelectionPage() {
             </div>
             <div className="SelectedSchemaDisplayCard">
                 <div className='SelectedSchemaCardContent'>
-                    <SchemaTable schemaData ={selectedSchema}/>
+                    {/* Display the selected schema using SchemaTable */}
+                    {selectedSchema && schemaId && (
+                        <SchemaTable
+                            schemaData={selectedSchema}
+                            schemaIdToProperty={schemaIdToProperty}
+                            selectedSchemaId={schemaId}
+                        />
+                     )}
                 </div>
             </div>
 
@@ -178,17 +183,75 @@ export default function SchemaSelectionPage() {
             </button>
         </div>
 
-        <div className='VisualizationDisplayCard'>
-            {/* Display steps_result if available */}
-            {stepsResult && (
+        <div className='QueryStepsDisplayCard'>
+            {/* Display steps_results if available */}
+            {querySteps && (
                 <>
-                    <h3>Steps Result:</h3>
-                    <pre>{JSON.stringify(stepsResult, null, 2)}</pre>
+                    <h3>The Query Steps:</h3>
+                    {querySteps.slice(0, -1).map((step, index) => (
+                        <div key={index} className="QueryStep">
+                            <p><strong>{`STEP ${index + 1}:`}</strong> <span>{step}</span></p>
+                        </div>
+                    ))}
+                    {querySteps.length > 0 && (
+                        <div className="QueryStep">
+                            <p><strong>Your Query:</strong> <span>{querySteps[querySteps.length - 1]}</span></p>
+                        </div>
+                    )}
                 </>
             )}
         </div>
-    </div>
 
+        <div className='VisualizationDisplayCard'>
+            {querySteps && (
+            <>
+                {querySteps.map((step, index, array) => (
+                <React.Fragment key={index}>
+                    {/* Container for displaying information about the query step */}
+                    <div className="table-info-container">
+                    {/* Display the query step index and description */}
+                    <p style={{ marginBottom: '15px' }}>
+                        <b>{`Query ${index + 1}:`}</b> {step}
+                    </p>
+                    {/* Displaying The queries passed to the next table */}
+                    <p>
+                        <b>Description: </b>
+                        {index === array.length - 1
+                        ? 'This is the result table.'
+                        : queryResults[index].data.length === 0
+                        ? 'No result for this query.'
+                        : `${queryResults[index].data.length} rows are being used in the next query.`
+                        }
+                    </p>
+                    </div>
+
+                    {/* Displaying the table or the "No result for this query" message */}
+                    {queryResults[index].data.length > 0 ? (
+                    <QueryTable
+                        tableName={queryResults[index].table_name}
+                        data={queryResults[index].data}
+                    />
+                    ) : (
+                    <p className="no-result-message">
+                        {/* No result for this query. */}
+                    </p>
+                    )}
+
+                    {/* Display an arrow indicator if not the last query step */}
+                    {index < array.length - 1 && (
+                    <div className="arrow-indicator1">
+                        <span>&#8595;</span>
+                    </div>
+                    )}
+                </React.Fragment>
+                ))}
+            </>
+            )}
+        </div>
+
+        </div>
     </>
   );
-}
+};
+
+export default QueryAnimationPage;
