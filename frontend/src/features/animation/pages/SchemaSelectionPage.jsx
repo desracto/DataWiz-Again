@@ -10,9 +10,9 @@ import svgImage from '../../../assets/images/vector-31.svg';
 
 // Define the mapping of schema IDs to their corresponding property names
 export const schemaIdToProperty = {
-    1: 'employees',
-    2: ['inventory', 'products'],
-    3: ['course', 'enrollments'],
+    1: 'employee',
+    2: ['inventory', 'product'],
+    3: ['course', 'enrollment'],
     4: ['flight', 'passenger', 'ticket'],
     5: ['album', 'artist', 'genre', 'song']
 };
