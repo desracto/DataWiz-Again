@@ -3,7 +3,7 @@ import { FaChevronRight, FaTrash } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import "./SavedQuizzes.css";
-import UNCompletedQuiz from "./UNCompletedQuiz.jsx"
+import UNCompletedQuiz from "./CompletedQuizPage.jsx"
 import SecondHeader from '../../../global_components/SecondHeader';
 import axios from 'axios';
 

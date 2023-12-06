@@ -1,13 +1,13 @@
 import { useCallback,useState } from "react";
-import "./UNCompletedQuiz.css";
+import "./CompletedQuizPage.css";
 import pdfimg from "../../../assets/images/pdf.png";
-import schemaImg from "../../../assets/images/image-14@2x.png";
+import schemaImg from "../../../assets/images/employee schema.png";
 import GeneratedQuizLinkComp from "../components/GeneratedQuizLink";
 import { useParams } from 'react-router-dom';
 import SecondHeader from "../../../global_components/SecondHeader";
 import { useNavigate} from "react-router-dom";
 
-const UNCompletedQuiz = () => {
+const CompletedQuiz = () => {
     const navigate = useNavigate();
 
   const [showGeneratedQuizLink, setShowGeneratedQuizLink] = useState(false);
@@ -31,11 +31,11 @@ const ViewButtonClick = useCallback(() => {
           <div className="main_Page">
             <div
               className={
-                " max-w-7xl content_container_bgcolor mx-auto h-auto rounded-2xl z-10 relative"
+                " max-w-7xl content_container_bgcolor mx-auto h-auto rounded-2xl z-10 relative mt-20"
               }
             >
               {/* Back arrow button */}
-              <button onClick={handleBackClick} className="back-arrow-button">
+              <button onClick={handleBackClick} className="completedquiz-back-arrow-button">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -50,7 +50,7 @@ const ViewButtonClick = useCallback(() => {
                   />
                 </svg>
               </button>
-              <div className="px-20 mt-[80px]">
+              <div className="px-20">
                 <div className=" view-attempts-text py-10">View All Attempts and Results</div>
                 <div className="flex justify-center pb-10">
                   <button
@@ -70,18 +70,18 @@ const ViewButtonClick = useCallback(() => {
                   {/* <div className={"groupItem"} /> */}
                   <div className={"rounded-2xl bg-white p-10"}>
                     <ul className={"youWillHaveASpecificAmoun"}>
-                      <li className={"youWillHave"}>
+                      
                         You will have a specific amount of time to complete the quiz. Ensure you start
                         the quiz with enough time to finish within the allocated period
-                      </li>
+                      
                     </ul>
                     <p className={"blankLine"}>&nbsp;</p>
                     <ul className={"youWillHaveASpecificAmoun"}>
-                      <li className={"youWillHave"}>
+                      
                         The quiz may contain a variety of question types, including multiple-choice,
                         true/false, and short-answer questions. Read each question carefully and
                         select the appropriate response.
-                      </li>
+                     
                     </ul>
                     <p className={"blankLine"}>&nbsp;</p>
                     <ul className={"youWillHaveASpecificAmoun"}>
@@ -94,7 +94,7 @@ const ViewButtonClick = useCallback(() => {
                 </div>
     
                 <div className={"innerheading"}>Schema:</div>
-                <div className="bg-white rounded-2xl margin_bottom ">
+                <div className="bg-white rounded-2xl margin_bottom pb-3 pt-3 ">
                   <img className={"w-full max-h-96 object-contain"} alt="" src={schemaImg} />
                 </div>
     
@@ -113,10 +113,9 @@ const ViewButtonClick = useCallback(() => {
                     <div className={"innerbg rounded-[0.6rem] p-5 my-5"}>
                       <div className={"inputLabel"}>
                         <p className={"blankLine"}>
-                          SELECT customer_id, COUNT(order_id) AS total_orders
+                          SELECT customer_id, COUNT(order_id) AS total_orders FROM Orders GROUP BY customer_id;
                         </p>
-                        <p className={"blankLine"}>FROM Orders</p>
-                        <p className={"blankLine"}>GROUP BY customer_id;</p>
+                     
                       </div>
                     </div>
                   </div>
@@ -142,6 +141,75 @@ const ViewButtonClick = useCallback(() => {
                     </div>
                   </div>
                 </div>
+
+                <div className={"pb-10 z-10"}>
+                  <div className={"innerheading"}>Question - 3</div>
+                  <div className={" bg-white rounded-2xl p-5"}>
+                    <div className={"inputLabel font1"}>Problem:</div>
+                    <div className={" innerbg rounded-[0.6rem] p-5 my-5"}>
+                      <div className={"inputLabel"}>
+                      Write a SQL query to select all columns from the 'Employees' table
+                      </div>
+                    </div>
+    
+                    <div className={"font1"}>Answer:</div>
+                    <div className={"innerbg rounded-[0.6rem] p-5 my-5"}>
+                      <div className={"inputLabel"}>
+                        <p className={"blankLine"}>
+                        SELECT * FROM Employees;
+                        </p>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className={"pb-10 z-10"}>
+                  <div className={"innerheading"}>Question - 4</div>
+                  <div className={" bg-white rounded-2xl p-5"}>
+                    <div className={"inputLabel font1"}>Problem:</div>
+                    <div className={" innerbg rounded-[0.6rem] p-5 my-5"}>
+                      <div className={"inputLabel"}>
+                      Write a SQL query to find all employees who work in the 'IT' department.
+                      </div>
+                    </div>
+    
+                    <div className={"font1"}>Answer:</div>
+                    <div className={"innerbg rounded-[0.6rem] p-5 my-5"}>
+                      <div className={"inputLabel"}>
+                        <p className={"blankLine"}>
+                        SELECT * FROM Employees WHERE Department = 'IT';
+                        </p>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className={"pb-10 z-10"}>
+                  <div className={"innerheading"}>Question - 5</div>
+                  <div className={" bg-white rounded-2xl p-5"}>
+                    <div className={"inputLabel font1"}>Problem:</div>
+                    <div className={" innerbg rounded-[0.6rem] p-5 my-5"}>
+                      <div className={"inputLabel"}>
+                      How would you select the first three employees in the 'Employees' table?
+                      </div>
+                    </div>
+    
+                    <div className={"font1"}>Answer:</div>
+                    <div className={"innerbg rounded-[0.6rem] p-5 my-5"}>
+                      <div className={"inputLabel"}>
+                        <p className={"blankLine"}>
+                        SELECT * FROM Employees LIMIT 3;
+                        </p>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
               </div>
             </div>
     
@@ -162,5 +230,5 @@ const ViewButtonClick = useCallback(() => {
       );
     };
     
-    export default UNCompletedQuiz;
+    export default CompletedQuiz;
     
