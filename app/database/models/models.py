@@ -98,6 +98,46 @@ class Quiz(db.Model):
     def add_time(self, time:str):
         self.start_time = datetime.datetime.strptime(time, "%m/%d/%Y - %H:%M:%S")
 
+    def retrieves_all_users(self):
+        pass
+
+    def retrieve_user_responses(self, user_id):
+        """
+            quiz_response: 
+            {
+                "filters": 
+                        {
+                            filter1: true,
+                            filter2: true,
+                            filter3: true
+                        },
+                "responses": [
+                                {
+                                    "question_number": question_number,
+                                    "problem": problem,
+                                    "answer": answer,
+                                    "user_answer": answer
+                                },
+                                {
+                                    "question_number": question_number,
+                                    "problem": problem,
+                                    "answer": answer,
+                                    "user_answer": answer
+                                },
+                                {
+                                    "question_number": question_number,
+                                    "problem": problem,
+                                    "answer": answer,
+                                    "user_answer": answer
+                                }
+                            ]
+            }
+
+            
+        """
+
+        pass
+
     # Dictionary converter Methods
     def to_dict(self):
 
