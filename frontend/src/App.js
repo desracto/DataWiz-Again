@@ -1,6 +1,5 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { useAuth } from './context/AuthContext.jsx'
 import './assets/global.css';
 
 // General Pages Imports
@@ -31,7 +30,6 @@ import QuizAttempt from './features/quiz/pages/QuizAttemptPage';
 import axios from 'axios'
 
 function App() {
-    const { userRole } = useAuth();
 
     const request = axios.create({
         baseURL: "http://localhost:5000",
@@ -52,7 +50,7 @@ function App() {
                     <Route path="/LandingPage" element={<LandingPage />} />
                     <Route path="/SignUpPage" element={<SignUpPage />} />
                     <Route path="/LoginPage" element={<LoginPage />} />
-                    <Route path="/ResetPasswordPage" element={<ResetPassword />} /> 
+                    <Route path="/ResetPasswordPage" element={<ResetPassword />} />
                     <Route path="/InstructorHomePage" element={<InstructorHomePage />} />
                     <Route path="/AnimationIntroductionPage" element={<AnimationIntroductionPage />} />
                     <Route path="/SchemaSelectionPage" element={<SchemaSelectionPage />} />
@@ -62,7 +60,7 @@ function App() {
                     <Route path="/CreateQuizPage" element={<CreateQuiz request={request} />} />
                     <Route path="/SavedQuizzesPage" element={<SavedQuizzes />} />
                     <Route path="/CompletedQuizPage" element={<CompletedQuiz />} />
-                    <Route path="/AccountSettingsPage" element={<AccountSettingsPage request={request}/>} />
+                    <Route path="/AccountSettingsPage" element={<AccountSettingsPage request={request} />} />
                     <Route path="/FaqsPage" element={<FaqsPage />} />
                     <Route path="/TestAni" element={<TestAniPage />} />
                     <Route path="/AllAttemptsPage" element={<AllAttempts />} />

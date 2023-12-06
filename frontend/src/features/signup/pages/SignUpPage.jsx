@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import "./SignUpPage.css";
 import axios from "axios";
 
+
+
 // Component Imports
 import Header1 from '../../../global_components/Header1';
 
@@ -30,6 +32,7 @@ const request = axios.create({
 const Signup = () => {
     const navigate = useNavigate();
     const {register, handleSubmit, formState: { errors }} = useForm();
+
     const [userInfo, setUserInfo] = useState();
     const [emailTakenError, setEmailTakenError] = useState("");
     const [usernameTakenError, setUsernameTakenError] = useState("");
@@ -37,7 +40,7 @@ const Signup = () => {
     const onSubmit = (data) => {
         setUserInfo(data);
         console.log(data);
-
+ 
         request({
             url: "api/user/",
             method: "post",

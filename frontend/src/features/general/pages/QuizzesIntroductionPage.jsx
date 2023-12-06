@@ -1,5 +1,5 @@
-import { useCallback } from "react";
-import { NavLink, useNavigate } from "react-router-dom"; 
+import { useEffect,useState,useCallback } from "react";
+import { Navigate,NavLink, useNavigate } from "react-router-dom"; 
 import "./QuizzesIntroductionPage.css";
 import SecondHeader from '../../../global_components/SecondHeader';
 
@@ -13,7 +13,7 @@ import CreateQuizIcon from '../../../assets/images/QuizIntro- createQuizzesIcon.
 
 
 const QuizzesIntroductionPage = () => {
-
+    console.log('Rendering QuizzesIntroductionPage...'); //added 
     const navigate = useNavigate();
 
     const onQuizIntroCreateAQuizButtonClick = useCallback(() => {
@@ -23,6 +23,7 @@ const QuizzesIntroductionPage = () => {
     const onQuizIntroViewQuizzesButtonClick = useCallback(() => {
         navigate("/SavedQuizzesPage");
     }, [navigate]);
+
 
 
   return (

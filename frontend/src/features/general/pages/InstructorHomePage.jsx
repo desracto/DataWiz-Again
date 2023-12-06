@@ -23,6 +23,7 @@ const request = axios.create({
     timeout: 300000
 })
 const InstructorHomePage = () => {
+
     const location = useLocation()
     console.log(location)
 

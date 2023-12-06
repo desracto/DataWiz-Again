@@ -44,7 +44,7 @@ const LoginPage = () => {
 
     
     const onSubmit = (data) => {
-        console.log(data);
+        // console.log(data);
         request({
             url: "/api/user/login/",
             method: "post",
