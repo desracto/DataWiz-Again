@@ -50,12 +50,20 @@ function SavedQuizzes() {
         <div className="contentcontainer ">
             <div className="content_heading">
             <span>Recent Quizzes </span>
-            <FaTrash 
-                    color="#98989F" 
-                    size={24} 
-                    style={{cursor: "pointer"}}
-                    onClick={deleteMostRecentQuiz}
-                />
+            {savedQuizzes.length > 0 ? (
+        <FaTrash 
+            color="#98989F" 
+            size={24} 
+            style={{ cursor: "pointer" }}
+            onClick={deleteMostRecentQuiz}
+        />
+    ) : (
+        <FaTrash 
+            color="#98989F" 
+            size={24} 
+            style={{ cursor: "not-allowed", opacity: 0.5 }}
+        />
+        )}
             
             </div>
             {savedQuizzes.map((quiz, index) => (
