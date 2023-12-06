@@ -47,29 +47,14 @@ const QueryTable = ({ tableName, data, highlightedRows }) => {
     fontSize: '14.5px',
   };
 
-  // Add colors as you wish to highlight the rows for each table
-  // Although, I would suggest using a single color for all the tables
-  // To maintain consistency
   const colors = {
     0: {
-      backgroundColor: '#fdff00',
+      backgroundColor: '#ffea6a',
       color: '#000',
     },
     1: {
-      backgroundColor: '#ff9a00',
+      backgroundColor: '#ffea6a',
       color: '#000',
-    },
-    2: {
-      backgroundColor: '#00ff04',
-      color: '#000',
-    },
-    3: {
-      backgroundColor: '#00c5ff',
-      color: '#000',
-    },
-    4: {
-      backgroundColor: '#ff00a7',
-      color: '#fff',
     },
   };
 
