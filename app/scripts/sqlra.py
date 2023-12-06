@@ -147,7 +147,8 @@ def process_join(stmt_dict: dict):
         'RIGHT JOIN',
         'RIGHT OUTTER JOIN',
         'FULL JOIN',
-        'FULL OUTTER JOIN'
+        'FULL OUTTER JOIN',
+        'JOIN'
     ]
 
     keys = stmt_dict.keys()

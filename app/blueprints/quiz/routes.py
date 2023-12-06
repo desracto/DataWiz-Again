@@ -172,5 +172,5 @@ def delete_quiz_question(quiz_id, qaid):
     return '', 204
 
 @quiz_bp.route("/<quiz_id>/<user_id>/submit-response", methods=['POST'])
-def submit_response(quiz_id):
+def submit_response(quiz_id, user_id):
     pass
