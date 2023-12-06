@@ -10,20 +10,9 @@ import PortalPopup from '../components/PortalPopup.jsx';
 import "./CreateQuiz.css";
 import SecondHeader from "../../../global_components/SecondHeader";
 import axios from "axios";
+import Cookies from "js-cookie";
 
-
-
-const request = axios.create({
-    baseURL: "http://localhost:5000", 
-    headers: {
-        "Content-Type": "application/json"
-    },
-    withCredentials: true,
-    timeout: 300000
-});
-
-
-const CreateQuiz = () => {
+const CreateQuiz = ({request}) => {
         const navigate = useNavigate();
         const [schemaAdded, setSchemaAdded] = useState(false);
         const [files, setFiles] = useState([]);
@@ -38,6 +27,46 @@ const CreateQuiz = () => {
         
         const quizNameRef = useRef(quizName);
         const quizDescriptionRef =useRef(quizDescription)
+
+        const [quizData, setQuizData] = useState({
+            quiz_name: "",
+            start_time: "",
+            description: "",
+            questions: []
+          });
+
+// Parse JSON data here and initialize quizData
+useEffect(() => {
+    fetchQuizData()
+      .then(data => {
+        setQuizData({
+          quiz_name: data.quiz_name,
+          start_time: data.start_time,
+          description: data.description,
+          questions: data.questions || []
+        });
+      })
+      .catch(error => {
+        console.error("Failed to fetch quiz data:", error);
+        // Handle error (e.g., set an error state, show notification, etc.)
+      });
+  }, []);
+
+
+        const handleQuizDataChange = (key, value) => {
+        setQuizData(prev => ({ ...prev, [key]: value }));
+        };
+    
+          /*
+          const handleQuestionChange = (index, key, value) => {
+            setQuizData(prev => ({
+              ...prev,
+              questions: prev.questions.map((q, i) => 
+                i === index ? { ...q, [key]: value } : q
+              )
+            }));
+          };
+        */
 
 
         const [isFilterModalOpen, setFilterModalOpen] =
@@ -124,16 +153,7 @@ const CreateQuiz = () => {
     setHasChanges(false); // Reset the hasChanges state
   };
 
-  const handleQuizNameChange = (e) => {
-    setQuizName(e.target.value);
-    setHasChanges(true);
-  };
   
-  const handleQuizDescriptionChange = (e) => {
-    setQuizDescription(e.target.value);
-    setHasChanges(true);
-  };
-
 
   /* cleanup function to save the draft only if changes have been made. */
   useEffect(() => {
@@ -148,19 +168,19 @@ const CreateQuiz = () => {
    
 
   const saveQuiz = () => {
-    if (!quizName.trim()) {
+    if (!quizData.quiz_name.trim()) {
         alert("Please enter a quiz name.");
         return;
     }
 
     const currentDate = new Date();
     const newQuiz = {
-        id: Date.now(), // Simple unique ID for demonstration
-        name: quizName,
-        description: quizDescription,
-        questions: questions,
-        date: currentDate.toLocaleDateString(), // Saves only the date
-        time: currentDate.toLocaleTimeString(), // Saves only the time
+      id: Date.now(),
+      name: quizData.quiz_name, // Changed to quizData.quiz_name
+      description: quizData.description, // Changed to quizData.description
+      questions: quizData.questions, // Changed to quizData.questions
+      date: currentDate.toLocaleDateString(),
+      time: currentDate.toLocaleTimeString(),
     };
 
     const savedQuizzes = JSON.parse(localStorage.getItem("quizzes") || "[]");
@@ -173,10 +193,6 @@ const CreateQuiz = () => {
     alert("Quiz saved successfully!");
     setSuccessModal(true);
   };
-
-
-
-  
 
     const handleSubmission = (id) => {
         const exist = schemasList.find((schema) => schema?.id == id);
@@ -211,22 +227,24 @@ const CreateQuiz = () => {
       const binaryFiles = await Promise.all(acceptedFiles.map(file => convertImageToBinary(file)));
       
       setSchemasList((prev) =>
-        prev.map((item) => {
-          if (item.id == currentRef?.current?.id) {
-            return {
-                ...schema,
-                files: [...schema.files, ...binaryFiles.map((binary, index) => ({
-                  name: acceptedFiles[index].name,
-                  binaryData: binary
-                }))]
-            };
-          } else {
-            return item;
-          }
-        })
-      );
-    }
-  }, []);
+      prev.map((item) => {
+        if (item.id == currentRef?.current?.id) {
+          return {
+            ...item,
+            files: [
+              ...acceptedFiles.map((file) => ({
+                ...file,
+                preview: URL.createObjectURL(file),
+              })),
+            ],
+          };
+        } else {
+          return item;
+        }
+      })
+    );
+  }
+}, []);
 
   const { getRootProps, getInputProps, open, isDragActive } = useDropzone({
     noClick: true,
@@ -305,33 +323,71 @@ const CreateQuiz = () => {
     );
   };
 
+  useEffect(() => {
+    fetchQuizData()
+      .then(data => {
+        setQuizData({
+          quiz_name: data.quiz_name,
+          start_time: data.start_time,
+          description: data.description,
+          questions: data.questions || []
+        });
+      })
+      .catch(error => {
+        // Handle the error, such as showing a notification to the user
+      });
+  }, []);
 
-  const handleSubmitQuiz = async () => {
-    // Collecting quiz data
-    const quizData = {
-      name: quizName,
-      description: quizDescription,
-      questions: schemasList.map(schema => schema.questions).flat(),
-      images: schemasList.flatMap(schema => 
-        schema.files.map(file => ({
-          name: file.name,
-          binaryData: file.binaryData
-        }))
-      )
-    };
-  
+  const fetchQuizData = async () => {
     try {
-      const response = await request.post('/api/quiz/', quizData);
-      // Handle the response
-      if (response.status === 201) {
-        navigate("/QuizHomePage"); // Navigate or handle success
+      const response = await axios.get('/api/quiz/data'); // Replace with your actual API endpoint
+      if (!response.data) {
+        throw new Error('No data received');
       }
+      return response.data;
     } catch (error) {
-      console.error("Error creating quiz", error); // Handle error 
-      alert("Failed to save quiz.");
-      
+      console.error('Failed to fetch quiz data:', error);
+      throw error; // Re-throw the error to be handled by the caller
     }
   };
+
+
+  const handleSubmitQuiz = async () => {
+    try {
+      // Construct the quiz data object from state or refs
+      const quizSubmissionData = {
+        quiz_name: quizNameRef.current, // Assuming you're using refs to track form data
+        start_time: '', // You'll need to define how to get this value
+        description: quizDescriptionRef.current, // Assuming you're using refs to track form data
+        questions: schemasList.map((schema, index) => ({
+          question_number: index + 1,
+          problem: schema.problem, // Assuming your schema has a 'problem' property
+          answer: schema.answer // Assuming your schema has an 'answer' property
+        })),
+        // ... other data you need to submit
+      };
+  
+      const response = await axios.post('/api/quiz/submit-response', quizSubmissionData, {
+        headers: {
+          'X-CSRF-TOKEN': Cookies.get('csrf_access_token'), // Ensure CSRF token is included if needed
+          'Content-Type': 'application/json',
+        },
+        data: quizSubmissionData,
+      });
+  
+      if (response.status === 200) {
+        console.log('Quiz submitted successfully:', response.data);
+        // Handle successful submission, e.g., showing a success message or redirecting
+      } else {
+        // Handle any other HTTP status codes as needed
+        console.warn('Quiz submission returned status:', response.status);
+      }
+    } catch (error) {
+      console.error('Failed to submit quiz:', error);
+      // Handle errors in submission, e.g., showing an error message
+    }
+  };
+
 
   const convertImageToBinary = (file) => {
     return new Promise((resolve, reject) => {
@@ -385,9 +441,9 @@ const CreateQuiz = () => {
                 <input
                   className="input"
                   placeholder="Enter Quiz Name"
-                  value={quizName}
+                  value={quizData.quiz_name}
                   onChange={(e) => {
-                    setQuizName(e.target.value); 
+                    handleQuizDataChange('quiz_name', e.target.value);
                     setHasChanges(true);
                   }}
                 />
@@ -402,9 +458,9 @@ const CreateQuiz = () => {
                   className="description-textarea"
                   placeholder="Description"
                   rows={5}
-                  value={quizDescription}
+                  value={quizData.description}
                   onChange={(e) => {
-                    setQuizDescription(e.target.value); 
+                    handleQuizDataChange('description', e.target.value); // updating description within quizData
                     setHasChanges(true);
                   }}
                   style={{ resize: "none" }} // Add this line
@@ -416,8 +472,9 @@ const CreateQuiz = () => {
               <div className="w-full flex flex-col gap-5">
                 {schemasList.map((schema, index) => (
                   <div key={index}>
+                    
                     <div className="flex-justify-between">
-                      <span className="text-Gilroy-Mediumm">Schema - {index + 1}</span>
+                      <span className="text-Gilroy-Mediumm">Schema - {index + 1} </span>
                       <FaTrash
                         color="#98989F"
                         size={24}
@@ -427,6 +484,7 @@ const CreateQuiz = () => {
                         }}
                         style={{ cursor: "pointer" }}
                       />
+                      
                     </div>
                     <div className="schema-box">
                       {schema?.files?.length === 0 ? (

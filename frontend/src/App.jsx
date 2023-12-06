@@ -23,14 +23,13 @@ import TestAniPage from './features/animation/pages/TestAni';
 import CreateQuiz from './features/quiz/pages/CreateQuiz';
 import QuizHome from './features/quiz/pages/QuizHome';
 import SavedQuizzes from './features/quiz/pages/SavedQuizzesPage';
-import CompletedQuiz from './features/quiz/pages/CompletedQuizPage';
+import UNCompletedQuiz from './features/quiz/pages/UNCompletedQuiz';
 import AllAttempts from './features/quiz/pages/AllAttemptsPage';
-import QuizAttempt from './features/quiz/pages/QuizAttemptPage';
 
 import axios from 'axios'
 
-function App() {
 
+function App() {
     const request = axios.create({
         baseURL: "http://localhost:5000",
         withCredentials: true,
@@ -45,30 +44,28 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route index element={<LandingPage />} /> {/* Root URL when the app is accessed*/}
-
-                    {/* Routes accessible to both both students and instrcutors*/}
                     <Route path="/LandingPage" element={<LandingPage />} />
                     <Route path="/SignUpPage" element={<SignUpPage />} />
                     <Route path="/LoginPage" element={<LoginPage />} />
                     <Route path="/ResetPasswordPage" element={<ResetPassword />} />
                     <Route path="/InstructorHomePage" element={<InstructorHomePage />} />
+                    <Route path="/QuizzesIntroductionPage" element={<QuizzesIntroductionPage />} />
                     <Route path="/AnimationIntroductionPage" element={<AnimationIntroductionPage />} />
                     <Route path="/SchemaSelectionPage" element={<SchemaSelectionPage />} />
                     <Route path="/QueryAnimationPage" element={<QueryAnimationPage />} />
                     <Route path="/SavedAnimationsPage" element={<SavedAnimationsPage />} />
                     <Route path="/QuizHomePage" element={<QuizHome />} />
                     <Route path="/CreateQuizPage" element={<CreateQuiz request={request} />} />
-                    <Route path="/SavedQuizzesPage" element={<SavedQuizzes request={request}/>} />
-                    <Route path="/CompletedQuizPage" element={<CompletedQuiz />} />
-                    <Route path="/AccountSettingsPage" element={<AccountSettingsPage request={request} />} />
+                    <Route path="/SavedQuizzesPage" element={<SavedQuizzes />} />
+                    <Route path="/CompletedQuizPage" element={<UNCompletedQuiz />} />
+                    <Route path="/AccountSettingsPage" element={<AccountSettingsPage request={request}/>} />
                     <Route path="/FaqsPage" element={<FaqsPage />} />
                     <Route path="/TestAni" element={<TestAniPage />} />
                     <Route path="/AllAttemptsPage" element={<AllAttempts />} />
-                    <Route path="/QuizAttemptPage" element={<QuizAttempt />} />
 
                 </Routes>
             </BrowserRouter>
-        </div >
+        </div>
     );
 }
 

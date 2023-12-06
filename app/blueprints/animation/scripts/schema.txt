@@ -61,7 +61,8 @@ INVENTORY,118,50
 INVENTORY,119,60
 INVENTORY,120,80
 
-# Schema 3 Tables
+# SCHEMA 3
+
 COURSE,CS101,Introduction to CS,3,Computer Sci	
 COURSE,MATH201,Calculus I,4,Mathematics	
 COURSE,ENG101,English Composition,3,English	

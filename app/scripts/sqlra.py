@@ -160,6 +160,9 @@ def process_join(stmt_dict: dict):
             join_type = key
             found = True
     
+    if not found:
+        return Exception('Invalid JOIN keyword')
+
     # Join found, process into one node
     join_values = stmt_dict[join_type]
     on_values = stmt_dict['ON'][0].tokens

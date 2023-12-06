@@ -27,18 +27,18 @@ const InstructorHomePage = () => {
     const location = useLocation()
     console.log(location)
 
-    // useEffect(() => {
-    //     request({
-    //         url: "/api/user/load_user",
-    //         method: "get"
-    //     }).then(response => {
-    //         const user_details = response.data
-    //         console.log(user_details)
+    useEffect(() => {
+        request({
+            url: "/api/user/load_user",
+            method: "get"
+        }).then(response => {
+            const user_details = response.data
+            console.log(user_details)
 
-    //     }).catch(error => {
-    //         console.error(error)
-    //     })
-    // }, [])
+        }).catch(error => {
+            console.error(error)
+        })
+    }, [])
 
     const navigate = useNavigate();
 
