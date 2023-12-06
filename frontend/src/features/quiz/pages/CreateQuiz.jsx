@@ -10,20 +10,9 @@ import PortalPopup from '../components/PortalPopup.jsx';
 import "./CreateQuiz.css";
 import SecondHeader from "../../../global_components/SecondHeader";
 import axios from "axios";
+import Cookies from "js-cookie";
 
-
-
-const request = axios.create({
-    baseURL: "http://localhost:5000", 
-    headers: {
-        "Content-Type": "application/json"
-    },
-    withCredentials: true,
-    timeout: 300000
-});
-
-
-const CreateQuiz = () => {
+const CreateQuiz = ({request}) => {
         const navigate = useNavigate();
         const [schemaAdded, setSchemaAdded] = useState(false);
         const [files, setFiles] = useState([]);
@@ -174,10 +163,6 @@ const CreateQuiz = () => {
     setSuccessModal(true);
   };
 
-
-
-  
-
     const handleSubmission = (id) => {
         const exist = schemasList.find((schema) => schema?.id == id);
         if (exist?.files?.length == 0) {
@@ -322,17 +307,21 @@ const CreateQuiz = () => {
       )
     };
   
-    try {
-      const response = await request.post('/api/quiz/', quizData);
-      // Handle the response
-      if (response.status === 201) {
-        navigate("/QuizHomePage"); // Navigate or handle success
-      }
-    } catch (error) {
-      console.error("Error creating quiz", error); // Handle error 
-      alert("Failed to save quiz.");
-      
-    }
+    request({
+        url: "api/quiz/",
+        method: "post",
+        headers: {
+            'X-CSRF-TOKEN': Cookies.get('csrf_access_token')
+        },
+        data: quizData
+    })
+    .then(response => {
+        console.log(response)
+    })
+    .catch(error => {
+        console.log(quizData)
+        console.error(error)
+    })
   };
 
   const convertImageToBinary = (file) => {

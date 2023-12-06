@@ -54,6 +54,12 @@ def create_quiz():
                                 'answer': answer
                             }]
 
+            [REQUIRED] "filters":   {
+                                        "matching_join": False,
+                                        "spell_checker": False,
+                                        "punish_add_data": False
+                                    }
+
             [OPTIONAL] "img_data": img_data
         }
     """
