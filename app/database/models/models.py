@@ -1,5 +1,6 @@
 from uuid import uuid4
 from werkzeug.security import generate_password_hash, check_password_hash
+from ...blueprints.main.errors import bad_request, error_response
 import datetime
 from sqlalchemy import types
 
@@ -70,6 +71,7 @@ class Quiz(db.Model):
     # Fields
     id = db.Column(db.String(32), primary_key=True, unique=True, default=get_uuid) # PK
     name = db.Column(db.String(120))
+    description = db.Column(db.String(2000)) 
     start_time = db.Column(db.DateTime)
     userid = db.Column(db.String(40), db.ForeignKey('Users.id')) # FK
     # img_id = db.Column(db.String(32), db.ForeignKey('Quiz_Image.img_id'))
@@ -77,7 +79,6 @@ class Quiz(db.Model):
     # Relationships
     user = db.relationship('Users', back_populates='quizzes')
     questions = db.relationship('Quiz_QPA', back_populates='quiz')
-    # img = db.relationship('Quiz_Image', back_populates='quiz')
 
     # Functions
     def __repr__(self):
@@ -97,6 +98,7 @@ class Quiz(db.Model):
     def add_time(self, time:str):
         self.start_time = datetime.datetime.strptime(time, "%m/%d/%Y - %H:%M:%S")
 
+    # Dictionary converter Methods
     def to_dict(self):
 
         questions = list(self.questions)
@@ -111,13 +113,13 @@ class Quiz(db.Model):
             "questions": questions
         }
         
-
         return data
-
+    
     def filter_quiz(self):
         questions = list(self.questions)
         for i in range(len(questions)):
             questions[i] = {
+                'qaid': questions[i].qaid,
                 'problem': questions[i].problem, 
                 'question_number': questions[i].question_number
             }
@@ -131,8 +133,84 @@ class Quiz(db.Model):
 
         return data
 
-    
 
+    # Question Methods
+    def add_questions(self, questions: list):
+        # questions -> [{'question_number': question_number, 'problem': problem, 'answer': 'answer}]
+        for question in questions:
+            print("Adding question: {}".format(question))
+            question = Quiz_QPA(quiz_id = self.id,
+                                question_number = question['question_number'],
+                                problem = question['problem'],
+                                answer = question['answer'])
+            
+            db.session.add(question)
+        db.session.commit()
+        return self
+    
+    def edit_question(self, edited_questions: list):
+        """
+            edited_question = [
+                {
+                    'qaid': qaid, -> FIXED, CANNOT BE CHANGED
+                    [OPTIONAL] 'question_number': question_number
+                    [OPTIONAL] 'problem': problem,
+                    [OPTIONAL] 'answer': answer
+                },
+                {
+                    'qaid': qaid, -> FIXED, CANNOT BE CHANGED
+                    [OPTIONAL] 'question_number': question_number
+                    [OPTIONAL] 'problem': problem,
+                    [OPTIONAL] 'answer': answer
+                },
+                {
+                    'qaid': qaid, -> FIXED, CANNOT BE CHANGED
+                    [OPTIONAL] 'question_number': question_number
+                    [OPTIONAL] 'problem': problem,
+                    [OPTIONAL] 'answer': answer
+                }
+            ]
+        """
+        for question in edited_questions:
+            print("Changing question: {}".format(question['qaid']))
+            # retrieve query object for each question changed
+            question_object:Quiz_QPA = Quiz_QPA.query.filter_by(qaid=question['qaid']).first_or_404()
+            
+            # Change all fields according to keys
+            if 'question_number' in question:
+                question_object.question_number = question['question_number']
+            if 'problem' in question:
+                question_object.problem = question['problem']
+            if 'answer' in question:
+                question_object.answer = question['answer']
+
+            db.session.add(question_object)
+        db.session.commit()
+        
+        return self
+
+    def delete_question(self, deleted_questions:list):
+        """
+            deleted_questions = [qaid, qaid, qaid]
+        """
+        for qaid in deleted_questions:
+            question_object = Quiz_QPA.query.filter_by(qaid=qaid).first_or_404()
+            db.session.delete(question_object)
+
+        db.session.commit()
+        return self
+
+    def add_attempts(self, attempts, user_id):
+        # attempts -> {'qaid': qaid, 'question_number': question_number, 'answer': answer}
+        for attempt in attempts:
+            print('Adding attempt: {}'.format(attempt))
+            question_attempt = Quiz_Question_Attempts(question_id = attempt['qaid'],
+                                                      user_id = user_id,
+                                                      answer = attempt['answer'])
+            
+            db.session.add(question_attempt)
+        db.session.commit()
+        return self.to_dict()
 
 class Quiz_QPA(db.Model):
     # Table name
@@ -146,16 +224,15 @@ class Quiz_QPA(db.Model):
     problem = db.Column(db.String(400))
     answer = db.Column(db.String(1000))
 
-
     # Relationships
-    # retrieves the associated quiz's details
     quiz = db.relationship('Quiz', back_populates='questions')
+    attempts = db.relationship('Quiz_Question_Attempts', back_populates='question')
 
     # Functions
     def __repr__(self):
         return "<Quiz_QPA | ID: {}, \
-                 Quiz ID: {}, \
-                 Question Number: {}>".format(self.qaid, self.quiz_id, self.question_number)
+               Quiz ID: {}, \
+               Question Number: {}>".format(self.qaid, self.quiz_id, self.question_number)
     
     def to_dict(self):
         data = {
@@ -166,38 +243,32 @@ class Quiz_QPA(db.Model):
             "quiz_id": self.quiz_id
         }
         return data
-
-class Quiz_Attempts(db.Model):
+    
+class Quiz_Question_Attempts(db.Model):
     # Table name
-    __tablename__ = 'Quiz_Attempts'
+    __tablename__ = 'Quiz_Quiz_Attempts'
 
     # Fields
     attempt_id = db.Column(db.String(32), primary_key=True, unique=True, default=get_uuid) # PK
-    quiz_id = db.Column(db.String(32), db.ForeignKey('Quiz.id')) # Fk
-    ques_id = db.Column(db.String(32), db.ForeignKey('Quiz_QPA.qaid')) # Fk
-    user_id = db.Column(db.String(32), db.ForeignKey('Users.id')) # Fk - Teacher
 
-    stu_id = db.Column(db.String(60))
+    question_id = db.Column(db.String(32), db.ForeignKey('Quiz_QPA.qaid')) # Fk
+    user_id = db.Column(db.String(32), db.ForeignKey('Users.id')) # FK
+
     answer = db.Column(db.String(1000))
-    # score = db.Column(db.Decimal(5,2)) # DOUBT - how the score is calculated 
     score = db.Column(types.DECIMAL(5, 2))
     feedback = db.Column(db.String(1000))
-    # DOUBT - how can we record the attempt_time and time_taken?  
+
+    # Relationships
+    question = db.relationship('Quiz_QPA', back_populates='attempts')
 
 
     # Functions    
     def __repr__(self):
         return "<Quiz Attempt | ID: {}, \
              User ID: {}, \
-             Quiz ID: {}, \
              Question Answer: {}, \
-             Score: {}>".format(self.attempt_id, self.user_id, self.quiz_id, self.answer, self.score)
+             Score: {}>".format(self.attempt_id, self.user_id, self.answer, self.score)
 
-    
-    def set_answer(self, answer):
-        self.answer = answer
-
-    
     def to_dict(self):
         data = {
             "attempt_id": self.attempt_id,

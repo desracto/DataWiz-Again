@@ -3,21 +3,29 @@ import { FaChevronRight, FaTrash } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import "./SavedQuizzes.css";
-import UNCompletedQuiz from "./UNCompletedQuiz.jsx"
+import UNCompletedQuiz from "./CompletedQuizPage.jsx"
 import SecondHeader from '../../../global_components/SecondHeader';
 import axios from 'axios';
-
-// Axios instance
-const request = axios.create({
-    baseURL: "http://localhost:5000",
-    headers: {
-        "Content-Type" : "application/json"
-    },
-    withCredentials: true
-  });
+import { useEffect } from "react";
 
 
-function SavedQuizzes() {
+const SavedQuizzes = ({request}) => {
+    // on render
+    useEffect(() => {
+        request({
+            url: "api/quiz/retrieve-quizzes",
+            method: "get"
+        })
+        .then(response => {
+            console.log(response.data)
+        })
+        .catch(error => {
+            console.error(error)
+        })
+
+    }, [])
+
+    
   const navigate = useNavigate();
   const savedQuizzes = JSON.parse(localStorage.getItem('quizzes') || '[]');
   const deleteMostRecentQuiz = () => {
@@ -50,12 +58,20 @@ function SavedQuizzes() {
         <div className="contentcontainer ">
             <div className="content_heading">
             <span>Recent Quizzes </span>
-            <FaTrash 
-                    color="#98989F" 
-                    size={24} 
-                    style={{cursor: "pointer"}}
-                    onClick={deleteMostRecentQuiz}
-                />
+            {savedQuizzes.length > 0 ? (
+        <FaTrash 
+            color="#98989F" 
+            size={24} 
+            style={{ cursor: "pointer" }}
+            onClick={deleteMostRecentQuiz}
+        />
+    ) : (
+        <FaTrash 
+            color="#98989F" 
+            size={24} 
+            style={{ cursor: "not-allowed", opacity: 0.5 }}
+        />
+        )}
             
             </div>
             {savedQuizzes.map((quiz, index) => (

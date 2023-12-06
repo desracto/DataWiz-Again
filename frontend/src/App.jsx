@@ -23,11 +23,11 @@ import TestAniPage from './features/animation/pages/TestAni';
 import CreateQuiz from './features/quiz/pages/CreateQuiz';
 import QuizHome from './features/quiz/pages/QuizHome';
 import SavedQuizzes from './features/quiz/pages/SavedQuizzesPage';
-import CompletedQuiz from './features/quiz/pages/CompletedQuizPage';
+import UNCompletedQuiz from './features/quiz/pages/UNCompletedQuiz';
 import AllAttempts from './features/quiz/pages/AllAttemptsPage';
-import QuizAttempt from './features/quiz/pages/QuizAttemptPage';
 
 import axios from 'axios'
+
 
 function App() {
     const request = axios.create({
@@ -56,13 +56,12 @@ function App() {
                     <Route path="/SavedAnimationsPage" element={<SavedAnimationsPage />} />
                     <Route path="/QuizHomePage" element={<QuizHome />} />
                     <Route path="/CreateQuizPage" element={<CreateQuiz request={request} />} />
-                    <Route path="/SavedQuizzesPage" element={<SavedQuizzes request={request}/>} />
-                    <Route path="/CompletedQuizPage" element={<CompletedQuiz />} />
+                    <Route path="/SavedQuizzesPage" element={<SavedQuizzes />} />
+                    <Route path="/CompletedQuizPage" element={<UNCompletedQuiz />} />
                     <Route path="/AccountSettingsPage" element={<AccountSettingsPage request={request}/>} />
                     <Route path="/FaqsPage" element={<FaqsPage />} />
                     <Route path="/TestAni" element={<TestAniPage />} />
                     <Route path="/AllAttemptsPage" element={<AllAttempts />} />
-                    <Route path="/QuizAttemptPage" element={<QuizAttempt />} />
 
                 </Routes>
             </BrowserRouter>

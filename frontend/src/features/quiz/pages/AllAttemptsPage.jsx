@@ -7,16 +7,8 @@ import pdf from '../../../assets/images/pdf.png';
 const AllAttempts = () => {
     const navigate = useNavigate();
 
- 
-
- 
-
-  
-
- 
-
 const ViewBackButtonClick = useCallback(() => {
-    navigate("/UncompletedQuizPage");
+    navigate("/CompletedQuizPage");
 }, [navigate]);
 
   return (
