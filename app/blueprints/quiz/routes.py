@@ -3,7 +3,7 @@ from datetime import datetime
 
 from . import quiz_bp
 
-from app.database.models.models import Quiz, Users, Quiz_QPA
+from app.database.models.models import Quiz, Users, Quiz_QPA, Quiz_Question_Attempts
 from ...extensions import db
 from ..main.errors import bad_request, error_response
 
@@ -31,7 +31,6 @@ def retrieve_filtered_quiz(quiz_id):
     quiz:Quiz = Quiz.query.filter_by(id=quiz_id).first_or_404()
     return quiz.filter_quiz()
 
-
 @quiz_bp.route("/", methods=['POST'])
 @jwt_required()
 def create_quiz():
@@ -40,9 +39,21 @@ def create_quiz():
         {
             [REQUIRED] "quiz_name": "name": str,
             [REQUIRED] "start_time": "time": str,
+            [OPTIONAL] "description": description
             [JWT-IDENTITY] "user_id": "id": str,
 
-            [OPTIONAL] "question": [{'question': problem, 'answer': answer}, {'question': problem, 'answer': answer}]: array
+            [OPTIONAL] "questions": [
+                            {
+                                'question_number': question_number,
+                                'problem': problem, 
+                                'answer': answer
+                            }, 
+                            {
+                                'question_number': question_number,
+                                'problem': problem, 
+                                'answer': answer
+                            }]
+
             [OPTIONAL] "img_data": img_data
         }
     """
@@ -53,30 +64,26 @@ def create_quiz():
         return bad_request('must include quiz name, start time and user id')
     
     # retrieve the user ID
-    user:Users = Users.query.filter_by(email=get_jwt_identity()).first_or_404()
-
-    # Check if time is valid
-    # DO THIS
+    email = get_jwt_identity()
+    user:Users = Users.query.filter_by(email=email).first_or_404()
 
     # Create new response
     quiz = None
-    quiz:Quiz = Quiz(name=data['quiz_name'], userid=user.id)
-    quiz.add_time(data['start_time'])
+    quiz:Quiz = Quiz(name = data['quiz_name'], 
+                     description = data['description'],
+                     userid = user.id)
     
-    # Check if optional fields present
-    # Handle the 'question' field if it's present
-    if 'question' in data:
-        for question in data['question']:
-            quiz_question = Quiz_QPA(problem=question['question'], answer=question['answer'])
-            quiz.questions.append(quiz_question)
+    quiz.add_time(data['start_time'])
+    db.session.add(quiz)
+    db.session.commit()
+    
+    if 'questions' in data:
+        quiz.add_questions(data['questions'])
 
     # Handle the 'schema' field if it's present
     if 'schema' in data:
         quiz.schema = data['schema']
-    
-    db.session.add(quiz)
-    db.session.commit()
-    
+
     # Create response and add quiz object
     response = jsonify(quiz.to_dict())
     response.status_code = 201
@@ -85,27 +92,33 @@ def create_quiz():
     response.headers['Location'] = url_for('quiz.retrieve_quiz', quiz_id=quiz.id)
     return response
     
-@quiz_bp.route("/<quiz_id>/add_question/", methods=['PUT'])
-def add_quiz_question(quiz_id):
+@quiz_bp.route("/add-question/", methods=['PUT'])
+@jwt_required()
+def add_quiz_question():
     """
         JSON Format:
         {
-            [REQUIRED] "problem": str,
-            [REQUIRED] "answer": str
+            [REQUIRED] "quiz_id": quiz_id,
+            "questions": [
+                {
+                    "question_number": question_number,
+                    "problem": problem,
+                    "answer": answer
+                }
+            ]
         }
     """
     data = request.get_json() or {}
+    REQUIRED_KEYS = ['quiz_id', 'questions']
 
     # Checking if required fields are present in the JSON request
-    if 'problem' not in data or 'answer' not in data:
-        return bad_request('must include problem and answer')
+    if not all(KEY in data for KEY in REQUIRED_KEYS):
+        return bad_request('must include quiz_id, problem and answer')
 
-    quiz:Quiz = Quiz.query.get_or_404(quiz_id)
+    quiz:Quiz = Quiz.query.get_or_404(id=data['quiz_id'])
 
     # Create a new quiz question and add it to the quiz
-    question = Quiz_QPA(qaid=2, problem=data['problem'], answer=data['answer'], quiz_id=quiz_id)
-    db.session.add(question)
-    db.session.commit()
+    quiz.add_questions(data['questions'])
 
     # Create a response with the added question
     response = jsonify(quiz.to_dict())
@@ -115,62 +128,107 @@ def add_quiz_question(quiz_id):
     response.headers['Location'] = url_for('quiz.retrieve_quiz', quiz_id=quiz.id)
     return response
 
-@quiz_bp.route("<quiz_id>/question/<qaid>/edit_question", methods=['PUT'])
-def edit_quiz_question(quiz_id, qaid):
+@quiz_bp.route("/edit-question/", methods=['PUT'])
+@jwt_required()
+def edit_quiz_question():
     """
         JSON Format:
         {
-            [OPTIONAL] "problem": str,
-            [OPTIONAL] "answer": str
+            [REQUIRED] 'quiz_id': quiz_id,
+            'edited_questions = [
+                {
+                    'qaid': qaid, -> FIXED, CANNOT BE CHANGED
+                    [OPTIONAL] 'question_number': question_number
+                    [OPTIONAL] 'problem': problem,
+                    [OPTIONAL] 'answer': answer
+                },
+                {
+                    'qaid': qaid, -> FIXED, CANNOT BE CHANGED
+                    [OPTIONAL] 'question_number': question_number
+                    [OPTIONAL] 'problem': problem,
+                    [OPTIONAL] 'answer': answer
+                },
+                {
+                    'qaid': qaid, -> FIXED, CANNOT BE CHANGED
+                    [OPTIONAL] 'question_number': question_number
+                    [OPTIONAL] 'problem': problem,
+                    [OPTIONAL] 'answer': answer
+                }
+            ]
         }
     """
     data = request.get_json() or {}
 
     # Find the quiz associated with quiz_id
-    quiz = Quiz.query.get_or_404(quiz_id)
+    quiz:Quiz = Quiz.query.get_or_404(data['quiz_id'])
     
     # Find the quiz question associated with qaid
-    question = Quiz_QPA.query.get(qaid)
-    if not question:
-        return error_response(404, 'Quiz not found')
-    
-    # Check if optional fields 'problem' and 'answer' are present in the JSON request
-    if 'problem' in data:
-        # Update the problem field if it's present
-        question.problem = data['problem']
-
-    if 'answer' in data:
-        # Update the answer field if it's present
-        question.answer = data['answer']
-
-    db.session.commit()
+    quiz.edit_question(data['edited_questions'])
 
     # Create a response with the updated question
-    response = jsonify(question.to_dict())
+    response = jsonify(quiz.to_dict())
     response.status_code = 200
 
     return response
 
-@quiz_bp.route("/<quiz_id>/question/<qaid>/delete_question/", methods=['DELETE'])
-def delete_quiz_question(quiz_id, qaid):
-    try:
-        # Retrieve the quiz associated with quiz_id; raise a 404 error if not found
-        quiz = Quiz.query.get_or_404(quiz_id)
+@quiz_bp.route("/delete-question", methods=['DELETE'])
+@jwt_required()
+def delete_quiz_question():
+    """
+        JSON Format:
+        {
+            'quiz_id': quiz_id
+            'deleted_questions': [qaid, qaid, qaid]
+        }
+    """
+    data = request.get_json() or {}
 
-        # Find the quiz question associated with qaid
-        question = Quiz_QPA.query.get(qaid)
-        if not question:
-            return error_response(404, 'Quiz question not found')
+    quiz:Quiz = Quiz.query.filter_by(id=data['quiz_id']).first_or_404()
+    quiz.delete_question(data['deleted_questions'])
 
-        # Remove the question from the quiz
-        db.session.delete(question)
-        db.session.commit()
+    response = jsonify(quiz.to_dict())
+    response.status_code = 200
 
-    except:
-        error_response(500, 'internal server error')
+    return response 
 
-    return '', 204
+@quiz_bp.route("/submit-response", methods=['POST'])
+@jwt_required()
+def submit_response():
+    """
+        {
+            "quiz_id": quiz_id,
+            "response": [
+                {
+                    "qaid": qaid,
+                    "question_number": question_number,
+                    "answer": answer
+                },
+                {
+                    "qaid": qaid,
+                    "question_number": question_number,
+                    "answer": answer
+                }
+            ]
+        }
+    """
+    data = request.get_json() or {}
+    REQUIRED_KEYS = ['quiz_id', 'response']
 
-@quiz_bp.route("/<quiz_id>/<user_id>/submit-response", methods=['POST'])
-def submit_response(quiz_id, user_id):
-    pass
+    # check for fields
+    if not all(KEY in data for KEY in REQUIRED_KEYS):
+        return bad_request('Malformed request object. Required keys: quiz_id, response')
+
+    # get user id
+    user_identity = get_jwt_identity() # LEARNER IDENTITY
+    user:Users = Users.query.filter_by(email=user_identity).first_or_404()
+
+    # get quiz object
+    quiz:Quiz = Quiz.query.filter_by(id=data['quiz_id']).first_or_404()
+    quiz.add_attempts(data['response'], user.id)
+
+    return jsonify(
+        {
+            'message': "responses submitted successfully"
+        }
+    )
+

@@ -29,7 +29,7 @@ def schema1():
         emps_json.append(emp.as_dict())
     
     results = {
-        "employees": emps_json
+        "employee": emps_json
     }
     return jsonify(results=results)
 
@@ -51,7 +51,7 @@ def schema2():
         invens_json.append(inv.as_dict())
 
     results = {
-        'products': prods_json,
+        'product': prods_json,
         'inventory': invens_json
     }
 
@@ -76,7 +76,7 @@ def schema3():
 
     results = {
         'course': course_json,
-        'enrollments': enrolls_json
+        'enrollment': enrolls_json
     } 
 
     return jsonify(results=results)
