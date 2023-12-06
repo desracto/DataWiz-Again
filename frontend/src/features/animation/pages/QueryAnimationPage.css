@@ -377,3 +377,37 @@
     text-align: left;
     animation: fadeIn 5s forwards;
 }
+
+
+
+/* -------------------- */
+
+.table-info-container1 {
+    text-align: left;
+    background-color: #D4C1CE;
+    padding: 15px;
+    margin: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.05);
+    animation: fadeIn 5s forwards;
+}
+
+.query-description {
+    font-size: 16px;
+    font-weight: 400;
+    margin: 10px;
+}
+
+.no-result-message {
+    font-size: 16px;
+    font-weight: 400;
+    margin: 10px;
+    text-align: center;
+}
+
+.arrow-indicator {
+    text-align: center;
+    margin: 35px;
+    font-size: 50px;
+    animation: fadeIn 5s forwards;
+}

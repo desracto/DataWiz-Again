@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 const TableTest = ({ tableName, data, highlightedRows }) => {
   // Calculate total width required for the columns
   const totalColumnWidth = Object.keys(data[0]).length * 150; // Adjust the width as needed
@@ -25,6 +24,7 @@ const TableTest = ({ tableName, data, highlightedRows }) => {
     opacity: 0, // Initial opacity set to 0 for the fade-in effect
     animation: 'fadeIn 5s forwards', // Animation name, duration, and fill mode
   };  
+
   const tableTitleStyle = {
     padding: '10px',
     borderRadius: '10px 10px 0 0',

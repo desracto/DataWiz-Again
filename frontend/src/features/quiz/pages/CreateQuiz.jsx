@@ -80,7 +80,7 @@ const CreateQuiz = () => {
       const { id, name, description, questions } = location.state.draft;
       setQuizName(name);
       setQuizDescription(description);
-      setSchemasList(questions);
+      setSchemasList(questions  || []);
       setIsDraftLoaded(true);
       setLoadedDraftId(id); // Store the loaded draft's ID
     }
@@ -198,25 +198,27 @@ const CreateQuiz = () => {
         }
     };
 
-  const onDrop = useCallback((acceptedFiles, fileRejections) => {
+
+
+  const onDrop = useCallback(async(acceptedFiles, fileRejections) => {
     if (fileRejections.length > 0) {
       // Alert the user about the incorrect file format
       alert('Invalid file type. Only .png, .jpg, and .jpeg files are accepted.');
+      return;
     } else {
       // Handle the accepted files
       const currentRef = getInputProps()?.ref;
-
+      const binaryFiles = await Promise.all(acceptedFiles.map(file => convertImageToBinary(file)));
+      
       setSchemasList((prev) =>
         prev.map((item) => {
           if (item.id == currentRef?.current?.id) {
             return {
-              ...item,
-              files: [
-                ...acceptedFiles.map((file) => ({
-                  ...file,
-                  preview: URL.createObjectURL(file),
-                })),
-              ],
+                ...schema,
+                files: [...schema.files, ...binaryFiles.map((binary, index) => ({
+                  name: acceptedFiles[index].name,
+                  binaryData: binary
+                }))]
             };
           } else {
             return item;
@@ -243,6 +245,7 @@ const CreateQuiz = () => {
   const [questions, setQuestions] = useState([]);
   let overallQuestionCount = 0;
 
+  
   const addLine = () => {
     if (schemasList.length === 0) {
       alert("Please add a schema first before adding questions.");
@@ -304,31 +307,48 @@ const CreateQuiz = () => {
 
 
   const handleSubmitQuiz = async () => {
+    // Collecting quiz data
     const quizData = {
-        name: quizName,
-        description: quizDescription,
-        questions: schemasList.map(schema => schema.questions.map(q => {
-            return {
-                question: q.question,
-                answer: q.answer
-            };
-        })).flat()
+      name: quizName,
+      description: quizDescription,
+      questions: schemasList.map(schema => schema.questions).flat(),
+      images: schemasList.flatMap(schema => 
+        schema.files.map(file => ({
+          name: file.name,
+          binaryData: file.binaryData
+        }))
+      )
     };
-    
-    request.post('/api/quiz/', quizData)
-    .then(response => {
-        if (response.status === 201) {
-            // Navigate to a different page or show success message
-            navigate("/QuizHomePage"); 
-        }
-    })
-    .catch(error => {
-        console.error("Error creating quiz", error);
-        // Handle error
+  
+    try {
+      const response = await request.post('/api/quiz/', quizData);
+      // Handle the response
+      if (response.status === 201) {
+        navigate("/QuizHomePage"); // Navigate or handle success
+      }
+    } catch (error) {
+      console.error("Error creating quiz", error); // Handle error 
+      alert("Failed to save quiz.");
+      
+    }
+  };
+
+  const convertImageToBinary = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsBinaryString(file);
     });
   };
 
-
+  const handleSaveAndSubmitQuiz = async () => {
+    // Call saveQuiz function
+    saveQuiz();
+  
+    // Then call handleSubmitQuiz function
+    await handleSubmitQuiz();
+  };
   return (
     <>
       <SecondHeader />
@@ -348,8 +368,7 @@ const CreateQuiz = () => {
                   </div>
                   <div 
                   className="flex-center-filter-save" 
-                  //onClick={() => setSuccessModal(true)}
-                  onClick={saveQuiz}
+                  onClick={handleSaveAndSubmitQuiz}
                   >
                     <FaSave size={30} color="#98989F" />
                     <span className="text-gilroy-semibold " >

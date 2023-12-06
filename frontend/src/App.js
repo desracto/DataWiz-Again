@@ -24,7 +24,7 @@ import TestAniPage from './features/animation/pages/TestAni';
 import CreateQuiz from './features/quiz/pages/CreateQuiz';
 import QuizHome from './features/quiz/pages/QuizHome';
 import SavedQuizzes from './features/quiz/pages/SavedQuizzesPage';
-import UNCompletedQuiz from './features/quiz/pages/UNCompletedQuiz';
+import CompletedQuiz from './features/quiz/pages/CompletedQuizPage';
 import AllAttempts from './features/quiz/pages/AllAttemptsPage';
 import QuizAttempt from './features/quiz/pages/QuizAttemptPage';
 
@@ -61,7 +61,7 @@ function App() {
                     <Route path="/QuizHomePage" element={<QuizHome />} />
                     <Route path="/CreateQuizPage" element={<CreateQuiz request={request} />} />
                     <Route path="/SavedQuizzesPage" element={<SavedQuizzes />} />
-                    <Route path="/CompletedQuizPage" element={<UNCompletedQuiz />} />
+                    <Route path="/CompletedQuizPage" element={<CompletedQuiz />} />
                     <Route path="/AccountSettingsPage" element={<AccountSettingsPage request={request}/>} />
                     <Route path="/FaqsPage" element={<FaqsPage />} />
                     <Route path="/TestAni" element={<TestAniPage />} />

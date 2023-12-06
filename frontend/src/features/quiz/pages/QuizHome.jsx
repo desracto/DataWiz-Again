@@ -75,7 +75,11 @@ function QuizHome() {
       <div className="content_container">
         <div className="content_heading">
           <span>Drafts</span>
-          <FaTrash color="#98989F" size={24} style={{cursor:"pointer"}} onClick={deleteMostRecentDraft}/>
+           {drafts.length > 0 ? (
+        <FaTrash color="#98989F" size={24} style={{cursor: "pointer"}} onClick={deleteMostRecentDraft} />
+    ) : (
+        <FaTrash color="#98989F" size={24} style={{cursor: "not-allowed", opacity: 0.5}} />
+    )}
         </div>
 
         {drafts.map((draft, index) => (
