@@ -9,7 +9,7 @@ from ..main.errors import bad_request, error_response
 
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
-@quiz_bp.route("/retrieve-quizzes", methods=['GET'])
+@quiz_bp.route("/retrieve-quizzes/", methods=['GET'])
 @jwt_required()
 def retrieve_quizzes():
     # get user account
@@ -56,8 +56,8 @@ def create_quiz():
 
             [REQUIRED] "filters":   {
                                         "matching_join": False,
-                                        "spell_checker": False,
-                                        "punish_add_data": False
+                                        "spell_check": False,
+                                        "additional_data": False
                                     }
 
             [OPTIONAL] "img_data": img_data
@@ -86,9 +86,12 @@ def create_quiz():
     if 'questions' in data:
         quiz.add_questions(data['questions'])
 
+    if 'filters' in data:
+        quiz.add_filters(data['filters'])
+
     # Handle the 'schema' field if it's present
     if 'schema' in data:
-        quiz.schema = data['schema']
+        pass
 
     # Create response and add quiz object
     response = jsonify(quiz.to_dict())
@@ -197,6 +200,16 @@ def delete_quiz_question():
 
     return response 
 
+@quiz_bp.route("/add-filter/", methods=['PUT'])
+@jwt_required()
+def add_filter():
+    """
+        {
+            "quiz_id": quiz_id
+        }
+    """
+    pass
+
 @quiz_bp.route("/submit-response", methods=['POST'])
 @jwt_required()
 def submit_response():
@@ -237,4 +250,77 @@ def submit_response():
             'message': "responses submitted successfully"
         }
     )
+
+# reoute for retriving all unique user attempts
+@quiz_bp.route("/retrieve-userid-attempts", methods=['GET'])
+@jwt_required()
+def retrieve_user_id_attempts():
+    """
+        JSON Formats
+
+        Request Format:
+        ```Python
+        request: {
+            "quiz_id": quiz_id
+        }
+        ```
+
+        Return format:
+        ```Python
+        response: {
+            "users": [
+                {
+                    "user_id": user_id,
+                    "username": username
+                },
+                {
+                    "user_id": user_id,
+                    "username": username
+                }....
+            ]
+        }
+    """
+    data = request.get_json() or {}
+
+    # retrieve user object
+    user:Users = Users.query.filter_by(email=get_jwt_identity()).first_or_404()
+
+    # retrieve quiz 
+    quiz:Quiz = Quiz.query.get_or_404(data['quiz_id'])
+
+    # retrieve all userid attempts
+    userid_attempts = quiz.retrieves_all_userid_responses()
+
+    return jsonify({
+        "users": userid_attempts
+    })
+
+
+# route for auto-grading
+@quiz_bp.route("/retrieve-user-response", methods=['GET'])
+@jwt_required()
+def retrieve_user_response():
+    """
+        JSON Formats\n
+        ``Request Object``
+        ```Python
+        request: {
+            "user_id": user_id,
+            "quiz_id": quiz_id
+        }
+        ```
+    """
+    data = request.get_json() or {}
+
+    # Retrieve quiz object
+    quiz:Quiz = Quiz.query.get_or_404(data['quiz_id'])
+
+    # Retrieve all user responses
+    quiz_responses = quiz.retrieve_user_responses(data['user_id'])
+
+    return jsonify({
+        "quiz_responses": quiz_responses
+    })
+
+
 

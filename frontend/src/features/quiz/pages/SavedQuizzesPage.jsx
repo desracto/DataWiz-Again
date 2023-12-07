@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 
 const SavedQuizzes = ({request}) => {
     const [quizInfo, setQuizInfo] = useState({ name: '', startTime: '' });
+    const [quizData, setQuizData] = useState([])
 
     // on render
     useEffect(() => {
@@ -20,15 +21,19 @@ const SavedQuizzes = ({request}) => {
             method: "get"
         })
         .then(response => {
-            const quizData = response.data; 
-            setQuizInfo({ name: quizData.quiz_name, startTime: quizData.start_time });
-            console.log(response.data)
+            // console.log(response.data)
+            setQuizData(response.data)
         })
         .catch(error => {
             console.error(error)
         })
 
     }, [])
+
+    // Print the updated quizData
+    useEffect(() => {
+        console.log(quizData)
+    }, [quizData])
 
     
   const navigate = useNavigate();
@@ -105,18 +110,16 @@ const SavedQuizzes = ({request}) => {
             <span1>All Quizzes</span1>
             </div>
 
-            {savedQuizzes.map((quiz, index) => (
+            {quizData.map((quiz, index) => (
             <div key={quiz.id} className="content_card">
-            <div className="button-div completed ">
-                    
-            <span> {quizInfo.name}</span>
-                <small>Date: {quiz.date}</small>
-                <small>Time: {quizInfo.startTime}</small> 
-                <span3>UNATTEMPTED</span3> 
+                <div className="button-div completed "> 
+                    <span> {quiz.quiz_name}</span>
+                    <small>Date: {quiz.start_time.split(" - ")[0]}</small>
+                    <small>Time: {quiz.start_time.split(" - ")[1]}</small> 
+                    <span3>UNATTEMPTED</span3> 
+                </div>
                 
-            </div>
-            
-            <FaChevronRight style={{cursor:"pointer"}} onSubmit={{}}/>
+                <FaChevronRight style={{cursor:"pointer"}} onSubmit={{}}/>
             </div>
             ))}
             
