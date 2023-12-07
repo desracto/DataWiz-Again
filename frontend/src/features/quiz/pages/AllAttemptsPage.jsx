@@ -11,6 +11,17 @@ const ViewBackButtonClick = useCallback(() => {
     navigate("/CompletedQuizPage");
 }, [navigate]);
 
+const downloadPdf = () => {
+    const pdfUrl = "quiz_2.pdf";       
+    const link = document.createElement("a");
+    link.href = pdfUrl;
+    link.download = "document.pdf"; // specify the filename
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+}
+
   return (
     <>
     <SecondHeader/>
@@ -38,33 +49,12 @@ const ViewBackButtonClick = useCallback(() => {
              
                 <li className={"Attempts-List"}>
                   Name: Hiba Gohar
-                  <span className="Auto-Grading-Results-Text">
+                  <span className="Auto-Grading-Results-Text"
+                        onClick={downloadPdf}>
                   <img src={pdf} alt="PDF" className="PDF-Icon" />
                   Auto-Grading Results
                   </span>
                 </li>
-              
-              <p className={"blankLine"}>&nbsp;</p>
-              
-              
-                <li className={"Attempts-List"}>
-                  Name: Hiba Gohar
-                  <span className="Auto-Grading-Results-Text">
-                  <img src={pdf} alt="PDF" className="PDF-Icon" />
-                  Auto-Grading Results
-                  </span>
-                </li>
-              
-              <p className={"blankLine"}>&nbsp;</p>
-              
-                <li className={"Attempts-List"}>
-                  Name: Tehami
-                  <span className="Auto-Grading-Results-Text " >
-                  <img src={pdf} alt="PDF" className="PDF-Icon" />
-                  Auto-Grading Results
-                  </span>
-                </li>
-              
             </div>
           </div>
 

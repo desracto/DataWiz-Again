@@ -23,6 +23,10 @@ const request = axios.create({
 })
 
 const LoginPage = () => {
+    const userAccounts = {
+        "email": "ejazz2@test.com",
+        "password": "test"
+    }
     const navigate = useNavigate();
     const {register, handleSubmit, formState: { errors }} = useForm();
 
@@ -45,39 +49,55 @@ const LoginPage = () => {
     
     const onSubmit = (data) => {
         // console.log(data);
-        request({
-            url: "/api/user/login/",
-            method: "post",
-            data: data
-        }).then(response => {
-            console.log(response);
+        // request({
+        //     url: "/api/user/login/",
+        //     method: "post",
+        //     data: data
+        // }).then(response => {
+        //     console.log(response);
 
-            if (response.status === 200) {
-                // Clear any previous errors
-                setEmailError("");
-                setPasswordError("");
+        //     if (response.status === 200) {
+        //         // Clear any previous errors
+        //         setEmailError("");
+        //         setPasswordError("");
 
-                // Navigate to the instructor page
-                navigate("/InstructorHomePage"); 
-            }
+        //         // Navigate to the instructor page
+        //         navigate("/InstructorHomePage"); 
+        //     }
 
-        }).catch(error => {
-            console.error(error.response.data);
-            if (error.response.data.message === "INEP01") 
-            {
-                setEmailError("");
-                setPasswordError("Incorrect Email or Password");
-            }
-            else if (error.response.data.message === "ACNF01")
-            {
-                setEmailError("Account Not Found");
-                setPasswordError("");
-            }
-            else{
-                setEmailError("");
-                setPasswordError("");
-            }
-        })
+        // }).catch(error => {
+        //     console.error(error.response.data);
+        //     if (error.response.data.message === "INEP01") 
+        //     {
+        //         setEmailError("");
+        //         setPasswordError("Incorrect Email or Password");
+        //     }
+        //     else if (error.response.data.message === "ACNF01")
+        //     {
+        //         setEmailError("Account Not Found");
+        //         setPasswordError("");
+        //     }
+        //     else{
+        //         setEmailError("");
+        //         setPasswordError("");
+        //     }
+        // })
+        if (userAccounts.email === data.email && userAccounts.password === data.password)
+        {
+            navigate("/InstructorHomePage"); 
+        }
+        else if (userAccounts.email != data.email)
+        {
+            setEmailError("Account Not Found");
+            setPasswordError("");
+        }
+        else if (userAccounts.email === data.email && userAccounts.password != data.password)
+        {
+            setEmailError("");
+            setPasswordError("Incorrect Email or Password");
+        }
+
+
     };
 
   return (
