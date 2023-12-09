@@ -16,7 +16,7 @@ class Users(db.Model):
     # Fields
     id = db.Column(db.String(32), primary_key=True, unique=True, default=get_uuid)
     fullname = db.Column(db.String(40))
-    username = db.Column(db.String(40), unique=True)
+    username = db.Column(db.String(40))
     email = db.Column(db.String(345), unique=True)
     password_hash = db.Column(db.Text, nullable=False)
     account_type = db.Column(db.String(10)) # Learner | Instructor
@@ -74,6 +74,7 @@ class Quiz(db.Model):
     description = db.Column(db.String(2000)) 
     start_time = db.Column(db.DateTime)
     userid = db.Column(db.String(40), db.ForeignKey('Users.id')) # FK
+    link_generated = db.Column(db.Boolean, default=False)
     # img_id = db.Column(db.String(32), db.ForeignKey('Quiz_Image.img_id'))
 
     # Relationships
@@ -167,6 +168,27 @@ class Quiz(db.Model):
         
         quiz_response['filters'] = self.filters[0].to_dict()
         return quiz_response
+    
+    def from_dict(self, data: dict):
+        fields = ['quiz_name', 'description']
+
+        for field in fields:
+            if field in data:
+                setattr(self, field, data[field])
+
+        if 'questions' in data:
+            #[{"qaid": qaid, "problem": problem, "answer": answer}]
+            for question in data['questions']:
+                question_obj:Quiz_QPA = Quiz_QPA.query.get_or_404(question['qaid'])
+                question_obj.from_dict(question)
+
+                db.session.add(question_obj)    
+            db.session.commit()
+
+        if 'start_time' in data:
+            self.add_time(data['start_time'])
+
+        return self
 
     # Dictionary converter Methods
     def to_dict(self):
@@ -175,12 +197,17 @@ class Quiz(db.Model):
         for i in range(len(questions)):
             questions[i] = questions[i].to_dict()
 
+        if len(questions) > 0:
+            questions = Quiz.sort_questions(questions)
+            
         data = {
             "id": self.id,
             "quiz_name": self.name,
             "start_time": self.get_time(),
             "userid": self.user.id,
-            "questions": questions
+            "questions": questions,
+            "description": self.description,
+            "link_generated": self.link_generated
         }
         
         return data
@@ -194,6 +221,9 @@ class Quiz(db.Model):
                 'question_number': questions[i].question_number
             }
 
+        if len(questions) > 0:
+            questions = Quiz.sort_questions(questions)
+
         data = {
             'id': self.id,
             'quiz_name': self.name,
@@ -202,7 +232,6 @@ class Quiz(db.Model):
         }
 
         return data
-
 
     # Question Methods
     def add_questions(self, questions: list):
@@ -301,9 +330,35 @@ class Quiz(db.Model):
         db.session.commit()
 
         return self.to_dict()
+
+    @staticmethod
+    def sort_questions(question_array: list):
+        question_numbers = [x['question_number'] for x in question_array]
+        n = len(question_numbers)
+
+        for i in range(n):
+            swapped = False
+
+            for j in range(0, n-i-1):
+                if question_numbers[j] > question_numbers[j+1]:
+                    question_numbers[j], question_numbers[j+1] = question_numbers[j+1], question_numbers[j]
+                    swapped = True
+
+            if (swapped == False):
+                break
+        
+        # match the question numbers to questions
+        # and replace
+        for i in range(len(question_numbers)):
+            for j in question_array:
+                if j['question_number'] == question_numbers[i]:
+                    question_numbers[i] = j
+                    break
+
+        return question_numbers
+
+
     
-
-
 
 class Quiz_QPA(db.Model):
     # Table name
@@ -327,6 +382,15 @@ class Quiz_QPA(db.Model):
                Quiz ID: {}, \
                Question Number: {}>".format(self.qaid, self.quiz_id, self.question_number)
     
+    def from_dict(self, data: dict):
+        fields = ['problem', 'answer']
+
+        for field in fields:
+            if field in data:
+               setattr(self, field, data[field]) 
+
+        return self
+
     def to_dict(self):
         data = {
             "qaid": self.qaid,

@@ -66,6 +66,8 @@
   background-color: transparent;
   color: #1976D2;
   font-family: 'Gilroy-Semibold', sans-serif;
+  overflow-x: auto;
+  outline: none;
 }
 
 .copy-icon {

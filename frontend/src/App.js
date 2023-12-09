@@ -8,7 +8,7 @@ import SignUpPage from './features/signup/pages/SignUpPage';
 import LoginPage from './features/login/pages/LoginPage';
 import ResetPassword from './features/login/pages/ResetPasswordPage';
 import InstructorHomePage from './features/general/pages/InstructorHomePage';
-import QuizzesIntroductionPage from './features/general/pages/QuizzesIntroductionPage';
+import QuizzesIntroductionPage from './features/quiz/pages/QuizzesIntroductionPage';
 import AnimationIntroductionPage from './features/general/pages/AnimationIntroductionPage';
 import AccountSettingsPage from './features/general/pages/AccountSettingsPage';
 import FaqsPage from './features/general/pages/FaqsPage';
@@ -21,11 +21,13 @@ import TestAniPage from './features/animation/pages/TestAni';
 
 //Quizz Pages
 import CreateQuiz from './features/quiz/pages/CreateQuiz';
-import QuizHome from './features/quiz/pages/QuizHome';
+import QuizDraft from './features/quiz/pages/QuizDraft';
 import SavedQuizzes from './features/quiz/pages/SavedQuizzesPage';
 import CompletedQuiz from './features/quiz/pages/CompletedQuizPage';
 import AllAttempts from './features/quiz/pages/AllAttemptsPage';
-import QuizAttempt from './features/quiz/pages/QuizAttemptPage';
+import QuizAttempt from './features/quiz/pages/QuizAttemptPage'; // delete
+import QuizAttemptTemplate from './features/quiz/pages/QuizAttemptTemplate';
+import QuizTemplate from './features/quiz/pages/QuizTemplate';
 
 import axios from 'axios'
 
@@ -56,16 +58,28 @@ function App() {
                     <Route path="/SchemaSelectionPage" element={<SchemaSelectionPage />} />
                     <Route path="/QueryAnimationPage" element={<QueryAnimationPage />} />
                     <Route path="/SavedAnimationsPage" element={<SavedAnimationsPage />} />
-                    <Route path="/QuizHomePage" element={<QuizHome />} />
-                    <Route path="/QuizzesIntroductionPage" element={<QuizzesIntroductionPage />} />
-                    <Route path="/CreateQuizPage" element={<CreateQuiz request={request} />} />
-                    <Route path="/SavedQuizzesPage" element={<SavedQuizzes request={request}/>} />
-                    <Route path="/CompletedQuizPage" element={<CompletedQuiz />} />
                     <Route path="/AccountSettingsPage" element={<AccountSettingsPage request={request} />} />
                     <Route path="/FaqsPage" element={<FaqsPage />} />
                     <Route path="/TestAni" element={<TestAniPage />} />
-                    <Route path="/AllAttemptsPage" element={<AllAttempts />} />
-                    <Route path="/QuizAttemptPage" element={<QuizAttempt />} />
+
+                    {/* Quiz Module Routes */}
+                        <Route path="/instructor/quiz/home/" element={<QuizzesIntroductionPage />} />
+                        <Route path="/instructor/quiz/drafts/" element={<QuizDraft />} />
+                        <Route path="/instructor/quiz/create/" element={<CreateQuiz request={request} />} />
+                        <Route path="/instructor/quiz/quizzes/" element={<SavedQuizzes request={request}/>} />
+
+                        <Route path="/AllAttemptsPage" element={<AllAttempts />} />
+                        <Route path="/QuizAttemptPage" element={<QuizAttempt />} />
+                        <Route path="/CompletedQuizPage" element={<CompletedQuiz />} />
+
+                        {/* Template Routes */}
+                        <Route path="/instructor/quiz/:id/overview/" element={<QuizTemplate request={request} />} />
+                        <Route path="/quiz/attempt-quiz/:id/" element={<QuizAttemptTemplate request={request} />} />
+
+
+
+                    {/* Quiz Module Routes */}
+
 
                 </Routes>
             </BrowserRouter>

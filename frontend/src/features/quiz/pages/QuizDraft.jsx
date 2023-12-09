@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { FaChevronRight, FaTrash } from "react-icons/fa";
 import { NavLink, useNavigate } from "react-router-dom"; // Import useHistory
-import "./QuizHome.css";
+import "./QuizDraft.css";
 import SecondHeader from '../../../global_components/SecondHeader';
 
-function QuizHome() {
+function QuizDraft() {
 
     const navigate = useNavigate();
     const [drafts, setDrafts] = useState([]);
@@ -39,7 +39,7 @@ function QuizHome() {
       
       const handleDraftClick = (draft) => {
         // Redirect to the CreateQuiz page with the draft data
-        navigate('/CreateQuizPage', { state: { draft } });
+        navigate('/instructor/quiz/create/', { state: { draft } });
     };
 
 
@@ -60,13 +60,13 @@ function QuizHome() {
           </span>
         </div>
         <div className="button">
-          <NavLink to={"/CreateQuizPage"} className="navlink">
+          <NavLink to={"/instructor/quiz/create/"} className="navlink">
             Create Quiz
           </NavLink>
         </div>
 
         <div className="SavedQuizzes-button">
-          <NavLink to={"/SavedQuizzesPage"} className="SavedQuizzes-button-navlink">
+          <NavLink to={"/instructor/quiz/quizzes"} className="SavedQuizzes-button-navlink">
             Saved Quizzes
           </NavLink>
         </div>
@@ -106,4 +106,4 @@ function QuizHome() {
   );
 }
 
-export default QuizHome;
+export default QuizDraft;

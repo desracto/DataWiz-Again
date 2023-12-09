@@ -1,0 +1,245 @@
+
+.youWillHave {
+  margin-bottom: 0;
+  font-family: Gilroy-MediumItalic;
+}
+
+.youWillHaveASpecificAmoun {
+  margin: 0;
+  font-family: Gilroy-MediumItalic;
+}
+
+.blankLine {
+  margin: 0;
+}
+
+.youWillHaveContainer {
+  /* position: absolute; */
+  top: calc(50% - 135px);
+  left: calc(50% - 394.5px);
+  display: inline-block;
+  width: 789px;
+}
+
+.inputLabel {
+  position: relative;
+
+}
+
+.textbox {
+  align-self: stretch;
+  flex: 1;
+  border-radius: var(--br-3xs);
+  background-color: var(--color-gainsboro-300);
+  border: 1px solid var(--color-dimgray-200);
+  padding: var(--padding-xl);
+  font-size: var(--font-size-base);
+  font-family: var(--font-gilroy-regular);
+}
+
+.inputfield,
+.inputfield1 {
+  /* position: absolute; */
+  /* top: 81px; */
+  /* left: calc(50% - 416.5px); */
+  width: 833px;
+  height: 132px;
+  gap: 10px;
+}
+
+.inputfield1 {
+  top: 253px;
+}
+
+
+.schema {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.image27Icon {
+  position: absolute;
+  top: 70px;
+  left: calc(50% - 435.5px);
+  width: 871px;
+  height: 459px;
+  object-fit: cover;
+}
+
+.groupChild1 {
+  top: 43px;
+  border-radius: var(--br-mini);
+  background-color: var(--color-white);
+  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.05);
+  height: 400px;
+}
+
+.inputfield3 {
+  top: 255px;
+}
+
+.groupDiv {
+  position: absolute;
+  top: 1844px;
+  left: calc(50% - 468.5px);
+  width: 937px;
+  height: 443px;
+  font-size: var(--font-size-lg);
+}
+
+.button {
+  /* position: absolute; */
+  height: 62.65%;
+  /* width: 81.22%; */
+  top: 19.28%;
+  right: 9.39%;
+  bottom: 18.07%;
+  left: 9.39%;
+}
+
+.QuizAttempt-content_container_bgcolor {
+  background: #D8D8D8;
+  border-radius: 1.5rem;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.innerbg {
+  background: #d8d8d872;
+}
+
+
+.font1 {
+  font-family: Gilroy-Bold;
+}
+
+.innerheading {
+  font-family: Gilroy-SemiBold;
+  font-size: 20px;
+  margin-top: 30px;
+  margin-bottom: 8px;
+}
+
+.margin_bottom {
+  margin-bottom: 50px;
+}
+
+
+
+
+
+.main_Page {
+  position: relative;
+  background-color: var(--color-white);
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  text-align: left;
+  font-size: var(--font-size-36xl);
+  color: var(--color-black);
+  font-family: var(--font-gilroy-semibold);
+}
+
+
+.SubmitQuizButton {
+    padding: 12px 20px;
+    /* Adjust size as needed */
+    background-color: #8A5A8E;
+    /* Purple background color */
+    color: white;
+    /* White text */
+    font-family: Gilroy-Bold;
+    font-size: 13px;
+    /* Font size */
+    border: none;
+    /* No border */
+    border-radius: 5px;
+    /* Rounded corners */
+    cursor: pointer;
+    /* Pointer cursor on hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Optional: Adds a subtle shadow */
+  
+  }
+  
+  .SubmitQuizButton:hover {
+    background-color: #331B3B;
+    /* Slightly darker purple background on hover */
+    transition-duration: 450ms;
+    /* Smooth background color transition on hover */
+  }
+
+
+.answer-textarea {
+    border-radius: 0.375rem; 
+    background-color:#d8d8d872;
+    padding: 0.9rem; 
+    border: none; 
+    margin-top: 1rem;
+    
+  }
+
+.questions-holder {
+    padding-bottom: 2.5rem;
+    z-index: 10;
+}
+
+.question_number {
+    font-family: Gilroy-SemiBold;
+    font-size: 20px;
+    margin-top: 30px;
+    margin-bottom: 8px;
+}
+
+.question-holder {
+    background-color: #fff;
+    border-radius: 1rem;
+    padding: 1.25rem;
+}
+
+.answer-holder {
+    background: #d8d8d872;
+    border-radius: 0.6rem;
+    padding: 1.25rem;
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+}
+
+.problem-title {
+    font-family: Gilroy-SemiBold;
+}
+
+.problem-holder {
+    border-radius: 0.6rem;
+    padding: 1.25rem;
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+    background: #d8d8d872;
+    position: relative;
+}
+
+.answer-title {
+    font-family: Gilroy-SemiBold;
+}
+
+.answer-input-holder {
+    width: 100%;
+    border-radius: 0.375rem; 
+    background-color:#d8d8d872;
+    padding: 0.9rem; 
+    border: none; 
+    margin-top: 1rem;
+    resize: none;
+}
+
+.description {
+    margin: 0;
+    font-family: Gilroy-MediumItalic;
+    border-radius: 1rem;
+    background-color: #fff;
+    padding: 2.5rem;
+    margin-bottom: 0;
+    font-family: Gilroy-MediumItalic;
+
+}

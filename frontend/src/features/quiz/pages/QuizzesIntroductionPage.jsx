@@ -17,14 +17,12 @@ const QuizzesIntroductionPage = () => {
     const navigate = useNavigate();
 
     const onQuizIntroCreateAQuizButtonClick = useCallback(() => {
-        navigate("/QuizHomePage");
+        navigate("/instructor/quiz/drafts/");
     }, [navigate]);
 
     const onQuizIntroViewQuizzesButtonClick = useCallback(() => {
-        navigate("/SavedQuizzesPage");
+        navigate("/instructor/quiz/quizzes");
     }, [navigate]);
-
-
 
   return (
     <>

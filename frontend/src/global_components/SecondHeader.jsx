@@ -91,7 +91,7 @@ const SecondHeader = () => {
             <span className="menu_top">Animation</span>
           </NavLink>
 
-          <NavLink to={"/QuizzesIntroductionPage"} className="nav_link">
+          <NavLink to={"/instructor/quiz/home/"} className="nav_link">
             <img
               src={quizzes}
               alt="Menu Icon 3"

@@ -25,7 +25,7 @@ def retrieve_quiz(quiz_id):
     quiz:Quiz = Quiz.query.filter_by(id=quiz_id).first_or_404()
     return quiz.to_dict()
 
-@quiz_bp.route("/retrieve-filtered-quiz/<quiz_id>", methods=['GET'])
+@quiz_bp.route("/retrieve-filtered-quiz/<quiz_id>/", methods=['GET'])
 @jwt_required()
 def retrieve_filtered_quiz(quiz_id):
     quiz:Quiz = Quiz.query.filter_by(id=quiz_id).first_or_404()
@@ -200,6 +200,107 @@ def delete_quiz_question():
 
     return response 
 
+@quiz_bp.route("/delete-quiz", methods=['DELETE'])
+@jwt_required()
+def delete_quiz():
+    """
+        JSON Format:
+        request: {
+            "quiz_id": quiz_id
+        }
+    """
+    data = request.get_json() or {}
+
+    if 'quiz_id' not in data:
+        return bad_request("must include quiz ID in request")
+
+    quiz:Quiz = Quiz.query.get_or_404(data['quiz_id'])
+    db.session.delete(quiz)
+    db.session.commit()
+
+    response = {
+        "msg": "quiz sucessfully deleted"
+    }
+    response = jsonify(response)
+    response.status_code = 200
+
+    return response
+
+@quiz_bp.route("/change-link-generated/", methods=['PUT'])
+@jwt_required()
+def change_link_generated():
+    """
+        JSON Format
+        request: {
+            "quiz_id": quiz_id
+        }
+    """
+    data = request.get_json() or {}
+    if 'quiz_id' not in data:
+        return bad_request("must include quiz_id in request")
+    
+    quiz:Quiz = Quiz.query.get_or_404(data['quiz_id'])
+    quiz.link_generated = True
+
+    try:
+        db.session.add(quiz)
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        return error_response(500, "Error handling request" + str(e))
+    
+    response = {
+        "msg": "sucessfully updated link_generated to TRUE"
+    }
+    response = jsonify(response)
+    response.status_code = 204 # no redirect
+
+    return response
+
+@quiz_bp.route("/edit-quiz/", methods=['PUT'])
+@jwt_required()
+def edit_quiz():
+    """
+        JSON Format
+        request: {
+            "id": id,
+            "quiz_name": quiz_name,
+            "start_time": start_time,
+            "description": description,
+            "questions": [
+                {
+                    "problem": problem,
+                    "answer": answer,
+                    "qaid": qaid,
+                },
+                {
+                    "problem": problem,
+                    "answer": answer,
+                    "qaid": qaid,
+                }
+            ]
+        }
+    """
+    data = request.get_json() or {}
+
+    # check for fields
+    
+    # retrieve quiz object
+    quiz:Quiz = Quiz.query.get_or_404(data['id'])
+    quiz.from_dict(data)
+
+    db.session.add(quiz)
+    db.session.commit()
+
+    response = {
+        "msg": "quiz object updated sucessfully"
+    }
+
+    response = jsonify(response)
+    response.status_code = 204
+
+    return response
+
 @quiz_bp.route("/add-filter/", methods=['PUT'])
 @jwt_required()
 def add_filter():
@@ -247,7 +348,7 @@ def submit_response():
 
     return jsonify(
         {
-            'message': "responses submitted successfully"
+            'msg': "responses submitted successfully"
         }
     )
 
@@ -294,7 +395,6 @@ def retrieve_user_id_attempts():
     return jsonify({
         "users": userid_attempts
     })
-
 
 # route for auto-grading
 @quiz_bp.route("/retrieve-user-response", methods=['GET'])

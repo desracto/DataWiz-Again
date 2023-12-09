@@ -3,7 +3,7 @@ from flask_jwt_extended import get_jwt, create_access_token, get_jwt_identity, s
 from flask import jsonify
 from datetime import datetime, timedelta
 
-@auth_bp.after_request
+@auth_bp.after_app_request
 def refresh_expiring_jwts(response):
     """
         Refreshes any token which will expire in 30 minutes
