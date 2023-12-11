@@ -153,7 +153,6 @@
 }
 
 .button-container1 {
-    /* background-color: rgb(191, 255, 0); */
     margin-top: 152px;
     position: absolute;
     width: 80%;
@@ -317,8 +316,6 @@
     padding: 30px;
 }
 
-/* -------------------------------- */
-
 .QueryStepsDisplayCard {
     text-align: left;
 }
@@ -334,7 +331,7 @@
 }
 
 .QueryStep p {
-    font-family: 'Your-Code-Font', monospace; /* Replace 'Your-Code-Font' with the actual font used for code blocks */
+    font-family: monospace; 
     margin-left: 20px; 
     margin-bottom: 15px;
 }
@@ -378,9 +375,6 @@
     animation: fadeIn 5s forwards;
 }
 
-
-
-/* -------------------- */
 
 .table-info-container1 {
     text-align: left;
