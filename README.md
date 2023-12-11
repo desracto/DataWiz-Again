@@ -44,7 +44,7 @@ Nadeem</b></a><br/>Website Development</td>
 
 ### Quiz and Auto-grading Module
 <p align="center">
-  <img src="[https://github.com/desracto/DataWiz-Again/assets/78848419/f1688a63-f818-41e9-adc9-2e326bfd4952](https://github.com/desracto/DataWiz-Again/assets/78848419/4234ac40-f6ed-45d3-97cb-c5b23aa9c1fd)" alt="GIF 3" width="49%">
+  <img src="https://github.com/desracto/DataWiz-Again/assets/78848419/4234ac40-f6ed-45d3-97cb-c5b23aa9c1fd" alt="GIF 3" width="49%">
     <img src="https://github.com/desracto/DataWiz-Again/assets/78848419/d6b2051f-8b16-408f-9598-dcb5f09a72c7" alt="GIF 4" width="49%">
 </p>
 
@@ -57,4 +57,6 @@ Nadeem</b></a><br/>Website Development</td>
   <li>Database 2: SQLite - For query animation module processing</li>
 </ul>
 
+
+## User Guide
 ## How to Use
