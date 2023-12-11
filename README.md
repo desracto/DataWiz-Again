@@ -37,12 +37,17 @@ Nadeem</b></a><br/>Website Development</td>
 </ul>
 
 ### Query Animation Module
-#### Schema Selection
-![Schema Selection](https://github.com/desracto/DataWiz-Again/assets/78848419/f1688a63-f818-41e9-adc9-2e326bfd4952)
+<p align="center">
+  <img src="https://github.com/desracto/DataWiz-Again/assets/78848419/f1688a63-f818-41e9-adc9-2e326bfd4952" alt="GIF 1" width="49%">
+    <img src="https://github.com/desracto/DataWiz-Again/assets/78848419/db16f59c-82a6-4560-85c8-0c3345134713" alt="GIF 2" width="49%">
+</p>
 
-#### Query Animation
+### Quiz and Auto-grading Module
+<p align="center">
+  <img src="[https://github.com/desracto/DataWiz-Again/assets/78848419/f1688a63-f818-41e9-adc9-2e326bfd4952](https://github.com/desracto/DataWiz-Again/assets/78848419/4234ac40-f6ed-45d3-97cb-c5b23aa9c1fd)" alt="GIF 3" width="49%">
+    <img src="https://github.com/desracto/DataWiz-Again/assets/78848419/d6b2051f-8b16-408f-9598-dcb5f09a72c7" alt="GIF 4" width="49%">
+</p>
 
-#### Saved Animation
 
 ## Technologies
 <ul>
