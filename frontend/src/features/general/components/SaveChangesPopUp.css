@@ -6,7 +6,6 @@
     width: 100%;
 }
 
-
 .save-changes-pop-up-card {
     position: relative;
     display: flex;
@@ -39,9 +38,6 @@
     line-height: 80px;
 }
 
-
-
-
 .confirm-button {
     margin: 0 auto;
     position: relative;
@@ -72,8 +68,6 @@
     font-size: 20px;
     color: black;
 }
-
-
 
 .save-changes-pop-up-cancelButton:hover {
     background-color: black;

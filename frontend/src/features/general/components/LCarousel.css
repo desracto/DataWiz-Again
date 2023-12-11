@@ -47,8 +47,6 @@ body {
   position: relative;
 }
 
-/* ---------------------------------------------------------------- */
-
 .SchemaSelectionFeatureCard,
 .QueryAnimationFeatureCard,
 .SavedQueryAnimationFeatureCard {
@@ -101,8 +99,6 @@ body {
     line-height: 30px;
     word-wrap: break-word;
 }
-
-/* ---------------------------------------------------------------- */
 
 .swiper-slide-shadow-left,
 .swiper-slide-shadow-right {
