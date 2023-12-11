@@ -38,7 +38,7 @@
     font-family: Gilroy-SemiBold;
     display: flex;
     align-items: center;
-    margin-top:1rem;
+    margin-top: 1rem;
 }
 
 .heading_container .button {
@@ -46,8 +46,8 @@
     justify-content: flex-start;
     align-items: center;
     margin-top: 1.5rem;
-    
-    
+
+
 }
 
 .heading_container .button .navlink {
@@ -66,8 +66,8 @@
     cursor: pointer;
     min-width: 136px;
     width: 40%;
-    color:black;
-    
+    color: black;
+
 }
 
 .button-div {
@@ -80,8 +80,6 @@
     transition: 0.45s;
 }
 
-
-
 /*saved quizzes button*/
 .heading_container .SavedQuizzes-button {
     display: flex;
@@ -91,8 +89,6 @@
     margin-left: 420px;
     transform: translateY(-60px);
     transform: translateX(-70px);
-    
-    
 }
 
 .heading_container .SavedQuizzes-button .SavedQuizzes-button-navlink {
@@ -111,8 +107,8 @@
     cursor: pointer;
     min-width: 136px;
     width: 90%;
-    color:black;
-    
+    color: black;
+
 }
 
 .heading_container .SavedQuizzes-button .SavedQuizzes-button-navlink:hover {
@@ -142,14 +138,15 @@
     align-items: center;
     margin-bottom: 3rem;
     margin-top: 1.7rem;
-    
+
 }
-.content_container .content_heading span{
+
+.content_container .content_heading span {
     font-size: 35px;
     font-family: Gilroy-Bold;
 }
 
-.content_container .content_card{
+.content_container .content_card {
     display: flex;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     padding-top: 1.6rem;
@@ -163,22 +160,26 @@
     width: auto;
     margin-bottom: 3rem;
 }
+
 .content_container .content_card div {
     width: 100%;
     display: flex;
     flex-direction: column;
 }
-.content_container .content_card div span{
+
+.content_container .content_card div span {
     font-family: Gilroy-SemiBold;
 }
-.content_container .content_card div small{
+
+.content_container .content_card div small {
     font-family: Gilroy-Regular;
     margin-left: 0.5rem;
 }
+
 @media (min-width: 768px) {
     .content_container {
         padding: 25px 40px;
-        width: 150%; 
+        width: 150%;
         max-width: 830px;
     }
 }
