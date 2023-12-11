@@ -228,3 +228,5 @@ const CompletedQuiz = () => {
         </>
     );
 };
+
+export default CompletedQuiz;
