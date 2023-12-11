@@ -36,6 +36,14 @@ Nadeem</b></a><br/>Website Development</td>
   <li><strong>Saved Animations and Quizzes:</strong> Effortlessly manage and revisit your saved query animations and quizzes in one organized location.</li>
 </ul>
 
+### Query Animation Module
+#### Schema Selection
+![Schema Selection](https://github.com/desracto/DataWiz-Again/assets/78848419/f1688a63-f818-41e9-adc9-2e326bfd4952)
+
+#### Query Animation
+
+#### Saved Animation
+
 ## Technologies
 <ul>
   <li>Frontend: React.js/ReactJS</li>
