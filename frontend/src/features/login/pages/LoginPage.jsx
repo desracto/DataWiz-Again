@@ -1,50 +1,54 @@
 import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate} from "react-router-dom";
-import axios from 'axios'
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+
 import "./LoginPage.css";
 
 // Component Imports
 import Header1 from '../../../global_components/Header1';
 
 // Images Imports
-import HiddenEye  from '../../../assets/images/clarityeyehideline.svg'
-import GoogleLogo from '../../../assets/images/google-account-login.svg'
+import GoogleLogo from '../../../assets/images/google-account-login.svg';
 import LeftArrow from '../../../assets/images/left-arrow.png';
 
-
+// Axios instance for making API requests
 const request = axios.create({
     baseURL: "http://localhost:5000",
     headers: {
-        "Content-Type" : "application/json"
+        "Content-Type": "application/json"
     },
     withCredentials: true,
     timeout: 300000
 })
 
+// LoginPage component for user authentication
 const LoginPage = () => {
+    // Using the useNavigate hook from react-router-dom to enable navigation
     const navigate = useNavigate();
-    const {register, handleSubmit, formState: { errors }} = useForm();
 
+    // React Hook Form for form validation
+    const { register, handleSubmit, formState: { errors } } = useForm();
+
+    // State to manage email and password error messages
     const [emailError, setEmailError] = useState("");
-    const [passwordError, setPasswordError] = useState("")
+    const [passwordError, setPasswordError] = useState("");
 
-
+    // Callback functions for navigation
     const onForgotPasswordClick = useCallback(() => {
         navigate("/ResetPasswordPage");
     }, [navigate]);
-        
+
     const onRegisterButtonClick = useCallback(() => {
         navigate("/SignUpPage");
     }, [navigate]);
-        
+
     const onBackArrowContainer1Click = useCallback(() => {
         navigate("/LandingPage");
     }, [navigate]);
 
-    
+    // Function to handle form submission
     const onSubmit = (data) => {
-        // console.log(data);
         request({
             url: "/api/user/login/",
             method: "post",
@@ -63,34 +67,33 @@ const LoginPage = () => {
 
         }).catch(error => {
             console.error(error.response.data);
-            if (error.response.data.message === "INEP01") 
-            {
+
+            // Handling different error scenarios
+            if (error.response.data.message === "INEP01") {
                 setEmailError("");
                 setPasswordError("Incorrect Email or Password");
-            }
-            else if (error.response.data.message === "ACNF01")
-            {
+            } else if (error.response.data.message === "ACNF01") {
                 setEmailError("Account Not Found");
                 setPasswordError("");
-            }
-            else{
+            } else {
                 setEmailError("");
                 setPasswordError("");
             }
         })
     };
 
-  return (
-    <>
-        <Header1/>
+    // Rendering the login page component
+    return (
+        <>
+            <Header1 />
             <div className="login-card-container">
                 <div className="login-card-item">
                     <div className="Return-Landing-Login1" onClick={onBackArrowContainer1Click}>
                         <div className="Return-Landing-Login-Circle">
-                            <img 
-                            src={LeftArrow}
-                            alt=""
-                            className="Return-Landing-Login-left">
+                            <img
+                                src={LeftArrow}
+                                alt=""
+                                className="Return-Landing-Login-left">
                             </img>
                         </div>
                     </div>
@@ -104,17 +107,23 @@ const LoginPage = () => {
                         </div>
                         <div className="EmailSection">
                             <div className="input-label1">
-                            Email
+                                Email
                             </div>
                             <input
                                 className="Login-emailField"
                                 name="Login-email"
                                 placeholder="xyz@gmail.com"
                                 type="email"
-                                {...register("email", { required: "Email is required",  pattern : {value:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, message: "Enter a valid email address"}})}
+                                {...register("email", {
+                                    required: "Email is required",
+                                    pattern: {
+                                        value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                        message: "Enter a valid email address"
+                                    }
+                                })}
                             />
-                            <p className = "ErrorMessages">{errors.email?.message}</p>
-                            <p className = "ErrorMessages">{emailError}</p>
+                            <p className="ErrorMessages">{errors.email?.message}</p>
+                            <p className="ErrorMessages">{emailError}</p>
                         </div>
 
                         <div className="PasswordSection">
@@ -129,34 +138,29 @@ const LoginPage = () => {
                                 {...register("password", { required: "Password is required" })}
                             />
 
-                            <p className = "ErrorMessages">{errors.password?.message}</p>
-                            <p className = "ErrorMessages">{passwordError}</p>
-                            {/* <img
-                                className="Login-HideEyeIcon"
-                                alt="hidden eye"
-                                src={HiddenEye}
-                            /> */}
-                        <   label className="Login-forgotPassword-label" onClick={onForgotPasswordClick}>
-                            <div className="Login-forgotPassword-text">
-                                Forgot Password?
-                            </div>
+                            <p className="ErrorMessages">{errors.password?.message}</p>
+                            <p className="ErrorMessages">{passwordError}</p>
+                            <label className="Login-forgotPassword-label" onClick={onForgotPasswordClick}>
+                                <div className="Login-forgotPassword-text">
+                                    Forgot Password?
+                                </div>
                             </label>
                         </div>
 
                         <button className="Login-signinButton">
                             <div className="Login-signinButton-Text">
-                                    Log In
+                                Log In
                             </div>
                         </button>
-                    
+
                         <div className="GoogleContainer">
                             <div className="Login-or-continue-with">
                                 or continue with
                             </div>
                             <img
-                            className="LoginPage-google-account-login"
-                            alt=""
-                            src={GoogleLogo}
+                                className="LoginPage-google-account-login"
+                                alt=""
+                                src={GoogleLogo}
                             />
                         </div>
 
@@ -171,9 +175,10 @@ const LoginPage = () => {
                             </label>
                         </div>
                     </form>
+                </div>
             </div>
-        </div>
-    </>
-  )
+        </>
+    );
 }
-export default LoginPage
+
+export default LoginPage;

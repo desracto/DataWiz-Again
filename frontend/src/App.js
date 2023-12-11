@@ -19,7 +19,7 @@ import FaqsPage from './features/general/pages/FaqsPage';
 import SchemaSelectionPage from './features/animation/pages/SchemaSelectionPage'
 import QueryAnimationPage from './features/animation/pages/QueryAnimationPage'
 import SavedAnimationsPage from './features/animation/pages/SavedAnimationsPage';
-import TestAniPage from './features/animation/pages/TestAni';
+//import TestAniPage from './features/animation/pages/TestAni';
 
 //Quizz Pages
 import CreateQuiz from './features/quiz/pages/CreateQuiz';
@@ -62,7 +62,7 @@ function App() {
                     <Route path="/SavedAnimationsPage" element={<SavedAnimationsPage />} />
                     <Route path="/AccountSettingsPage" element={<AccountSettingsPage request={request} />} />
                     <Route path="/FaqsPage" element={<FaqsPage />} />
-                    <Route path="/TestAni" element={<TestAniPage />} />
+                    
 
 
                     <Route path="/instructor/home/" element={<InstructorHomePage />} />

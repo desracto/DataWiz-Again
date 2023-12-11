@@ -9,8 +9,6 @@ import LCarousel from '../components/LCarousel';
 import ICarousel from '../components/ICarousel';
 import Header1 from '../../../global_components/Header1';
 
-
-
 // Image Imports
 import dataWizLogoImage from '../../../assets/images/DataWiz-Logo.png';
 import TehamiImage from '../../../assets/images/TehamiChar.png';
@@ -19,30 +17,33 @@ import RidaImage from '../../../assets/images/RidaChar.png';
 import EjazImage from '../../../assets/images/EjazChar.png';
 import NihalImage from '../../../assets/images/NihalChar.png';
 
-
 function LandingPage() {
   return (
     <>
+        {/* Header Component */}
         <Header1 />
-{/* ----------------------Introduction----------------------- */}
+
+        {/* Introduction Section */}
         <div className="IntroCard">
             <div className='IntroSection1Container'>
                 <div className="StyleVector1"></div>
                 <div className="UnleashThePowerOfSqlLearning">Unleash the<br />power of SQL Learning</div>
-                    <div className="Description">
+                <div className="Description">
                     DataWiz is your gateway to mastering SQL effortlessly. Whether you're a curious learner or an educator looking for efficient teaching tools, DataWiz has something for everyone. Explore the world of interactive query animation and auto-grading quizzes for an engaging learning experience.
                 </div>
 
+                {/* Sign Up and Login Buttons */}
                 <div className="SignupAndLoginButtons">
                     <Link to="/LoginPage" className="LoginButton">
-                    <div className="ButtonText">Login</div>
+                        <div className="ButtonText">Login</div>
                     </Link>
 
                     <Link to="/SignUpPage" className="SignUpButton">
-                    <div className="ButtonText">Sign Up</div>
+                        <div className="ButtonText">Sign Up</div>
                     </Link>
                 </div>
 
+                {/* DataWiz Logo */}
                 <div className="Ellipse1">
                     <img
                         src={dataWizLogoImage}
@@ -51,8 +52,9 @@ function LandingPage() {
                     />
                 </div>
             </div>
-
         </div>
+
+        {/* Top Features Section */}
         <div className="TopFeaturesContainer">
             <div className="LFeatures">
                 Features.
@@ -61,79 +63,76 @@ function LandingPage() {
                 For Learners.
             </div>
         </div>
-        {/* ----------------------Features--------------------------- */}
 
-            <div className="AnimationFeatureCarousel">
-                <LCarousel />
+        {/* Animation Feature Carousel */}
+        <div className="AnimationFeatureCarousel">
+            <LCarousel />
+        </div>
+
+        {/* Bottom Features Section */}
+        <div className="BottomFeaturesContainer">
+            <div className="ForInstructors">
+                For Instructors.
             </div>
+        </div>
 
-            <div className="BottomFeaturesContainer">
-                <div className="ForInstructors">
-                    For Instructors.
+        {/* Auto-Grading Feature Carousel */}
+        <div className="AutoGradingFeatureCarousel">
+            <ICarousel />
+        </div>
+
+        {/* Meet The Team Section */}
+        <div className="MeetTheTeamContainer">
+            <div className="MeetTheTeamCard">
+                <div className='MTTTop'>
+                    <div className='BarL'></div>
+                    <div className='MeetTheTeamTitle'>
+                        Meet The Team
+                    </div>
+                    <div className='BarR'></div>
+                </div>
+
+                {/* Team Members Section */}
+                <div className='TopRowIcons'>
+                    <div className="Tehami">
+                        <div className="Ellipse2">
+                            <img src={TehamiImage} alt="TehamiImage" className="TehamiImageIcon"/>
+                        </div>
+                        <div className="TehamiName">Muhammad Tehami Nadeem</div>
+                    </div>
+                    <div className="Hiba">
+                        <div className="Ellipse3">
+                            <img src={HibaImage} alt="HibaImage" className="HibaImageIcon"/>
+                        </div>
+                        <div className="HibaName">Hiba Gohar</div>
+                    </div>
+                    <div className="Rida">
+                        <div className="Ellipse4">
+                            <img src={RidaImage} alt="RidaImage" className="RidaImageIcon"/>
+                        </div>
+                        <div className="RidaName">Rida Asif</div>
+                    </div>
+                </div>
+
+                {/* Team Members Section */}
+                <div className='BottomRowIcons'>
+                    <div className="Ejaz">
+                        <div className="Ellipse5">
+                            <img src={EjazImage} alt="EjazImage" className="EjazImageIcon"/>
+                        </div>
+                        <div className="EjazName">Mohmmad Ejaz Chowdhury</div>
+                    </div>
+                    <div className="Nihal">
+                        <div className="Ellipse6">
+                            <img src={NihalImage} alt="NihalImage" className="NihalImageIcon"/>
+                        </div>
+                        <div className="NihalName">Mohmmad Nihal Kattakath</div>
+                    </div>
                 </div>
             </div>
-
-            <div className="AutoGradingFeatureCarousel">
-                <ICarousel />
-            </div>
-                
-        {/* ----------------------Meet The Team---------------------- */}
-
-            <div className="MeetTheTeamContainer">
-                <div className="MeetTheTeamCard">
-                    <div className='MTTTop'>
-                        <div className='BarL'></div>
-                        <div className='MeetTheTeamTitle'>
-                            Meet The Team
-                        </div>
-                        <div className='BarR'></div>
-                    </div>
-                    <div className='TopRowIcons'>
-                        <div className="Tehami">
-                            <div className="Ellipse2">
-                                <img src={TehamiImage} alt="TehamiImage" className="TehamiImageIcon"/>
-                            </div>
-                            <div className="TehamiName">Muhammad Tehami Nadeem</div>
-                        </div>
-                        <div className="Hiba">
-                            <div className="Ellipse3">
-                                <img src={HibaImage} alt="HibaImage" className="HibaImageIcon"/>
-                            </div>
-                            <div className="HibaName">Hiba Gohar</div>
-                        </div>
-                        <div className="Rida">
-                            <div className="Ellipse4">
-                                <img src={RidaImage} alt="RidaImage" className="RidaImageIcon"/>
-                            </div>
-                            <div className="RidaName">Rida Asif</div>
-                        </div>
-                    </div>
-
-                    <div className='BottomRowIcons'>
-                        <div className="Ejaz">
-                            <div className="Ellipse5">
-                                <img src={EjazImage} alt="EjazImage" className="EjazImageIcon"/>
-                            </div>
-                            <div className="EjazName">Mohmmad Ejaz Chowdhury</div>
-                        </div>
-                        <div className="Nihal">
-                            <div className="Ellipse6">
-                                <img src={NihalImage} alt="NihalImage" className="NihalImageIcon"/>
-                            </div>
-                            <div className="NihalName">Mohmmad Nihal Kattakath</div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-
-        </>
-        );
+        </div>
+    </>
+  );
 }
 
 export default LandingPage;
-
-
-
-

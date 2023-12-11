@@ -5,7 +5,6 @@ import axios from 'axios';
 import "./InstructorHomePage.css";
 import SecondHeader from "../../../global_components/SecondHeader";
 
-
 // Image Imports
 import stackedWaves from '../../../assets/images/stacked-waves-haikei.svg'
 import MainIcon from '../../../assets/images/InstrHome-MainIcon.svg'
@@ -14,6 +13,7 @@ import SavedAnimationIcon from '../../../assets/images/Saved-Animations.png';
 import SavedQuizzesIcon from '../../../assets/images/Saved-Quizzes.png';
 import CreateQuizzIcon from '../../../assets/images/Create-Quizzes-Logo.png';
 
+// Axios instance for API requests
 const request = axios.create({
     baseURL: "http://localhost:5000",
     headers: {
@@ -21,12 +21,14 @@ const request = axios.create({
     },
     withCredentials: true,
     timeout: 300000
-})
-const InstructorHomePage = () => {
+});
 
+const InstructorHomePage = () => {
+    // Accessing the current location
     const location = useLocation()
     console.log(location)
 
+    // Fetch user details on component mount
     useEffect(() => {
         request({
             url: "/api/user/load_user",
@@ -40,8 +42,10 @@ const InstructorHomePage = () => {
         })
     }, [])
 
+    // UseNavigate hook for programmatic navigation
     const navigate = useNavigate();
 
+    // Callbacks for button clicks
     const onExploreAnimationButtonClick = useCallback(() => {
         navigate("/SchemaSelectionPage");
     }, [navigate]);
@@ -59,7 +63,7 @@ const InstructorHomePage = () => {
     }, [navigate]);
 
     const onSavedQueryAnimationCardClick = useCallback(() => {
-    // Please sync "Saved Animation Page" to the project
+        // Please sync "Saved Animation Page" to the project
     }, []);
 
     const onSavedQuizzesCardClick = useCallback(() => {

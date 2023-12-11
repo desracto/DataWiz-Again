@@ -81,7 +81,6 @@ const QueryAnimationPage = () => {
         }
     };
 
-
     // Function to find matching rows between two tables
     const highlightMatchingRows = (prevTableData, nextTableData, query) => {
         const highlightedRows = [];
@@ -127,32 +126,17 @@ const QueryAnimationPage = () => {
         return highlightedRows;
     };
 
-
     return (
         <>
             <SecondHeader />
+            {/* SVG Backgrounds */}
             <div className="SVG-CONTAINER">
-                <img
-                    src={svgImage}
-                    alt="SVG Background"
-                    className="svg-background"
-                />
-                <img
-                    src={svgImage2}
-                    alt="SVG Background"
-                    className="svg-background1"
-                />
-                <img
-                    src={svgImage}
-                    alt="SVG Background"
-                    className="svg-background2"
-                />
-                <img
-                    src={svgImage2}
-                    alt="SVG Background"
-                    className="svg-background3"
-                />
+                <img src={svgImage} alt="SVG Background" className="svg-background" />
+                <img src={svgImage2} alt="SVG Background" className="svg-background1" />
+                <img src={svgImage} alt="SVG Background" className="svg-background2" />
+                <img src={svgImage2} alt="SVG Background" className="svg-background3" />
             </div>
+            {/* Main Query Animation Container */}
             <div className="QueryAnimationContainer">
                 <div className="QueryAnimationTitle">
                     Query Animation
@@ -160,6 +144,7 @@ const QueryAnimationPage = () => {
                 <div className="QueryAnimationText">
                     Unlock the power of SQL with DataWiz's mesmerizing query animations, revealing the steps of database queries in a whole new light.
                 </div>
+                {/* Query Input Card */}
                 <div className="QueryInputCard">
                     <div className="AnimationNameLabel">
                         Enter Animation Name:
@@ -171,17 +156,19 @@ const QueryAnimationPage = () => {
                             placeholder="Animation 1"
                         />
                     </div>
-                    <div className='button-container1' >
-                        <button className='ReturnSchemaSelectionButton'
-                            onClick={returnToSchemaSelection}>
+                    {/* Return to Schema Selection Button */}
+                    <div className='button-container1'>
+                        <button className='ReturnSchemaSelectionButton' onClick={returnToSchemaSelection}>
                             Schema Selection
                         </button>
                     </div>
-                    <div className='button-container2' >
+                    {/* Schema Button */}
+                    <div className='button-container2'>
                         <button className='SchemaButton'>
                             SCHEMA
                         </button>
                     </div>
+                    {/* Selected Schema Display Card */}
                     <div className="SelectedSchemaDisplayCard">
                         <div className='SelectedSchemaCardContent'>
                             {/* Display the selected schema using SchemaTable */}
@@ -194,7 +181,7 @@ const QueryAnimationPage = () => {
                             )}
                         </div>
                     </div>
-
+                    {/* Query Container */}
                     <div className="QueryContainer">
                         <textarea
                             className="QueryPlaceholder"
@@ -204,11 +191,13 @@ const QueryAnimationPage = () => {
                             onChange={(e) => setQuery(e.target.value)}
                             onKeyDown={(e) => handleEnterKey(e)}
                         />
+                        {/* Animate Query Button */}
                         <button className='AnimateQueryButton' onClick={handleAnimateQuery}>
                             ANIMATE QUERY
                         </button>
                     </div>
                 </div>
+                {/* Down and Save Button Container */}
                 <div className='DownAndSaveButtonContainer'>
                     <button className='SaveAniButton'>
                         SAVE ANIMATION
@@ -217,6 +206,7 @@ const QueryAnimationPage = () => {
                         DOWNLOAD PDF
                     </button>
                 </div>
+                {/* Query Steps Display Card */}
                 <div className='QueryStepsDisplayCard'>
                     {/* Display steps_results if available */}
                     {queryExecuted && querySteps !== null && (
@@ -235,6 +225,7 @@ const QueryAnimationPage = () => {
                         </>
                     )}
                 </div>
+                {/* Visualization Display Card */}
                 <div className='VisualizationDisplayCard'>
                     {queryExecuted && querySteps !== null && (
                         <>
@@ -243,13 +234,10 @@ const QueryAnimationPage = () => {
                                     {/* Container for displaying information about the query step */}
                                     <div className="table-info-container">
                                         {/* Display the query step index and description */}
-                                        {/* Displaying the query here */}
                                         <p className="query-description">
                                             <b>Query {index + 1}: &nbsp;</b>
                                             {querySteps[index]}
                                         </p>
-                                        {/* Displaying The queries passed to the next table */}
-
                                         {/* Displaying The queries passed to the next table */}
                                         <p className="query-description">
                                             <b>Descriptiomn: &nbsp;</b>
@@ -297,4 +285,5 @@ const QueryAnimationPage = () => {
         </>
     );
 };
+
 export default QueryAnimationPage;

@@ -1,104 +1,103 @@
-
-  .All-attempts-textt{
+.All-attempts-textt {
     font-size: 30px;
     font-family: Gilroy-Bold;
     text-align: center;
-    padding-top: 3.5rem; /* 56px */
-    padding-bottom: 3.5rem; /* 56px */
+    padding-top: 3.5rem;
+    /* 56px */
+    padding-bottom: 3.5rem;
+    /* 56px */
     margin-bottom: -20px;
-    
-    
-  }
-
+}
 
 .Attempts-List {
-  margin-bottom: 0;
-  margin: 0;
-  font-family: Gilroy-Light;
-  justify-content: space-between;
+    margin-bottom: 0;
+    margin: 0;
+    font-family: Gilroy-Light;
+    justify-content: space-between;
 }
 
 .Attempts-List:after {
-    content: ""; /* This is necessary to create a pseudo-element */
-    display: block; /* Make it a block to occupy the full width */
-    height: 0.5px; /* The height of the line */
-    width: 100%; /* The width of the line */
-    background-color: #000; /* The color of the line, change as needed */
-    margin-top: 2rem; /* Space above the line, adjust as needed */
-  }
+    content: "";
+    /* This is necessary to create a pseudo-element */
+    display: block;
+    /* Make it a block to occupy the full width */
+    height: 0.5px;
+    /* The height of the line */
+    width: 100%;
+    /* The width of the line */
+    background-color: #000;
+    /* The color of the line, change as needed */
+    margin-top: 2rem;
+    /* Space above the line, adjust as needed */
+}
 
-  .PDF-Icon {
-    width: 20px; /* or the size you want */
-    height: auto; /* maintain aspect ratio */
-    margin-right: 8px; /* or the spacing you want */
-  }
-  
-  .Auto-Grading-Results-Text {
+.PDF-Icon {
+    width: 20px;
+    /* or the size you want */
+    height: auto;
+    /* maintain aspect ratio */
+    margin-right: 8px;
+    /* or the spacing you want */
+}
+
+.Auto-Grading-Results-Text {
     display: flex;
     align-items: center;
-    font-family: Gilroy-Bold; 
+    font-family: Gilroy-Bold;
     margin-left: 420px;
     transform: translateY(-20px);
     margin-bottom: -22px;
     cursor: pointer;
-  }
-
-
-
-
+}
 
 .AllAttempts-content_container_bgcolor {
-  background: #D8D8D8;
-  border-radius: 1.5rem;
-  margin-bottom: 30px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    background: #D8D8D8;
+    border-radius: 1.5rem;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
-
-
-
 
 .back-arrow-button {
-  background-color: #ffffff;
-  border-radius: 75px;
-  box-shadow: 0px 4px 20px #00000040;
-  height: 40px;
-  position: relative;
-  width: 40px;
-  top: 150px;
-  left: 290px;
-  cursor: pointer;
-  
-  }
-
-  .back-arrow-button:hover{
-    background-color: #d8d8d8;
-    transition-duration: 700ms;
-  }
-
-  .back-arrow-button svg {
-    width: 20px; /* Adjust the size of the SVG as needed */
-    height: 20px; /* Adjust the size of the SVG as needed */
-    margin-top: 4px;
-    align-items: center;
-  }
-
-.main_Page {
-  position: relative;
-  background-color: var(--color-white);
-  width: 100%;
-  height: auto;
-  overflow: hidden;
-  text-align: left;
-  font-size: var(--font-size-36xl);
-  color: var(--color-black);
-  font-family: var(--font-gilroy-semibold);
+    background-color: #ffffff;
+    border-radius: 75px;
+    box-shadow: 0px 4px 20px #00000040;
+    height: 40px;
+    position: relative;
+    width: 40px;
+    top: 150px;
+    left: 290px;
+    cursor: pointer;
 }
 
-.All-attempts-Inner-Container{
+.back-arrow-button:hover {
+    background-color: #d8d8d8;
+    transition-duration: 700ms;
+}
+
+.back-arrow-button svg {
+    width: 20px;
+    /* Adjust the size of the SVG as needed */
+    height: 20px;
+    /* Adjust the size of the SVG as needed */
+    margin-top: 4px;
+    align-items: center;
+}
+
+.main_Page {
+    position: relative;
+    background-color: var(--color-white);
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    text-align: left;
+    font-size: var(--font-size-36xl);
+    color: var(--color-black);
+    font-family: var(--font-gilroy-semibold);
+}
+
+.All-attempts-Inner-Container {
     border-radius: 1rem;
     background-color: white;
     padding: 2.5rem;
     margin-bottom: 40px;
 }
-
-
