@@ -2,6 +2,8 @@ import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './assets/global.css';
 
+import TestPage from './features/general/pages/TestPage';
+
 // General Pages Imports
 import LandingPage from './features/general/pages/LandingPage'
 import SignUpPage from './features/signup/pages/SignUpPage';
@@ -36,6 +38,7 @@ function App() {
     const request = axios.create({
         baseURL: "http://localhost:5000",
         withCredentials: true,
+        mode: 'cors',
         headers: {
             "Content-Type": "application/json"
         },
@@ -53,7 +56,6 @@ function App() {
                     <Route path="/SignUpPage" element={<SignUpPage />} />
                     <Route path="/LoginPage" element={<LoginPage />} />
                     <Route path="/ResetPasswordPage" element={<ResetPassword />} />
-                    <Route path="/InstructorHomePage" element={<InstructorHomePage />} />
                     <Route path="/AnimationIntroductionPage" element={<AnimationIntroductionPage />} />
                     <Route path="/SchemaSelectionPage" element={<SchemaSelectionPage />} />
                     <Route path="/QueryAnimationPage" element={<QueryAnimationPage />} />
@@ -62,23 +64,29 @@ function App() {
                     <Route path="/FaqsPage" element={<FaqsPage />} />
                     <Route path="/TestAni" element={<TestAniPage />} />
 
-                    {/* Quiz Module Routes */}
-                        <Route path="/instructor/quiz/home/" element={<QuizzesIntroductionPage />} />
-                        <Route path="/instructor/quiz/drafts/" element={<QuizDraft />} />
-                        <Route path="/instructor/quiz/create/" element={<CreateQuiz request={request} />} />
-                        <Route path="/instructor/quiz/quizzes/" element={<SavedQuizzes request={request}/>} />
 
-                        <Route path="/AllAttemptsPage" element={<AllAttempts />} />
-                        <Route path="/QuizAttemptPage" element={<QuizAttempt />} />
-                        <Route path="/CompletedQuizPage" element={<CompletedQuiz />} />
-
-                        {/* Template Routes */}
-                        <Route path="/instructor/quiz/:id/overview/" element={<QuizTemplate request={request} />} />
-                        <Route path="/quiz/attempt-quiz/:id/" element={<QuizAttemptTemplate request={request} />} />
-
-
+                    <Route path="/instructor/home/" element={<InstructorHomePage />} />
 
                     {/* Quiz Module Routes */}
+                    <Route path="/instructor/quiz/home/" element={<QuizzesIntroductionPage />} />
+                    <Route path="/instructor/quiz/drafts/" element={<QuizDraft />} />
+                    <Route path="/instructor/quiz/create/" element={<CreateQuiz request={request} />} />
+                    <Route path="/instructor/quiz/quizzes/" element={<SavedQuizzes request={request} />} />
+
+                    <Route path="/AllAttemptsPage" element={<AllAttempts />} />
+                    <Route path="/QuizAttemptPage" element={<QuizAttempt />} />
+                    <Route path="/CompletedQuizPage" element={<CompletedQuiz />} />
+
+                    {/* Template Routes */}
+                    <Route path="/instructor/quiz/:id/overview/" element={<QuizTemplate request={request} />} />
+                    <Route path="/quiz/attempt-quiz/:id/" element={<QuizAttemptTemplate request={request} />} />
+
+
+
+                    {/* Quiz Module Routes */}
+
+                    <Route path="/test-page/" element={<TestPage />} />
+
 
 
                 </Routes>

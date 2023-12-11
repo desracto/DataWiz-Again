@@ -58,7 +58,7 @@ const LoginPage = () => {
                 setPasswordError("");
 
                 // Navigate to the instructor page
-                navigate("/InstructorHomePage"); 
+                navigate("/instructor/home/"); 
             }
 
         }).catch(error => {

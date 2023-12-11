@@ -36,14 +36,14 @@ const SecondHeader = () => {
   useOutsideAlerter(modalRef, setIsMobile);
 
   const GoToHomePage = useCallback(() => {
-    navigate("/InstructorHomePage");
+    navigate("/instructor/home/");
   }, [navigate]);
 
   return (
     <div className="main">
       <div className="Header2Container">
         {/* Logo */}
-        <Link to="/InstructorHomePage">
+        <Link to="/instructor/home/">
           <button className="logo-button z-10">
             <div className="logo">
               <img src={logo} alt="Logo" />
@@ -73,7 +73,7 @@ const SecondHeader = () => {
 
         {/* Menu */}
         <div className="menu_list">
-          <NavLink to="/InstructorHomePage" className="nav_link">
+          <NavLink to="/instructor/home/" className="nav_link">
             <img
               src={home}
               alt="Menu Icon 3"
@@ -136,7 +136,7 @@ const SecondHeader = () => {
                 </span>
               </div>
               <div className="menu_container">
-                <NavLink to="/InstructorHomePage" className="mobile_nav_link">
+                <NavLink to="/instructor/home/" className="mobile_nav_link">
                   <img
                     src={home}
                     alt="Menu Icon 3"
