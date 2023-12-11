@@ -10,6 +10,7 @@ import home from "../assets/images/Home-Icon.png";
 import logo from "../assets/images/Logo.png";
 import quizzes from "../assets/images/Create-Quizzes-Logo.png";
 import setting from "../assets/images/Settings-Icon.png";
+import AboutUs from "../assets/images/FAQs-Icon.png";
 import { useRef } from "react";
 import { useEffect } from "react";
 
@@ -114,6 +115,16 @@ const SecondHeader = () => {
             <span className="menu_top">FAQs</span>
           </NavLink>
 
+          <NavLink to="/AboutUsPage" className="nav_link">
+            <img
+              src={faqs}
+              alt="Menu Icon 3"
+              style={{ maxWidth: "43px", height: "auto", marginBottom: "-1px", marginTop: "1px" }}
+            />
+            <span className="menu_top">About Us</span>
+          </NavLink>
+
+
           <NavLink to="/AccountSettingsPage" className="nav_link">
             <img
               src={setting}
@@ -192,6 +203,21 @@ const SecondHeader = () => {
                     }}
                   />
                   <span style={{ marginLeft: "14px" }}>FAQs</span>
+                </NavLink>
+
+                <NavLink to="/AboutUsPage" className="mobile_nav_link">
+                  <img
+                    src={AboutUs}
+                    alt="Menu Icon 3"
+                    style={{
+                      maxWidth: "30px",
+                      height: "auto",
+                      marginBottom: "-1px",
+                      marginTop: "1px",
+                      marginLeft: "-3px",
+                    }}
+                  />
+                  <span style={{ marginLeft: "14px" }}>About Us</span>
                 </NavLink>
 
                 <NavLink to="/AccountSettingsPage" className="mobile_nav_link">
