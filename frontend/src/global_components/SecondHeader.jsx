@@ -6,6 +6,7 @@ import "./Header2.css";
 // Images Imports
 import animation from "../assets/images/Animation.png";
 import faqs from "../assets/images/FAQs-Icon.png";
+import aboutUs from "../assets/images/AboutUs.png";
 import home from "../assets/images/Home-Icon.png";
 import logo from "../assets/images/Logo.png";
 import quizzes from "../assets/images/Create-Quizzes-Logo.png";
@@ -117,7 +118,7 @@ const SecondHeader = () => {
 
           <NavLink to="/AboutUsPage" className="nav_link">
             <img
-              src={faqs}
+              src={aboutUs}
               alt="Menu Icon 3"
               style={{ maxWidth: "43px", height: "auto", marginBottom: "-1px", marginTop: "1px" }}
             />

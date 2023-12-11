@@ -1,7 +1,7 @@
 import { FaFilter, FaSave, FaTrash } from "react-icons/fa";
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
-import "../Dropzone.css";
+import "./Dropzone.css";
 
  
 function Dropzone({className}) {
