@@ -6,15 +6,14 @@
 - [Project repository structure](#project-repository-structure)
 - [Features](#features)
 - [Technologies](#technologies)
-- [User guide](#user-guide)
-- [How to use](#how-to-use)
-- [Learn more](#learn-more)
+- [User Guide](#user-guide)
+- [How to Use](#how-to-use)
 
 ## Team Odyssey
 <table>
   <tbody>
     <tr>
-      <td align="center"><a href="https://github.com/hibaagohar"><img src="https://avatars.githubusercontent.com/u/78848419?v=4" width="100px;"/><br/><b>Hiba Gohar</b></a><br/>Team Lead. Website and Server development</td>
+      <td align="center"><a href="https://github.com/hibaagohar"><img src="https://avatars.githubusercontent.com/u/78848419?v=4" width="100px;"/><br/><b>Hiba Gohar</b></a><br/>Team Lead. Website and Server Development </td>
       <td align="center"><a href="https://github.com/desracto"><img src="https://avatars.githubusercontent.com/u/102794774?v=4" width="100px;"/><br/><b>Mohammed Ejazz  
 Chowdhury</b></a><br/>Server, algorithm and Database development</td>
       <td align="center"><a href="https://github.com/rida-asif"><img src="https://avatars.githubusercontent.com/u/109846716?v=4" width="100px;"/><br/><b>Rida Asif</b></a><br/>Server, algorithm and Database development</td>
@@ -26,6 +25,7 @@ Nadeem</b></a><br/>Website Development</td>
   </tbody>
 </table>
 
+## Project repository structure
 
 ## Features
 <ul>
@@ -38,14 +38,10 @@ Nadeem</b></a><br/>Website Development</td>
 
 ## Technologies
 <ul>
-  <li>Frontend: React.js</li>
-  <li>Backend: Flask API</li>
-  <li>Database: [Database name]</li>
+  <li>Frontend: React.js/ReactJS</li>
+  <li>Backend: Flask</li>
+  <li>Database 1: MySQL - For storing user information</li>
+  <li>Database 2: SQLite - For query animation module processing</li>
 </ul>
 
-<h2>Getting Started</h2>
-
-<h2>Contact</h2>
-<p>For any inquiries or support, please contact us at <a href="mailto:email@example.com">email@example.com</a>.</p>
-
-<hr>
+## How to Use
