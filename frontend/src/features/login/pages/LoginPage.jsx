@@ -12,6 +12,10 @@ import Header1 from '../../../global_components/Header1';
 import GoogleLogo from '../../../assets/images/google-account-login.svg';
 import LeftArrow from '../../../assets/images/left-arrow.png';
 
+// Import SVG images 
+import svgImage from '../../../assets/images/vector-31.svg';
+import svgImage2 from '../../../assets/images/blob-haikei.svg';
+
 // Axios instance for making API requests
 const request = axios.create({
     baseURL: "http://localhost:5000",
@@ -62,7 +66,7 @@ const LoginPage = () => {
                 setPasswordError("");
 
                 // Navigate to the instructor page
-                navigate("/instructor/home/"); 
+                navigate("/instructor/home/");
             }
 
         }).catch(error => {
@@ -86,6 +90,11 @@ const LoginPage = () => {
     return (
         <>
             <Header1 />
+            {/* SVG Backgrounds */}
+            <div className="SVG-CONTAINER">
+                <img src={svgImage} alt="SVG Background" className="svg-background" />
+                <img src={svgImage2} alt="SVG Background" className="svg-background1" />
+            </div>
             <div className="login-card-container">
                 <div className="login-card-item">
                     <div className="Return-Landing-Login1" onClick={onBackArrowContainer1Click}>

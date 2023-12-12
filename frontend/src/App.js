@@ -14,6 +14,7 @@ import QuizzesIntroductionPage from './features/quiz/pages/QuizzesIntroductionPa
 import AnimationIntroductionPage from './features/general/pages/AnimationIntroductionPage';
 import AccountSettingsPage from './features/general/pages/AccountSettingsPage';
 import FaqsPage from './features/general/pages/FaqsPage';
+import AboutUsPage from './features/general/pages/AboutUs';
 
 // Animation Pages
 import SchemaSelectionPage from './features/animation/pages/SchemaSelectionPage'
@@ -62,7 +63,7 @@ function App() {
                     <Route path="/SavedAnimationsPage" element={<SavedAnimationsPage />} />
                     <Route path="/AccountSettingsPage" element={<AccountSettingsPage request={request} />} />
                     <Route path="/FaqsPage" element={<FaqsPage />} />
-                    
+                    <Route path="/AboutUs" element={<AboutUsPage />} />
 
 
                     <Route path="/instructor/home/" element={<InstructorHomePage />} />

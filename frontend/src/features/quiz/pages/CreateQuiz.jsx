@@ -12,6 +12,11 @@ import SecondHeader from "../../../global_components/SecondHeader";
 import axios from "axios";
 import Cookies from "js-cookie";
 
+// Import SVG images 
+import svgImage from '../../../assets/images/vector-31.svg';
+import svgImage2 from '../../../assets/images/blob-haikei.svg';
+
+
 const CreateQuiz = ({ request }) => {
     const navigate = useNavigate();
     const [schemaAdded, setSchemaAdded] = useState(false);
@@ -172,19 +177,17 @@ const CreateQuiz = ({ request }) => {
         alert("Quiz saved successfully!");
         setSuccessModal(true);
     };
-    
+
     useEffect(() => {
         console.log(schemasList)
     }, [schemasList]);
 
     const handleSubmission = (id) => {
         const exist = schemasList.find((schema) => schema?.id == id);
-        if (exist?.files?.length == 0) 
-        {
+        if (exist?.files?.length == 0) {
             alert("Please upload an image before submitting.");
-        } 
-        else 
-        {
+        }
+        else {
             setSchemasList((prev) =>
                 prev.map((item) => {
                     if (item.id == id) {
@@ -393,6 +396,13 @@ const CreateQuiz = ({ request }) => {
     return (
         <>
             <SecondHeader />
+            {/* SVG Backgrounds */}
+            <div className="SVG-CONTAINER">
+                <img src={svgImage} alt="SVG Background" className="svg-background" />
+                <img src={svgImage2} alt="SVG Background" className="svg-background1" />
+                <img src={svgImage} alt="SVG Background" className="svg-background2" />
+                <img src={svgImage2} alt="SVG Background" className="svg-background3" />
+            </div>
             <div className="create-quiz-container">
 
                 {/* Pop up Components */}
@@ -406,7 +416,7 @@ const CreateQuiz = ({ request }) => {
                             <div className="createquiz-style">Create Quiz</div>
 
                             {/* Autograding & Save Button */}
-                            {schemasList ?.length > 0 ? (
+                            {schemasList?.length > 0 ? (
                                 <div className="flex-row-container">
                                     <div className="flex-center-filter-save" onClick={openFilterModal}>
                                         <FaFilter size={25} color="#98989F" />
@@ -567,7 +577,7 @@ const CreateQuiz = ({ request }) => {
                                             </div>
                                         </div>
                                         {/* Schema Section */}
-                                        
+
                                         {schema?.questions?.map((val, qIndex) => {
                                             return (
                                                 <div key={qIndex}>

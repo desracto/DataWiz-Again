@@ -7,6 +7,7 @@ import SchemaTable from '../components/SchemaTable';
 
 // Image Imports
 import svgImage from '../../../assets/images/vector-31.svg';
+import svgImage2 from '../../../assets/images/blob-haikei.svg';
 
 // Define the mapping of schema IDs to their corresponding property names
 export const schemaIdToProperty = {
@@ -57,14 +58,12 @@ const SchemaSelectionPage = () => {
         <>
             <SecondHeader />
 
-            {/* SVG container for background image */}
+            {/* SVG Backgrounds */}
             <div className="SVG-CONTAINER">
-                <img
-                    src={svgImage}
-                    alt="SVG Background"
-                    className="svg-background"
-                />
+                <img src={svgImage} alt="SVG Background" className="svg-background" />
+                <img src={svgImage2} alt="SVG Background" className="svg-background1" />
             </div>
+
 
             {/* Main container for SchemaSelectionPage */}
             <div className="SchemaSelectionContainer">

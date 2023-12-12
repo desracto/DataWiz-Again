@@ -6,11 +6,11 @@ import "./Header2.css";
 // Images Imports
 import animation from "../assets/images/Animation.png";
 import faqs from "../assets/images/FAQs-Icon.png";
+import aboutUs from "../assets/images/AboutUs.png";
 import home from "../assets/images/Home-Icon.png";
 import logo from "../assets/images/Logo.png";
 import quizzes from "../assets/images/Create-Quizzes-Logo.png";
 import setting from "../assets/images/Settings-Icon.png";
-import AboutUs from "../assets/images/FAQs-Icon.png";
 import { useRef } from "react";
 import { useEffect } from "react";
 
@@ -117,9 +117,9 @@ const SecondHeader = () => {
 
           <NavLink to="/AboutUsPage" className="nav_link">
             <img
-              src={faqs}
+              src={aboutUs}
               alt="Menu Icon 3"
-              style={{ maxWidth: "43px", height: "auto", marginBottom: "-1px", marginTop: "1px" }}
+              style={{ maxWidth: "32px", height: "auto", marginBottom: "-1px", marginTop: "1px" }}
             />
             <span className="menu_top">About Us</span>
           </NavLink>
@@ -134,6 +134,8 @@ const SecondHeader = () => {
             <span className="menu_top">Settings</span>
           </NavLink>
         </div>
+
+
 
         {/* Mobile Menu */}
         {isMobile ? (
@@ -195,29 +197,29 @@ const SecondHeader = () => {
                     src={faqs}
                     alt="Menu Icon 3"
                     style={{
-                      maxWidth: "30px",
+                      width: "26px",
                       height: "auto",
                       marginBottom: "-1px",
                       marginTop: "1px",
-                      marginLeft: "-3px",
+                      marginLeft: "-1.5px",
                     }}
                   />
-                  <span style={{ marginLeft: "14px" }}>FAQs</span>
+                  <span style={{ marginLeft: "9px" }}>FAQs</span>
                 </NavLink>
 
-                <NavLink to="/AboutUsPage" className="mobile_nav_link">
+                <NavLink to="/AboutUsPage" className="mobile_nav_link" >
                   <img
-                    src={AboutUs}
+                    src={aboutUs}
                     alt="Menu Icon 3"
                     style={{
                       maxWidth: "30px",
                       height: "auto",
                       marginBottom: "-1px",
                       marginTop: "1px",
-                      marginLeft: "-3px",
+                      marginLeft: "0px",
                     }}
                   />
-                  <span style={{ marginLeft: "14px" }}>About Us</span>
+                  <span style={{ marginLeft: "12px" }}>About Us</span>
                 </NavLink>
 
                 <NavLink to="/AccountSettingsPage" className="mobile_nav_link">
