@@ -511,9 +511,11 @@ const CreateQuiz = ({ request }) => {
                                                                     d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
                                                                 />
                                                             </svg>
+
                                                             <span className="schemabox-text-gilroy-semibold">
                                                                 {"Drag & Drop, Upload/Paste Image"}
                                                             </span>
+
                                                             {schema?.files?.length === 0 && (
                                                                 <button className="schema-box-browsebutton" onClick={open}>
                                                                     Browse
@@ -524,6 +526,7 @@ const CreateQuiz = ({ request }) => {
                                                                     />
                                                                 </button>
                                                             )}
+
                                                             <span className="span-text-image-size">Max Image Size: 5MB</span>
                                                         </span>
 
@@ -568,6 +571,7 @@ const CreateQuiz = ({ request }) => {
                                         {schema?.questions?.map((val, qIndex) => {
                                             return (
                                                 <div key={qIndex}>
+
                                                     <div className="flex-justify-between">
                                                         <span className="text-Gilroy-Mediumm">
                                                             Question -{++overallQuestionCount}
@@ -579,8 +583,11 @@ const CreateQuiz = ({ request }) => {
                                                             className="cursor-pointer"
                                                         />
                                                     </div>
+
                                                     <div className="auto-width-full-height">
+                                                        
                                                         <div className="width-full-flex-column">
+                                                            {/* Proble holder */}
                                                             <div className="width-full-just-centered">
                                                                 <div className="flex flex-col w-full ">
                                                                     <label className="text-Gilroy-Mediumm">Problem:</label>
@@ -592,6 +599,9 @@ const CreateQuiz = ({ request }) => {
                                                                     />
                                                                 </div>
                                                             </div>
+                                                            {/* Proble holder */}
+                                                            
+                                                            {/* Answer Holder */}
                                                             <div className="full-width-center-margintop">
                                                                 <div className="flex flex-col w-full ">
                                                                     <label className="text-Gilroy-Mediumm">Answer</label>
@@ -603,6 +613,8 @@ const CreateQuiz = ({ request }) => {
                                                                     />
                                                                 </div>
                                                             </div>
+                                                            {/* Answer Holder */}
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>
