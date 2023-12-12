@@ -422,6 +422,7 @@ const CreateQuiz = ({ request }) => {
                                         <FaFilter size={25} color="#98989F" />
                                         <span className="text-gilroy-semibold ">Auto-Grading Filters</span>
                                     </div>
+                                    
                                     <div
                                         className="flex-center-filter-save"
                                         onClick={handleSaveAndSubmitQuiz}

@@ -84,6 +84,16 @@ function Dropzone({ className }) {
                 })
             }
         }
+
+        // Handles the value changes for problems and answers
+        const handleInputChange = (questionListIndex, questionIndex, field, value) => {
+            setQuestionList((prevQuestions) => {
+                const updatedQuestions = [...prevQuestions]
+                updatedQuestions[questionListIndex].questions[questionIndex][field] = value
+                // console.log(updatedQuestions)
+                return updatedQuestions;
+            })
+        }
     {/* Event handlers */ }
 
 
@@ -93,10 +103,28 @@ function Dropzone({ className }) {
             <form>
                 <div className={styles.create_quiz_container}>
 
-                    {/* Create Quiz Title */}
-                    <div className={styles.create_quiz_title}>Create Quiz</div>
-                    {/* Create Quiz Title */}
+                    <div className={styles.header_container}>
+                        {/* Create Quiz Title */}
+                        <div className={styles.create_quiz_title}>Create Quiz</div>
+                        {/* Create Quiz Title */}
 
+                        <div className={styles.buttons}>
+                            {/* Autograding Filters*/ }
+                                <div className={styles.autograding_filter_button}>
+                                    <FaFilter size={25} color="#98989F" />
+                                    <span className={styles.autograding_filter_title}>Auto-Grading Filters</span>
+                                </div>
+                            {/* Autograding Filters*/ }
+
+                            {/* Save Quiz Button*/}
+                            <div className={styles.save_quiz_button}>
+                                <FaSave size={30} color="#98989F" />
+                                <span className={styles.save_quiz_title}>Save Quiz</span>
+                            </div>
+                            {/* Save Quiz Button*/}
+                        </div>
+                    </div>
+                    
                     {/* Quiz Name */}
                     <div className={styles.quiz_name}>
                         <label className={styles.quiz_name_title}>Enter Quiz Name</label>
@@ -156,7 +184,7 @@ function Dropzone({ className }) {
                                                 </span>
 
                                                 <button className={styles.schema_box_browse_button}
-                                                    onClick={(e) => { e.preventDefault(); open }} >
+                                                    onClick={(e) => { e.preventDefault(); open; }} >
                                                     Browse
                                                     <MdOutlineAddCircleOutline
                                                         className="ml-3"
@@ -182,7 +210,7 @@ function Dropzone({ className }) {
                             {/* Schema Section */}
 
                             {/* Problem-Answer section */}
-                            {question.questions.map((problem, index) => (
+                            {question.questions.map((problem, questionIndex) => (
                                 <div className={styles.problem_holder}>
 
                                     <div className={styles.question_number}>Question - {problem.question_number + 1}</div>
@@ -195,6 +223,7 @@ function Dropzone({ className }) {
                                             <textarea className={styles.problem}
                                                 defaultValue={problem.problem}
                                                 rows={4}
+                                                onChange={(e) => handleInputChange(index, questionIndex, 'problem', e.target.value)}
                                             />
                                         </div>
                                         {/* Problem Holder */}
@@ -205,6 +234,7 @@ function Dropzone({ className }) {
                                             <textarea className={styles.answer}
                                                 defaultValue={problem.answer}
                                                 rows={4}
+                                                onChange={(e) => handleInputChange(index, questionIndex, 'answer', e.target.value)}
                                             />
                                         </div>
                                         {/* Answer Holder */}
@@ -216,7 +246,7 @@ function Dropzone({ className }) {
 
                             {/* Button for adding a problem-answer pair */}
                             <button className={styles.add_problem}
-                                onClick={(e) => { handleAddingProblem(index), e.preventDefault() }}>
+                                onClick={(e) => { handleAddingProblem(index); e.preventDefault(); }}>
                                 Add Problem & Answer
                             </button>
                         </div>
@@ -225,12 +255,12 @@ function Dropzone({ className }) {
                     <div className={styles.button_holders}>
                         {/* Button for adding a question (schema, problem, answer) */}
                         <button className={styles.add_schema_button}
-                            onClick={(e) => { handleAddingSchema(), e.preventDefault() }}>
+                            onClick={(e) => { handleAddingSchema(); e.preventDefault(); }}>
                             Add new schema
                         </button>
 
                         <button className={styles.submit_button}
-                            onClick={(e) => { handleFormSubmit(), e.preventDefault() }}>
+                            onClick={(e) => { handleFormSubmit(); e.preventDefault(); }}>
                             SUBMIT
                         </button>
                     </div>
