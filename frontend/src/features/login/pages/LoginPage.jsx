@@ -1,7 +1,8 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import { useAuth } from '../../../Context/AuthContext'; // authentication 
 
 import "./LoginPage.css";
 
@@ -28,8 +29,26 @@ const request = axios.create({
 
 // LoginPage component for user authentication
 const LoginPage = () => {
+    
+    const fetchUserData = async () => {
+        try {
+            const response = await request({
+                url: "api/user/load_user/",
+                method: 'get',
+                withCredentials: true
+            });
+            return response.data.account_type;;
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+            return null;
+        }
+    };
+
+
     // Using the useNavigate hook from react-router-dom to enable navigation
     const navigate = useNavigate();
+
+    const { login } = useAuth(); // authentication
 
     // React Hook Form for form validation
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -52,39 +71,43 @@ const LoginPage = () => {
     }, [navigate]);
 
     // Function to handle form submission
-    const onSubmit = (data) => {
-        request({
-            url: "/api/user/login/",
-            method: "post",
-            data: data
-        }).then(response => {
-            console.log(response);
+   // Function to handle form submission
+const onSubmit = (data) => {
+    request({
+        url: "/api/user/login/",
+        method: "post",
+        data: data
+    }).then(async (response) => { // Mark the function as async
 
-            if (response.status === 200) {
-                // Clear any previous errors
-                setEmailError("");
-                setPasswordError("");
+        if (response.status === 200) {
+            // Clear any previous errors
+            setEmailError("");
+            setPasswordError("");
 
-                // Navigate to the instructor page
-                navigate("/instructor/home/");
-            }
+            const accountType = await fetchUserData(); 
+            console.log("The account type is " + accountType);
+            console.log("Logged " + login);
+            login(accountType);
+            navigate("/instructor/home/");
+        }
 
-        }).catch(error => {
-            console.error(error.response.data);
+    }).catch(error => {
+        console.error(error.response.data);
 
-            // Handling different error scenarios
-            if (error.response.data.message === "INEP01") {
-                setEmailError("");
-                setPasswordError("Incorrect Email or Password");
-            } else if (error.response.data.message === "ACNF01") {
-                setEmailError("Account Not Found");
-                setPasswordError("");
-            } else {
-                setEmailError("");
-                setPasswordError("");
-            }
-        })
-    };
+        // Handling different error scenarios
+        if (error.response.data.message === "INEP01") {
+            setEmailError("");
+            setPasswordError("Incorrect Email or Password");
+        } else if (error.response.data.message === "ACNF01") {
+            setEmailError("Account Not Found");
+            setPasswordError("");
+        } else {
+            setEmailError("");
+            setPasswordError("");
+        }
+    });
+};
+
 
     // Rendering the login page component
     return (

@@ -1,4 +1,4 @@
-import React from 'react'
+import {React,useEffect} from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './assets/global.css';
 
@@ -31,10 +31,13 @@ import AllAttempts from './features/quiz/pages/AllAttemptsPage';
 import QuizAttempt from './features/quiz/pages/QuizAttemptPage'; // delete
 import QuizAttemptTemplate from './features/quiz/pages/QuizAttemptTemplate';
 import QuizTemplate from './features/quiz/pages/QuizTemplate';
+import { useAuth } from './Context/AuthContext';
+
 
 import axios from 'axios'
 
 function App() {
+    const { isLoggedIn, accountType } = useAuth();
 
     const request = axios.create({
         baseURL: "http://localhost:5000",
@@ -46,11 +49,22 @@ function App() {
         timeout: 300000
     })
 
+    useEffect(() => {
+        console.log("from app.js " + accountType);
+    })
+
     return (
         <div>
             <BrowserRouter>
                 <Routes>
                     <Route index element={<LandingPage />} /> {/* Root URL when the app is accessed*/}
+
+                    {/* Template Routes */}
+                    <Route path="/instructor/quiz/:id/overview/" element={<QuizTemplate request={request} />} />
+                    <Route path="/quiz/attempt-quiz/:id/" element={<QuizAttemptTemplate request={request} />} />
+
+                    {/* Quiz Module Routes */}
+                    <Route path="/test-page/" element={<TestPage />} />
 
                     {/* Routes accessible to both both students and instrcutors*/}
                     <Route path="/LandingPage" element={<LandingPage />} />
@@ -64,12 +78,10 @@ function App() {
                     <Route path="/AccountSettingsPage" element={<AccountSettingsPage request={request} />} />
                     <Route path="/FaqsPage" element={<FaqsPage />} />
                     <Route path="/AboutUs" element={<AboutUsPage />} />
-
-
                     <Route path="/instructor/home/" element={<InstructorHomePage />} />
 
                     {/* Quiz Module Routes */}
-                    <Route path="/instructor/quiz/home/" element={<QuizzesIntroductionPage />} />
+
                     <Route path="/instructor/quiz/drafts/" element={<QuizDraft />} />
                     <Route path="/instructor/quiz/create/" element={<CreateQuiz request={request} />} />
                     <Route path="/instructor/quiz/quizzes/" element={<SavedQuizzes request={request} />} />
@@ -78,17 +90,16 @@ function App() {
                     <Route path="/QuizAttemptPage" element={<QuizAttempt />} />
                     <Route path="/CompletedQuizPage" element={<CompletedQuiz />} />
 
-                    {/* Template Routes */}
-                    <Route path="/instructor/quiz/:id/overview/" element={<QuizTemplate request={request} />} />
-                    <Route path="/quiz/attempt-quiz/:id/" element={<QuizAttemptTemplate request={request} />} />
 
+                    {/* Routes accessible only to instructors */}
+                    {isLoggedIn && accountType != 'learner' && (
+                        <>
+                            <Route path="/instructor/quiz/home/" element={<QuizzesIntroductionPage request={request} />} />
+                        </>
+                    )}
 
-
-                    {/* Quiz Module Routes */}
-
-                    <Route path="/test-page/" element={<TestPage />} />
-
-
+                    {/* 404 Page */}
+                    <Route path="*" element={<div> Page not found</div>} />
 
                 </Routes>
             </BrowserRouter>

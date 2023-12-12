@@ -2,6 +2,8 @@ import { useEffect, useState, useCallback } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "./QuizzesIntroductionPage.css";
 import SecondHeader from '../../../global_components/SecondHeader';
+import { useAuth } from '../../../Context/AuthContext';
+
 
 // Import Images
 import vector64 from '../../../assets/images/vector-64.svg';
@@ -12,11 +14,45 @@ import QuizzIntro_Icon from '../../../assets/images/QuizIntro-icon.svg';
 import CreateQuizIcon from '../../../assets/images/QuizIntro- createQuizzesIcon.svg';
 
 // Define the QuizzesIntroductionPage functional component
-const QuizzesIntroductionPage = () => {
-    console.log('Rendering QuizzesIntroductionPage...'); // Log to the console when rendering (for debugging)
+const QuizzesIntroductionPage = ({ request }) => {
     
     // Use React Router hook for navigation
     const navigate = useNavigate();
+
+    const { user, login } = useAuth();
+
+    // authenticate user type
+    useEffect(() => {
+        // fetch account type
+        const fetchUserData = async () => {
+            try {
+                const response = await request({
+                    url: "api/user/load_user/",
+                    method: 'get',
+                    withCredentials: true
+                });
+                return response.data.account_type;
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+                return null;
+            }
+        };
+
+        const fetchDataAndCheckAccess = async () => {
+            const accountType = await fetchUserData();
+            console.log('Account Type:', accountType);
+
+            if (!user || accountType === 'learner') {
+                console.log('Access denied for learners.');
+                navigate('*'); // show page not found
+            } else {
+                login(accountType);
+            }
+        };
+
+        fetchDataAndCheckAccess();
+        }, [user, login, navigate, request]);
+
 
     // Function to handle the "Create a Quiz" button click
     const onQuizIntroCreateAQuizButtonClick = useCallback(() => {
