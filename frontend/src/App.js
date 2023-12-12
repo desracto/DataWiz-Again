@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './assets/global.css';
 
-import TestPage from './features/general/pages/TestPage';
+import TestPage from './features/quiz/pages/TestPage';
 
 // General Pages Imports
 import LandingPage from './features/general/pages/LandingPage'
