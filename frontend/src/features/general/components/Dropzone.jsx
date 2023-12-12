@@ -156,7 +156,7 @@ function Dropzone({ className }) {
                                                 </span>
 
                                                 <button className={styles.schema_box_browse_button}
-                                                    onClick={(e) => { e.preventDefault(); open }} >
+                                                    onClick={(e) => { e.preventDefault(); open(); }} >
                                                     Browse
                                                     <MdOutlineAddCircleOutline
                                                         className="ml-3"
@@ -216,7 +216,7 @@ function Dropzone({ className }) {
 
                             {/* Button for adding a problem-answer pair */}
                             <button className={styles.add_problem}
-                                onClick={(e) => { handleAddingProblem(index), e.preventDefault() }}>
+                                onClick={(e) => { handleAddingProblem(index); e.preventDefault(); }}>
                                 Add Problem & Answer
                             </button>
                         </div>
@@ -225,12 +225,12 @@ function Dropzone({ className }) {
                     <div className={styles.button_holders}>
                         {/* Button for adding a question (schema, problem, answer) */}
                         <button className={styles.add_schema_button}
-                            onClick={(e) => { handleAddingSchema(), e.preventDefault() }}>
+                            onClick={(e) => { handleAddingSchema(); e.preventDefault(); }}>
                             Add new schema
                         </button>
 
                         <button className={styles.submit_button}
-                            onClick={(e) => { handleFormSubmit(), e.preventDefault() }}>
+                            onClick={(e) => { handleFormSubmit(); e.preventDefault(); }}>
                             SUBMIT
                         </button>
                     </div>

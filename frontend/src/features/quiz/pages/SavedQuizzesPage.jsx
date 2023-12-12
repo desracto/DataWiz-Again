@@ -118,7 +118,7 @@ const SavedQuizzes = ({request}) => {
 
 
                     </div> 
-                    {/* Recent Quizzes */}
+                    {/* All Quizzes */}
 
                     <div className="all-quizzes">
                         <div className="content_heading">
