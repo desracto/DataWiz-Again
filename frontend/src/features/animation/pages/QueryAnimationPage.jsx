@@ -129,13 +129,14 @@ const QueryAnimationPage = () => {
     return (
         <>
             <SecondHeader />
-            {/* SVG Backgrounds */}
             <div className="SVG-CONTAINER">
                 <img src={svgImage} alt="SVG Background" className="svg-background" />
                 <img src={svgImage2} alt="SVG Background" className="svg-background1" />
                 <img src={svgImage} alt="SVG Background" className="svg-background2" />
                 <img src={svgImage2} alt="SVG Background" className="svg-background3" />
+                <img src={svgImage} alt="SVG Background" className="svg-background4" />
             </div>
+
             {/* Main Query Animation Container */}
             <div className="QueryAnimationContainer">
                 <div className="QueryAnimationTitle">

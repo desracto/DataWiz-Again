@@ -59,7 +59,7 @@ const InstructorHomePage = () => {
     }, [navigate]);
 
     const onCreateQuizButtonClick = useCallback(() => {
-        navigate("/QuizDraftPage");
+        navigate("/instructor/quiz/drafts/");
     }, [navigate]);
 
     const onSavedQueryAnimationCardClick = useCallback(() => {

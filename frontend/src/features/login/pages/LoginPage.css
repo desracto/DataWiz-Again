@@ -231,3 +231,24 @@ body {
     margin: 5px 10px;
     font-family: Gilroy-Bold;
 }
+
+.svg-background {
+    position: absolute;
+    right: -40%;
+    width: 80%;
+    height: 80%;
+    top: 0;
+    overflow: hidden;
+    z-index: -1;
+    background-repeat: repeat;
+}
+
+.svg-background1 {
+    position: absolute;
+    left: -32%;
+    width: 70%;
+    height: 70%;
+    top: 300px;
+    overflow: hidden;
+    z-index: -1;
+}

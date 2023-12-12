@@ -4,6 +4,10 @@ import { NavLink, useNavigate } from "react-router-dom"; // Import NavLink and u
 import "./QuizDraft.css";
 import SecondHeader from '../../../global_components/SecondHeader';
 
+// Import SVG images 
+import svgImage from '../../../assets/images/vector-31.svg';
+import svgImage2 from '../../../assets/images/blob-haikei.svg';
+
 // Define the QuizDraft functional component
 function QuizDraft() {
     // Use React Router hook for navigation
@@ -57,6 +61,12 @@ function QuizDraft() {
         <>
             {/* Include the SecondHeader component */}
             <SecondHeader />
+            {/* SVG Backgrounds */}
+            <div className="SVG-CONTAINER">
+                <img src={svgImage} alt="SVG Background" className="svg-background" />
+                <img src={svgImage2} alt="SVG Background" className="svg-background1" />
+            </div>
+
 
             {/* Main container */}
             <div className="main_container">

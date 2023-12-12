@@ -153,17 +153,16 @@ function LandingPage() {
                 </div>
                 <div className='AboutUsDesriptionsCont'>
                     <div className="AboutUsDesriptions">
-                        Click the 'About Us' button below to explore our
+                        Click the button below to explore our
                         goal and values and to embark on an adventure to
                         learn the tale of DataWiz.
                     </div>
                 </div>
                 {/* About Us Button */}
                 <div className="AboutUsButtonCont">
-                    <Link to="/LoginPage" className="AboutUsButton">
+                    <Link to="/AboutUsPage" className="AboutUsButton">
                         <div className="ButtonText">About Us</div>
                     </Link>
-
                 </div>
 
             </div>

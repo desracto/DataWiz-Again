@@ -11,7 +11,6 @@ import home from "../assets/images/Home-Icon.png";
 import logo from "../assets/images/Logo.png";
 import quizzes from "../assets/images/Create-Quizzes-Logo.png";
 import setting from "../assets/images/Settings-Icon.png";
-import AboutUs from "../assets/images/FAQs-Icon.png";
 import { useRef } from "react";
 import { useEffect } from "react";
 
