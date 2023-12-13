@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.472.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@ionic/core": "^7.5.4",
     "@ionic/react": "^7.5.4",
+    "@mooncake-dev/react-day-time-picker": "^1.0.5",
     "@mui/material": "^5.14.20",
     "@mui/x-date-pickers": "^6.18.4",
     "@testing-library/jest-dom": "^5.14.1",

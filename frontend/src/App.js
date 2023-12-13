@@ -2,8 +2,6 @@ import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './assets/global.css';
 
-import TestPage from './features/quiz/pages/TestPage';
-
 // General Pages Imports
 import LandingPage from './features/general/pages/LandingPage'
 import SignUpPage from './features/signup/pages/SignUpPage';
@@ -40,9 +38,6 @@ function App() {
         baseURL: "http://localhost:5000",
         withCredentials: true,
         mode: 'cors',
-        headers: {
-            "Content-Type": "application/json"
-        },
         timeout: 300000
     })
 
@@ -86,7 +81,7 @@ function App() {
 
                     {/* Quiz Module Routes */}
 
-                    <Route path="/test-page/" element={<TestPage />} />
+                    
 
 
 

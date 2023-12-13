@@ -1,0 +1,49 @@
+.svg_background {
+    position: absolute;
+    right: -40%;
+    width: 80%;
+    height: 80%;
+    top: 0;
+    overflow: hidden;
+    z-index: -1;
+    background-repeat: repeat;
+}
+
+.svg_background2 {
+    position: absolute;
+    left: -35%;
+    width: 80%;
+    height: 80%;
+    top: 1400px;
+    overflow: hidden;
+    z-index: -1;
+    transform: scaleX(-1) scaleY(-1);
+
+}
+
+.svg_background1 {
+    position: absolute;
+    left: -32%;
+    width: 70%;
+    height: 70%;
+    top: 300px;
+    overflow: hidden;
+    z-index: -1;
+
+}
+
+.svg_background3 {
+    position: absolute;
+    right: -32%;
+    width: 80%;
+    height: 80%;
+    top: 1000px;
+    overflow: hidden;
+    z-index: -1;
+    background-repeat: repeat;
+
+}
+
+.page_content_component {
+    padding-top: 3rem;
+}

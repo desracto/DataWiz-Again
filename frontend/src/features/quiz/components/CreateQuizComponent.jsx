@@ -6,17 +6,32 @@ import { MdOutlineAddCircleOutline } from "react-icons/md";
 import FilterModal from "../components/FilterModal";
 import { useClearableField } from "@mui/x-date-pickers";
 import PortalPopup from '../components/PortalPopup.jsx';
+import DateTimePickerValue from "./DateTimePicker.jsx";
+import dayjs from "dayjs";
+import { format } from 'date-fns';
+import Cookies from "js-cookie";
 
 
 
+function CreateQuizComponent({ request }) {
 
 
-function CreateQuizComponent({ className }) {
+
+    var reader = new FileReader();
+
+    const [quizName, setQuizName] = useState();
+    const [isQuizNameEmpty, setQuizNameStatus] = useState(true);
+
+    const [quizDescription, setQuizDescription] = useState([]);
+    const [isQuizDescriptionEmpty, setQuizDescriptionStatus] = useState(true);
 
     const [files, setFiles] = useState([]);
+    const [filesBlob, setFilesBlob] = useState([]);
     const [questionList, setQuestionList] = useState([]);
-    const [quizName, setQuizName] = useState();
-    const [quizDescription, setQuizDescription] = useState([]);
+
+    const [isQuizQuestionsEmpty, setQuizQuestionsStatus] = useState(true)
+
+    const [quizStartTime, setQuizStartTime] = useState(dayjs(format(new Date(), "DD/MM/YYYY - HH:mm:ss"), "DD/MM/YYYY - HH:mm:ss"));
 
     const isDebug = true 
 
@@ -40,8 +55,19 @@ function CreateQuizComponent({ className }) {
         }, [showFilterPopUp])
     {/* Pop-up handlers */}
 
-
     {/* Dropzone Hook */ }
+
+        function getBase64(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onloadend = function () {
+                    resolve(reader.result);
+                };
+            })
+        }
+        
+
         // Dropzone callback functions
         // onDrop -> called when a user manually drags and drops a file
         const onDrop = useCallback((acceptedFiles) => {
@@ -50,11 +76,13 @@ function CreateQuizComponent({ className }) {
                 // sets the new file but alongside an object URL for displaying in an image tag
                 setFiles(previousFiles => [
                     ...previousFiles,
-                    ...acceptedFiles.map(file =>
-                        Object.assign(file, { preview: URL.createObjectURL(file) }))
+                    ...acceptedFiles.map(file => {
+                        Object.assign(file, { preview: URL.createObjectURL(file) })
+                        Object.assign(file, { b64data: getBase64(file).then(result => {return result}) })
+                        return file
+                    }
+                    )
                 ])
-
-
             }
         }, [])
 
@@ -70,7 +98,14 @@ function CreateQuizComponent({ className }) {
         }, [files]);
 
         // Dropzone hook
-        const { getRootProps, getInputProps, open, isDragActive } = useDropzone({ onDrop })
+        const { getRootProps, getInputProps, open, isDragActive } = useDropzone({ 
+            onDrop,
+            accept: {
+                "image/png": [".png"],
+                "image/jpb": [".jpg"],
+                "image/jpeg": [".jpeg"]
+            }
+        })
     {/* Dropzone Hook */ }
 
     {/* Event handlers */ }
@@ -98,9 +133,50 @@ function CreateQuizComponent({ className }) {
             }
         }, [quizDescription])
 
+        // print quiz start time
+        useEffect(() => {
+            if (isDebug) 
+            {
+                console.log(quizStartTime)
+            }
+        }, [quizStartTime])
+
+        useEffect(() => {
+            console.log(files)
+            console.log(filesBlob)
+        }, [files])
 
         const handleFormSubmit = (e) => {
-            console.log(questionList)
+            const quiz = {
+                quiz_name: quizName,
+                description: quizDescription,
+                start_time: quizStartTime.$D + "/" + quizStartTime.$M + "/" +  + quizStartTime.$y + " - " + quizStartTime.$H + ":" + quizStartTime.$m,
+                questions: questionList,
+                filters: filters
+            }
+
+            const promises = quiz.questions.map((question, index) => {
+                question.schema[0].b64data.then(result => {
+                    quiz.questions[index].schema[0].b64data = result
+                })
+            })
+
+            Promise.all(promises)
+                .then(() => {
+                    return request({
+                        url: "api/quiz/",
+                        method: "post",
+                        data: quiz
+                    })
+                })
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(error => {
+                    console.error(error)
+                })
+            
+            console.log(quiz)
         }
 
         const handleAddingSchema = () => {
@@ -143,13 +219,35 @@ function CreateQuizComponent({ className }) {
             })
         }
 
-        // handles deleting a schema
+        // handles deleting a schema & associated questions
         const handleSchemaDelete = (questionListIndex) => {
             setQuestionList((prevQuestions) => {
                 const updatedQuestions = [...prevQuestions]
                 updatedQuestions.splice(questionListIndex, 1)
                 return updatedQuestions
             })
+
+            setFiles((prevFiles) => {
+                const updatedFiles = [...prevFiles]
+                updatedFiles.splice(questionListIndex, 1)
+                return updatedFiles
+            })
+        }
+
+        // remove the schema from a question
+        const handleSpecificSchemaDelete = (questionListIndex) => {
+            setQuestionList((prevQuestions) => {
+                const updatedQuestions = [...prevQuestions]
+                updatedQuestions[questionListIndex].schema = []
+                return updatedQuestions
+            })
+
+            setFiles((prevFiles) => {
+                const updatedFiles = [...prevFiles]
+                updatedFiles.splice(questionListIndex, 1)
+                return updatedFiles
+            })
+
         }
 
         // handles deleting a problem
@@ -209,7 +307,8 @@ function CreateQuizComponent({ className }) {
                             {/* Autograding Filters*/ }
 
                             {/* Save Quiz Button*/}
-                            <div className={styles.save_quiz_button}>
+                            <div className={styles.save_quiz_button}
+                                 onClick={handleFormSubmit}>
                                 <FaSave size={30} color="#98989F" />
                                 <span className={styles.save_quiz_title}>Save Quiz</span>
                             </div>
@@ -220,7 +319,7 @@ function CreateQuizComponent({ className }) {
                     {/* Quiz Name */}
                     <div className={styles.quiz_name}>
                         <label className={styles.quiz_name_title}>Enter Quiz Name</label>
-                        <input  className={styles.input}
+                        <input  className={`${styles.input} ${isQuizNameEmpty ? styles.error_input : styles.no_error}`}
                                 placeholder="Enter Quiz Name"
                                 onChange={(e) => {setQuizName(e.target.value)}}                                
                         />
@@ -239,7 +338,22 @@ function CreateQuizComponent({ className }) {
                                       onChange={(e) => {setQuizDescription(e.target.value)}}
                             />
                         </div>
-                    {/* Quiz Description */}
+                    {/* Quiz Start and end time */}
+                    <div className={styles.quiz_start_time_container}>
+                        <label className={styles.quiz_name_title}>Quiz Start Time</label>
+                        <div className={styles.start_time_picker_holder}>
+                            <DateTimePickerValue className = {styles.quiz_start_time_picker}
+                                                    sx={{
+                                                        innerHeight: 300
+                                                    }}
+                                                    quizStartTime={quizStartTime}
+                                                    onChange = {setQuizStartTime} 
+                            />
+                        </div>
+
+                    </div>
+
+                    {/* Quiz Start and end time */}
 
                     {questionList.map((question, index) => (
                         <div className={styles.question} key={index}>
@@ -302,20 +416,29 @@ function CreateQuizComponent({ className }) {
                                                     </button>
 
                                                     <span className={styles.text_image_size}>Max Image Size: 5MB</span>
+                                                    <span className={styles.text_image_size}>Accepted File Types: png, jpb, jpeg</span>
                                                 </span>
                                             </div>
                                             {/* Main input section for the schema */}
                                         </div>
 
                                     ) : question.schema.length === 1 ? (
-                                        <div className={styles.display_schema_section}>
-                                            <img src={question.schema[0].preview}
-                                                className={styles.schema_image}
-                                            />
-                                            <button>
+                                        <div className={styles.uploaded_schema_section}>
 
+                                            <div className={styles.display_schema_section}>
+                                                <img src={question.schema[0].preview}
+                                                    className={styles.schema_image}
+                                                />
+                                            </div>
+
+                                            <button className={styles.delete_schema_image}
+                                                    onClick={(e) => {e.preventDefault(); handleSpecificSchemaDelete(index); }}>
+
+                                                Delete Schema Image
                                             </button>
                                         </div>
+
+
                                     ) : null}
                                 </div>
                             </div>
@@ -343,7 +466,7 @@ function CreateQuizComponent({ className }) {
                                         {/* Problem Holder */}
                                         <div className={styles.problem_text_holder}>
                                             <label className={styles.problem_title}>Problem: </label>
-                                            <textarea className={styles.problem}
+                                            <textarea className={`${styles.problem} ${problem.problem.trim() === "" ? styles.error_input : ''}`}
                                                 defaultValue={problem.problem}
                                                 rows={4}
                                                 onChange={(e) => handleInputChange(index, questionIndex, 'problem', e.target.value)}
@@ -384,15 +507,13 @@ function CreateQuizComponent({ className }) {
                             Add new schema
                         </button>
 
-                        <button className={styles.submit_button}
-                            onClick={(e) => { handleFormSubmit(); e.preventDefault(); }}>
-                            SUBMIT
-                        </button>
+
                     </div>
                 </div>
 
                 {showFilterPopUp && (
                     <PortalPopup
+                        className={`${styles.portal_popup} ${showFilterPopUp ? styles['fade_in'] : ''}`}
                         overlayColor="rgba(65, 62, 62, 0.5)"
                         placement="Centered"
                         onOutsideClick={closeFilters}

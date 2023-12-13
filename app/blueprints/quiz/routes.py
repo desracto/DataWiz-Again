@@ -1,5 +1,9 @@
 from flask import request, jsonify, url_for
 from datetime import datetime
+import urllib.request as requests
+from flask_accept import accept
+import io, base64
+from PIL import Image
 
 from . import quiz_bp
 
@@ -8,6 +12,8 @@ from ...extensions import db
 from ..main.errors import bad_request, error_response
 
 from flask_jwt_extended import jwt_required, get_jwt_identity
+
+import os
 
 @quiz_bp.route("/retrieve-quizzes/", methods=['GET'])
 @jwt_required()
@@ -31,8 +37,18 @@ def retrieve_filtered_quiz(quiz_id):
     quiz:Quiz = Quiz.query.filter_by(id=quiz_id).first_or_404()
     return quiz.filter_quiz()
 
+def print_files(data):
+    # save schema files
+    for question in data['questions']:
+        b64data = question['schema'][0]['b64data']
+        img_type = b64data[b64data.find('/') + 1:b64data.find(';')]
+
+        img = Image.open(io.BytesIO(base64.b64decode(bytes(b64data[b64data.find(',') + 1:], 'utf-8'))))
+        img.save("app\\schema_files\\img." + img_type)
+
+            
 @quiz_bp.route("/", methods=['POST'])
-@jwt_required()
+@accept('application/json', 'multipart/form-data', 'application/x-www-form-urlencoded')
 def create_quiz():
     """
         JSON Format:
@@ -41,19 +57,38 @@ def create_quiz():
             [REQUIRED] "start_time": "time": str,
             [OPTIONAL] "description": description
             [JWT-IDENTITY] "user_id": "id": str,
-
             [OPTIONAL] "questions": [
                             {
-                                'question_number': question_number,
-                                'problem': problem, 
-                                'answer': answer
-                            }, 
+                                "schema": [File],
+                                "questions": [
+                                    {
+                                        "problem": problem,
+                                        "answer": answer,
+                                        "question_number": question_number
+                                    },
+                                    {
+                                        "problem": problem,
+                                        "answer": answer,
+                                        "question_number": question_number
+                                    }
+                                ]
+                            },
                             {
-                                'question_number': question_number,
-                                'problem': problem, 
-                                'answer': answer
-                            }]
-
+                                "schema": [File],
+                                "questions": [
+                                    {
+                                        "problem": problem,
+                                        "answer": answer,
+                                        "question_number": question_number
+                                    },
+                                    {
+                                        "problem": problem,
+                                        "answer": answer,
+                                        "question_number": question_number
+                                    }
+                                ]
+                            }
+                        ]
             [REQUIRED] "filters":   {
                                         "matching_join": False,
                                         "spell_check": False,
@@ -65,41 +100,48 @@ def create_quiz():
     """
     data = request.get_json() or {}
 
-    # Checking if required fields present in json request
-    if 'quiz_name' not in data or 'start_time' not in data:
-        return bad_request('must include quiz name, start time and user id')
+    print_files(data)
+
+    return 'success', 200
+
+    # data = request.get_json() or {}
+    # quiz_name = request.form.get('quiz_name')
+
+    # # Checking if required fields present in json request
+    # if 'quiz_name' not in data or 'start_time' not in data:
+    #     return bad_request('must include quiz name, start time and user id')
     
-    # retrieve the user ID
-    email = get_jwt_identity()
-    user:Users = Users.query.filter_by(email=email).first_or_404()
+    # # retrieve the user ID
+    # email = get_jwt_identity()
+    # user:Users = Users.query.filter_by(email=email).first_or_404()
 
-    # Create new response
-    quiz = None
-    quiz:Quiz = Quiz(name = data['quiz_name'], 
-                     description = data['description'],
-                     userid = user.id)
+    # # Create new response
+    # quiz = None
+    # quiz:Quiz = Quiz(name = data['quiz_name'], 
+    #                  description = data['description'],
+    #                  userid = user.id)
     
-    quiz.add_time(data['start_time'])
-    db.session.add(quiz)
-    db.session.commit()
+    # quiz.add_time(data['start_time'])
+    # db.session.add(quiz)
+    # db.session.commit()
     
-    if 'questions' in data:
-        quiz.add_questions(data['questions'])
+    # if 'questions' in data:
+    #     quiz.add_questions(data['questions'])
 
-    if 'filters' in data:
-        quiz.add_filters(data['filters'])
+    # if 'filters' in data:
+    #     quiz.add_filters(data['filters'])
 
-    # Handle the 'schema' field if it's present
-    if 'schema' in data:
-        pass
+    # # Handle the 'schema' field if it's present
+    # if 'schema' in data:
+    #     pass
 
-    # Create response and add quiz object
-    response = jsonify(quiz.to_dict())
-    response.status_code = 201
+    # # Create response and add quiz object
+    # response = jsonify(quiz.to_dict())
+    # response.status_code = 201
 
-    # Set Location header to new resource
-    response.headers['Location'] = url_for('quiz.retrieve_quiz', quiz_id=quiz.id)
-    return response
+    # # Set Location header to new resource
+    # response.headers['Location'] = url_for('quiz.retrieve_quiz', quiz_id=quiz.id)
+    # return response
     
 @quiz_bp.route("/add-question/", methods=['PUT'])
 @jwt_required()

@@ -16,24 +16,14 @@ export default function DateTimePickerValue({ quizStartTime, onChange }) {
     // Set initial state for the date/time value using quizStartTime prop
     const [value, setValue] = React.useState(dayjs(quizStartTime, "DD/MM/YYYY - HH:mm:ss"));
 
-    // Define a function to handle changes in date/time value
-    const handleDateTimeChange = (newValue) => {
-        setValue(newValue);
-        // If there is a provided onChange callback, invoke it with the updated value
-        if (onChange) {
-            onChange('start_time', newValue);
-        }
-    }
-
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             {/* Container for demonstration purposes */}
             <DemoContainer components={['DateTimePicker']}>
                 {/* DateTimePicker component for selecting date and time */}
                 <DateTimePicker
-                    label="Start Time" // Label for the DateTimePicker
-                    value={value} // Current value of the DateTimePicker
-                    onChange={handleDateTimeChange} // Callback for value changes
+                    onChange={onChange} // Callback for value changes
+                    slotProps={{ textField: { size: 'large' } }}
                 />
             </DemoContainer>
         </LocalizationProvider>
