@@ -1,8 +1,7 @@
-
 .IntroCard {
     display: flex;
     flex-direction: column;
-    align-items: center; 
+    align-items: center;
     margin-top: 140px;
 }
 
@@ -20,9 +19,11 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    align-items: left; /* Center content horizontally */
-    text-align: left; /* Center text content */
-    padding-right: 350px;    
+    align-items: left;
+    /* Center content horizontally */
+    text-align: left;
+    /* Center text content */
+    padding-right: 350px;
 }
 
 .UnleashThePowerOfSqlLearning {
@@ -50,11 +51,11 @@
 .Ellipse1 {
     width: 250px;
     height: 250px;
-    top: 60px;  
+    top: 60px;
     right: 50px;
     background: #663D79;
     box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.10);
-    border-radius: 50%; 
+    border-radius: 50%;
     position: absolute;
     display: flex;
     align-items: center;
@@ -102,7 +103,7 @@
     margin-left: 2%;
     transition: background 0.3s ease;
 }
-  
+
 .ButtonText {
     text-align: center;
     font-size: 18px;
@@ -110,17 +111,20 @@
     word-wrap: break-word;
 }
 
-.LoginButton:hover, .SignUpButton:hover {
-    background: #331B3B; 
+.LoginButton:hover,
+.SignUpButton:hover {
+    background: #331B3B;
     color: white;
 }
 
-.LoginButton:active, .SignUpButton:active {
-    background: #331B3B; 
+.LoginButton:active,
+.SignUpButton:active {
+    background: #331B3B;
     color: white;
 }
 
-.LoginButton, .SignUpButton {
+.LoginButton,
+.SignUpButton {
     text-decoration: none;
 }
 
@@ -131,7 +135,7 @@
     position: flex;
     flex-direction: column;
     margin-top: 100px;
- }
+}
 
 .LFeatures {
     text-align: center;
@@ -142,7 +146,7 @@
     position: flex;
     margin-bottom: 10px;
 }
-  
+
 .ForLearners {
     text-align: center;
     color: #5C5959;
@@ -155,7 +159,7 @@
 .AnimationFeatureCarousel {
     display: flex;
     justify-content: center;
-    align-items: center; 
+    align-items: center;
     position: relative;
     margin-top: 30px;
     height: 500px;
@@ -178,7 +182,7 @@
     flex-direction: column;
     margin-top: 50px;
 }
-  
+
 .ForInstructors {
     text-align: center;
     color: #5C5959;
@@ -188,7 +192,6 @@
     position: flex;
 }
 
-
 /* ----------------------Meet The Team---------------------- */
 
 .MeetTheTeamContainer {
@@ -197,29 +200,32 @@
     flex-direction: column;
     align-items: center;
 }
-  
+
 .MeetTheTeamCard {
     width: 950px;
     height: 590px;
     background: #daccd5;
-    border-top-right-radius: 290px; 
-    border-bottom-right-radius: 50px; 
-    border-top-left-radius: 290px; 
-    border-bottom-left-radius: 50px;  
+    border-top-right-radius: 290px;
+    border-bottom-right-radius: 50px;
+    border-top-left-radius: 290px;
+    border-bottom-left-radius: 50px;
     /* border-radius: 300px; */
     overflow: hidden;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+    margin-bottom: 50px;
 }
 
 .MTTTop {
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
     width: 100%;
 }
-  
-.BarL, .BarR {
-    width: 150px; /* Equal width for both bars */
+
+.BarL,
+.BarR {
+    width: 150px;
+    /* Equal width for both bars */
     height: 5px;
     border-radius: 10px;
     background: linear-gradient(to right, #763f93, #ffd452);
@@ -238,14 +244,14 @@
     padding: 0px 30px;
 }
 
-
 .TopRowIcons {
     display: flex;
-    justify-content: center; /* Center the ellipses horizontally */
-    align-items: center; /* Center the ellipses vertically */
+    justify-content: center;
+    /* Center the ellipses horizontally */
+    align-items: center;
+    /* Center the ellipses vertically */
 }
 
-/* Common styles for the ellipses */
 .Ellipse2,
 .Ellipse3,
 .Ellipse4 {
@@ -255,18 +261,20 @@
     border-radius: 50%;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center the content vertically */
-    justify-content: center; /* Center the content horizontally */
+    align-items: center;
+    /* Center the content vertically */
+    justify-content: center;
+    /* Center the content horizontally */
     box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.12);
     margin: 0 50px;
     margin-top: 40px;
-
 }
 
 .TehamiImageIcon {
     width: 80px;
     height: 100px;
 }
+
 .HibaImageIcon,
 .RidaImageIcon {
     width: 70px;
@@ -297,20 +305,22 @@
 
 .BottomRowIcons {
     display: flex;
-    justify-content: center; /* Center the ellipses horizontally */
-    align-items: center; /* Center the ellipses vertically */
+    justify-content: center;
+    /* Center the ellipses horizontally */
+    align-items: center;
+    /* Center the ellipses vertically */
 }
 
 .Ellipse5,
-.Ellipse6{
+.Ellipse6 {
     width: 150px;
     height: 150px;
     background: #F6E9C4;
     border-radius: 50%;
     display: flex;
     flex-direction: column;
-    align-items: center; 
-    justify-content: center; 
+    align-items: center;
+    justify-content: center;
     box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.12);
     margin: 0 50px;
     margin-top: 25px;
@@ -348,3 +358,97 @@
     width: 234.5px;
     text-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
 }
+
+.AboutUsDesriptionsCont {
+    text-align: center;
+    width: 100%; 
+    max-width: 590px; 
+    margin: 0 auto; /* Center the container horizontally */
+    padding: 10px; 
+}
+
+.AboutUsDesriptions {
+    color: #5C5959;
+    font-size: 20px;
+    font-family: 'Gilroy-SemiBold';
+    word-wrap: break-word;
+}
+
+
+.svg-background {
+    position: absolute;
+    right: -40%;
+    width: 80%;
+    height: 80%;
+    top: 0;
+    overflow: hidden;
+    z-index: -1;
+    background-repeat: repeat;
+}
+
+.svg-background2 {
+    position: absolute;
+    left: -35%;
+    width: 80%;
+    height: 80%;
+    top: 1400px;
+    overflow: hidden;
+    z-index: -1;
+    transform: scaleX(-1) scaleY(-1);
+}
+
+.svg-background1 {
+    position: absolute;
+    left: -32%;
+    width: 70%;
+    height: 70%;
+    top: 300px;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.svg-background3 {
+    position: absolute;
+    right: -32%;
+    width: 80%;
+    height: 80%;
+    top: 1000px;
+    overflow: hidden;
+    z-index: -1;
+    background-repeat: repeat;
+}
+
+.svg-background4 {
+    position: absolute;
+    right: -40%;
+    width: 80%;
+    height: 80%;
+    top: 2100px;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.AboutUsButtonCont{
+    width: 100%; 
+    padding: 10px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.AboutUsButton{
+    width: 310px;
+    height: 40px;
+    background: #FDC221;
+    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.12);
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    transition: background 0.3s ease;
+}
+

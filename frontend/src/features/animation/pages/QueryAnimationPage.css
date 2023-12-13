@@ -1,8 +1,8 @@
 .svg-background {
     position: absolute;
     right: -40%;
-    width: 80%; 
-    height: 80%; 
+    width: 80%;
+    height: 80%;
     top: 0;
     overflow: hidden;
     z-index: -1;
@@ -12,19 +12,19 @@
 .svg-background2 {
     position: absolute;
     left: -35%;
-    width: 80%; 
-    height: 80%; 
+    width: 80%;
+    height: 80%;
     top: 1400px;
     overflow: hidden;
     z-index: -1;
-    transform: scaleX(-1) scaleY(-1); 
+    transform: scaleX(-1) scaleY(-1);
 }
 
 .svg-background1 {
     position: absolute;
     left: -32%;
-    width: 70%; 
-    height: 70%; 
+    width: 70%;
+    height: 70%;
     top: 300px;
     overflow: hidden;
     z-index: -1;
@@ -33,13 +33,24 @@
 .svg-background3 {
     position: absolute;
     right: -32%;
-    width: 80%; 
-    height: 80%; 
+    width: 80%;
+    height: 80%;
     top: 1000px;
     overflow: hidden;
     z-index: -1;
     background-repeat: repeat;
 }
+
+.svg-background4 {
+    position: absolute;
+    right: -40%;
+    width: 80%;
+    height: 80%;
+    top: 2100px;
+    overflow: hidden;
+    z-index: -1;
+}
+
 
 .QueryAnimationContainer {
     display: flex;
@@ -153,7 +164,6 @@
 }
 
 .button-container1 {
-    /* background-color: rgb(191, 255, 0); */
     margin-top: 152px;
     position: absolute;
     width: 80%;
@@ -317,8 +327,6 @@
     padding: 30px;
 }
 
-/* -------------------------------- */
-
 .QueryStepsDisplayCard {
     text-align: left;
 }
@@ -334,7 +342,7 @@
 }
 
 .QueryStep p {
-    font-family: 'Your-Code-Font', monospace; /* Replace 'Your-Code-Font' with the actual font used for code blocks */
+    font-family: monospace; 
     margin-left: 20px; 
     margin-bottom: 15px;
 }
@@ -372,15 +380,12 @@
     background-color: #D4C1CE;
     padding: 20px;
     border-radius: 15px;
-    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.20);
     width: 100%; /* Taking up 95% of its container */
     text-align: left;
     animation: fadeIn 5s forwards;
 }
 
-
-
-/* -------------------- */
 
 .table-info-container1 {
     text-align: left;

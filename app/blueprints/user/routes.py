@@ -150,9 +150,9 @@ def get_user():
     user: Users = Users.query.filter_by(email=current_user).first_or_404()
     return jsonify(user.to_dict())
 
-@user_bp.route('/id/<username>/', methods=['PUT'])
+@user_bp.route('/update/', methods=['PUT'])
 @jwt_required()
-def update_user(username:str):
+def update_user():
     """
         update_user function recieves a response object following this format:\n 
         {
@@ -172,9 +172,10 @@ def update_user(username:str):
         Code: 200 (OK)
     """
     try:
-        user:Users = Users.query.filter_by(username=username).first()
+        user:Users = Users.query.filter_by(email=get_jwt_identity()).first_or_404()
     except Exception as e:  
         return error_response(500, 'Internal server error. Error: ' + str(e))
+    
     data = request.get_json() or {}
 
     # Checking if the new data already exists in the database
@@ -186,6 +187,12 @@ def update_user(username:str):
     if 'email' in data and data['email'] != user.email and \
             Users.query.filter_by(email=data['email']).first():
         return bad_request('please use a different email')
+    
+    # handle password change
+    if 'new_password' in data:
+        # correct currnt password
+        if user.check_password(data['current_password']):
+            user.set_password(data['new_password'])
 
     # change user data 
     user.from_dict(data, new_user=False)
@@ -196,9 +203,9 @@ def update_user(username:str):
         return error_response(500, 'Internal server error. Error: ' + str(e))
 
     # return new user resource represnetation
-    return url_for('user.get_user', username=user.username)
+    return url_for('user.get_user')
 
-@user_bp.route('/id/<username>/', methods=['DELETE'])
+@user_bp.route('/delete-account', methods=['DELETE'])
 @jwt_required()
 def delete_user(username:str):
     """

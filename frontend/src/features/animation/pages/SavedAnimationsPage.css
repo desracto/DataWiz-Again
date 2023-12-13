@@ -19,7 +19,6 @@
 
 .heading-subcontainer {
     color: #000;
-   
 }
 
 .heading-subcontainer h1 {
@@ -43,16 +42,12 @@
 .headingcontainer-savedquizzes .button {
     display: flex;
     justify-content: flex-start;
-    align-items: center;
-    
-    
+    align-items: center;  
 }
 
 .content-card-button-div {
     cursor: pointer;
 }
-
-
 
 .headingcontainer-savedquizzes .button .navlink:hover {
     background: #331B3B;
@@ -106,19 +101,23 @@
     width: auto;
     margin-bottom: 2rem;
 }
+
 .content-container .animation-content_card div {
     width: 100%;
     display: flex;
     flex-direction: column;
 }
+
 .content-container .animation-content_card div span{
     font-family: Gilroy-SemiBold;
     margin-left: 0.5rem
 }
+
 .content-container .animation-content_card div small{
     font-family: Gilroy-Regular;
     margin-left: 0.5rem;
 }
+
 @media (min-width: 768px) {
     .content-container {
         padding: 4.5rem;
@@ -126,3 +125,26 @@
         
     }
 }
+
+.svg-background {
+    position: absolute;
+    right: -40%;
+    width: 80%;
+    height: 80%;
+    top: 0;
+    overflow: hidden;
+    z-index: -1;
+    background-repeat: repeat;
+}
+
+
+.svg-background1 {
+    position: absolute;
+    left: -32%;
+    width: 70%;
+    height: 70%;
+    top: 300px;
+    overflow: hidden;
+    z-index: -1;
+}
+
