@@ -3,14 +3,14 @@ import { useNavigate } from "react-router-dom";
 import "./DeleteConfirmationPopUp.css";
 
 // Define the DeleteConfirmationPopUp functional component, taking in props
-const DeleteConfirmationPopUp = ({ onClose }) => {
+const DeleteConfirmationPopUp = ({ onClose, onDeleteConfirmed }) => {
   // Get the navigate function from the useNavigate hook
   const navigate = useNavigate();
 
   // Define a memoized callback function for handling the confirmation button click
   const onConfirmButtonContainerClick = useCallback(() => {
     // Navigate to the "/LandingPage" route when the confirm button is clicked
-    navigate("/LandingPage");
+    onDeleteConfirmed();
   }, [navigate]);
 
   return (

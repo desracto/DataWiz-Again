@@ -5,6 +5,7 @@ import schemaImg from "../../../assets/images/image-14@2x.png";
 import SubmitQuiz from "../components/SubmitQuizPopup";
 import { useParams } from 'react-router-dom';
 import SecondHeader from "../../../global_components/SecondHeader";
+import Footer from '../../../global_components/Footer';
 import { useNavigate } from "react-router-dom";
 
 // Define the QuizAttempt functional component
@@ -148,6 +149,7 @@ const QuizAttempt = () => {
                     <SubmitQuiz onClose={() => setshowSubmitQuizPopup(false)} />
                 )}
             </div>
+            <Footer/>
         </>
     );
 };

@@ -1,0 +1,71 @@
+.footer-container {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    max-height: max-content;
+    padding: 5vh;
+    background-color: #D3D3D3;
+}
+
+.footer-logo {
+    width: 10vh;
+}
+
+.footer-title {
+    font-family: 'Gilroy-Bold';
+    font-size: 5vh;
+    margin-top: 25px;
+}
+
+.footer-description {
+    font-family: 'Gilroy-Medium';
+    font-size: 1.8vh;
+    margin-top: 25px;
+    text-align: center;
+}
+
+.footer-contact {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 80%;
+    max-width: 800px;
+    margin-top: 35px;
+}
+
+.contact-info,
+.location-info,
+.instagram-info {
+    font-size: 1.6vh;
+    font-family: 'Gilroy-Bold';
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact-icon,
+.location-icon,
+.instagram-icon {
+    margin-right: 10px;
+}
+
+.location-link,
+.instagram-link {
+    text-decoration: none;
+    color: #000000;
+}
+
+.location-link:hover,
+.instagram-link:hover {
+    color: #000000;
+}
+
+.footer-copyright {
+    margin-top: 35px;
+    font-size: 1.8vh;
+    text-align: center;
+}

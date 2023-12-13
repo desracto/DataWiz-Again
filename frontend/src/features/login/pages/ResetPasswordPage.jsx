@@ -6,6 +6,7 @@ import "./ResetPasswordPage.css";
 
 // Component Imports
 import Header1 from '../../../global_components/Header1';
+import Footer from '../../../global_components/Footer';
 
 // Image Imports
 import LeftArrow from '../../../assets/images/left-arrow.png';
@@ -93,7 +94,7 @@ const ResetPassword = () => {
                     <PasswordResetPopUp onClose={closePasswordResetPopUp} />
                 </PortalPopup>
             )}
-
+        <Footer />
         </>
     );
 };

@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import "./InstructorHomePage.css";
 import SecondHeader from "../../../global_components/SecondHeader";
+import Footer from '../../../global_components/Footer';
 
 // Image Imports
 import stackedWaves from '../../../assets/images/stacked-waves-haikei.svg'
@@ -203,6 +204,7 @@ const InstructorHomePage = () => {
                     </button>
                 </div>
             </div>
+            <Footer />
         </>
     );
 };
