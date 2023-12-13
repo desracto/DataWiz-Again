@@ -2,6 +2,7 @@ import { useState } from 'react'
 import "./FaqsPage.css"
 import SecondHeader from "../../../global_components/SecondHeader";
 import Accordion from '../components/AccordionItem';
+import Footer from '../../../global_components/Footer';
 
 // questions and answers for the FAQs page
 const data = [
@@ -112,6 +113,7 @@ const FaqsPage = () => {
                     ))}
                 </div>
             </div>
+            <Footer/>
         </>
     );
 };

@@ -1,4 +1,5 @@
 import SecondHeader from "../../../global_components/SecondHeader";
+import Footer from '../../../global_components/Footer';
 import { useNavigate } from "react-router-dom";
 import { useCallback, useState } from "react";
 import "./AllAttemptsPage.css";
@@ -78,6 +79,7 @@ const AllAttempts = () => {
                     </div>
                 </div>
             </div>
+            <Footer />
         </>
     );
 };

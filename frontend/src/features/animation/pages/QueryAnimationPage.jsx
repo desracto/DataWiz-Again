@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { schemaIdToProperty } from './SchemaSelectionPage';
 import axios from 'axios';
 import "./QueryAnimationPage.css";
+import Footer from '../../../global_components/Footer';
 
 // Import SVG images 
 import svgImage from '../../../assets/images/vector-31.svg';
@@ -283,6 +284,7 @@ const QueryAnimationPage = () => {
                     )}
                 </div>
             </div>
+            <Footer/>
         </>
     );
 };

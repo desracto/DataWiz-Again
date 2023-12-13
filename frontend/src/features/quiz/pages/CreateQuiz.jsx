@@ -9,6 +9,7 @@ import SuccessModal from "../components/SuccessModal";
 import PortalPopup from '../components/PortalPopup.jsx';
 import "./CreateQuiz.css";
 import SecondHeader from "../../../global_components/SecondHeader";
+import Footer from '../../../global_components/Footer';
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -672,7 +673,7 @@ const CreateQuiz = ({ request }) => {
                     <FilterModal onClose={closeFilterModal} />
                 </PortalPopup>
             )}
-
+        <Footer />
         </>
     );
 }

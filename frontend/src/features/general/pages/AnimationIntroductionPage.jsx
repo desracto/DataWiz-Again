@@ -2,6 +2,7 @@ import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AnimationIntroductionPage.css";
 import SecondHeader from "../../../global_components/SecondHeader";
+import Footer from '../../../global_components/Footer';
 
 import animQuery from '../../../assets/images/animInto-QueryAnimation.png';
 import vector62 from '../../../assets/images/vector-62.svg';
@@ -91,6 +92,7 @@ const AnimationIntroductionPage = () => {
                 </div>
                 <img className="Anim-Intro-Sec3-Image" alt="" src={animSavedQuery} />
             </div>
+            <Footer />
         </>
     );
 };

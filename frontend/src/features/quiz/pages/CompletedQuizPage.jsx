@@ -5,6 +5,7 @@ import schemaImg from "../../../assets/images/employee schema.png";
 import GeneratedQuizLinkComp from "../components/GeneratedQuizLink";
 import { useParams } from 'react-router-dom';
 import SecondHeader from "../../../global_components/SecondHeader";
+import Footer from '../../../global_components/Footer';
 import { useNavigate } from "react-router-dom";
 
 // Define the CompletedQuiz functional component
@@ -225,6 +226,7 @@ const CompletedQuiz = () => {
                     <GeneratedQuizLinkComp onClose={() => setShowGeneratedQuizLink(false)} />
                 )}
             </div>
+            <Footer />
         </>
     );
 };

@@ -4,6 +4,7 @@ import SecondHeader from '../../../global_components/SecondHeader';
 import { Link, useNavigate } from 'react-router-dom';  // Import useNavigate from react-router-dom
 import "./SchemaSelectionPage.css";
 import SchemaTable from '../components/SchemaTable';
+import Footer from '../../../global_components/Footer';
 
 // Image Imports
 import svgImage from '../../../assets/images/vector-31.svg';
@@ -107,6 +108,7 @@ const SchemaSelectionPage = () => {
                     </div>
                 </div>
             </div>
+            <Footer/>
         </>
     );
 };

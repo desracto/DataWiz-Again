@@ -8,7 +8,7 @@ import SavedAnimations from "../../../assets/images/Saved-Animations.png";
 import SavedQuizzes from "../../../assets/images/Saved-Quizzes.png";
 import CreateQuizzesLogo from "../../../assets/images/Create-Quizzes-Logo.png";
 import AutoGradingIcon from "../../../assets/images/Auto-grading_Icon.png"
-import Header1 from '../../../global_components/Header1';
+import SecondHeader from "../../../global_components/SecondHeader";
 //import Footer from "../components/Footer.jsx";
 
 import svgImage from '../../../assets/images/vector-31.svg';
@@ -30,9 +30,7 @@ const AboutUsPage = () => {
 
     return (
         <>
-            <div className="aboutus-header1">
-                <Header1 />
-            </div>
+            <SecondHeader />
             <div className="AboutUs-Main">
                 <div className="Hero-Section">
                     <div className="Hero-Overlay">

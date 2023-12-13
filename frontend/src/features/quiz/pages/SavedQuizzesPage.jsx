@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import "./SavedQuizzes.css";
 import UNCompletedQuiz from "./CompletedQuizPage.jsx"
 import SecondHeader from '../../../global_components/SecondHeader';
+import Footer from '../../../global_components/Footer';
 import axios from 'axios';
 import { useState, useEffect } from "react";
 
@@ -142,6 +143,7 @@ const SavedQuizzes = ({request}) => {
                     </div>
                 </div>
             </div>
+            <Footer/>
         </div>
   );
 }
