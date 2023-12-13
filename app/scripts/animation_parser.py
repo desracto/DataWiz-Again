@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, text
-from .sqlra import translate_query
+from sqlra import translate_query
 
 def fetch_query_results(query_list):
     """
