@@ -337,7 +337,8 @@ def main():
     db_results, rm_keys = run(b)
     # ans = json_comp_converter(db_results, rm_keys, table_names)
     ans = json_converter(db_results, rm_keys, table_names)
-    print(ans)    
+    print(ans)
+    #print    
     
 if __name__ == "__main__":
     main()
