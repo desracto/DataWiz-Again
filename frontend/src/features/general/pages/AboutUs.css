@@ -1,0 +1,407 @@
+
+.aboutus-header1{
+    margin-bottom: 180px;
+}
+
+.AboutUs-Main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-top: 5vw;
+}
+
+.Hero-Section {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    overflow: hidden;
+    max-width: 1800px;
+    margin-bottom: 20px;
+}
+
+.Hero-Overlay {
+    position: absolute;
+    width: 95%;
+    height: 100%;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: rgba(250, 199, 236, 0.863);
+}
+
+.Hero-Image {
+    width: 95%;
+    border-radius: 20px;
+}
+
+.Hero-AboutUs-Text {
+    padding: 1.5rem;
+    margin-left: 5%;
+    text-align: left;
+    color: #000;
+}
+
+.Hero-AboutUs-Text-Header {
+    font-size: 5.8vw;
+    line-height: 0.1;
+    font-family: Gilroy-SemiBold;
+    margin-bottom: 0;
+}
+
+.Hero-AboutUs-Text-SubHeader {
+    font-size: 2.8vw;
+    font-family: Gilroy-Light;
+}
+
+.Hero-AboutUs-Text-Paragraph {
+    font-size: 1.7vw;
+    line-height: 1.5;
+    font-family: Gilroy-Regular;
+}
+
+.AboutUs-Section1 {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 3vw;
+    padding: 10vw;
+}
+
+.AboutUs-Section1-Text {
+    width: 45%;
+    padding: 1.5rem;
+    text-align: left;
+}
+
+.AboutUs-Section1-Title {
+    font-size: 3vw;
+    font-family: Gilroy-Light;
+    margin-bottom: 0;
+}
+
+.AboutUs-Section1-Content {
+    font-size: 1.5vw;
+    line-height: 1.5;
+    font-family: Gilroy-Medium;
+}
+
+.AboutUs-Section1-Image {
+    width: 30%;
+    height: 30%;
+}
+
+.AboutUs-Section2 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10vh;
+}
+
+.AboutUs-Section2-Text {
+    width: 60%;
+    margin-bottom: 2vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.AboutUs-Section2-Title {
+    font-size: 3vw;
+    font-family: Gilroy-Light;
+    margin-bottom: 0;
+}
+
+.AboutUs-Section2-Container {
+    width: 85%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #D4C1CE;
+    border-radius: 20px;
+    margin-bottom: 5vh;
+}
+.AboutUs-Section2-Container2 {
+    width: 85%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #D4C1CE;
+    border-radius: 20px;
+    margin-bottom: 5vh;
+    padding-left: 30px;
+}
+
+.AboutUs-Section2-Image-Container {
+    width: 20%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.AboutUs-Section2-Image {
+    width: 45%;
+    height: 100%;
+    max-width: 350px;
+    height: 50%;
+}
+
+.AboutUs-Section2-Text-Container {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    padding-right: 3vh;
+    padding-top: 4vh;
+    padding-bottom: 4vh;
+    margin: auto;
+}
+
+.AboutUs-Section2-Sub-Title {
+    font-size: 2.3vw;
+    font-family: Gilroy-SemiBold;
+    margin-bottom: 4vh;
+}
+
+.AboutUs-Section2-Card-Title {
+    font-size: 2vw;
+    font-family: Gilroy-SemiBold;
+    margin-bottom: 0;
+}
+
+.AboutUs-Section2-Content {
+    width: 95%;
+    font-size: 1.2vw;
+    line-height: 1.5;
+    font-family: Gilroy-Medium;
+    text-align: justify;
+}
+
+.Quiz-Container {
+    background-color: #FFEEBB;
+}
+
+.Quiz-Content {
+    text-align: right;
+    align-items: flex-end;
+    justify-content: flex-end;
+    margin-right: 0;
+    width: 95%;
+}
+
+.Quiz-Content p {
+    text-align: right;
+}
+
+.AboutUs-Section3 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3vh;
+    margin-bottom: 3vw;
+}
+
+.AboutUs-Section3-Container {
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #D4C1CE;
+    border-radius: 20px;
+}
+
+.AboutUs-Section3-Header {
+    width: 60%;
+    margin-top: 4vh;
+    margin-bottom: 3vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.AboutUs-Section3-Title {
+    font-size: 3vw;
+    font-family: Gilroy-Light;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0;
+}
+
+.AboutUs-Section3-Body {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-bottom: 5vh;
+}
+
+.AboutUs-Section3-Text {
+    width: 45%;
+    margin-bottom: 3vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+}
+
+.AboutUs-Section3-Content {
+    font-size: 1.5vw;
+    line-height: 1.5;
+    font-family: Gilroy-Medium;
+}
+
+.AboutUs-Section3-Image {
+    width: 35%;
+    height: 35%;
+}
+
+.Solid-Black-Line {
+    background: #000000;
+    border-radius: 20px;
+    width: 95%;
+    height: 0.2vw;
+}
+
+.Solid-Black-Line2 {
+    background: #000000;
+    border-radius: 20px;
+    width: 25%;
+    height: 0.2vw;
+    margin-top: 2vw;
+    margin-bottom: 2vw;
+}
+
+.Solid-Black-Line3 {
+    background: #000000;
+    border-radius: 20px;
+    width: 30%;
+    height: 0.2vw;
+    margin-top: 2vw;
+    margin-bottom: 2vw;
+}
+
+.Solid-Black-Line4 {
+    background: #000000;
+    border-radius: 20px;
+    width: 30%;
+    height: 0.2vw;
+    margin-top: 2vw;
+    margin-bottom: 2vw;
+}
+
+.Solid-Vector {
+    width: 75%;
+    height: 0.8vw;
+    margin-top: 1.4vw;
+    transform: rotate(-0.3deg);
+    background-color: #422660;
+}
+
+.Solid-Vector2 {
+    width: 35%;
+    height: 0.8vw;
+    margin-top: -1vw;
+    transform: rotate(-0.3deg);
+    background-color: #FF398E;
+}
+
+.Solid-Vector3 {
+    width: 100%;
+    height: 0.8vw;
+    margin-top: -1vw;
+    transform: rotate(-0.1deg);
+    background-color: #F0C64A;
+}
+
+.Solid-Vector4 {
+    width: 100%;
+    height: 0.8vw;
+    margin-top: -1vw;
+    transform: rotate(-0.1deg);
+    background-color: #9766C8;
+}
+
+.Bold-Text {
+    font-family: Gilroy-Bold;
+}
+
+.AboutUs-Section2-Card-Title-Quiz-Cont{
+    font-family: Gilroy-SemiBold;
+    font-size: 2vw;
+}
+
+.svg-background {
+    position: absolute;
+    right: -40%;
+    width: 80%;
+    height: 80%;
+    top: 0;
+    overflow: hidden;
+    z-index: -1;
+    background-repeat: repeat;
+}
+
+.svg-background2 {
+    position: absolute;
+    left: -35%;
+    width: 80%;
+    height: 80%;
+    top: 1400px;
+    overflow: hidden;
+    z-index: -1;
+    transform: scaleX(-1) scaleY(-1);
+}
+
+.svg-background1 {
+    position: absolute;
+    left: -32%;
+    width: 70%;
+    height: 70%;
+    top: 300px;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.svg-background3 {
+    position: absolute;
+    right: -32%;
+    width: 80%;
+    height: 80%;
+    top: 1000px;
+    overflow: hidden;
+    z-index: -1;
+    background-repeat: repeat;
+}
+
+.svg-background4 {
+    position: absolute;
+    right: -40%;
+    width: 80%;
+    height: 80%;
+    top: 2100px;
+    overflow: hidden;
+    z-index: -1;
+}

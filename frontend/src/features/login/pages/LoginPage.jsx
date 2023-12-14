@@ -7,6 +7,7 @@ import "./LoginPage.css";
 
 // Component Imports
 import Header1 from '../../../global_components/Header1';
+import Footer from '../../../global_components/Footer';
 
 // Images Imports
 import GoogleLogo from '../../../assets/images/google-account-login.svg';
@@ -186,6 +187,7 @@ const LoginPage = () => {
                     </form>
                 </div>
             </div>
+        ,<Footer/>
         </>
     );
 }

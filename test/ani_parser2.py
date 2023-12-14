@@ -286,6 +286,96 @@ def animation_table_names(b):
     return table_names
 
 
+def pdf_animation(q: str):
+    
+    q = "select count(artist_id), country, Genre.genre_id FROM Artist JOIN Genre ON Artist.genre_id = Genre.genre_id GROUP BY country ORDER BY Genre.genre_id asc"
+    
+    sql = translate_query(query = q,
+                                DEBUG=True,
+                                CLEAN=True)
+    print(f'\nSQL: {sql}\n')
+
+    # subqueries = find_subqueries(sql)
+    # subqueries.pop(0)
+
+    # if len(subqueries) > 0:
+    #     sq_list = []
+    #     for i in subqueries:
+    #         x = converter(i)
+    #         y = query_generator(x)
+    #         z = select_star_fixer(y, i)
+    #         y.append(z)
+    #         sq_list.append(y)
+
+    a = converter(sql)
+    b = query_generator(a)
+    print(f"Length B {len(b)}")
+
+    print(f"B starts - query generator")
+    for i in b:
+        print(i)
+    print(f"B ends - query generator")
+
+    # b = [
+    #     "select * FROM Album",
+    #     "select * FROM Album WHERE artist_id IN (SELECT artist_id FROM Artist WHERE country = 'United States')",
+    #     "select album_id, album_name, year FROM Album WHERE artist_id IN (SELECT artist_id FROM Artist WHERE country = 'United States')"
+    # ]
+
+    table_names = animation_table_names(b)
+    db_results, rm_keys = run(b)
+    
+    return db_results, rm_keys
+
+
+
+def animator(q: str):
+    
+    q = "select count(artist_id), country, Genre.genre_id FROM Artist JOIN Genre ON Artist.genre_id = Genre.genre_id GROUP BY country ORDER BY Genre.genre_id asc"
+    
+    sql = translate_query(query = q,
+                                DEBUG=True,
+                                CLEAN=True)
+    print(f'\nSQL: {sql}\n')
+
+    # subqueries = find_subqueries(sql)
+    # subqueries.pop(0)
+
+    # if len(subqueries) > 0:
+    #     sq_list = []
+    #     for i in subqueries:
+    #         x = converter(i)
+    #         y = query_generator(x)
+    #         z = select_star_fixer(y, i)
+    #         y.append(z)
+    #         sq_list.append(y)
+
+    a = converter(sql)
+    b = query_generator(a)
+    print(f"Length B {len(b)}")
+
+    print(f"B starts - query generator")
+    for i in b:
+        print(i)
+    print(f"B ends - query generator")
+
+    # b = [
+    #     "select * FROM Album",
+    #     "select * FROM Album WHERE artist_id IN (SELECT artist_id FROM Artist WHERE country = 'United States')",
+    #     "select album_id, album_name, year FROM Album WHERE artist_id IN (SELECT artist_id FROM Artist WHERE country = 'United States')"
+    # ]
+
+    table_names = animation_table_names(b)
+    db_results, rm_keys = run(b)
+
+    print(f"DB RESULTS: {db_results}")
+    print(f"DB RESULTS: {rm_keys}")
+    # ans = json_comp_converter(db_results, rm_keys, table_names)
+    ans = json_converter(db_results, rm_keys, table_names)
+    
+    return ans
+
+
 
 def main():
    
@@ -299,7 +389,7 @@ def main():
     # q = "SELECT album_id, album_name, year FROM Album WHERE artist_id IN (SELECT artist_id FROM Artist WHERE country = 'United States')"
     # q = "SELECT artist_id FROM Artist WHERE country = 'United States'"
     # q = "SELECT * FROM Album, Song"
-    q = "select count(artist_id), country, Genre.genre_id FROM Artist JOIN Genre ON Artist.genre_id = Genre.genre_id GROUP BY country ORDER BY Genre.genre_id asc"
+    # q = "select count(artist_id), country, Genre.genre_id FROM Artist JOIN Genre ON Artist.genre_id = Genre.genre_id GROUP BY country ORDER BY Genre.genre_id asc"
     
     sql = translate_query(query = q,
                                 DEBUG=True,
@@ -337,7 +427,7 @@ def main():
     db_results, rm_keys = run(b)
     # ans = json_comp_converter(db_results, rm_keys, table_names)
     ans = json_converter(db_results, rm_keys, table_names)
-    print(ans)    
+    print(ans) 
     
 if __name__ == "__main__":
     main()

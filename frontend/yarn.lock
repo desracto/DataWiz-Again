@@ -2586,6 +2586,15 @@
     ionicons "^7.2.1"
     tslib "^2.1.0"
 
+"@ionic/core@^7.5.4":
+  version "7.5.7"
+  resolved "https://registry.yarnpkg.com/@ionic/core/-/core-7.5.7.tgz#0ab892ef47486bc5a2eb9e800188c276ed3b5557"
+  integrity sha512-BVoKckmcC1kgRW5+ZGmzZMCXOjjaxq6D5lp0XzOpqUKBfyr8b39nkdJL2odQY2F1+jScChxk7wB5nubx4i3lUw==
+  dependencies:
+    "@stencil/core" "^4.7.2"
+    ionicons "^7.2.1"
+    tslib "^2.1.0"
+
 "@ionic/react@^7.5.4":
   version "7.6.0"
   resolved "https://registry.npmjs.org/@ionic/react/-/react-7.6.0.tgz"
@@ -3945,6 +3954,11 @@
 "@stencil/core@^4.0.3", "@stencil/core@^4.8.1":
   version "4.8.1"
   resolved "https://registry.npmjs.org/@stencil/core/-/core-4.8.1.tgz"
+  integrity sha512-KG1H10j24rlyxIqOI4CG8/h9T7ObTv7giW2H3u1qXV4KKrLykDOpMcLzpqNXqL2Fki3s1QvHyl/oaRvi5waWVw==
+
+"@stencil/core@^4.7.2":
+  version "4.8.1"
+  resolved "https://registry.yarnpkg.com/@stencil/core/-/core-4.8.1.tgz#34f62c3d0f2a2f43abe935092fe13fa6cce1bf2b"
   integrity sha512-KG1H10j24rlyxIqOI4CG8/h9T7ObTv7giW2H3u1qXV4KKrLykDOpMcLzpqNXqL2Fki3s1QvHyl/oaRvi5waWVw==
 
 "@surma/rollup-plugin-off-main-thread@^2.2.3":

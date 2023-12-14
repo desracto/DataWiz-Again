@@ -13,6 +13,7 @@ import AnimationIntroductionPage from './features/general/pages/AnimationIntrodu
 import AccountSettingsPage from './features/general/pages/AccountSettingsPage';
 import FaqsPage from './features/general/pages/FaqsPage';
 import AboutUsPage from './features/general/pages/AboutUs';
+import AboutUsPage2 from './features/general/pages/AboutUs2';
 
 // Animation Pages
 import SchemaSelectionPage from './features/animation/pages/SchemaSelectionPage'
@@ -58,7 +59,8 @@ function App() {
                     <Route path="/SavedAnimationsPage" element={<SavedAnimationsPage request={request}/>} />
                     <Route path="/AccountSettingsPage" element={<AccountSettingsPage request={request} />} />
                     <Route path="/FaqsPage" element={<FaqsPage />} />
-                    <Route path="/about-us" element={<AboutUsPage />} />
+                    <Route path="/AboutUs" element={<AboutUsPage />} />
+                    <Route path="/AboutUs2" element={<AboutUsPage2 />} />
 
 
                     <Route path="/instructor/home/" element={<InstructorHomePage />} />

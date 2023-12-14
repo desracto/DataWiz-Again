@@ -6,6 +6,7 @@ import axios from "axios";
 
 // Component Imports
 import Header1 from '../../../global_components/Header1';
+import Footer from '../../../global_components/Footer';
 
 // Image Imports
 import HiddenEye from '../../../assets/images/clarityeyehideline.svg';
@@ -265,6 +266,7 @@ const Signup = () => {
                     className="svg-background1"
                 />
             </div>
+            <Footer/>
         </>
     );
 };

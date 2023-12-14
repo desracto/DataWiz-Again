@@ -3,6 +3,7 @@ import { FaChevronRight, FaTrash } from "react-icons/fa";
 import { NavLink, useNavigate } from "react-router-dom"; // Import NavLink and useHistory
 import "./QuizDraft.css";
 import SecondHeader from '../../../global_components/SecondHeader';
+import Footer from '../../../global_components/Footer';
 
 // Import SVG images 
 import svgImage from '../../../assets/images/vector-31.svg';
@@ -129,6 +130,7 @@ function QuizDraft() {
                     ))}
                 </div>
             </div>
+            <Footer/>            
         </>
     );
 }

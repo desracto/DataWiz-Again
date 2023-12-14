@@ -209,7 +209,7 @@ def update_user():
 @jwt_required()
 def delete_user():
     """
-        delete_user fetches a user using their ``username`` and 
+        delete_user fetches a user using their `username` and 
         deletes the resource from the database.
         Also logs out user
     """
@@ -228,6 +228,7 @@ def delete_user():
     response = jsonify({
         "message": "account has been successfully deleted" 
     })
+
 
     # Logout user
     unset_cookies(response)

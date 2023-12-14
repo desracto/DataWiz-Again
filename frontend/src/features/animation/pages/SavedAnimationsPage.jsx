@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import "./SavedAnimationsPage.css";
 import SecondHeader from '../../../global_components/SecondHeader';
+import Footer from '../../../global_components/Footer';
 
 // Import SVG images 
 import svgImage from '../../../assets/images/vector-31.svg';
@@ -113,6 +114,7 @@ function SavedAnimationsPage({request}) {
                     ))}
                 </div>
             </div>
+            <Footer/>
         </>
     );
 }

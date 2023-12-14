@@ -1,4 +1,5 @@
 import React, { useCallback, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import LogoutConfirmationPopUp from "../components/LogoutConfirmationPopUp.jsx";
 import PortalPopup from '../components/PortalPopup.jsx';
 import DeleteConfirmationPopUp from "../components/DeleteConfirmationPopUp.jsx";
@@ -10,10 +11,14 @@ import Cookies from 'js-cookie';
 // Import images
 import vector from '../../../assets/images/vector.svg';
 import instructorIcon from '../../../assets/images/Settings-Instructor.png';
+
 import SecondHeader from "../../../global_components/SecondHeader.jsx";
+import Footer from '../../../global_components/Footer';
 
 // Define the AccountSettingPage functional component
 const AccountSettingPage = ({ request }) => {
+    const navigate = useNavigate();
+
     // Initialize form using react-hook-form
     const { register, handleSubmit, setValue, formState: { errors }, getValues, trigger } = useForm({ reValidateMode: 'onSubmit' });
 
@@ -118,6 +123,25 @@ const AccountSettingPage = ({ request }) => {
         // Close the pop-up
         closeSaveChangesPopUp();
     };
+
+    const handleDeleteAccount = useCallback(() => {
+        // Make an API call to delete the user account
+        request({
+          url: 'api/user/delete-account',
+          method: 'DELETE',
+          headers: {
+            'X-CSRF-TOKEN': Cookies.get("csrf_access_token")
+            }
+        })
+          .then(() => {
+            console.log("Account deleted");
+            navigate('/LandingPage');
+          })
+          .catch((error) => {
+            console.error('Error deleting account:', error);
+          });
+      }, [request, navigate]);
+    
 
     // Print tracked changes everytime it updates
     useEffect(() => {
@@ -286,7 +310,10 @@ const AccountSettingPage = ({ request }) => {
                     placement="Centered"
                     onOutsideClick={closeDeleteConfirmationPopUp}
                 >
-                    <DeleteConfirmationPopUp onClose={closeDeleteConfirmationPopUp} />
+                    <DeleteConfirmationPopUp 
+                        onClose={closeDeleteConfirmationPopUp}
+                        onDeleteConfirmed={handleDeleteAccount}
+                    />
                 </PortalPopup>
             )}
             {isSaveChangesPopUpOpen && (
@@ -301,6 +328,7 @@ const AccountSettingPage = ({ request }) => {
                     />
                 </PortalPopup>
             )}
+        <Footer />
         </>
     );
 };

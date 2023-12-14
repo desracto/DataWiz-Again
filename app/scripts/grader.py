@@ -19,7 +19,7 @@ def major_minor(dict1, dict2):
         if keyword_unsimilar == True:
             if set(dict1[key]) != set(dict2[key]):
                 error_list.append({key: (dict1[key], dict2[key])})
-                print("Mismatch of value count as per original query")
+                # print("Mismatch of value count as per original query")
             else: 
                 for item1, item2 in zip(dict1[key], dict2[key]):
                     # print(f'item1:  {item1} and item2 key: {item2}')
@@ -28,7 +28,7 @@ def major_minor(dict1, dict2):
         else: 
             if set(dict1[key]) != set(dict2[key]):
                 error_list.append({key: (dict1[key], dict2[key])})
-                print("Mismatch of value count as per original query")
+                # print("Mismatch of value count as per original query")
             else: 
                 for item1, item2 in zip(dict1[key], dict2[key]):
                     # print(f'item1:  {item1} and item2 key: {item2}')
@@ -46,30 +46,74 @@ def major_minor(dict1, dict2):
     # print(minor_mistakes)
 
     score = 1 - (major_mistakes + minor_mistakes)
-    print("\n\n")
-    print("Major mistakes: ")
-    print(keyword_list)
-    print("\nMajor mistakes: ")
-    print(error_list)
-    print(f'\nFinal score: {score}')
+    
+    if score < 0:
+        score = 0
 
-    return score
+    # print("\n\n")
+    # print("Major mistakes: ")
+    # print(keyword_list)
+    # print("\nMinor mistakes: ")
+    # print(error_list)
+    # print(f'\nFinal score: {score}')
+
+    print(keyword_list)
+
+    major_string = ""
+    if len(keyword_list) > 0:
+        for i in keyword_list:
+            major_string += str(i) + "\n"
+    else:
+        major_string = "None"
+
+    minor_string = ""
+    if len(error_list) > 0:
+        for i in error_list:
+            minor_string += str(i) + "\n"
+    else:
+        minor_string = "None"
+    
+    explanation = f"\nMissing Keywords: \n{major_string}\nMinor mistakes: \n{minor_string}\nScore: {score}\n"
+    print(explanation)
+
+    return score, explanation
 
 
 
 def spellchecker(teacher_sql, student_sql):
 
+    mistake_count = 0
+    keyword_list = []
+    error_list = []
+    keyword_count = 0
     for key in teacher_sql:
         if key in student_sql:
             teacher_values = teacher_sql[key]
             student_values = student_sql[key]
-            print(f"Comparison for '{key}':")
+            # print(f"Comparison for '{key}':")
             for t_value in teacher_values:
                 for s_value in student_values:
                     distance = textdistance.levenshtein.normalized_distance(t_value, s_value)
-                    print(f"Distance between '{t_value}' and '{s_value}': {distance}")
+                    keyword_count =+ 1
+                    if distance >= 0.35 and distance <= 0.8:
+                        mistake_count =+ 1
+                        keyword_list.append(key)
+                        error_list.append((t_value, s_value))
+                        # print(f"Distance between '{t_value}' and '{s_value}': {distance}")
 
-    return None
+    score = 1 - (mistake_count/keyword_count)
+
+    mistake_text = "\n---------------\nSpelling errors: "
+    mistake_string = ""
+    if len(keyword_list) > 0:
+        for i in range(0, len(keyword_list)):
+            mistake_string += "\n\nKeyword: "+ str(keyword_list[i]) + "\n" + str(error_list[i]) + "\n"
+    else: 
+        mistake_string += "None"
+
+    mistake_text += mistake_string + f"\nScore: {score}"
+
+    return score, mistake_text
 
 
 # def get_join_types(sql_dict):
@@ -111,11 +155,13 @@ def compare_join_types(teacher_sql, student_sql):
     student_join = get_join_type(student_sql)
 
     if teacher_join == student_join:
-        print(f"Join types match: {teacher_join}")
-        return 0  # Join types are the same, no deduction
+        # print(f"Join types match: {teacher_join}")
+        mistake_text = f"\n\n---------------\nCompare the Join types: \nJoin type are the same [{teacher_join}, {student_join}] \nScore: 1"
+        return 1, mistake_text   # Join types are the same, no deduction
     else:
-        print(f"Join types don't match. Teacher's join: {teacher_join}, Student's join: {student_join}")
-        return 1  # Join types are different, deduct 1 point
+        # print(f"Join types don't match. Teacher's join: {teacher_join}, Student's join: {student_join}")
+        mistake_text = f"\n\n---------------\nCompare the Join types: \nJoin types are not the same [{teacher_join}, {student_join}] \nScore: 0"
+        return 0 , mistake_text # Join types are different, deduct 1 point
 
 
 def check_unnecessary_additions(teacher_sql, student_sql):
@@ -124,25 +170,97 @@ def check_unnecessary_additions(teacher_sql, student_sql):
 
     # Check for extra keys in the student's query
     extra_keys = student_keys.difference(teacher_keys)
+    # counter_keys = len(student_keys.union(teacher_keys))
 
-    unnecessary_additions = 0
+    unnecessary_additions_counter = 0
+    additions_keys_list = []
+    additions_value_list = []
 
     if extra_keys:
-        print(f"Extra keys found in student's query: {', '.join(extra_keys)}")
-        unnecessary_additions += len(extra_keys)  # Counting extra keys as unnecessary additions
+        # print(f"Extra keys found in student's query: {', '.join(extra_keys)}")
+        unnecessary_additions_counter += len(extra_keys)  # Counting extra keys as unnecessary additions
+        for i in extra_keys:
+            additions_keys_list.append(i)
 
+    # counter_values = 0
     for key in teacher_keys.intersection(student_keys):
         teacher_values = set(teacher_sql[key])
         student_values = set(student_sql[key])
+        # counter_values += len(student_values.union(teacher_values))
 
         # Check for extra elements in the values of matching keys
         extra_values = student_values.difference(teacher_values)
         if extra_values:
-            print(f"Extra values found for key '{key}' in student's query: {', '.join(extra_values)}")
-            unnecessary_additions += len(extra_values)  # Counting extra values as unnecessary additions
+            # print(f"Extra values found for key '{key}' in student's query: {', '.join(extra_values)}")
+            unnecessary_additions_counter += len(extra_values)  # Counting extra values as unnecessary additions
+            for i in extra_keys:
+                additions_value_list.append((key, extra_values))
+    
+    # unnecessary_additions_counter = counter_keys + counter_values
 
-    return unnecessary_additions
+    if len(additions_keys_list) > 0 or len(additions_value_list)>1:
+        score = 0
+        mistake_text = f"\n\n---------------\nUnnecessary Additions: \n{additions_keys_list}\n{additions_value_list}\n\nScore: {score}"
+    else:
+        score = 1
+        mistake_text = f"\n\n---------------\nUnnecessary Additions: None \nScore: {score}"
 
+    return score, mistake_text
+
+
+def auto_grader(correct_ans, stu_ans):
+    
+    sql_c = translate_query(query = correct_ans,
+                                DEBUG=True,
+                                CLEAN=True)
+    sql_s = translate_query(query = stu_ans,
+                                DEBUG=True,
+                                CLEAN=True)
+    
+    print(f'SQL from teacher: {sql_c}')
+    print(f'SQL from student: {sql_s}\n')
+
+    filters = {
+        # "major_and_minorf": True,
+        "spell_typo_checkerf": True,
+        "join_checkerf" : True,
+        "additional_checkerf" : True
+    }
+
+    score_counter = 1
+    temp_score = 0
+
+    score1, result = major_minor(sql_c, sql_s)
+    temp_score += score1
+
+
+    if filters.get("spell_typo_checkerf"):
+        score_counter =+ 1
+        score2, temp_result2 = spellchecker(sql_c, sql_s)
+        temp_score += score2
+        result += temp_result2
+
+
+    join_types = ['INNER JOIN', 'LEFT JOIN', 'LEFT OUTER JOIN', 'RIGHT JOIN', 'RIGHT OUTER JOIN', 'FULL JOIN', 'FULL OUTER JOIN', 'JOIN', 'NATURAL JOIN', 'SELF JOIN']
+    join_check = any(key in sql_c for key in join_types)
+
+    if join_check and filters.get("join_checkerf"):
+        join_type_difference, temp_result3 = compare_join_types(sql_c, sql_s)
+        score_counter =+ 1
+        temp_score += join_type_difference
+        result += temp_result3
+
+    if filters.get("additional_checkerf"):
+        score_counter =+ 1
+        score3, temp_result3 = check_unnecessary_additions(sql_c, sql_s)
+        temp_score += score3
+        result += temp_result3
+
+    score = temp_score/score_counter
+    print(f"SCORE R: {score}")
+    print(f"SCORE R: {temp_score}")
+    print(f"SCORE R: {score_counter}")
+    return score, result
 
 def main():
     
@@ -155,8 +273,8 @@ def main():
     # correct_ans = "SELECT name, inspiration FROM programme INNER JOIN scores ON programme.id = score.id WHERE s.inspiration > 18 GROUP BY id HAVING something"
     # stu_ans = "SELECT name FROM programme INNER JOIN scores ON programme.id = score.id WHERE s.inspiration > 18 GROUP BY id HAVING something"
     
-    # correct_ans = "SELECT employees, employee_id FROM employees RIGHT JOIN departments ON employees.department_id = departments.department_id where employees.employee_id = 100"
-    # stu_ans = "SELECT employees, employee_id FROM emp LEFT JOIN departments ON employees.department_id = departments.department_id where employees.employee_id > 100"
+    correct_ans = "SELECT employees, employee_id FROM employees INNER JOIN departments ON employees.department_id = departments.department_id where employees.employee_id = 100"
+    stu_ans = "SELECT employees, employee_id FROM emp JOIN departments ON employees.department_id = departments.department_id where employees.employee_id > 100"
 
     # correct_ans = "SELECT first_name, last_name FROM employees WHERE department = 'Sales' GROUP BY department HAVING COUNT(*) > 5 ORDER BY last_name ASC LIMIT 10"
     # stu_ans = "SELECT first_name, last_name FROM employees WHERE department = 'Sales' GROUP BY department LIMIT 10"
@@ -167,35 +285,28 @@ def main():
     # correct_ans = "SELECT professor_name FROM courses WHERE department = 'Computer Science'"
     # stu_ans = "SELECT subject, professor_name FROM classes WHERE field = 'CS' and department = 'Computer Science'"
 
-    correct_ans = "SELECT professor_name FROM courses WHERE department = 'Computer Science'"
-    stu_ans = "SELECT subject, professor_name FROM classes WHERE field = 'CS' and department = 'Computer Science'"
+    # correct_ans = "SELECT professor_name FROM courses WHERE department = 'Computer Science'"
+    # stu_ans = "SELECT subject, professor_name FROM classes WHERE field = 'CS' and department = 'Computer Science'"
 
     # correct_ans = "SELECT employees.employee_id, employees.employee_name, departments.department_name FROM employees, departments WHERE employees.department_id = departments.department_id"
     # stu_ans = "SELECT employees.employee_id, employees.employee_name, departments.department_name FROM employees JOIN departments ON employees.department_id = departments.department_id"
 
-    sql_c = translate_query(query = correct_ans,
-                                DEBUG=True,
-                                CLEAN=True)
-    sql_s = translate_query(query = stu_ans,
-                                DEBUG=True,
-                                CLEAN=True)
-    
-    print(f'SQL from teacher: {sql_c}')
-    print(f'SQL from student: {sql_s}\n')
+    # correct_ans = "SELECT name, CASE WHEN age < 30 THEN 'Young' ELSE 'Old' END AS age_group FROM employees"
+    # stu_ans = "SELECT name, CASE WHEN age < 30 THEN 'Young' ELSE 'Old' END AS age_group"
 
-    major_minor(sql_c, sql_s)
+    # correct_ans = "SELECT sum(salary) AS sum FROM employees WHERE name LIKE '%son%';"
+    # stu_ans = "SELECT count(salary) AS count FROM employees WHERE name LIKE '%son%';"
 
-    # spellchecker(sql_c, sql_s)
+    # correct_ans = "SELECT album_id, album_name FROM employees WHERE name LIKE '%son%';"
+    # stu_ans = "SELECT album.album_id FROM employees WHERE name LIKE '%son%';"
 
-    # join_types = ['INNER JOIN', 'LEFT JOIN', 'LEFT OUTER JOIN', 'RIGHT JOIN', 'RIGHT OUTER JOIN', 'FULL JOIN', 'FULL OUTER JOIN', 'JOIN', 'NATURAL JOIN', 'SELF JOIN']
-    # join_check = any(key in sql_c for key in join_types)
+    # correct_ans = "SELECT * FROM employees WHERE age IN (SELECT MAX(age) FROM employees)"
+    # stu_ans = "SELECT * FROM employees WHERE age IN (SELECT age FROM employees)"
+    ans = auto_grader(correct_ans, stu_ans)
+    print(ans)
 
-    # if join_check:
-    #     join_type_difference = compare_join_types(sql_c, sql_s)
-    #     if join_type_difference is not None:
-    #         print(f"Deduction: {join_type_difference}")
+    return None
 
-    # check_unnecessary_additions(sql_c, sql_s)
 
 if __name__ == "__main__":
     main()

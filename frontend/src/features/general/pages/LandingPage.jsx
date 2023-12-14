@@ -8,6 +8,7 @@ import './LandingPage.css';
 import LCarousel from '../components/LCarousel';
 import ICarousel from '../components/ICarousel';
 import Header1 from '../../../global_components/Header1';
+import Footer from '../../../global_components/Footer';
 
 // Image Imports
 import dataWizLogoImage from '../../../assets/images/DataWiz-Logo.png';
@@ -160,12 +161,13 @@ function LandingPage() {
                 </div>
                 {/* About Us Button */}
                 <div className="AboutUsButtonCont">
-                    <Link to="/about-usPage" className="AboutUsButton">
+                    <Link to="/AboutUs" className="AboutUsButton">
                         <div className="ButtonText">About Us</div>
                     </Link>
                 </div>
 
             </div>
+        <Footer/>  
         </>
     );
 }

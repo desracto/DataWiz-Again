@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, text
-from .sqlra import translate_query
+from sqlra import translate_query
 
 def fetch_query_results(query_list):
     """
@@ -214,6 +214,31 @@ def animation_table_names(b):
             table_names.append("Final Result")
 
     return table_names
+
+
+def pdf_animation(q: str):
+    
+    q = "select count(artist_id), country, Genre.genre_id FROM Artist JOIN Genre ON Artist.genre_id = Genre.genre_id GROUP BY country ORDER BY Genre.genre_id asc"
+    
+    sql = translate_query(query = q,
+                                DEBUG=True,
+                                CLEAN=True)
+    print(f'\nSQL: {sql}\n')
+
+    a = converter(sql)
+    b = query_generator(a)
+    print(f"Length B {len(b)}")
+
+    print(f"B starts - query generator")
+    for i in b:
+        print(i)
+    print(f"B ends - query generator")
+
+    table_names = animation_table_names(b)
+    db_results, rm_keys = fetch_query_results(b)
+    
+    return db_results, rm_keys
+
 
 
 def retrieve_query_results(q: str):

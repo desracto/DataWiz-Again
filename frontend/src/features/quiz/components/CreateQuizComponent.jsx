@@ -409,7 +409,7 @@ function CreateQuizComponent({ request }) {
                                                     </span>
 
                                                     <button className={styles.schema_box_browse_button}
-                                                        onClick={(e) => { e.preventDefault(); open; }} >
+                                                        onClick={(e) => { e.preventDefault(); open(); }} >
                                                         Browse
                                                         <MdOutlineAddCircleOutline
                                                             className="ml-3"

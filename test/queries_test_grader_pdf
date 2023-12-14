@@ -1,0 +1,181 @@
+Schema 1 Questions =
+  [
+  "What are the names and job titles of all employees?",
+  "Which departments have a budget greater than a certain amount?",
+  "List the names of the projects along with the names of the employees working on them.",
+  "How many employees are there in each department?",
+  "Find the department with the maximum number of employees.",
+  "Get the details of employees who do not have a phone number listed."
+]
+
+Schema 1 Answers = 
+[
+  "SELECT Name, Job_Title FROM Employee;",
+  "SELECT Dept_name FROM Department WHERE Budget > {amount};", // Replace {amount} with the actual budget amount.
+  "SELECT p.Project_name, e.Name FROM Project p JOIN Employee e ON p.Project_id = e.Project_id;",
+  "SELECT Dept_id, COUNT(*) as NumberOfEmployees FROM Employee GROUP BY Dept_id;",
+  "SELECT Dept_id, COUNT(*) as NumberOfEmployees FROM Employee GROUP BY Dept_id ORDER BY NumberOfEmployees DESC LIMIT 1;",
+  "SELECT * FROM Employee WHERE Phone_no IS NULL;"
+]
+
+
+
+Schema 2 Questions = 
+[
+  "What is the contact information for all patients?",
+  "How can we find the number of appointments per doctor?",
+  "Which patients are currently assigned to a room?",
+  "Can we list all appointments scheduled for the next 7 days?",
+  "What are the details of doctors along with their specialties?",
+  "How can we identify rooms that are unoccupied?"
+]
+
+
+Schema 2 Answers= 
+[
+  "SELECT FirstName, LastName, Email, Phone_no FROM Patient;",
+  "SELECT DoctorID, COUNT(*) AS NumberOfAppointments FROM Appointment GROUP BY DoctorID;",
+  "SELECT * FROM Patient WHERE RoomID IS NOT NULL;",
+  "SELECT * FROM Appointment WHERE AppointmentDate BETWEEN CURRENT_DATE AND CURRENT_DATE + INTERVAL 7 DAY;",
+  "SELECT DoctorName, Specialty FROM Doctor;",
+  "SELECT * FROM Room WHERE RoomID NOT IN (SELECT RoomID FROM Patient WHERE RoomID IS NOT NULL);"
+]
+
+
+
+Schema 3 Questions =
+[
+  "List all the students with their email addresses.",
+  "Find the total number of students enrolled in each course.",
+  "Provide the names of instructors along with the courses they teach.",
+  "Get all the assignments due in the next 30 days.",
+  "Identify the students who are not enrolled in any courses.",
+  "Display the courses along with the names of students enrolled and their enrollment dates."
+]
+
+
+Schema 3 Answers = 
+[
+  "SELECT FirstName, LastName, Email FROM Student;",
+  "SELECT CourseID, COUNT(StudentID) AS NumberOfStudents FROM Enrollment GROUP BY CourseID;",
+  "SELECT i.InstructorName, c.CourseName FROM Instructor i JOIN Course c ON i.InstructorID = c.InstructorID;",
+  "SELECT AssignmentName, DueDate FROM Assignment WHERE DueDate BETWEEN CURRENT_DATE AND CURRENT_DATE + INTERVAL '30' DAY;",
+  "SELECT * FROM Student WHERE StudentID NOT IN (SELECT StudentID FROM Enrollment);",
+  "SELECT c.CourseName, s.FirstName, s.LastName, e.EnrollmentDat FROM Course c JOIN Enrollment e ON c.CourseID = e.CourseID JOIN Student s ON e.StudentID = s.StudentID;"
+]
+
+
+--------------------
+
+
+Schema 4 Questions = 
+[
+  "List all the students with their email addresses.",
+  "Find the total number of students enrolled in each course.",
+  "Provide the names of instructors along with the courses they teach.",
+  "Get all the assignments due in the next 30 days.",
+  "Identify the students who are not enrolled in any courses.",
+  "Display the courses along with the names of students enrolled and their enrollment dates."
+]
+
+
+Schema 4 Answers = [
+  "SELECT FirstName, LastName, Email FROM Student;",
+  "SELECT CourseID, COUNT(StudentID) AS NumberOfStudents FROM Enrollment GROUP BY CourseID;",
+  "SELECT i.InstructorName, c.CourseName FROM Instructor i JOIN Course c ON i.InstructorID = c.InstructorID;",
+  "SELECT AssignmentName, DueDate FROM Assignment WHERE DueDate BETWEEN CURRENT_DATE AND CURRENT_DATE + INTERVAL '30' DAY;",
+  "SELECT * FROM Student WHERE StudentID NOT IN (SELECT StudentID FROM Enrollment);",
+  "SELECT c.CourseName, s.FirstName, s.LastName, e.EnrollmentDat FROM Course c JOIN Enrollment e ON c.CourseID = e.CourseID JOIN Student s ON e.StudentID = s.StudentID;"
+]
+
+
+Schema 5 Questions = 
+[
+  "Retrieve all blogger names and their email addresses.",
+  "List all blog posts along with their corresponding blogger names.",
+  "Find the number of comments made on each blog post.",
+  "Get the most recent comments for each blog post.",
+  "Display all comments made by a specific blogger.",
+  "Show the titles of blog posts that do not have any comments."
+]
+
+
+Schema 5 Answers =
+[
+  "SELECT BloggerName, Email FROM Blogger;",
+  "SELECT b.BloggerName, bp.Title, bp.Conte FROM Blogger b JOIN BlogPost bp ON b.BloggerID = bp.Blogg;",
+  "SELECT bp.BlogP, bp.Title, COUNT(c.CommentID) AS NumberOfComments FROM BlogPost bp LEFT JOIN Comment c ON bp.BlogP = c.BlogPostID GROUP BY bp.BlogP;",
+  "SELECT bp.BlogP, bp.Title, c.CommentConte, c.CommentDate FROM BlogPost bp JOIN Comment c ON bp.BlogP = c.BlogPostID WHERE c.CommentDate IN (SELECT MAX(CommentDate) FROM Comment GROUP BY BlogPostID);",
+  "SELECT c.CommentConte, c.CommentDate FROM Comment c WHERE c.BloggerID = ?;", // Replace '?' with the BloggerID in question.
+  "SELECT Title FROM BlogPost WHERE BlogP NOT IN (SELECT BlogPostID FROM Comment);"
+]
+
+
+
+----------------------------
+
+c_queries = [
+    "SELECT * FROM employees;",
+    "SELECT name, age, salary FROM employees WHERE department_id = 10;",
+    "SELECT DISTINCT department_id FROM employees;",
+    "SELECT name, MAX(salary) AS max_salary FROM employees GROUP BY department_id;",
+    "SELECT name FROM employees WHERE age > 30;",
+    "SELECT * FROM employees ORDER BY salary DESC;",
+    "SELECT name, SUM(salary) AS total_salary FROM employees GROUP BY department_id;",
+    "SELECT * FROM employees WHERE name LIKE 'A%';",
+    "SELECT * FROM employees WHERE department_id IN (1, 3, 5);",
+    "SELECT AVG(salary) AS avg_salary FROM employees WHERE department_id = 10;",
+    "SELECT COUNT(*) AS total_employees FROM employees;",
+    "SELECT * FROM employees WHERE age BETWEEN 25 AND 35;",
+    "SELECT department_id, COUNT(*) AS num_employees FROM employees GROUP BY department_id HAVING num_employees > 5;",
+    "SELECT * FROM employees WHERE salary > (SELECT AVG(salary) FROM employees);",
+    "SELECT name, RANK() OVER (ORDER BY salary DESC) AS rank FROM employees;",
+    "SELECT * FROM employees LEFT JOIN departments ON employees.department_id = departments.id;",
+    "SELECT name, COALESCE(salary, 0) AS salary FROM employees;",
+    "SELECT name, CASE WHEN age < 30 THEN 'Young' ELSE 'Old' END AS age_group FROM employees;",
+    "SELECT department_id, PERCENT_RANK() OVER (ORDER BY salary) AS salary_percent_rank FROM employees;",
+    "SELECT name, LEAD(salary) OVER (ORDER BY salary) AS next_salary FROM employees;"
+    "SELECT name, COUNT(*) AS num_employees FROM employees GROUP BY name HAVING num_employees > 1;",
+    "SELECT * FROM employees WHERE salary NOT BETWEEN 30000 AND 60000;",
+    "SELECT AVG(salary) AS avg_salary FROM employees WHERE department_id = 5;",
+    "SELECT department_id, MAX(salary) AS max_salary FROM employees GROUP BY department_id HAVING MAX(salary) > 80000;",
+    "SELECT * FROM employees WHERE name LIKE '%son%';",
+    "SELECT name, DENSE_RANK() OVER (ORDER BY salary DESC) AS dense_rank FROM employees;",
+    "SELECT name, COALESCE(salary, 0) AS salary FROM employees;",
+    "SELECT department_id, SUM(CASE WHEN salary > 50000 THEN 1 ELSE 0 END) AS high_salary_employees FROM employees GROUP BY department_id;",
+    # "SELECT * FROM employees WHERE age IN (SELECT MIN(age) FROM employees);",
+    "SELECT name, NTILE(4) OVER (ORDER BY salary) AS quartile FROM employees;"
+]
+
+# Modified SQL queries list with intentional mistakes or variations
+stu_queries = [
+    "SELECT * FORM employees;",  # Missing keyword 'FROM'
+    "SELECT name, age salary FROM employees WHERE department_id = 10;",  # Missing comma between 'age' and 'salary'
+    "SELECT DISTINCT department_id FROM employees WHERE name IS NOT NULL;",  # Added condition 'WHERE name IS NOT NULL'
+    "SELECT name, MAX(salary) AS highest_salary FROM employees GROUP BY department_id;",  # Changed alias to 'highest_salary'
+    "SELECT names FROM employees WHERE age > 30;",  # Changed column name to 'names'
+    "SELECT * FROM employees ORDER salary DESC;",  # Missing keyword 'BY' in ORDER BY
+    "SELECT name, SUM(salary) AS total_salary FROM employees WHERE department_id = 2;",  # Changed department_id value
+    "SELECT * FROM employees WHERE name LIKE '%A%';",  # Changed LIKE pattern
+    "SELECT * FROM employees WHERE department_id IN 1, 3, 5;",  # Missing parentheses in IN statement
+    "SELECT AVG(salary) avg_salary FROM employees WHERE department_id = 10;",  # Changed alias position
+    "SELECT COUNT(*) total_employees FROM employees WHERE age BETWEEN 25 OR 35;",  # Incorrect BETWEEN syntax
+    "SELECT department_id, COUNT(*) AS num_employees FROM employees GROUP BY department_id HAVING num_employees > 8;",  # Changed HAVING condition
+    "SELECT * FROM employees WHERE salary > (SELECT AVG(salary) FROM employees) AND age < 30;",  # Added an additional condition
+    "SELECT name, RANK() FROM employees ORDER BY salary DESC;",  # Removed OVER clause in window function
+    "SELECT * FROM employees RIGHT JOIN departments ON employees.department_id = departments.id;",  # Changed LEFT JOIN to RIGHT JOIN
+    "SELECT name, COALESCE(salary) AS salary FROM employees;",  # Removed the default value in COALESCE
+    "SELECT name, CASE WHEN age < 30 THEN 'Young' END AS age_group FROM employees;",  # Changed CASE statement
+    "SELECT department_id, PERCENT_RANK() AS salary_percent_rank FROM employees ORDER BY salary;",  # Removed OVER clause
+    "SELECT name, LEAD(salary) FROM employees GROUP BY TEST_values ORDER BY salary;",  # Removed OVER clause in window function
+    "SELECT name, COUNT(*) AS num_employees FROM employees GROUP BY name HAVING num_employees > 3;",  # Changed HAVING condition
+    "SELECT * FORM employees WHERE salary BETWEEN 30000 AND 60000;",  # Missing keyword 'FROM'
+    "SELECT AVG(salary) AS avg_sal FROM employees WHERE department_id 5;",  # Missing operator in WHERE clause
+    "SELECT department_id, MAX(salary) AS max_salary FROM employees WHERE salary > 70000 GROUP BY department_id;",  # Added condition to WHERE clause
+    "SELECT * FROM employees WHERE name LIKE '%on%';",  # Changed LIKE pattern
+    "SELECT name, DENSE_RANK() OVER (ORDER BY salary) AS dense_rank FROM employees WHERE age > 25;",  # Changed WHERE condition
+    "SELECT name, COALESCE(salary, 0) AS salary FROM employees WHERE age > 30;",  # Changed WHERE condition
+    "SELECT department_id, SUM(CASE WHEN salary > 50000 THEN 1 END) AS high_salary_employees FROM employees GROUP BY department_id;",  # Removed ELSE in CASE statement
+    # "SELECT * FROM employees WHERE age IN (SELECT MAX(age) FROM employees);",  # Changed subquery to MAX(age)
+    "SELECT name, NTILE(4) AS quartile FROM employees ORDER BY salary DESC;"  # Removed OVER clause
+]

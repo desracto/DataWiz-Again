@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "./QuizzesIntroductionPage.css";
 import SecondHeader from '../../../global_components/SecondHeader';
+import Footer from '../../../global_components/Footer';
 
 // Import Images
 import vector64 from '../../../assets/images/vector-64.svg';
@@ -95,6 +96,7 @@ const QuizzesIntroductionPage = () => {
                 </div>
                 <img className="Quiz-Intro-Sec3-Image" alt="" src={savedQuizzes} />
             </div>
+            <Footer/>
         </>
     );
 };

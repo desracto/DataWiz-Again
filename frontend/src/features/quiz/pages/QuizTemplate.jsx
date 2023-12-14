@@ -5,6 +5,7 @@ import schemaImg from "../../../assets/images/employee schema.png";
 import GeneratedQuizLinkComp from "../components/GeneratedQuizLink";
 import { useParams } from 'react-router-dom';
 import SecondHeader from "../../../global_components/SecondHeader";
+import Footer from '../../../global_components/Footer';
 import { useNavigate } from "react-router-dom";
 import LoadingComponent from "../../../global_components/Loading"
 import Cookies from "js-cookie";
@@ -350,6 +351,7 @@ const QuizTemplate = ({request}) => {
                     <GeneratedQuizLinkComp linkGenerated = {quiz.link_generated} quizID = {id} onClose = {() => setShowGeneratedQuizLink(false)} />
                 )}
             </div>
+            <Footer/>
         </>
     );
 };
