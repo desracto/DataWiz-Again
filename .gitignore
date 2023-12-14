@@ -34,3 +34,4 @@ venv
 # temp files
 /temp
 /dump
+node_modules
