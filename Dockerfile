@@ -8,8 +8,7 @@ WORKDIR /app
 COPY requirements.txt .
 
 # Install the required Python packages
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+RUN \venv\Scripts\activate 
 
 # Copy the rest of the application code into the container
 COPY . .
