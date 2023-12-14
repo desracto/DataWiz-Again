@@ -8,7 +8,7 @@ WORKDIR /app
 COPY requirements.txt .
 
 # Install the required Python packages
-RUN \\venv\\Scripts\\activate 
+RUN /venv/Scripts/activate 
 
 # Copy the rest of the application code into the container
 COPY . .
