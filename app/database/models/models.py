@@ -3,6 +3,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from ...blueprints.main.errors import bad_request, error_response
 import datetime
 from sqlalchemy import types
+import io, base64
+from PIL import Image
+
 
 from ...extensions import db
 
@@ -24,6 +27,7 @@ class Users(db.Model):
 
     # Relationships
     quizzes = db.relationship('Quiz', back_populates='user')
+    animations = db.relationship('Animation', back_populates='user')
 
     # Functions
     def __repr__(self):
@@ -63,6 +67,14 @@ class Users(db.Model):
             json_quizzes.append(quiz.to_dict())
         
         return json_quizzes
+    
+    def retrieve_animations(self):
+        json_animations = []
+        for animation in self.animations:
+            json_animations.append(animation.to_dict())
+            
+        return json_animations
+        
 
 class Quiz(db.Model):
     # Table name
@@ -70,15 +82,19 @@ class Quiz(db.Model):
 
     # Fields
     id = db.Column(db.String(32), primary_key=True, unique=True, default=get_uuid) # PK
+    userid = db.Column(db.String(40), db.ForeignKey('Users.id')) # FK
+
     name = db.Column(db.String(120))
     description = db.Column(db.String(2000)) 
     start_time = db.Column(db.DateTime)
-    userid = db.Column(db.String(40), db.ForeignKey('Users.id')) # FK
+
     link_generated = db.Column(db.Boolean, default=False)
-    # img_id = db.Column(db.String(32), db.ForeignKey('Quiz_Image.img_id'))
 
     # Relationships
     user = db.relationship('Users', back_populates='quizzes')
+
+    question_sets = db.relationship('Quiz_QuestionSet', back_populates='quiz')
+
     questions = db.relationship('Quiz_QPA', back_populates='quiz')
     filters = db.relationship('Filters', back_populates='quiz')
 
@@ -234,17 +250,79 @@ class Quiz(db.Model):
         return data
 
     # Question Methods
-    def add_questions(self, questions: list):
-        # questions -> [{'question_number': question_number, 'problem': problem, 'answer': 'answer}]
-        for question in questions:
-            print("Adding question: {}".format(question))
-            question = Quiz_QPA(quiz_id = self.id,
-                                question_number = question['question_number'],
-                                problem = question['problem'],
-                                answer = question['answer'])
+    def add_questions(self, questionList: list):
+        """
+            JSON Format:
+            questionList: [
+                    questionSet: {
+                            schema: [File],
+                            questions: [
+                                {
+                                    problem: problem,
+                                    answer: answer,
+                                    question_number: question_number
+                                },
+                                {
+                                    problem: problem,
+                                    answer: answer,
+                                    question_number: question_number
+                                }
+                            ]
+                        }
+            ]
+        """
+        print("Adding questions... ")
+        # Create empty qSet header. This points to the sceham
+        # and the array of questions
+        for qSetinList in questionList:
+            print("Creating QuestionSet Header...")
+            qSet:Quiz_QuestionSet = Quiz_QuestionSet(quizID = self.id)
             
-            db.session.add(question)
-        db.session.commit()
+            try:
+                db.session.add(qSet)
+                db.session.commit()
+            except Exception as e:
+                db.session.rollback()
+                raise
+                
+            # schema
+            if 'schema' in qSetinList:
+                print("Adding Schema to QuestionSet....")
+                b64data = qSetinList['schema'][0]['b64data']
+                img_type = b64data[b64data.find('/') + 1:b64data.find(';')]
+
+                img = Image.open(io.BytesIO(base64.b64decode(bytes(b64data[b64data.find(',') + 1:], 'utf-8'))))
+                img.save("app\\schema_files\\{}_{}.{}".format(self.id, qSet.id, img_type))
+                
+                qSet.schema = "{}_{}.{}".format(self.id, qSet.id, img_type)
+                
+                try:
+                    db.session.add(qSet)
+                    db.session.commit()
+                except Exception as e:
+                    db.session.rollback()
+                    raise
+            
+            # questions
+            if 'questions' in qSetinList:
+                print("Adding questions to QuestionSet....")
+                for question in qSetinList['questions']:
+                    questionObject:Quiz_QPA = Quiz_QPA(quiz_id = self.id,
+                                                    questionSetID = qSet.id,
+                                                    
+                                                    question_number = question['question_number'],
+                                                    problem = question['problem'],
+                                                    answer = question['answer']
+                                                    )
+                    
+                    db.session.add(questionObject)
+                    
+                try:
+                    db.session.commit()
+                except Exception as e:
+                    db.session.rollback()
+                    return Exception(e)
+        
         return self.to_dict()
     
     def edit_question(self, edited_questions: list):
@@ -320,6 +398,7 @@ class Quiz(db.Model):
                 "additional_data": True/False
             }
         """
+        print("Adding Filters....")
         filter = Filters(quiz_id = self.id,
                          matching_joins = filters['matching_joins'],
                          spell_check = filters['spell_check'],
@@ -357,7 +436,18 @@ class Quiz(db.Model):
 
         return question_numbers
 
+class Quiz_QuestionSet(db.Model):
+    __tablename__ = "Quiz_QuestionSet"
 
+    # Fields
+    id = db.Column(db.String(32), primary_key=True, unique=True, default=get_uuid) # PK
+    quizID = db.Column(db.String(32), db.ForeignKey('Quiz.id')) # FK -> Quiz 
+
+    schema = db.Column(db.String(70))
+
+    # relationships
+    quiz = db.relationship('Quiz', back_populates='question_sets')
+    questions = db.relationship('Quiz_QPA', back_populates='question_set')
     
 
 class Quiz_QPA(db.Model):
@@ -366,7 +456,8 @@ class Quiz_QPA(db.Model):
 
     # Fields
     qaid = db.Column(db.String(32), primary_key=True, unique=True, default=get_uuid) # PK
-    quiz_id = db.Column(db.String(32), db.ForeignKey('Quiz.id')) # Fk
+    quiz_id = db.Column(db.String(32), db.ForeignKey('Quiz.id')) # FK -> Quiz 
+    questionSetID = db.Column(db.String(32), db.ForeignKey('Quiz_QuestionSet.id')) # FK -> QuestionSet
 
     question_number = db.Column(db.Integer)
     problem = db.Column(db.String(400))
@@ -374,6 +465,7 @@ class Quiz_QPA(db.Model):
 
     # Relationships
     quiz = db.relationship('Quiz', back_populates='questions')
+    question_set = db.relationship('Quiz_QuestionSet', back_populates='questions')
     attempts = db.relationship('Quiz_Question_Attempts', back_populates='question')
 
     # Functions
@@ -470,23 +562,28 @@ class Animation(db.Model):
     __tablename__ = 'animation'
 
     # Fields
-    ani_id = db.Column(db.Integer, primary_key=True, unique=True, default=get_uuid) # PK
-    user_id = db.Column(db.String(32), db.ForeignKey('Users.id')) # Fk
+    ani_id = db.Column(db.String(32), primary_key=True, unique=True, default=get_uuid) # PK
+    userid = db.Column(db.String(32), db.ForeignKey('Users.id')) # Fk
 
-    query = db.Column(db.String(400))
+    animation_name = db.Column(db.String(100))
+    query = db.Column(db.String(500))
+    schema_id = db.Column(db.Integer)
+    
+    user = db.relationship('Users', back_populates='animations')
 
     # Functions    
     def __repr__(self):
         return "<Animation | ID: {}, \
              User ID: {}, \
-             Query: {}>".format(self.ani_id, self.user_id, self.query)
-
+             Query: {}>".format(self.ani_id, self.userid, self.query)
 
     def to_dict(self):
         data = {
             "ani_id": self.ani_id,
-            "user_id": self.user_id,
-            "query": self.query
+            "user_id": self.userid,
+            "query": self.query,
+            "schema_id": self.schema_id,
+            "animation_name": self.animation_name
         }
         return data
 

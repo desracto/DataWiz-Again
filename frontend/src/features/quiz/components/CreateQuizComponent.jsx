@@ -150,14 +150,14 @@ function CreateQuizComponent({ request }) {
             const quiz = {
                 quiz_name: quizName,
                 description: quizDescription,
-                start_time: quizStartTime.$D + "/" + quizStartTime.$M + "/" +  + quizStartTime.$y + " - " + quizStartTime.$H + ":" + quizStartTime.$m,
-                questions: questionList,
+                start_time: quizStartTime.$M + "/" + quizStartTime.$D + "/" +  + quizStartTime.$y + " - " + quizStartTime.$H + ":" + quizStartTime.$m + ":" + quizStartTime.$s,
+                questionList: questionList,
                 filters: filters
             }
 
-            const promises = quiz.questions.map((question, index) => {
+            const promises = quiz.questionList.map((question, index) => {
                 question.schema[0].b64data.then(result => {
-                    quiz.questions[index].schema[0].b64data = result
+                    quiz.questionList[index].schema[0].b64data = result
                 })
             })
 
@@ -166,7 +166,10 @@ function CreateQuizComponent({ request }) {
                     return request({
                         url: "api/quiz/",
                         method: "post",
-                        data: quiz
+                        data: quiz,
+                        headers:{
+                            'X-CSRF-TOKEN': Cookies.get('csrf_access_token')
+                        }
                     })
                 })
                 .then(response => {
@@ -266,8 +269,8 @@ function CreateQuizComponent({ request }) {
             const [filters, setFilters] = useState(
                 {
                     'additional_data': false,
-                    'spell_checker': false,
-                    'matching_join_types': false
+                    'spell_check': false,
+                    'matching_joins': false
                 }
             )
         
@@ -319,7 +322,7 @@ function CreateQuizComponent({ request }) {
                     {/* Quiz Name */}
                     <div className={styles.quiz_name}>
                         <label className={styles.quiz_name_title}>Enter Quiz Name</label>
-                        <input  className={`${styles.input} ${isQuizNameEmpty ? styles.error_input : styles.no_error}`}
+                        <input  className={`${styles.input} ${isQuizNameEmpty ? "" : ""}`}
                                 placeholder="Enter Quiz Name"
                                 onChange={(e) => {setQuizName(e.target.value)}}                                
                         />
@@ -466,7 +469,7 @@ function CreateQuizComponent({ request }) {
                                         {/* Problem Holder */}
                                         <div className={styles.problem_text_holder}>
                                             <label className={styles.problem_title}>Problem: </label>
-                                            <textarea className={`${styles.problem} ${problem.problem.trim() === "" ? styles.error_input : ''}`}
+                                            <textarea className={`${styles.problem} ${problem.problem.trim() === "" ? "" : ''}`}
                                                 defaultValue={problem.problem}
                                                 rows={4}
                                                 onChange={(e) => handleInputChange(index, questionIndex, 'problem', e.target.value)}

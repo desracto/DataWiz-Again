@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaChevronRight, FaTrash } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
@@ -8,36 +8,54 @@ import SecondHeader from '../../../global_components/SecondHeader';
 // Import SVG images 
 import svgImage from '../../../assets/images/vector-31.svg';
 import svgImage2 from '../../../assets/images/blob-haikei.svg';
+import { useScrollTrigger } from "@mui/material";
 
 // Define the SavedAnimationsPage functional component
-function SavedAnimationsPage() {
+function SavedAnimationsPage({request}) {
     // Use the navigate hook for programmatic navigation
     const navigate = useNavigate();
+    const [savedAnimations, setSavedAnimations] = useState([]);
 
-    // Retrieve saved animations from localStorage or initialize an empty array
-    const savedAnimations = JSON.parse(localStorage.getItem('animations') || '[]');
+    // on first render, retrieve all the saved animations
+    useEffect(() => {
+        request({
+            url: "api/animation/retrieve_animations/",
+            methods: 'get'
+        })
+        .then(response => {
+            console.log(response)
+            setSavedAnimations(response.data)
+        })
+        .catch(error => {
+            console.error(error)
+        })
+    }, [])
 
-    // Function to delete the most recent animation
-    const deleteMostRecentAnimation = () => {
-        if (savedAnimations.length === 0) {
-            alert("No animations to delete.");
-            return;
-        }
+    // // Retrieve saved animations from localStorage or initialize an empty array
+    // const savedAnimations = JSON.parse(localStorage.getItem('animations') || '[]');
 
-        // Create a new array excluding the most recent animation
-        const updatedAnimations = savedAnimations.slice(0, savedAnimations.length - 1);
+    // // Function to delete the most recent animation
+    // const deleteMostRecentAnimation = () => {
+    //     if (savedAnimations.length === 0) {
+    //         alert("No animations to delete.");
+    //         return;
+    //     }
 
-        // Update the animations in localStorage
-        localStorage.setItem('animations', JSON.stringify(updatedAnimations));
+    //     // Create a new array excluding the most recent animation
+    //     const updatedAnimations = savedAnimations.slice(0, savedAnimations.length - 1);
 
-        // Refresh the page to update the UI
-        window.location.reload();
-    };
+    //     // Update the animations in localStorage
+    //     localStorage.setItem('animations', JSON.stringify(updatedAnimations));
+
+    //     // Refresh the page to update the UI
+    //     window.location.reload();
+    // };
 
     // Function to navigate to a saved animation page
-    const goToSavedAnimation = (animationId) => {
+    const goToSavedAnimation = (animationId, schemaId, animationName, query) => {
         // Navigate to the UNCompletedQuiz page with the animation ID as a parameter
-        navigate(`/uncompleted-quiz/${animationId}`);
+        navigate(`/QueryAnimationPage`, {
+            state: { schemaId: schemaId, animationName: animationName, query: query }});
     };
 
     return (
@@ -66,27 +84,12 @@ function SavedAnimationsPage() {
                             color="#98989F"
                             size={24}
                             style={{ cursor: "pointer" }}
-                            onClick={deleteMostRecentAnimation}
+                            
                         />
                     </div>
 
                     {/* Map through and display each saved animation */}
-                    {savedAnimations.map((animation, index) => (
-                        <div key={animation.id} className="animation-content_card">
-                            <div className="content-card-button-div">
-                                {/* Display animation details */}
-                                <span> {animation.name}</span>
-                                <small>Date: {animation.date}</small>
-                                <small>Time: {animation.time}</small>
-                            </div>
 
-                            {/* Navigate to the saved animation on clicking the right arrow icon */}
-                            <FaChevronRight
-                                style={{ cursor: "pointer" }}
-                                onClick={() => goToSavedAnimation(animation.id)}
-                            />
-                        </div>
-                    ))}
 
                     {/* Heading for all animations */}
                     <div className="content_heading">
@@ -98,15 +101,13 @@ function SavedAnimationsPage() {
                         <div key={animation.id} className="animation-content_card">
                             <div className="content-card-button-div">
                                 {/* Display animation details */}
-                                <span> {animation.name}</span>
-                                <small>Date: {animation.date}</small>
-                                <small>Time: {animation.time}</small>
+                                <span> {animation.animation_name} </span>
                             </div>
 
                             {/* Navigate to the saved animation on clicking the right arrow icon */}
                             <FaChevronRight
                                 style={{ cursor: "pointer" }}
-                                onClick={() => goToSavedAnimation(animation.id)}
+                                onClick={() => goToSavedAnimation(animation.id, animation.schema_id, animation.animation_name, animation.query)}
                             />
                         </div>
                     ))}

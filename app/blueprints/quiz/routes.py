@@ -7,7 +7,7 @@ from PIL import Image
 
 from . import quiz_bp
 
-from app.database.models.models import Quiz, Users, Quiz_QPA, Quiz_Question_Attempts
+from app.database.models.models import Quiz, Users, Quiz_QPA, Quiz_QuestionSet, Quiz_Question_Attempts
 from ...extensions import db
 from ..main.errors import bad_request, error_response
 
@@ -37,18 +37,8 @@ def retrieve_filtered_quiz(quiz_id):
     quiz:Quiz = Quiz.query.filter_by(id=quiz_id).first_or_404()
     return quiz.filter_quiz()
 
-def print_files(data):
-    # save schema files
-    for question in data['questions']:
-        b64data = question['schema'][0]['b64data']
-        img_type = b64data[b64data.find('/') + 1:b64data.find(';')]
-
-        img = Image.open(io.BytesIO(base64.b64decode(bytes(b64data[b64data.find(',') + 1:], 'utf-8'))))
-        img.save("app\\schema_files\\img." + img_type)
-
-            
 @quiz_bp.route("/", methods=['POST'])
-@accept('application/json', 'multipart/form-data', 'application/x-www-form-urlencoded')
+@jwt_required()
 def create_quiz():
     """
         JSON Format:
@@ -100,48 +90,37 @@ def create_quiz():
     """
     data = request.get_json() or {}
 
-    print_files(data)
-
-    return 'success', 200
-
-    # data = request.get_json() or {}
-    # quiz_name = request.form.get('quiz_name')
-
-    # # Checking if required fields present in json request
-    # if 'quiz_name' not in data or 'start_time' not in data:
-    #     return bad_request('must include quiz name, start time and user id')
+    # Field checks
+    if 'quiz_name' not in data or 'start_time' not in data or 'description' not in data:
+        return bad_request('must include quiz_name, description, start_time in request object')
     
-    # # retrieve the user ID
-    # email = get_jwt_identity()
-    # user:Users = Users.query.filter_by(email=email).first_or_404()
+    # retrieve user ID
+    email = get_jwt_identity()
+    user:Users = Users.query.filter_by(email=email).first_or_404()
 
-    # # Create new response
-    # quiz = None
-    # quiz:Quiz = Quiz(name = data['quiz_name'], 
-    #                  description = data['description'],
-    #                  userid = user.id)
+    # Create Quiz header 
+    quiz:Quiz = Quiz(name=data['quiz_name'],
+                     description=data['description'],
+                     userid = user.id)
+    quiz.add_time(data['start_time'])
     
-    # quiz.add_time(data['start_time'])
-    # db.session.add(quiz)
-    # db.session.commit()
-    
-    # if 'questions' in data:
-    #     quiz.add_questions(data['questions'])
+    db.session.add(quiz)
+    db.session.commit()
 
-    # if 'filters' in data:
-    #     quiz.add_filters(data['filters'])
+    # if questions present
+    if 'questionList' in data:
+        quiz.add_questions(data['questionList'])
 
-    # # Handle the 'schema' field if it's present
-    # if 'schema' in data:
-    #     pass
+    if 'filters' in data:
+        quiz.add_filters(data['filters'])
 
     # # Create response and add quiz object
-    # response = jsonify(quiz.to_dict())
-    # response.status_code = 201
+    response = jsonify(quiz.to_dict())
+    response.status_code = 201
 
-    # # Set Location header to new resource
-    # response.headers['Location'] = url_for('quiz.retrieve_quiz', quiz_id=quiz.id)
-    # return response
+    # Set Location header to new resource
+    response.headers['Location'] = url_for('quiz.retrieve_quiz', quiz_id=quiz.id)
+    return response
     
 @quiz_bp.route("/add-question/", methods=['PUT'])
 @jwt_required()

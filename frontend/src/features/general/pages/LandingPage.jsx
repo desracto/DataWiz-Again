@@ -160,7 +160,7 @@ function LandingPage() {
                 </div>
                 {/* About Us Button */}
                 <div className="AboutUsButtonCont">
-                    <Link to="/AboutUsPage" className="AboutUsButton">
+                    <Link to="/about-usPage" className="AboutUsButton">
                         <div className="ButtonText">About Us</div>
                     </Link>
                 </div>

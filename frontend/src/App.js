@@ -54,14 +54,18 @@ function App() {
                     <Route path="/ResetPasswordPage" element={<ResetPassword />} />
                     <Route path="/AnimationIntroductionPage" element={<AnimationIntroductionPage />} />
                     <Route path="/SchemaSelectionPage" element={<SchemaSelectionPage />} />
-                    <Route path="/QueryAnimationPage" element={<QueryAnimationPage />} />
-                    <Route path="/SavedAnimationsPage" element={<SavedAnimationsPage />} />
+                    <Route path="/QueryAnimationPage" element={<QueryAnimationPage request={request} />} />
+                    <Route path="/SavedAnimationsPage" element={<SavedAnimationsPage request={request}/>} />
                     <Route path="/AccountSettingsPage" element={<AccountSettingsPage request={request} />} />
                     <Route path="/FaqsPage" element={<FaqsPage />} />
-                    <Route path="/AboutUs" element={<AboutUsPage />} />
+                    <Route path="/about-us" element={<AboutUsPage />} />
 
 
                     <Route path="/instructor/home/" element={<InstructorHomePage />} />
+
+                    {/* Animation Module Routes */}
+                    
+                    {/* Animation Module Routes */}
 
                     {/* Quiz Module Routes */}
                     <Route path="/instructor/quiz/home/" element={<QuizzesIntroductionPage />} />

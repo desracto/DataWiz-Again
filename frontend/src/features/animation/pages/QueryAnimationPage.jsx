@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import SecondHeader from '../../../global_components/SecondHeader';
 import SchemaTable from '../components/SchemaTable';
 import QueryTable from '../components/QueryTable';
@@ -10,25 +10,22 @@ import "./QueryAnimationPage.css";
 // Import SVG images 
 import svgImage from '../../../assets/images/vector-31.svg';
 import svgImage2 from '../../../assets/images/blob-haikei.svg';
-
-// Create an Axios instance for making API requests
-const request = axios.create({
-    baseURL: "http://localhost:5000",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    withCredentials: true,
-    timeout: 300000
-});
+import Cookies from 'js-cookie';
 
 // Define the QueryAnimationPage functional component
-const QueryAnimationPage = () => {
+const QueryAnimationPage = ({request}) => {
     // Hooks for managing state and routing
     const location = useLocation();
     const [query, setQuery] = useState('');
     const [queryResults, setQueryResults] = useState(null);
     const [querySteps, setQuerySteps] = useState(null);
+    const [animationName, setAnimationName] = useState(null);
+
+    const [selectedSchema, setSelectedSchema] = useState();
+    const [schemaId, setSchemaId] = useState();
+
     const navigate = useNavigate();
+
 
     // State variables to track query execution and data availability
     const [queryExecuted, setQueryExecuted] = useState(false);
@@ -38,9 +35,67 @@ const QueryAnimationPage = () => {
         navigate("/SchemaSelectionPage");
     }, [navigate]);
 
+    const loadSchema = async (schemaId) => {
+        try {
+            // Make an API request to fetch schema data based on schema ID
+            const response = await axios.get("http://localhost:5000/api/animation/schema/" + schemaId);
+            const data = response.data.results;
+
+            // Extract selected schema data based on the mapping
+            const selectedSchemaData = Array.isArray(schemaIdToProperty[schemaId])
+                ? schemaIdToProperty[schemaId].map(table => data[table])
+                : [data[schemaIdToProperty[schemaId]]];
+
+            // Update state with selected schema data and ID
+            setSelectedSchema(selectedSchemaData);
+
+            console.log('Selected Schema:', selectedSchemaData);
+        } catch (error) {
+            console.error('Error fetching schema:', error);
+        }
+    };
+
     // Extract selected schema and schemaId from location.state
-    const selectedSchema = location.state ? location.state.selectedSchema : null;
-    const schemaId = location.state ? location.state.schemaId : null;
+    // on first render only
+    useEffect(() => {
+        setSelectedSchema(location.state ? location.state.selectedSchema : null);
+        setSchemaId(location.state ? location.state.schemaId : null);
+
+    }, []);
+
+    useEffect(() => {
+        if (!selectedSchema && schemaId !== null) {
+            // Use the callback form of setSchemaId to make sure you're working with the latest state
+            setSchemaId(prevSchemaId => {
+                loadSchema(prevSchemaId);
+                console.log(prevSchemaId);
+                return prevSchemaId;
+            });
+        }
+    }, [selectedSchema, schemaId]);
+    
+    const handleSaveAnimation = () => { 
+        const data = {
+            animation_name: animationName,
+            query: query,
+            schema_id: schemaId
+        }
+
+        request({
+            url: "api/animation/save-animation/",
+            method: 'post',
+            headers: {
+                'X-CSRF-TOKEN': Cookies.get("csrf_access_token")
+            },
+            data: data
+        })
+        .then(response => {
+            console.log(response)
+        })
+        .catch(error => {
+            console.error(error)
+        })
+    }
 
     // Event handler for handling the Enter key in the query input
     const handleEnterKey = (e) => {
@@ -155,6 +210,7 @@ const QueryAnimationPage = () => {
                             className="AnimationNameTextbox"
                             type="text"
                             placeholder="Animation 1"
+                            onChange={(e) => setAnimationName(e.target.value)}
                         />
                     </div>
                     {/* Return to Schema Selection Button */}
@@ -200,7 +256,8 @@ const QueryAnimationPage = () => {
                 </div>
                 {/* Down and Save Button Container */}
                 <div className='DownAndSaveButtonContainer'>
-                    <button className='SaveAniButton'>
+                    <button className='SaveAniButton'
+                            onClick={handleSaveAnimation}>
                         SAVE ANIMATION
                     </button>
                     <button className='DownPDFButton'>

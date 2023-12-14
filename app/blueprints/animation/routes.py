@@ -1,8 +1,10 @@
 from app.blueprints.animation import animation_bp
 
 from flask import jsonify, request
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from ...extensions import db
+
+from ...database.models.models import Users, Animation
 
 from ..main.errors import bad_request, error_response
 from .scripts.generator import generate_prefixed
@@ -162,3 +164,44 @@ def animate_query():
     
     # Return the steps_result as JSON
     return jsonify(query_results)
+
+@animation_bp.route("/retrieve_animations/", methods=['GET'])
+@jwt_required()
+def retrieve_animations():
+    # retrieve user
+    user:Users = Users.query.filter_by(email=get_jwt_identity()).first_or_404()
+    return user.retrieve_animations()
+
+@animation_bp.route("/retrieve_animation/<animation_id>/", methods=['GET'])
+@jwt_required()
+def retrieve_animation(animation_id):
+    animation:Animation = Animation.query.get_or_404(ani_id = animation_id)
+    return animation.to_dict()
+
+@animation_bp.route("/save-animation/", methods=['POST'])
+@jwt_required()
+def save_animation():
+    data = request.get_json() or {}
+    
+    # field check
+    if 'animation_name' not in data or 'query' not in data or 'schema_id' not in data:
+        return bad_request('must include animation_name and query')
+    
+    # get user
+    email = get_jwt_identity()
+    user:Users = Users.query.filter_by(email=email).first_or_404()
+    
+    # create animation object
+    animation = Animation(userid = user.id,
+                          animation_name = data['animation_name'],
+                          query = data['query'],
+                          schema_id = data['schema_id']
+                          )
+    
+    db.session.add(animation)
+    db.session.commit()
+    
+    response = jsonify(animation.to_dict())
+    response.status_code = 201
+    
+    return response

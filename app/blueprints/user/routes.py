@@ -207,15 +207,18 @@ def update_user():
 
 @user_bp.route('/delete-account', methods=['DELETE'])
 @jwt_required()
-def delete_user(username:str):
+def delete_user():
     """
         delete_user fetches a user using their ``username`` and 
         deletes the resource from the database.
         Also logs out user
     """
+
+    email = get_jwt_identity()
+
     # Deletes user resource from database
     try:
-        user:Users = Users.query.filter_by(username=username).first()
+        user:Users = Users.query.filter_by(email=email).first()
         db.session.delete(user)
         db.session.commit()
     except Exception as e:
