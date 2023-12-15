@@ -26,6 +26,7 @@ yarn-error.log*
 # python
 **/__pycache__/
 
+/frontend/build
 
 # vscode
 .vscode

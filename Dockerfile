@@ -1,11 +1,8 @@
 # Use an official Node.js runtime as a base image
-FROM node:18
+FROM node:latest AS builder
 
 # Set the working directory inside the container to /frontend
 WORKDIR /frontend
-
-# Set more permissive permissions (example)
-RUN chmod -R 777 /frontend
 
 # Copy package.json and yarn.lock to the working directory
 COPY frontend/package.json .
