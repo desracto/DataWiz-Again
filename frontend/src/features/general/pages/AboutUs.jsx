@@ -16,6 +16,14 @@ import svgImage2 from '../../../assets/images/blob-haikei.svg';
 
 const AboutUsPage = () => {
 
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            bottom: 0,
+            behavior: 'instant'
+        })
+    })
+
     const animationData = [
         { image: SchemaSelection, title: "Schema Selection for Query Animation", text: "Embark on your SQL learning adventure by choosing from a diverse set of schemas. Craft your query, and witness the magic as DataWiz animates the intricate steps taken within the database to reach the final result. Select, query, animate, and grasp SQL concepts visually and interactively." },
         { image: Animation, title: "Query Animation", text: "Explore the intricate steps behind SQL queries with our Query Animation. Select from a range of schemas, craft your query, and witness a captivating animation that unveils how the database processes your query to derive the final result. An interactive and visual learning experience like never before." },

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./AboutUs.css";
 import AboutUsHeroImg from "../../../assets/images/AboutUsHeroImg.jpg";
 import AboutUsGlobe from "../../../assets/images/AboutUs-Globe.png";
@@ -15,6 +15,14 @@ import svgImage from '../../../assets/images/vector-31.svg';
 import svgImage2 from '../../../assets/images/blob-haikei.svg';
 
 const AboutUsPage = () => {
+
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            bottom: 0,
+            behavior: 'instant'
+        })
+    })
 
     const animationData = [
         { image: SchemaSelection, title: "Schema Selection for Query Animation", text: "Embark on your SQL learning adventure by choosing from a diverse set of schemas. Craft your query, and witness the magic as DataWiz animates the intricate steps taken within the database to reach the final result. Select, query, animate, and grasp SQL concepts visually and interactively." },
