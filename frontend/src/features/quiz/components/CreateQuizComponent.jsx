@@ -147,8 +147,10 @@ function CreateQuizComponent({ request, defaultQuiz, title, isEdit, id }) {
                 })
             })
 
-            {isEdit ? quiz.id = id : null}
-
+            if (isEdit) {
+                quiz.id = id;
+            }
+              
             Promise.all(promises)
                 .then(() => {
                     return request({
