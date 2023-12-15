@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./AboutUs.css";
 import AboutUsHeroImg from "../../../assets/images/AboutUsHeroImg.jpg";
 import AboutUsGlobe from "../../../assets/images/AboutUs-Globe.png";
