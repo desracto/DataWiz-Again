@@ -2,6 +2,8 @@ import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './assets/global.css';
 
+import TestPage from '../src/features/quiz/pages/TestPage'
+
 // General Pages Imports
 import LandingPage from './features/general/pages/LandingPage'
 import SignUpPage from './features/signup/pages/SignUpPage';
@@ -46,10 +48,10 @@ function App() {
         <div>
             <BrowserRouter>
                 <Routes>
-                    <Route index element={<LandingPage />} /> {/* Root URL when the app is accessed*/}
+                    <Route index element={<LandingPage request={request}/>} /> {/* Root URL when the app is accessed*/}
 
                     {/* Routes accessible to both both students and instrcutors*/}
-                    <Route path="/LandingPage" element={<LandingPage />} />
+                    <Route path="/LandingPage" element={<LandingPage request={request}/>} />
                     <Route path="/SignUpPage" element={<SignUpPage />} />
                     <Route path="/LoginPage" element={<LoginPage />} />
                     <Route path="/ResetPasswordPage" element={<ResetPassword />} />
@@ -86,6 +88,7 @@ function App() {
 
 
                     {/* Quiz Module Routes */}
+                    <Route path="/test-page/:id/" element={<TestPage request={request}/>} />
 
                     
 

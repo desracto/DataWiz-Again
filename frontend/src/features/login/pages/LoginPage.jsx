@@ -71,18 +71,23 @@ const LoginPage = () => {
             }
 
         }).catch(error => {
-            console.error(error.response.data);
-
-            // Handling different error scenarios
-            if (error.response.data.message === "INEP01") {
-                setEmailError("");
-                setPasswordError("Incorrect Email or Password");
-            } else if (error.response.data.message === "ACNF01") {
-                setEmailError("Account Not Found");
-                setPasswordError("");
-            } else {
-                setEmailError("");
-                setPasswordError("");
+            console.error(error);
+            if (!error?.response)
+            {
+                console.error("No server response")
+            }
+            else{
+                // Handling different error scenarios
+                if (error.response.data.message === "INEP01") {
+                    setEmailError("");
+                    setPasswordError("Incorrect Email or Password");
+                } else if (error.response.data.message === "ACNF01") {
+                    setEmailError("Account Not Found");
+                    setPasswordError("");
+                } else {
+                    setEmailError("");
+                    setPasswordError("");
+                }
             }
         })
     };

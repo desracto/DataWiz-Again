@@ -2,7 +2,7 @@ import React from "react";
 import { FaChevronRight, FaSlash, FaTrash } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
-import "./SavedQuizzes.css";
+import "../styles/SavedQuizzes.css";
 import UNCompletedQuiz from "./CompletedQuizPage.jsx"
 import SecondHeader from '../../../global_components/SecondHeader';
 import Footer from '../../../global_components/Footer';

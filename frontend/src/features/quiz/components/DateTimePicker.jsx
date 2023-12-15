@@ -24,6 +24,7 @@ export default function DateTimePickerValue({ quizStartTime, onChange }) {
                 <DateTimePicker
                     onChange={onChange} // Callback for value changes
                     slotProps={{ textField: { size: 'large' } }}
+                    defaultValue={value}
                 />
             </DemoContainer>
         </LocalizationProvider>

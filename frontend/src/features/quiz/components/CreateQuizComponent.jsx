@@ -13,12 +13,7 @@ import Cookies from "js-cookie";
 
 
 
-function CreateQuizComponent({ request }) {
-
-
-
-    var reader = new FileReader();
-
+function CreateQuizComponent({ request, defaultQuiz, title, isEdit, id }) {
     const [quizName, setQuizName] = useState();
     const [isQuizNameEmpty, setQuizNameStatus] = useState(true);
 
@@ -26,7 +21,6 @@ function CreateQuizComponent({ request }) {
     const [isQuizDescriptionEmpty, setQuizDescriptionStatus] = useState(true);
 
     const [files, setFiles] = useState([]);
-    const [filesBlob, setFilesBlob] = useState([]);
     const [questionList, setQuestionList] = useState([]);
 
     const [isQuizQuestionsEmpty, setQuizQuestionsStatus] = useState(true)
@@ -34,6 +28,23 @@ function CreateQuizComponent({ request }) {
     const [quizStartTime, setQuizStartTime] = useState(dayjs(format(new Date(), "DD/MM/YYYY - HH:mm:ss"), "DD/MM/YYYY - HH:mm:ss"));
 
     const isDebug = true 
+
+    useEffect(() => {
+        {/* On Page Load */}
+        if (defaultQuiz !== undefined)
+        {
+            setQuizName(defaultQuiz?.quizName)
+            setQuizDescription(defaultQuiz?.description)
+
+            if (defaultQuiz?.start_time)
+            {
+                setQuizStartTime(dayjs(defaultQuiz.start_time, 'DD/MM/YYYY - HH:mm:ss'))
+               
+            }
+
+            setQuestionList(defaultQuiz?.questionLists)
+        }
+    }, [])
 
     {/* Pop-up handlers */}
         const [showFilterPopUp, setFilterShow] = useState(false)
@@ -46,13 +57,6 @@ function CreateQuizComponent({ request }) {
         const closeFilters = useCallback(() => {
             setFilterShow(false)
         })
-
-        useEffect(() => {
-            if (isDebug) 
-            {
-                console.log(showFilterPopUp)
-            }
-        }, [showFilterPopUp])
     {/* Pop-up handlers */}
 
     {/* Dropzone Hook */ }
@@ -67,7 +71,6 @@ function CreateQuizComponent({ request }) {
             })
         }
         
-
         // Dropzone callback functions
         // onDrop -> called when a user manually drags and drops a file
         const onDrop = useCallback((acceptedFiles) => {
@@ -78,7 +81,7 @@ function CreateQuizComponent({ request }) {
                     ...previousFiles,
                     ...acceptedFiles.map(file => {
                         Object.assign(file, { preview: URL.createObjectURL(file) })
-                        Object.assign(file, { b64data: getBase64(file).then(result => {return result}) })
+                        Object.assign(file, { b64data_Promise: getBase64(file).then(result => {return result}) })
                         return file
                     }
                     )
@@ -117,22 +120,6 @@ function CreateQuizComponent({ request }) {
             }
         }, [questionList])
 
-        // print quiz name
-        useEffect(() => {
-            if (isDebug)
-            {
-                console.log(quizName)
-            }
-        }, [quizName])
-
-        // print quiz description 
-        useEffect(() => {
-            if (isDebug)
-            {
-                console.log(quizDescription)
-            }
-        }, [quizDescription])
-
         // print quiz start time
         useEffect(() => {
             if (isDebug) 
@@ -143,7 +130,6 @@ function CreateQuizComponent({ request }) {
 
         useEffect(() => {
             console.log(files)
-            console.log(filesBlob)
         }, [files])
 
         const handleFormSubmit = (e) => {
@@ -156,16 +142,18 @@ function CreateQuizComponent({ request }) {
             }
 
             const promises = quiz.questionList.map((question, index) => {
-                question.schema[0].b64data.then(result => {
+                question.schema[0]?.b64data_Promise?.then(result => {
                     quiz.questionList[index].schema[0].b64data = result
                 })
             })
 
+            {isEdit ? quiz.id = id : null}
+
             Promise.all(promises)
                 .then(() => {
                     return request({
-                        url: "api/quiz/",
-                        method: "post",
+                        url: isEdit ? "api/quiz/edit-quiz/" : "api/quiz/",
+                        method:  isEdit ? "put" : "post" ,
                         data: quiz,
                         headers:{
                             'X-CSRF-TOKEN': Cookies.get('csrf_access_token')
@@ -268,9 +256,9 @@ function CreateQuizComponent({ request }) {
         {/* Filter Pop-up */}
             const [filters, setFilters] = useState(
                 {
-                    'additional_data': false,
-                    'spell_check': false,
-                    'matching_joins': false
+                    'additional_data': defaultQuiz?.filters?.additional_data ? defaultQuiz.filters.additional_data : false,
+                    'spell_check': defaultQuiz?.filters?.spell_check ? defaultQuiz.filters.spell_check : false,
+                    'matching_joins': defaultQuiz?.filters?.matching_joins ? defaultQuiz.filters.matching_joins : false
                 }
             )
         
@@ -297,7 +285,7 @@ function CreateQuizComponent({ request }) {
                 <div className={styles.create_quiz_container}>
                     <div className={styles.header_container}>
                         {/* Create Quiz Title */}
-                        <div className={styles.create_quiz_title}>Create Quiz</div>
+                        <div className={styles.create_quiz_title}>{title}</div>
                         {/* Create Quiz Title */}
 
                         <div className={styles.buttons}>
@@ -324,7 +312,8 @@ function CreateQuizComponent({ request }) {
                         <label className={styles.quiz_name_title}>Enter Quiz Name</label>
                         <input  className={`${styles.input} ${isQuizNameEmpty ? "" : ""}`}
                                 placeholder="Enter Quiz Name"
-                                onChange={(e) => {setQuizName(e.target.value)}}                                
+                                onChange={(e) => {setQuizName(e.target.value)}}
+                                defaultValue={defaultQuiz?.quiz_name ? defaultQuiz.quiz_name : null}                                
                         />
                     </div>
                     {/* Quiz Name */}
@@ -339,6 +328,7 @@ function CreateQuizComponent({ request }) {
                                       rows={5}
                                       style={{resize: "none"}} 
                                       onChange={(e) => {setQuizDescription(e.target.value)}}
+                                      defaultValue={defaultQuiz?.description ? defaultQuiz.description : null}
                             />
                         </div>
                     {/* Quiz Start and end time */}
@@ -357,7 +347,6 @@ function CreateQuizComponent({ request }) {
                     </div>
 
                     {/* Quiz Start and end time */}
-
                     {questionList.map((question, index) => (
                         <div className={styles.question} key={index}>
 
@@ -409,7 +398,7 @@ function CreateQuizComponent({ request }) {
                                                     </span>
 
                                                     <button className={styles.schema_box_browse_button}
-                                                        onClick={(e) => { e.preventDefault(); open(); }} >
+                                                        onClick={(e) => { e.preventDefault();}} >
                                                         Browse
                                                         <MdOutlineAddCircleOutline
                                                             className="ml-3"
@@ -427,20 +416,25 @@ function CreateQuizComponent({ request }) {
 
                                     ) : question.schema.length === 1 ? (
                                         <div className={styles.uploaded_schema_section}>
-
-                                            <div className={styles.display_schema_section}>
-                                                <img src={question.schema[0].preview}
-                                                    className={styles.schema_image}
-                                                />
-                                            </div>
-
+                                            {question?.schema[0]?.preview ? (
+                                                <div className={styles.display_schema_section}>
+                                                    <img src={question.schema[0].preview}
+                                                        className={styles.schema_image}
+                                                    />
+                                                </div>
+                                            ) : question?.schema[0] ? (
+                                                <div className={styles.display_schema_section}>
+                                                    <img src={question.schema[0]}
+                                                        className={styles.schema_image}
+                                                    />
+                                                </div>
+                                            ): null}
                                             <button className={styles.delete_schema_image}
                                                     onClick={(e) => {e.preventDefault(); handleSpecificSchemaDelete(index); }}>
 
                                                 Delete Schema Image
                                             </button>
                                         </div>
-
 
                                     ) : null}
                                 </div>
@@ -509,6 +503,13 @@ function CreateQuizComponent({ request }) {
                             onClick={(e) => { handleAddingSchema(); e.preventDefault(); }}>
                             Add new schema
                         </button>
+
+                        {isEdit ?  (
+                            <button className={styles.generate_link}
+                                onClick={(e) => { e.preventDefault(); }}>
+                                Generate Link
+                            </button>
+                        ) : null}
 
 
                     </div>

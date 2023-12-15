@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import "./QuizAttemptTemplate.css";
+import "../styles/QuizAttemptTemplate.css";
 import pdfimg from "../../../assets/images/pdf.png";
 import schemaImg from "../../../assets/images/image-14@2x.png";
 import SubmitQuiz from "../components/SubmitQuizPopup";

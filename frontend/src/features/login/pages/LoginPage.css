@@ -232,6 +232,11 @@ body {
     font-family: Gilroy-Bold;
 }
 
+.SVG-CONTAINER {
+    width: 100vw;
+    overflow: hidden;
+}
+
 .svg-background {
     position: absolute;
     right: -40%;

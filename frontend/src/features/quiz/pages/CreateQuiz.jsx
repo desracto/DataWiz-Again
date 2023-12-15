@@ -6,7 +6,7 @@ import SecondHeader from "../../../global_components/SecondHeader";
 
 import svgImage from '../../../assets/images/vector-31.svg';
 import svgImage2 from '../../../assets/images/blob-haikei.svg';
-import styles from '../pages/CreateQuiz.module.css';
+import styles from '../styles/CreateQuiz.module.css';
 
 
 function CreateQuiz({ request }) {
@@ -25,7 +25,7 @@ function CreateQuiz({ request }) {
             </div>
 
             <div className={styles.page_content_component}>
-                <CreateQuizComponent request={request}/>
+                <CreateQuizComponent request={request} title={'Create Quiz'}/>
             </div>
         </div>
     )

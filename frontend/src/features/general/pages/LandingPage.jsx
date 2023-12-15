@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom";
@@ -22,8 +22,26 @@ import NihalImage from '../../../assets/images/NihalChar.png';
 import svgImage from '../../../assets/images/vector-31.svg';
 import svgImage2 from '../../../assets/images/blob-haikei.svg';
 
+function LandingPage({request}) {
 
-function LandingPage() {
+    const [isServerRunning, changeServerStatus] = useState(false)
+
+    // check if API enabled and running
+    useEffect(() => {
+        request({
+            url: "api/main/are-you-running/",
+            method: 'post'
+        })
+        .then(res => {
+            changeServerStatus(true)
+        })
+        .catch(error => {
+            if (!error?.response) {
+                changeServerStatus(false)
+            }
+        })
+    }, [])
+
     return (
         <>
             {/* Header Component */}
@@ -48,13 +66,19 @@ function LandingPage() {
                     </div>
 
                     {/* Sign Up and Login Buttons */}
-                    <div className="SignupAndLoginButtons">
+                    <div className={`SignupAndLoginButtons ${isServerRunning ? '' : 'server_disabled'}`}>
                         <Link to="/LoginPage" className="LoginButton">
-                            <div className="ButtonText">Login</div>
-                        </Link>
+                            <div className="ButtonText"
+                                 title={isServerRunning ? '' : 'Currently Disabled. Server not active'}>
+                                    Login
+                            </div>
+                        </Link> 
 
                         <Link to="/SignUpPage" className="SignUpButton">
-                            <div className="ButtonText">Sign Up</div>
+                            <div className="ButtonText"
+                                 title={isServerRunning ? '' : 'Currently Disabled. Server not active'}>
+                                    Sign Up
+                            </div>
                         </Link>
                     </div>
 

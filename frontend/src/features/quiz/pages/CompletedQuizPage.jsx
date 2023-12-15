@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import "./CompletedQuizPage.css";
+import "../styles/CompletedQuizPage.css";
 import pdfimg from "../../../assets/images/pdf.png";
 import schemaImg from "../../../assets/images/employee schema.png";
 import GeneratedQuizLinkComp from "../components/GeneratedQuizLink";

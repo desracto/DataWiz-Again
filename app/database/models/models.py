@@ -5,6 +5,7 @@ import datetime
 from sqlalchemy import types
 import io, base64
 from PIL import Image
+from flask import url_for
 
 
 from ...extensions import db
@@ -95,7 +96,7 @@ class Quiz(db.Model):
 
     question_sets = db.relationship('Quiz_QuestionSet', back_populates='quiz')
 
-    questions = db.relationship('Quiz_QPA', back_populates='quiz')
+    questions = db.relationship('Quiz_QPA', back_populates='quiz') # try not to use this
     filters = db.relationship('Filters', back_populates='quiz')
 
     # Functions
@@ -188,40 +189,38 @@ class Quiz(db.Model):
     def from_dict(self, data: dict):
         fields = ['quiz_name', 'description']
 
+        # changing quiz name and description
         for field in fields:
             if field in data:
                 setattr(self, field, data[field])
-
-        if 'questions' in data:
-            #[{"qaid": qaid, "problem": problem, "answer": answer}]
-            for question in data['questions']:
-                question_obj:Quiz_QPA = Quiz_QPA.query.get_or_404(question['qaid'])
-                question_obj.from_dict(question)
-
-                db.session.add(question_obj)    
-            db.session.commit()
-
+        
+        # changing start time
         if 'start_time' in data:
+            print("Changing time....")
             self.add_time(data['start_time'])
+
+        # changing question lists
+        if 'questionList' in data:
+            print("Changing Question Lists....")
+            self.edit_questionSet(data['questionList'])
 
         return self
 
     # Dictionary converter Methods
     def to_dict(self):
 
-        questions = list(self.questions)
-        for i in range(len(questions)):
-            questions[i] = questions[i].to_dict()
-
-        if len(questions) > 0:
-            questions = Quiz.sort_questions(questions)
+        question_sets = list(self.question_sets)
+        questionLists = []
+        
+        for i in range(len(question_sets)):
+            questionLists.append(question_sets[i].to_dict())            
             
         data = {
             "id": self.id,
             "quiz_name": self.name,
             "start_time": self.get_time(),
             "userid": self.user.id,
-            "questions": questions,
+            "questionLists": questionLists,
             "description": self.description,
             "link_generated": self.link_generated
         }
@@ -325,6 +324,94 @@ class Quiz(db.Model):
         
         return self.to_dict()
     
+    def edit_questionSet(self, questionSets: list):
+        for qSet in questionSets:
+            print("Chaninging question Set...")
+            
+            existing = False
+            questionSet = None
+            # if existing question, retrieve ID
+            if 'questionSet_ID' in qSet:
+                questionSet:Quiz_QuestionSet = Quiz_QuestionSet.query.get(qSet['questionSet_ID'])
+                print('Existing Set Detected: {}'.format(questionSet.id))
+            else:
+                questionSet:Quiz_QuestionSet = Quiz_QuestionSet(quizID = self.id)
+                db.session.add(questionSet)
+                db.session.commit()
+
+            if not questionSet:
+                raise Exception("QUESTION SET OBJECT NOT DEFINED")
+
+            # changing schema
+            if 'b64data' in qSet['schema'][0]:
+                print("New Schemas Detected. Changing....")
+                
+                # New schema present
+                b64data = qSet['schema'][0]['b64data']
+                img_type = b64data[b64data.find('/') + 1:b64data.find(';')]
+
+                img = Image.open(io.BytesIO(base64.b64decode(bytes(b64data[b64data.find(',') + 1:], 'utf-8'))))
+                
+                # save image using <quiz.id>_<questionSet.id>.<img_type>
+                img.save("app\\schema_files\\{}_{}.{}".format(self.id, questionSet.id, img_type))
+                
+                questionSet.schema = "{}_{}.{}".format(self.id, questionSet.id, img_type)
+                
+            # changing questions
+            for question in qSet['questions']:
+                print("Changing question...")
+                
+                existing = False
+                question_obj:Quiz_QPA = Quiz_QPA()
+                # if existing question
+                if 'qaid' in question:
+                    question_obj:Quiz_QPA = Quiz_QPA.query.get(question['qaid'])
+                    print("Existing question detected: {}".format(question_obj.qaid))
+                    existing = True
+
+                # Change all fields according to keys
+                if 'question_number' in question:
+                    question_obj.question_number = question['question_number']
+                if 'problem' in question:
+                    question_obj.problem = question['problem']
+                if 'answer' in question:
+                    question_obj.answer = question['answer']
+                
+                if not existing:
+                    # set the quiz id, qaid is automatically generated
+                    question_obj.quiz_id = self.id
+                    question_obj.questionSetID = questionSet.id
+                
+                # add question changes to session
+                try:
+                    print("Added changes to question to db session...")
+                    db.session.add(question_obj)
+                except:
+                    db.session.rollback()
+                    raise
+                
+            # if the qSet doesn't exist, set the quizID
+            if not existing:
+                questionSet.quizID = self.id
+        
+            # add qSet changes at the end of loop
+            try:
+                print("Added changes to question Set to db session...")
+                db.session.add(questionSet)
+            except:
+                db.session.rollback()
+                raise
+        
+        try:
+            print('Pushing Changes....')
+            db.session.commit()
+        except:
+            db.session.rollback()
+            raise
+    
+        print("Sucessfully Changed Question Sets for {}".format(self.id))
+
+    # unused
     def edit_question(self, edited_questions: list):
         """
             edited_question = [
@@ -449,6 +536,23 @@ class Quiz_QuestionSet(db.Model):
     quiz = db.relationship('Quiz', back_populates='question_sets')
     questions = db.relationship('Quiz_QPA', back_populates='question_set')
     
+    # Functions
+    def __repr__(self):
+        return "<Quiz_QuestionSet Quiz: {}, ID: {}>".format(self.quizID, self.id)
+    
+    def to_dict(self):
+        data = {}
+        data['schema'] = [url_for('quiz.retrieve_schema', img_name=self.schema, _external=True)]
+        data['questions'] = []
+        data['questionSet_ID'] = self.id
+        data['quizID'] = self.quizID
+        
+        questions = self.questions
+        for question in questions:
+            data['questions'].append(question.to_dict())
+            
+        return data
+                        
 
 class Quiz_QPA(db.Model):
     # Table name

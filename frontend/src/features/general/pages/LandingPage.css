@@ -452,3 +452,9 @@
     transition: background 0.3s ease;
 }
 
+.server_disabled{
+    opacity: 0.5;
+    pointer-events: none;
+    
+}
+

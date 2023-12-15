@@ -1,4 +1,4 @@
-from flask import request, jsonify, url_for
+from flask import request, jsonify, url_for, send_file
 from datetime import datetime
 import urllib.request as requests
 from flask_accept import accept
@@ -288,17 +288,25 @@ def edit_quiz():
             "quiz_name": quiz_name,
             "start_time": start_time,
             "description": description,
-            "questions": [
+            "questionLists": [
                 {
-                    "problem": problem,
-                    "answer": answer,
-                    "qaid": qaid,
-                },
-                {
-                    "problem": problem,
-                    "answer": answer,
-                    "qaid": qaid,
-                }
+                    "schema": [Binary Data] / [URL Preview],
+                    "questions": [                
+                        {
+                                "problem": problem,
+                                "answer": answer,
+                                "qaid": qaid,
+                                "question_number": question_number
+                            },
+                            {
+                                "problem": problem,
+                                "answer": answer,
+                                "qaid": qaid,
+                                "question_number": question_number
+                            }
+                        ]
+                }...
+
             ]
         }
     """
@@ -443,5 +451,7 @@ def retrieve_user_response():
         "quiz_responses": quiz_responses
     })
 
-
+@quiz_bp.route('/retrieve-schema/<img_name>')
+def retrieve_schema(img_name):
+    return send_file('schema_files\\{}'.format(img_name))
 
