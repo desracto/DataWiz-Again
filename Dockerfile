@@ -11,12 +11,11 @@ RUN chmod -R 777 /frontend
 COPY frontend/package.json .
 COPY frontend/yarn.lock .
 
-
 # Install dependencies
 RUN yarn install
 
 # Copy the rest of the application code to the working directory
-COPY . .
+COPY . ./
 
 # Run yarn build
 RUN yarn build
