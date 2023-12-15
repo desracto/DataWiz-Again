@@ -1,20 +1,23 @@
-# Use the official Python image as the base image
-FROM python:3.12-slim
+# Use an official Node.js runtime as a base image
+FROM node:14
 
-# Set the working directory
-WORKDIR /app
+# Set the working directory inside the container to /app/frontend
+WORKDIR /app/frontend
 
-# Copy the requirements file into the container
-COPY requirements.txt .
+# Copy package.json and yarn.lock to the working directory
+COPY package.json .
+COPY yarn.lock .
 
-# Install the required Python packages
-RUN /venv/Scripts/activate 
+# Install dependencies
+RUN yarn install
 
-# Copy the rest of the application code into the container
+# Copy the rest of the application code to the working directory
 COPY . .
 
-# Expose the port that your Flask app listens on
-EXPOSE 5000
+# Run yarn build
+RUN yarn build
 
-# Start the Flask app
-CMD ["python", "datawiz_api.py"]
+# Your additional configuration or steps go here
+
+# Command to start your application, if applicable
+CMD [ "yarn", "start" ]

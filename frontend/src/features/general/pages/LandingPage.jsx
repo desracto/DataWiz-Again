@@ -22,7 +22,6 @@ import NihalImage from '../../../assets/images/NihalChar.png';
 import svgImage from '../../../assets/images/vector-31.svg';
 import svgImage2 from '../../../assets/images/blob-haikei.svg';
 
-
 function LandingPage() {
     return (
         <>
@@ -49,11 +48,15 @@ function LandingPage() {
 
                     {/* Sign Up and Login Buttons */}
                     <div className="SignupAndLoginButtons">
-                        <Link to="/LoginPage" className="LoginButton">
+                        <Link to="/LoginPage" className="LoginButton"
+                              onClick={(e) => {e.preventDefault()}} 
+                              title="Currently Disabled. Server Not Running">
                             <div className="ButtonText">Login</div>
                         </Link>
 
-                        <Link to="/SignUpPage" className="SignUpButton">
+                        <Link to="/SignUpPage" className="SignUpButton"
+                              onClick={(e) => {e.preventDefault()}} 
+                              title="Currently Disabled. Server Not Running">
                             <div className="ButtonText">Sign Up</div>
                         </Link>
                     </div>

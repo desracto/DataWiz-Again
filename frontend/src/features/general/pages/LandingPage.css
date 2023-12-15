@@ -76,11 +76,11 @@
 .LoginButton {
     width: 310px;
     height: 40px;
-    background: #FDC221;
+    background: #fce196;
     box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.12);
     border-radius: 10px;
     border: none;
-    cursor: pointer;
+    cursor: not-allowed;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -91,11 +91,11 @@
 .SignUpButton {
     width: 310px;
     height: 40px;
-    background: #8A5A8E;
+    background: #a988ac;
     box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.12);
     border-radius: 10px;
     border: none;
-    cursor: pointer;
+    cursor: not-allowed;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -113,14 +113,14 @@
 
 .LoginButton:hover,
 .SignUpButton:hover {
-    background: #331B3B;
-    color: white;
+    /* background: #331B3B;
+    color: white; */
 }
 
 .LoginButton:active,
 .SignUpButton:active {
-    background: #331B3B;
-    color: white;
+    /* background: #331B3B;
+    color: white; */
 }
 
 .LoginButton,
