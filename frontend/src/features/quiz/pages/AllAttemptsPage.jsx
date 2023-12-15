@@ -2,7 +2,7 @@ import SecondHeader from "../../../global_components/SecondHeader";
 import Footer from '../../../global_components/Footer';
 import { useNavigate } from "react-router-dom";
 import { useCallback, useState } from "react";
-import "./AllAttemptsPage.css";
+import "../styles/AllAttemptsPage.css";
 import pdf from '../../../assets/images/pdf.png';
 
 // Define the AllAttempts functional component
@@ -17,9 +17,8 @@ const AllAttempts = () => {
 
     return (
         <>
-            {/* Include the SecondHeader component */}
             <SecondHeader />
-
+            
             {/* Main content container */}
             <div className="main_Page">
                 {/* Back arrow button */}

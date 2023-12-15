@@ -13,7 +13,7 @@ def create_app():
     
     # Main blueprint
     from app.blueprints.main import main_bp
-    app.register_blueprint(main_bp)
+    app.register_blueprint(main_bp, url_prefix="/api/main/")
 
     # Auth Blueprint
     from app.blueprints.auth import auth_bp

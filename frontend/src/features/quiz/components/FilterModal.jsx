@@ -28,14 +28,14 @@ const FilterModal = ({ filters, onFilterChange, onClose }) => {
                     <div className="grid-item">
                         {/* ToggleSwitch for "Matching Join types" filter */}
                         <ToggleSwitch label="Matching Join types" unique_by="1" 
-                                      checked={filters['matching_join_types']}
+                                      checked={filters['matching_joins']}
                                       onChange={(e) => {onFilterChange('matching_joins')}}
                         />
                     </div>
                     <div className="grid-item">
                         {/* ToggleSwitch for "Spell checker / Typo" filter */}
                         <ToggleSwitch label="Spell checker / Typo" unique_by="2" 
-                                      checked={filters['spell_checker']}
+                                      checked={filters['spell_check']}
                                       onChange={(e) => {onFilterChange('spell_check')}}
                         />
                     </div>

@@ -425,4 +425,19 @@
     transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
 
-
+.generate_link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.1rem;
+    border: none;
+    border-radius: 0.575rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+        0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    background-color: #F0C64A;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: 'Gilroy-Bold', sans-serif;
+    transition: background-color 450ms, color 450ms;
+}

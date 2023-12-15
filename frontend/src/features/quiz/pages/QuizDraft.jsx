@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaChevronRight, FaTrash } from "react-icons/fa";
 import { NavLink, useNavigate } from "react-router-dom"; // Import NavLink and useHistory
-import "./QuizDraft.css";
+import "../styles/QuizDraft.css";
 import SecondHeader from '../../../global_components/SecondHeader';
 import Footer from '../../../global_components/Footer';
 

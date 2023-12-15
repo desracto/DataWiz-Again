@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import "./QuizzesIntroductionPage.css";
+import "../styles/QuizzesIntroductionPage.css";
 import SecondHeader from '../../../global_components/SecondHeader';
 import Footer from '../../../global_components/Footer';
 
