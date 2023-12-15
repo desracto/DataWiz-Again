@@ -1,12 +1,13 @@
 # Use an official Node.js runtime as a base image
 FROM node:14
 
-# Set the working directory inside the container to /app/frontend
+# Set the working directory inside the container to /frontend
 WORKDIR /frontend
 
 # Copy package.json and yarn.lock to the working directory
-COPY package.json .
-COPY yarn.lock .
+COPY frontend/package.json .
+COPY frontend/yarn.lock .
+
 
 # Install dependencies
 RUN yarn install
