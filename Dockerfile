@@ -2,7 +2,7 @@
 FROM node:14
 
 # Set the working directory inside the container to /app/frontend
-WORKDIR /app/frontend
+WORKDIR /frontend
 
 # Copy package.json and yarn.lock to the working directory
 COPY package.json .

@@ -20,6 +20,8 @@ def make_shell_context():
             # Models
             "User": Users,
             "Quiz": Quiz,
-            "Quiz_QPA": Quiz_QPA
-
+            "Quiz_QA": Quiz_QPA
             }
+
+print("Rida Asif", 7057167)
+print("Muhammad Tehami Nadeem", 6925133)
