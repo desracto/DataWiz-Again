@@ -16,13 +16,13 @@ import svgImage2 from '../../../assets/images/blob-haikei.svg';
 
 const AboutUsPage = () => {
 
-    useEffect(() => {
-        window.scrollTo({
-            top: 0,
-            bottom: 0,
-            behavior: 'instant'
-        })
-    })
+    // useEffect(() => {
+    //     window.scrollTo({
+    //         top: 0,
+    //         bottom: 0,
+    //         behavior: 'instant'
+    //     })
+    // })
 
     const animationData = [
         { image: SchemaSelection, title: "Schema Selection for Query Animation", text: "Embark on your SQL learning adventure by choosing from a diverse set of schemas. Craft your query, and witness the magic as DataWiz animates the intricate steps taken within the database to reach the final result. Select, query, animate, and grasp SQL concepts visually and interactively." },
@@ -121,17 +121,15 @@ const AboutUsPage = () => {
                         </div>
                         <div className="AboutUs-Section3-Body">
                             <div className="AboutUs-Section3-Text">
-                                <p className="AboutUs-Section3-Content">Initiated in April 2023, DataWiz embodies the expertise <br /> of Hiba Gohar,
-                                    Rida Asif, Mohammed Ejaz Choudhary, <br /> Mohammed Nihal, and Tehami Nadeem. Mastering Big <br /> Data, Cybersecurity, and
-                                    Game Development, DataWiz <br /> sets new standards in the realm of SQL applications.
+                                <p className="AboutUs-Section3-Content">In the intricate dance of data education, DataWiz stands at the intersection of innovation and technology. 
+                                Behind every animation and auto-grading feature lies a meticulous tech tapestry. 
+                                Node.js paves the way, React shapes the interfaces, and the recent shift to MySQL and SQLite ensures scalability and efficiency.
                                 </p>
-                                <p className="AboutUs-Section3-Content">Initiated in April 2023, DataWiz embodies the expertise <br /> of Hiba Gohar,
-                                    Rida Asif, Mohammed Ejaz Choudhary, <br /> Mohammed Nihal, and Tehami Nadeem. Mastering Big <br /> Data, Cybersecurity, and
-                                    Game Development, DataWiz <br /> sets new standards in the realm of SQL applications.
-                                </p>
-                                <p className="AboutUs-Section3-Content">Initiated in April 2023, DataWiz embodies the expertise <br /> of Hiba Gohar,
-                                    Rida Asif, Mohammed Ejaz Choudhary, <br /> Mohammed Nihal, and Tehami Nadeem. Mastering Big <br /> Data, Cybersecurity, and
-                                    Game Development, DataWiz <br /> sets new standards in the realm of SQL applications.
+                                <p className="AboutUs-Section3-Content">DataWiz is not just about code; it's a collective effort. 
+                                Our passionate team collaborates seamlessly, infusing creativity into every feature. 
+                                From the animated Query Animation to the precise Auto-Grading, each line of code is a step toward redefining how SQL is learned and mastered. 
+                                Step behind the scenes, where collaboration meets innovation, and witness the evolution of DataWiz—a living project, 
+                                continuously shaped by your feedback and the commitment to making SQL education both informative and captivating.
                                 </p>
                             </div>
                             <img className="AboutUs-Section3-Image" src={AboutUsGlobe} alt="" />
